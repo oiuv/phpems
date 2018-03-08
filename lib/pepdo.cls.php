@@ -22,7 +22,7 @@
     {
     	if($this->log)
     	{
-    		$fp = fopen('data/error.log','a');
+    		$fp = fopen(__DIR__.'/../data/error.log','a');
 			fputs($fp,print_r($sql,true).print_r($query->errorInfo(),true));
 			fclose($fp);
     	}
