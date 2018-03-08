@@ -15,10 +15,10 @@ define('WP','http://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']));
 else
 define('WP','http://'.$_SERVER['SERVER_NAME'].'/');
 
-define('DB','777');//MYSQL数据库名
+define('DB','phpems');//MYSQL数据库名
 define('DH','127.0.0.1');//MYSQL主机名，不用改
 define('DU','root');//MYSQL数据库用户名
-define('DP','root');//MYSQL数据库用户密码
+define('DP','');//MYSQL数据库用户密码
 define('DTH','x2_');//系统表前缀，不用改
 
 /**
