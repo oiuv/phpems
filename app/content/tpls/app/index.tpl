@@ -95,6 +95,7 @@
 				</a>
 			</div>
 			<div class="col-xs-9" style="padding-left:0px;">
+				{x2;if:is_array($basics['basic'])}
 				{x2;tree:$basics['basic'],basic,bid}
 				<div class="col-xs-3">
 					<a href="index.php?exam-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="thumbnail ajax">
@@ -106,6 +107,7 @@
 				<div class="col-xs-12"><hr /></div>
 				{x2;endif}
 				{x2;endtree}
+				{x2;endif}
 			</div>
 		</div>
 	</div>
