@@ -1,0 +1,1 @@
+					    	<textarea class="jckeditor" etype="simple" id="editor{x2;$dataid}" name="question[{x2;$dataid}]" style="width:100%; height:150px;" rel="_{x2;$cquestype}-{x2;$questionid}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$dataid]}</textarea>

@@ -1,0 +1,123 @@
+*{
+font-size:14px;}
+html{width:100%;height:100%;overflow:hidden;}
+body{
+background-color:#F5F5F5;
+height:100%;}
+#content{
+font-family:"΢���ź�";
+display:block;
+width:100%;
+height:100%;
+position:relative;}
+.pages{
+background-color:#F5F5F5;
+width:100%;
+position:absolute;
+top:0px;
+left:0px;
+height:100%;
+overflow:hidden;
+-webkit-backface-visibility: hidden;
+-moz-backface-visibility: hidden;
+backface-visibility: hidden;
+-webkit-transform: translate3d(0, 0, 0);
+-moz-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+-webkit-transform-style: preserve-3d;
+-moz-transform-style: preserve-3d;
+transform-style: preserve-3d;
+visibility: visible;}
+.currentpage{z-index:1;visibility: visible;}
+.pagecontent{
+height:100%;
+overflow:auto;}
+a{
+color:#333333;}
+a:hover,a:visited{text-decoration:none;}
+h4{
+font-weight:800;}
+img{max-width:100%;
+font-family:"Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;}
+.pages{max-width:100%;}
+.menu{display:none;position:fixed;z-index:99;width:24rem;background-color:#333333;overflow:scroll}
+header h5{
+line-height:2.4rem;
+color:#FFFFFF;
+font-size:1.4rem;}
+footer p{
+line-height:2rem;
+color:#FFFFFF;
+font-size:1rem;}
+.input-group-addon{
+font-size:1.4rem;
+}
+.form-group input{
+font-size:1.6rem;
+padding:1.2rem;
+/**height:4.4rem;**/
+line-height:2.4rem;
+}
+#login{
+display:none;}
+#facebook{
+position:absolute;
+left:0px;
+top:0px;
+width:100%;
+z-index:999;
+height:100%;
+background-color:#255D8C;
+color:#FFFFFF;
+}
+
+#allmap img{
+height:auto!important;}
+
+.title{
+position:relative;
+color:#0A3668;
+border-bottom:1px solid #ebebeb;
+line-height:2em;
+font-weight:500;
+font-size:16px;}
+
+.title::after {
+background: #0A3668 none repeat scroll 0 0;
+bottom: -1px;
+content: "";
+height: 1px;
+left: -5px;
+position: absolute;
+width: 5rem;}
+
+.box{
+border-radius:none;
+background-color: #d9edf7;
+margin:10px auto 0px auto;
+height:auto;
+overflow:hidden;
+display:block;}
+
+.itembox{
+padding:0px 20px 15px 20px;}
+
+.footbar a{
+color:#FFFFFF;}
+
+.footer a{color:#3A3A3A;}
+.footer a.active{color:#EE615C;}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus{
+background-color:#337AB7;}
+
+input[type="checkbox"] {
+width: 1.5rem;
+height: 1.5rem;
+background-color: #F5F5F5;
+border: 0.05rem solid #CCC;
+-webkit-border-radius: 50%!important;
+border-radius: 50%!important;
+vertical-align: middle;}
+
+.swiper-slide{width:100%!important;}
