@@ -1,4 +1,4 @@
-/data
-/files
-/vendor
 /.idea
+/data
+/vendor
+.DS_Store
