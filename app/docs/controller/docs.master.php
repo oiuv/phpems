@@ -182,9 +182,9 @@ class action extends app
 	private function del()
 	{
 		$page = intval($this->ev->get('page'));
-		$contentid = intval($this->ev->get('contentid'));
-		$content = $this->doc->getContentById($contentid);
-		$this->doc->delContent($contentid);
+		$contentid = intval($this->ev->get('docid'));
+		$content = $this->doc->getDocById($contentid);
+		$this->doc->delDoc($contentid);
 		$message = array(
 			'statusCode' => 200,
 			"message" => "操作成功",

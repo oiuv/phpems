@@ -51,7 +51,7 @@ class orders_bank
 		return $this->db->insertElement(array('table' => 'orders','query' => $args));
 	}
 
-	public function getOrderById($id,$userid)
+	public function getOrderById($id,$userid = null)
 	{
 		if($userid)
 		$data = array(false,'orders',array(array("AND","ordersn = :ordersn",'ordersn',$id),array("AND","orderuserid = :orderuserid",'orderuserid',$userid)));

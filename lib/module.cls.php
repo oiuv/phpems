@@ -152,7 +152,7 @@ class module
 	}
 
 	//根据字段名称和模型ID查找字段
-	public function getFieldByNameAndModuleid($field,$moduleid)
+	public function getFieldByNameAndModuleid($field,$moduleid = null)
 	{
 		if($moduleid)
 		$data = array(false,'module_fields',array(array('AND',"fieldmoduleid = :moduleid",'moduleid',$moduleid),array('AND',"field = :field",'field',$field)));
