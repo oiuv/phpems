@@ -279,7 +279,7 @@ class favor_exam
 					'ehtype'=>$exam['examsessiontype'],
 					'ehtimelist'=>$exam['examsessiontimelist'],
 					'ehexam'=>$exam['examsession'],
-					'ehexamid'=>$exam['examsessionkey'],
+					'ehexamid'=>is_numeric($exam['examsessionkey'])?:0,
 					'ehbasicid'=>$exam['examsessionbasic'],
 					'ehquestion'=>base64_encode(gzcompress(serialize($exam['examsessionquestion']),9)),
 					'ehsetting'=>base64_encode(gzcompress(serialize($exam['examsessionsetting']),9)),

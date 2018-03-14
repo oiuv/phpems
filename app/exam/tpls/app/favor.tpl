@@ -57,6 +57,7 @@
 				{x2;if:$type}
 					{x2;eval:v:ishead = 0}
 					{x2;eval:v:ispre = 0}
+				    {x2;if:is_array($favors['data'])}
 					{x2;tree:$favors['data'],question,qid}
 						{x2;if:v:pre != v:question['questionparent']}
 						{x2;eval:v:ishead = 0}
@@ -111,6 +112,7 @@
 						{x2;eval:v:ishead++}
 			            {x2;eval:v:pre=v:question['questionparent']}
 					{x2;endtree}
+				    {x2;endif}
 					</div>
 				{x2;else}
 					{x2;tree:$favors['data'],question,qid}

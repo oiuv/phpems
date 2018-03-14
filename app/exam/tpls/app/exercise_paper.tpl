@@ -35,11 +35,14 @@
 						{x2;eval: v:oid++}
 						<div role="tabpanel" class="tab-pane tableindex{x2;if:v:oid == 1} active{x2;endif}" id="qt_{x2;v:quest}">
 							{x2;eval: v:tid = 0}
+							{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 			                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 			                {x2;eval: v:tid++}
 			                {x2;eval: v:qmid++}
 							<a id="sign_{x2;v:question['questionid']}" href="javascript:;" onclick="javascript:gotoquestion('{x2;v:question['questionid']}')" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]} btn-danger{x2;endif}">{x2;v:tid}</a>
 							{x2;endtree}
+							{x2;endif}
+							{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 							{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 			                {x2;eval: v:tid++}
 			                {x2;tree:v:questionrow['data'],data,did}
@@ -47,6 +50,7 @@
 			                <a id="sign_{x2;v:data['questionid']}" href="javascript:;" onclick="javascript:gotoquestion('{x2;v:data['questionid']}')" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]} btn-danger{x2;endif}">{x2;v:tid}-{x2;v:did}</a>
                 			{x2;endtree}
                 			{x2;endtree}
+							{x2;endif}
 						</div>
 						{x2;endif}
 						{x2;endif}
@@ -69,6 +73,7 @@
 					<blockquote class="questype">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}</blockquote>
 				</div>
 				{x2;eval: v:tid = 0}
+				{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
                 {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
                 {x2;eval: v:tid++}
                 {x2;eval: v:qcid++}
@@ -126,6 +131,8 @@
 					</div>
 				</div>
 				{x2;endtree}
+				{x2;endif}
+				{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 				{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
                 {x2;eval: v:tid++}
                 {x2;tree:v:questionrow['data'],data,did}
@@ -191,6 +198,7 @@
 				</div>
 				{x2;endtree}
 				{x2;endtree}
+				{x2;endif}
 				{x2;endif}
 				{x2;endif}
 				{x2;endtree}

@@ -42,16 +42,20 @@
 						{x2;eval: v:oid++}
 						<div role="tabpanel" class="tab-pane tableindex{x2;if:v:oid == 1} active{x2;endif}" id="qt_{x2;v:quest}">
 							{x2;eval: v:tid = 0}
+							{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 			                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 			                {x2;eval: v:tid++}
 							<a id="sign_{x2;v:question['questionid']}" href="#question_{x2;v:question['questionid']}" class="btn btn-default">{x2;v:tid}</a>
 							{x2;endtree}
+							{x2;endif}
+							{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 							{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 			                {x2;eval: v:tid++}
 			                {x2;tree:v:questionrow['data'],data,did}
 			                <a id="sign_{x2;v:data['questionid']}" href="#question_{x2;v:data['questionid']}" class="btn btn-default">{x2;v:tid}-{x2;v:did}</a>
                 			{x2;endtree}
                 			{x2;endtree}
+							{x2;endif}
 						</div>
 						{x2;endif}
 						{x2;endtree}
@@ -61,7 +65,7 @@
 			<div class="col-xs-9 split pull-right" style="padding:0px;position:relative;">
 				<div class="scoreArea">{x2;$sessionvars['examsessionscore']}</div>
 				<div class="box itembox">
-					<h2 class="text-center tt">{x2;$sessionvars['examsession']}ccc</h2>
+					<h2 class="text-center tt">{x2;$sessionvars['examsession']}</h2>
 				</div>
 				{x2;eval: v:oid = 0}
 				{x2;tree:$questype,quest,qid}
@@ -73,6 +77,7 @@
 					<blockquote class="questype">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}</blockquote>
 				</div>
 				{x2;eval: v:tid = 0}
+				{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 	            {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 	            {x2;eval: v:tid++}
 				<div class="box itembox paperexamcontent">
@@ -124,6 +129,8 @@
 	                </div>
 				</div>
 				{x2;endtree}
+				{x2;endif}
+				{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 				{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 	            {x2;eval: v:tid++}
 				<div class="box itembox paperexamcontent">
@@ -184,6 +191,7 @@
 					{x2;endtree}
 				</div>
 				{x2;endtree}
+				{x2;endif}
 				{x2;endif}
 				{x2;endtree}
 			</div>

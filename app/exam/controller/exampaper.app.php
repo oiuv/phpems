@@ -440,6 +440,7 @@ class action extends app
 						$questions[$key] = $this->exam->getQuestionListByIds($ids);
 					}
 				}
+				if (is_array($questionids['questionrow']))
 				foreach($questionids['questionrow'] as $key => $p)
 				{
 					$ids = "";
