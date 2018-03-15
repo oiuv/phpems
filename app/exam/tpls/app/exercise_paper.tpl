@@ -111,7 +111,7 @@
 	                        {x2;if:v:key >= v:question['questionselectnumber']}
 	                        {x2;eval: break;}
 	                        {x2;endif}
-	                        <label class="checkbox-inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+	                        <label class="checkbox-inline"><input type="checkbox" name="question[{x2;v:question['questionid']}][{x2;v:key}]" rel="{x2;v:question['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']])}{x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}{x2;endif}/>{x2;v:so} </label>
 	                        {x2;endtree}
                         {x2;endif}
                     </div>
@@ -176,7 +176,7 @@
 		                        {x2;if:v:key >= v:data['questionselectnumber']}
 		                        {x2;eval: break;}
 		                        {x2;endif}
-		                        <label class="checkbox-inline"><input type="checkbox" name="question[{x2;v:data['questionid']}][{x2;v:key}]" rel="{x2;v:data['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+		                        <label class="checkbox-inline"><input type="checkbox" name="question[{x2;v:data['questionid']}][{x2;v:key}]" rel="{x2;v:data['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][v:data['questionid']])}{x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}{x2;endif}/>{x2;v:so} </label>
 		                        {x2;endtree}
 	                        {x2;endif}
 	                    </div>
