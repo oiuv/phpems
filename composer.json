@@ -10,12 +10,12 @@
   },
   "autoload": {
     "classmap": [
-      "lib"
     ],
     "psr-4": {
       "Model\\": "model/"
     },
-    "file": [
+    "files": [
+      "lib/database.inc.php"
     ]
   }
 }

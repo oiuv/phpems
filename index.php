@@ -6,7 +6,7 @@ set_time_limit(0);
 $t1 = microtime();
 define("PE_VERSION", '4.2');
 require __DIR__ . "/vendor/autoload.php";
-require __DIR__ . "/lib/database.inc.php";
+require __DIR__ . "/lib/init.cls.php";
 
 $ginkgo = new ginkgo;
 $ginkgo->run();

@@ -27,5 +27,5 @@ $capsule->bootEloquent();
 
 
 //$users = \Model\User::all();
-//$user = Capsule::table('user')->value('username');
-//dd($user);
+//$name = Capsule::table('user')->value('username');
+//dd($users);
