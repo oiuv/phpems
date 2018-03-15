@@ -75,7 +75,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v5.6.11",
+            "version": "v5.6.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -119,7 +119,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v5.6.11",
+            "version": "v5.6.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -163,16 +163,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v5.6.11",
+            "version": "v5.6.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "4d2fc3c816ed402fcac290e6ca7bc855d5313000"
+                "reference": "104cd99c17d46e6f96eafd4f1469ea921a289279"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/illuminate/database/4d2fc3c816ed402fcac290e6ca7bc855d5313000.zip",
-                "reference": "4d2fc3c816ed402fcac290e6ca7bc855d5313000",
+                "url": "https://files.phpcomposer.com/files/illuminate/database/104cd99c17d46e6f96eafd4f1469ea921a289279.zip",
+                "reference": "104cd99c17d46e6f96eafd4f1469ea921a289279",
                 "shasum": ""
             },
             "require": {
@@ -218,34 +218,34 @@
                 "orm",
                 "sql"
             ],
-            "time": "2018-03-09T13:55:05+00:00"
+            "time": "2018-03-14T12:21:13+00:00"
         },
         {
             "name": "illuminate/support",
-            "version": "v5.6.11",
+            "version": "v5.6.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "259f6f17a11b0379340ec5311fcba27bc2a04070"
+                "reference": "f0776f5bbfeeb9d4c4cac8f64d96f8f0cbe4f3f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/illuminate/support/259f6f17a11b0379340ec5311fcba27bc2a04070.zip",
-                "reference": "259f6f17a11b0379340ec5311fcba27bc2a04070",
+                "url": "https://files.phpcomposer.com/files/illuminate/support/f0776f5bbfeeb9d4c4cac8f64d96f8f0cbe4f3f7.zip",
+                "reference": "f0776f5bbfeeb9d4c4cac8f64d96f8f0cbe4f3f7",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "~1.1",
                 "ext-mbstring": "*",
                 "illuminate/contracts": "5.6.*",
-                "nesbot/carbon": "^1.20",
+                "nesbot/carbon": "^1.24.1",
                 "php": "^7.1.3"
             },
             "conflict": {
                 "tightenco/collect": "<5.5.33"
             },
             "suggest": {
-                "illuminate/filesystem": "Required to use the composer class (5.2.*).",
+                "illuminate/filesystem": "Required to use the composer class (5.6.*).",
                 "symfony/process": "Required to use the composer class (~4.0).",
                 "symfony/var-dumper": "Required to use the dd function (~4.0)."
             },
@@ -275,7 +275,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2018-03-09T16:52:54+00:00"
+            "time": "2018-03-14T12:56:14+00:00"
         },
         {
             "name": "nesbot/carbon",

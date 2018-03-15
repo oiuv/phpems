@@ -1,11 +1,21 @@
 {
-    "repositories": {
-        "packagist": {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
-        }
-    },
-    "require": {
-        "illuminate/database": "^5.6"
+  "repositories": {
+    "packagist": {
+      "type": "composer",
+      "url": "https://packagist.phpcomposer.com"
     }
+  },
+  "require": {
+    "illuminate/database": "^5.6"
+  },
+  "autoload": {
+    "classmap": [
+      "lib"
+    ],
+    "psr-4": {
+      "Model\\": "model/"
+    },
+    "file": [
+    ]
+  }
 }
