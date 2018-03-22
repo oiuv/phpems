@@ -18,6 +18,7 @@
 					{x2;eval: v:oid++}
 					<h4 class="title questionpanel" id="questype_{x2;v:quest}">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}</h4>
 					{x2;eval: v:tid = 0}
+					{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 	                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 	                {x2;eval: v:tid++}
 	                {x2;eval: v:qcid++}
@@ -71,6 +72,8 @@
 		                </div>
 					</div>
 					{x2;endtree}
+					{x2;endif}
+					{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 					{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 	                {x2;eval: v:tid++}
 					<div class="paperexamcontent" id="questions_{x2;v:data['questionid']}" rel="{x2;v:quest}" style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
@@ -130,6 +133,7 @@
 						{x2;endtree}
 					</div>
 					{x2;endtree}
+					{x2;endif}
 					{x2;endif}
 					{x2;endif}
 					{x2;endtree}

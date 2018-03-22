@@ -513,6 +513,7 @@ class action extends app
 				$questionids = $this->question->selectQuestions($examid,$this->data['currentbasic']);
 				$questions = array();
 				$questionrows = array();
+				if (is_array($questionids['question']))
 				foreach($questionids['question'] as $key => $p)
 				{
 					$ids = "";
@@ -527,6 +528,7 @@ class action extends app
 						$questions[$key] = $this->exam->getQuestionListByIds($ids);
 					}
 				}
+				if (is_array($questionids['questionrow']))
 				foreach($questionids['questionrow'] as $key => $p)
 				{
 					$ids = "";

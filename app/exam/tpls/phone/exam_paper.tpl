@@ -30,11 +30,14 @@
 							<dt class="float_l"><h4 class="title">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}</h4></dt>
 							<dd class="tableindex">
 								{x2;eval: v:tid = 0}
+								{x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 				                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 				                {x2;eval: v:tid++}
 				                {x2;eval: v:qmid++}
 								<a style="margin-bottom:0.5rem;" id="sign_{x2;v:question['questionid']}" href="javascript:;" onclick="javascript:$.leftMenu($('#questionbar'));gotoquestion('{x2;v:question['questionid']}');$('#form1').toggle();" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]} btn-danger{x2;endif}">{x2;v:tid}</a>
 								{x2;endtree}
+                                {x2;endif}
+                                {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 								{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 				                {x2;eval: v:tid++}
 				                {x2;tree:v:questionrow['data'],data,did}
@@ -42,6 +45,7 @@
 				                <a style="margin-bottom:0.5rem;" id="sign_{x2;v:data['questionid']}" href="javascript:;" onclick="javascript:$.leftMenu($('#questionbar'));gotoquestion('{x2;v:data['questionid']}');$('#form1').toggle();" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]} btn-danger{x2;endif}">{x2;v:tid}-{x2;v:did}</a>
 		            			{x2;endtree}
 		            			{x2;endtree}
+                                {x2;endif}
 							</dd>
 							{x2;endif}
 							{x2;endif}
@@ -59,6 +63,7 @@
 						{x2;eval: v:oid++}
 						<h4 class="title questionpanel" id="questype_{x2;v:quest}">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}</h4>
 						{x2;eval: v:tid = 0}
+                        {x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 		                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 		                {x2;eval: v:tid++}
 		                {x2;eval: v:qcid++}
@@ -67,12 +72,12 @@
 								第{x2;v:tid}题
 								<span class="pull-right">
 									<a class="btn {x2;if:$sessionvars['examsessionsign'][v:question['questionid']]}text-danger{x2;else}text-info{x2;endif} qicon" href="javascript:;" onclick="javascript:signQuestion('{x2;v:question['questionid']}',this);"><i class="glyphicon glyphicon-bookmark"></i></a>
-									<a name="question_{x2;v:question['questionid']}">
+									<a name="question_{x2;v:question['questionid']}"></a>
 									<input id="time_{x2;v:question['questionid']}" type="hidden" name="time[{x2;v:question['questionid']}]"/>
 								</span>
 							</h4>
 							<div class="choice">
-								</a>{x2;realhtml:v:question['question']}
+								{x2;realhtml:v:question['question']}
 							</div>
 							{x2;if:!$questype[v:quest]['questsort']}
 							{x2;if:v:question['questionselect'] && $questype[v:quest]['questchoice'] != 5}
@@ -115,6 +120,8 @@
 							</div>
 						</div>
 						{x2;endtree}
+                        {x2;endif}
+                        {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 						{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 		                {x2;eval: v:tid++}
 		                {x2;tree:v:questionrow['data'],data,did}
@@ -178,6 +185,7 @@
 						</div>
 						{x2;endtree}
 						{x2;endtree}
+						{x2;endif}
 						{x2;endif}
 						{x2;endif}
 						{x2;endtree}
