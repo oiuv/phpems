@@ -29,9 +29,9 @@
 		</div>
 		<div class="container-fluid">
 			<div style="clear:both;overflow:hidden;" class="items">
-				<div class="col-xs-4" style="padding:0.2rem;">
+				<div class="col-xs-3" style="padding:0.2rem;">
 					<div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
-						<a href="index.php?exam-phone-index" class="ajax" data-page="exam" data-target="exam">
+						<a href="index.php?exam-phone-index" class="ajax" data-page="mybasic" data-target="mybasic">
 							<p>
 								<img src="app/core/styles/img/exam.png" style="width:92%;"/>
 							</p>
@@ -39,7 +39,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="col-xs-4" style="padding:0.2rem;">
+				<div class="col-xs-3" style="padding:0.2rem;">
 					<div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
 						<a class="ajax" href="index.php?course-phone-index" data-target="course" data-page="course">
 							<p>
@@ -49,7 +49,17 @@
 						</a>
 					</div>
 				</div>
-				<div class="col-xs-4" style="padding:0.2rem;">
+				<div class="col-xs-3" style="padding:0.2rem;">
+					<div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
+						<a href="index.php?certificate-phone" data-target="certificate" data-page="certificate" class="ajax">
+							<p>
+								<img src="app/core/styles/img/t3.png" style="width:92%;"/>
+							</p>
+							<h5>证书申请</h5>
+						</a>
+					</div>
+				</div>
+				<div class="col-xs-3" style="padding:0.2rem;">
 					<div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
 						<a href="index.php?content-phone-category" data-target="contentcategory" data-page="contentcategory" class="ajax">
 							<p>
@@ -136,7 +146,7 @@
 {x2;if:!$userhash}
     </div>
 </div>
-<script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 	wx.config({
         debug: false,

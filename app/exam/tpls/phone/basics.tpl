@@ -9,7 +9,7 @@
 				<h5 class="text-center">
 					<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 					{x2;$data['currentbasic']['basic']}
-					<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+					<a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone" class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
 				</h5>
 			</header>
 			<h4 style="overflow:hidden;clear:both;padding-top:0.2rem;">

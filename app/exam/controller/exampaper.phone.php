@@ -422,7 +422,6 @@ class action extends app
 				$questions = array();
 				$questionrows = array();
 				$str = '';
-				if (is_array($questionids['question']))
 				foreach($questionids['question'] as $key => $p)
 				{
 					$ids = "";
@@ -438,7 +437,6 @@ class action extends app
 						$questions[$key] = $this->exam->getQuestionListByIds($ids);
 					}
 				}
-				if (is_array($questionids['questionrow']))
 				foreach($questionids['questionrow'] as $key => $p)
 				{
 					$ids = "";
@@ -566,6 +564,8 @@ class action extends app
 
 	private function index()
 	{
+        $this->pg->isPhone = 1;
+        $this->pg->target = 'class="ajax" data-target="exampaper" data-page="exampaper" ';
 		$page = $this->ev->get('page');
 		$ids = trim($this->data['currentbasic']['basicexam']['auto'].','.$this->data['currentbasic']['basicexam']['train'],', ');
 		if(!$ids)$ids = 0;

@@ -17,8 +17,8 @@
 <script src="app/core/styles/js/bootstrap.min.js"></script>
 <script src="app/core/styles/js/all.fine-uploader.min.js"></script>
 <script src="app/core/styles/js/ckeditor/js/MathJax.js?config=TeX-AMS_HTML"></script>
-<script src="app/core/styles/js/ckplayer/ckplayer.js"></script>
 <script src="app/core/styles/js/jquery.media.js"></script>
+<script src="app/core/styles/js/jquery.mobile.custom.min.js"></script>
 <script src="app/core/styles/js/mplugin.js"></script>
 <script src="app/exam/styles/js/mplugin.js"></script>
 </head>

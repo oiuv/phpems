@@ -18,6 +18,19 @@ class action extends app
 		exit;
 	}
 
+	public function delopen()
+	{
+		$ocid = $this->ev->get('ocid');
+        $this->course->delOpenCourse($ocid);
+        $message = array(
+            'statusCode' => 200,
+            "message" => "操作成功",
+            "callbackType" => "forward",
+            "forwardUrl" => "reload"
+        );
+        exit(json_encode($message));
+	}
+
 	private function selectmember()
 	{
 		$page = intval($this->ev->get('page'));

@@ -4,9 +4,8 @@
 session_start();
 set_time_limit(0);
 $t1 = microtime();
-define("PE_VERSION", '4.2');
-require __DIR__ . "/vendor/autoload.php";
-require __DIR__ . "/lib/init.cls.php";
+define("PE_VERSION",'5.0');
+require "lib/init.cls.php";
 
 $ginkgo = new ginkgo;
 $ginkgo->run();

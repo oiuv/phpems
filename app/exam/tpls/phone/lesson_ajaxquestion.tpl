@@ -43,9 +43,9 @@
 			<div class="choice" style="margin-top:20px;overflow:hidden;">
 				<div class="btn-group hide answerbox pull-right">
             		{x2;if:$number > 1}
-            		<a class="btn btn-primary ajax" data-page="paper" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
+            		<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
             		{x2;endif}
-					<a class="btn btn-primary ajax" data-page="paper" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
+					<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
             	</div>
             	<div class="btn-group pull-right">
             		<a class="btn btn-primary questionbtn" href="javascript:;" onclick="javascript:$('.questionbtn').addClass('hide');$('.answerbox').removeClass('hide');" title="查看答案">查看答案</a>
@@ -117,10 +117,10 @@
 				<div class="choice" style="margin-top:20px;overflow:hidden;">
 					<div class="btn-group pull-right hide answerbox">
 		            		{x2;if:$number > 1}
-		            		<a class="btn btn-primary ajax" action-pageant="pre" data-page="paper" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
+		            		<a class="btn btn-primary ajax" action-pageant="pre" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
 		            		{x2;endif}
 		            		{x2;if:(v:did + $number) < $allnumber}
-							<a class="btn btn-primary ajax" data-page="paper" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
+							<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
 							{x2;endif}
 		        	</div>
 		        	<div class="btn-group pull-right">

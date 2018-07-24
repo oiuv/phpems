@@ -8,7 +8,7 @@
 			<h5 class="text-center">
 				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 				用户登录
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 			</h5>
 		</header>
 		<div class="container-fluid">
@@ -28,7 +28,7 @@
 					</div>
 					<input type="hidden" value="1" name="userlogin"/>
 					<button type="submit" class="btn btn-primary btn-block" style="line-height:3rem;">登录</button>
-					<a class="btn btn-default btn-block ajax" href="index.php?user-phone-register" data-target="user" data-page="user" style="line-height:3rem;">注册</a>
+					<a class="btn btn-default btn-block ajax" href="index.php?user-phone-register" data-target="userregister" data-page="userregister" style="line-height:3rem;">注册</a>
 				</form>
 			</div>
 		</div>

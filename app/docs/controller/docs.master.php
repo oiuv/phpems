@@ -182,14 +182,15 @@ class action extends app
 	private function del()
 	{
 		$page = intval($this->ev->get('page'));
-		$contentid = intval($this->ev->get('docid'));
-		$content = $this->doc->getDocById($contentid);
-		$this->doc->delDoc($contentid);
+        $docid = intval($this->ev->get('docid'));
+		$doc = $this->doc->getDocById($docid);
+		if($doc)
+		$this->doc->delDoc($docid);
 		$message = array(
 			'statusCode' => 200,
 			"message" => "操作成功",
 		    "callbackType" => "forward",
-		    "forwardUrl" => "index.php?docs-master-docs&catid={$content['contentcatid']}&page={$page}"
+		    "forwardUrl" => "reload"
 		);
 		exit(json_encode($message));
 	}

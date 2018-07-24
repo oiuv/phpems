@@ -21,7 +21,7 @@ define('DU','root');//MYSQL数据库用户名
 define('DP','');//MYSQL数据库用户密码
 define('DTH','x2_');//系统表前缀，不用改
 
-/**
+
 define('WXAPPID','wx0f2a632abf082e60');
 define('WXAPPSECRET','3368f73a6f517b37c7e8f0cee2c86341');
 define('WXMCHID','1369875702');
@@ -31,7 +31,7 @@ define('WXKEY','zhelishi32weidewxkey');
 define('ALIPART','2088121450284825');
 define('ALIKEY','j8tnfkx7l0wddmxyfytzt0kdkuaitkiw');
 define('ALIACC','suoware@126.com');
-
+/**
 **/
 
 

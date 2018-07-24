@@ -205,7 +205,7 @@ class favor_exam
 		$args[] = array("AND","examhistory.ehuserid = user.userid");
 		$data = array(false,array('examhistory','user'),$args,false,"ehscore DESC",false);
 		$sql = $this->pdosql->makeSelect($data);
-		return $this->db->fetchAll($sql,false,array('ehquestion','ehsetting','ehscorelist','ehuseranswer','ehtimelist'));
+		return $this->db->fetchAll($sql,false,array('ehscorelist','ehuseranswer','ehtimelist'));
 	}
 
 	//根据用户和ID获取一个考试记录
@@ -218,6 +218,16 @@ class favor_exam
 		$r['ehsetting'] = unserialize(gzuncompress(base64_decode($r['ehsetting'])));
 		return $r;
 	}
+
+    public function getExamHistoryByArgs($args)
+    {
+        $data = array(false,'examhistory',$args);
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetch($sql,array('ehscorelist','ehuseranswer','ehtimelist'));
+        $r['ehquestion'] = unserialize(gzuncompress(base64_decode($r['ehquestion'])));
+        $r['ehsetting'] = unserialize(gzuncompress(base64_decode($r['ehsetting'])));
+        return $r;
+    }
 
 	//根据ID修改一个考试记录
 	public function modifyExamHistory($args,$ehid)

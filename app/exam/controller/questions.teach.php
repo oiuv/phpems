@@ -15,6 +15,27 @@ class action extends app
 		$this->$action();
 		exit;
 	}
+	
+	private function filebataddquestion()
+	{
+		setlocale(LC_ALL,'zh_CN');
+		if($this->ev->get('insertquestion'))
+		{
+			$page = $this->ev->get('page');
+			$uploadfile = $this->ev->get('uploadfile');
+			$knowsid = trim($this->ev->get('knowsid'));
+			$this->exam->importQuestionBat($uploadfile,$knowsid);
+			$message = array(
+				'statusCode' => 200,
+				"message" => "操作成功",
+				"callbackType" => "forward",
+			    "forwardUrl" => "index.php?exam-teach-questions&page={$page}{$u}"
+			);
+			$this->G->R($message);
+		}
+		else
+		$this->tpl->display('question_filebatadd');
+	}
 
 	private function addquestion()
 	{
@@ -100,6 +121,21 @@ class action extends app
 			$this->tpl->display('question_batadd');
 		}
 	}
+
+    private function batdel()
+    {
+        $page = $this->ev->get('page');
+        $delids = $this->ev->get('delids');
+        foreach($delids as $questionid => $p)
+            $this->exam->delQuestions($questionid);
+        $message = array(
+            'statusCode' => 200,
+            "message" => "操作成功",
+            "callbackType" => "forward",
+            "forwardUrl" => "index.php?exam-teach-questions&page={$page}{$u}"
+        );
+        $this->G->R($message);
+    }
 
 	private function delquestion()
 	{

@@ -380,7 +380,7 @@ class action extends app
 					if($id)
 					$message = array(
 						'statusCode' => 200,
-						"message" => "操作成功，本试卷需要教师评分，请等待评分结果",
+						"message" => "本试卷需要教师评分后显示",
 					    "callbackType" => 'forward',
 					    "forwardUrl" => "index.php?exam-phone-history&ehtype=2"
 					);
@@ -513,7 +513,6 @@ class action extends app
 				$questionids = $this->question->selectQuestions($examid,$this->data['currentbasic']);
 				$questions = array();
 				$questionrows = array();
-				if (is_array($questionids['question']))
 				foreach($questionids['question'] as $key => $p)
 				{
 					$ids = "";
@@ -528,7 +527,6 @@ class action extends app
 						$questions[$key] = $this->exam->getQuestionListByIds($ids);
 					}
 				}
-				if (is_array($questionids['questionrow']))
 				foreach($questionids['questionrow'] as $key => $p)
 				{
 					$ids = "";
@@ -656,6 +654,8 @@ class action extends app
 
 	private function index()
 	{
+        $this->pg->isPhone = 1;
+        $this->pg->target = 'class="ajax" data-target="exams" data-page="exams" ';
 		$page = $this->ev->get('page');
 		$ids = trim($this->data['currentbasic']['basicexam']['self'],', ');
 		if(!$ids)$ids = '0';

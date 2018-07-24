@@ -70,6 +70,8 @@ class action extends app
 			$questiontype = $this->basic->getQuestypeList();
 			foreach($rs as $p)
 			{
+                $p['ehquestion'] = unserialize(gzuncompress(base64_decode($p['ehquestion'])));
+                $p['ehsetting'] = unserialize(gzuncompress(base64_decode($p['ehsetting'])));
 				foreach($p['ehquestion']['questions'] as $questions)
 				{
 					foreach($questions as $key => $question)
@@ -105,7 +107,8 @@ class action extends app
 							$stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
 							if($p['ehuseranswer'][$question['questionid']] && $questiontype[$question['questiontype']]['questsort'] == 0 && $questiontype[$question['questiontype']]['questchoice'] < 5)
 							{
-								foreach($os as $o)
+                                $p['ehuseranswer'][$question['questionid']] = implode("",$p['ehuseranswer'][$question['questionid']]);
+                                foreach($os as $o)
 								{
 									if(strpos($p['ehuseranswer'][$question['questionid']],$o) !== false)
 									$stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
@@ -128,6 +131,8 @@ class action extends app
 		{
 			foreach($rs as $p)
 			{
+                $p['ehquestion'] = unserialize(gzuncompress(base64_decode($p['ehquestion'])));
+                $p['ehsetting'] = unserialize(gzuncompress(base64_decode($p['ehsetting'])));
 				foreach($p['ehquestion']['questions'] as $questions)
 				{
 					foreach($questions as $key => $question)
@@ -172,13 +177,139 @@ class action extends app
 		}
 	}
 
-	private function outscore()
+    private function outanswer()
+    {
+        $search = $this->ev->get('search');
+        $args = array();
+        $basicid = $this->ev->get('basicid');
+        if($basicid)
+        {
+            $fname = 'data/score/'.TIME.'-'.$basicid.'-answer.csv';
+            $args[] =  array('AND',"ehbasicid = :ehbasicid",'ehbasicid',$basicid);
+            $args[] =  array('AND',"ehneedresit = 0");
+            $args[] = array('AND',"ehstatus = '1'");
+            $args[] =  array('AND',"ehtype = 2");
+            if($search['stime'])
+            {
+                $stime = strtotime($search['stime']);
+                $args[] = array('AND',"ehstarttime >= :stime",'stime',$stime);
+            }
+            if($search['etime'])
+            {
+                $etime = strtotime($search['etime']);
+                $args[] = array('AND',"ehstarttime <= :etime",'etime',$etime);
+            }
+            if($search['sscore'])
+            {
+                $args[] = array('AND',"ehscore >= :sscore",'sscore',$search['sscore']);
+            }
+            if($search['escore'])
+            {
+                $args[] = array('AND',"ehscore <= :escore",'escore',$search['escore']);
+            }
+            if($search['examid'])
+            {
+                $args[] = array('AND',"ehexamid = :ehexamid",'ehexamid',$search['examid']);
+            }
+            $sf = array('ehusername','useremail','usertruename','ehstarttime','ehtime','ehquestion','ehuseranswer');
+            $rs = $this->favor->getAllExamHistoryByArgs($args,$sf);
+            $r = array();
+            $index = array();
+            $questions = array();
+            $answers = array();
+            $info = array();
+            foreach($rs as $p)
+            {
+                $info[] = array('ehstarttime' => $p['ehstarttime'],'useremail' =>$p['useremail'],'ehusername' =>$p['ehusername'],'usertruename' => $p['usertruename'],'ehtime' => $p['ehtime']);
+            	$p['ehquestion'] = unserialize(gzuncompress(base64_decode($p['ehquestion'])));
+                $p['ehuseranswer'] = unserialize($p['ehuseranswer']);
+                foreach($p['ehquestion']['questions'] as $fquestions)
+                {
+                    foreach($fquestions as $key => $question)
+                    {
+                    	if(!$questions[$question['questionid']])
+						{
+
+							$questions[$question['questionid']]['title'] = strip_tags(html_entity_decode($question['question']));
+                            $index[] = $question['questionid'];
+						}
+                    }
+                }
+                foreach($p['ehquestion']['questionrows'] as $questionrows)
+                {
+                    foreach($questionrows as $questionrow)
+                    {
+                        foreach($questionrow['data'] as $key => $question)
+                        {
+                            if(!$questions[$question['questionid']])
+                            {
+                                $questions[$question['questionid']]['title'] = strip_tags(html_entity_decode($question['question']));
+                                $index[] = $question['questionid'];
+                            }
+                        }
+                    }
+                }
+                $answers[] = $p['ehuseranswer'];
+            }
+            $r = array();
+            $tmp = array();
+            $tmp[] = iconv("UTF-8","GBK",'序号');
+            $tmp[] = iconv("UTF-8","GBK",'答题时间');
+            $tmp[] = iconv("UTF-8","GBK",'所用时间(秒)');
+            $tmp[] = iconv("UTF-8","GBK",'邮箱');
+            $tmp[] = iconv("UTF-8","GBK",'用户名');
+            $tmp[] = iconv("UTF-8","GBK",'姓名');
+            foreach($index as $inx)
+			{
+                $tmp[] = iconv("UTF-8","GBK",$questions[$inx]['title']);
+			}
+            $r[] = $tmp;
+            $i = 0;
+            foreach($answers as $key => $answer)
+			{
+                $tmp = array();
+                $tmp[] = iconv("UTF-8","GBK",++$i);
+                $tmp[] = iconv("UTF-8","GBK",date('Y-m-d H:i:s',$info[$key]['ehstarttime']));
+                $tmp[] = iconv("UTF-8","GBK",$info[$key]['ehtime']);
+                $tmp[] = iconv("UTF-8","GBK",$info[$key]['useremail']);
+                $tmp[] = iconv("UTF-8","GBK",$info[$key]['ehusername']);
+                $tmp[] = iconv("UTF-8","GBK",$info[$key]['usertruename']);
+                foreach($index as $inx)
+                {
+
+                	$tmp[] = iconv("UTF-8","GBK",$answer[$inx]);
+                }
+                $r[] = $tmp;
+			}
+            if($this->files->outCsv($fname,$r))
+                $message = array(
+                    'statusCode' => 200,
+                    "message" => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    "callbackType" => 'forward',
+                    "forwardUrl" => "{$fname}"
+                );
+            else
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "导出失败"
+                );
+        }
+        else
+            $message = array(
+                'statusCode' => 300,
+                "message" => "请选择好考场"
+            );
+        exit(json_encode($message));
+    }
+
+
+    private function outscore()
 	{
 		$appid = 'user';
 		$app = $this->G->make('apps','core')->getApp($appid);
 		$this->tpl->assign('app',$app);
 		$fields = array();
-		$tpfields = explode(',',$app['appsetting']['regfields']);
+		$tpfields = explode(',',$app['appsetting']['outfields']);
 		foreach($tpfields as $f)
 		{
 			$tf = $this->module->getFieldByNameAndModuleid($f);
@@ -219,7 +350,7 @@ class action extends app
 			{
 				$args[] = array('AND',"ehexamid = :ehexamid",'ehexamid',$search['examid']);
 			}
-			$sf = array('ehusername','ehscore');
+			$sf = array('ehusername','ehscore','ehtime');
 			foreach($fields as $p)
 			{
 				$sf[] = $p['field'];
@@ -228,7 +359,7 @@ class action extends app
 			$r = array();
 			foreach($rs as $p)
 			{
-				$tmp = array('ehusername' => iconv("UTF-8","GBK",$p['ehusername']),'ehscore' => $p['ehscore']);
+				$tmp = array('ehusername' => iconv("UTF-8","GBK",$p['ehusername']),'ehscore' => $p['ehscore'],'ehtime' => $p['ehtime']);
 				foreach($fields as $ps)
 				{
 					$tmp[$ps['field']] = iconv("UTF-8","GBK",$p[$ps['field']]);
@@ -276,6 +407,14 @@ class action extends app
 		$sessionvars = $this->favor->getExamHistoryById($ehid);
 		if($this->ev->get('makescore'))
 		{
+			if($sessionvars['ehteacher'] != $this->_user['username'])
+			{
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "本试卷已被{$sessionvars['ehteacher']}锁定批改中"
+                );
+                exit(json_encode($message));
+			}
 			$score = $this->ev->get('score');
 			$sumscore = 0;
 			if(is_array($score))
@@ -367,6 +506,13 @@ class action extends app
 	{
 		$ehid = $this->ev->get('ehid');
 		$sessionvars = $this->favor->getExamHistoryById($ehid);
+		if(!$sessionvars['ehstatus'] && !$sessionvars['ehteacher'])
+		{
+            $args = array();
+            $sessionvars['ehteacher'] = $args['ehteacher'] = $this->_user['username'];
+            $sessionvars['ehdecidetime'] = $args['ehdecidetime'] = TIME;
+			$this->favor->modifyExamHistory($args,$ehid);
+		}
 		$questype = $this->basic->getQuestypeList();
 		$this->tpl->assign('ehid',$ehid);
 		$this->tpl->assign('sessionvars',$sessionvars);
@@ -380,7 +526,7 @@ class action extends app
 		$app = $this->G->make('apps','core')->getApp($appid);
 		$this->tpl->assign('app',$app);
 		$fields = array();
-		$tpfields = explode(',',$app['appsetting']['regfields']);
+		$tpfields = explode(',',$app['appsetting']['outfields']);
 		foreach($tpfields as $f)
 		{
 			$tf = $this->module->getFieldByNameAndModuleid($f);

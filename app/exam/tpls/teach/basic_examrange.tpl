@@ -169,6 +169,13 @@
 					          	</label>
 							</div>
 						</div>
+						<div class="form-group">
+							<label for="basicexam_auto" class="control-label col-sm-2">可开通的用户组：</label>
+							<div class="col-sm-9 form-inline">
+								<input size="50" class="form-control" type="text" id="basicexam_allowgroup" name="args[basicexam][allowgroup]" value="{x2;$basic['basicexam']['allowgroup']}" /> <a class="selfmodal btn btn-primary" href="javascript:;" data-target="#modal" url="index.php?exam-teach-basic-selectgroups&groups={basicexam_allowgroup}&useframe=1&target=basicexam_allowgroup" valuefrom="basicexam_allowgroup">选组</a>
+								<span class="help-block">不填写或者填写0为不限制。</span>
+							</div>
+						</div>
 						<div class="submit">
 							<label for="basicexam_auto" class="control-label col-sm-2"></label>
 							<div class="col-sm-9">
@@ -176,7 +183,9 @@
 								<input type="hidden" name="page" value="{x2;$page}"/>
 								<input type="hidden" name="setexamrange" value="1"/>
 								<input type="hidden" name="basicid" value="{x2;$basic['basicid']}"/>
-								{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+								{x2;tree:$search,arg,aid}
+								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;endtree}
 							</div>
 						</div>
 					</form>

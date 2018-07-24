@@ -103,7 +103,7 @@ class ev
         {
             $r[0] = $this->G->defaultApp;
         }
-        if($r[1] != 'master' && $this->isMobile())
+        if(!in_array($r[1],array('master','api')) && $this->isMobile())
 		{
             $r[1] = 'phone';
 		}

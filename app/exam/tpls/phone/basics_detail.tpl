@@ -9,7 +9,7 @@
 				<h5 class="text-center">
 					<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 					{x2;$basic['basic']}
-					<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+					<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 				</h5>
 			</header>
 			<div class="container-fluid">
@@ -20,16 +20,15 @@
 							<div class="thumbnail"><img alt="300x200" src="{x2;if:$basic['basicthumb']}{x2;$basic['basicthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" /></div>
 						</div>
 						<div class="caption" class="col-xs-7">
-
 							<p>科目：{x2;$subjects[$basic['basicsubjectid']]['subject']}</p>
 							<p>地区：{x2;$areas[$basic['basicareaid']]['area']}</p>
 							<p>您现有积分：{x2;$_user['usercoin']} <!--（<a href="index.php?user-center-payfor">支付宝充值</a> / <a href="#myModal" role="button" data-toggle="modal">代金券充值</a>） --></p>
-							<p><a href="index.php?user-center-payfor" class="ajax" data-target="page2" data-page="page2">积分不足？点此充值</a></p>
+							<p><a href="index.php?user-center-payfor" class="ajax" data-target="user-payfor" data-page="user-payfor">积分不足？点此充值</a></p>
 							{x2;if:$isopen}<p>到期时间：{x2;date:$isopen['obendtime'],'Y-m-d'}</p>{x2;endif}
 						</div>
 						<hr style="clear:both"/>
 						{x2;if:!$isopen}
-						<form action="index.php?exam-phone-basics-openit" method="post">
+						<form action="index.php?exam-phone-basics-openit" method="post" data-target="mybasic" data-page="mybasic">
 							{x2;if:!$basic['basicdemo']}
 								{x2;if:$price}
 								<p>

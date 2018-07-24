@@ -3,7 +3,7 @@
 			<h5 class="text-center">
 				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 				我的收藏
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 			</h5>
 		</header>
 		<div class="container-fluid">
@@ -11,10 +11,10 @@
 				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
 					<ul class="nav nav-pills">
 						<li{x2;if:!$type} class="active"{x2;endif}>
-							<a href="index.php?exam-phone-favor" class="ajax" data-target="favor" data-page="favor">普通试题</a>
+							<a href="index.php?exam-phone-favor" class="ajax">普通试题</a>
 						</li>
 						<li{x2;if:$type} class="active"{x2;endif}>
-							<a href="index.php?exam-phone-favor&type=1" class="ajax" data-target="favor" data-page="favor">题冒题</a>
+							<a href="index.php?exam-phone-favor&type=1" class="ajax">题冒题</a>
 						</li>
 					</ul>
 				</div>

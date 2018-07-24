@@ -304,7 +304,11 @@ class exam_exam
 
 	public function importQuestionBat($uploadfile,$tknowsid,$questionparent = 0)
 	{
-		$handle = fopen($uploadfile,"r");
+		$this->session = $this->G->make('session');
+        $this->_user = $this->session->getSessionUser();
+        $userid = $this->_user['sessionuserid'];
+        $username = $this->_user['sessionusername'];
+	    $handle = fopen($uploadfile,"r");
 		$qrid = 0;
 		while ($data = fgetcsv($handle))
 		{
@@ -326,6 +330,8 @@ class exam_exam
 						$args['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK","UTF-8//IGNORE",trim(nl2br($question[1])," \n\t"))));
 						$args['qrlevel'] = $question[7];
 						$args['qrtime'] = TIME;
+                        $args['qruserid'] = $userid;
+                        $args['qrusername'] = $username;
 						if(!$tknowsid)
 						$questionknowsid = trim($question[6]," \n\t");
 						else
@@ -359,6 +365,8 @@ class exam_exam
 						if($qrid)$args['questionparent'] = $qrid;
 						$args['questionlevel'] = intval(trim($question[7]," \n\t"));
 						$args['questioncreatetime'] = TIME;
+                        $args['questionuserid'] = $userid;
+                        $args['questionusername'] = $username;
 						$this->addQuestions($args);
 					}
 				}
@@ -370,6 +378,8 @@ class exam_exam
 					$args['questionselectnumber'] = intval(trim($question[3]," \n\t"));
 					$args['questionanswer'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK","UTF-8//IGNORE",trim($question[4]," \n\t"))));
 					$args['questiondescribe'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK","UTF-8//IGNORE",trim($question[5]," \n\t"))));
+                    $args['questionuserid'] = $userid;
+                    $args['questionusername'] = $username;
 					if(!$tknowsid)
 					$questionknowsid = trim($question[6]," \n\t");
 					else
@@ -547,7 +557,10 @@ class exam_exam
 	//返回值：受影响记录数
 	public function delQuestions($id)
 	{
-		$data = array('questions',array('questionstatus'=>'0'),array(array("AND","questionid = :questionid",'questionid',$id)));
+        $this->session = $this->G->make('session');
+        $this->_user = $this->session->getSessionUser();
+        $username = $this->_user['sessionusername'];
+	    $data = array('questions',array('questionstatus'=>'0','questiondeler'=>$username,'questiondeltime'=>TIME),array(array("AND","questionid = :questionid",'questionid',$id)));
 		$sql = $this->pdosql->makeUpdate($data);
 		return $this->db->exec($sql);
 		//$this->db->affectedRows();
@@ -558,7 +571,10 @@ class exam_exam
 	//返回值：受影响记录数
 	public function delQuestionsByArgs($args)
 	{
-		$data = array('questions',array('questionstatus'=>'0'),$args);
+        $this->session = $this->G->make('session');
+        $this->_user = $this->session->getSessionUser();
+        $username = $this->_user['sessionusername'];
+	    $data = array('questions',array('questionstatus'=>'0','questiondeler'=>$username,'questiondeltime'=>TIME),$args);
 		$sql = $this->pdosql->makeUpdate($data);
 		return $this->db->exec($sql);
 		//$this->db->affectedRows();
@@ -591,7 +607,10 @@ class exam_exam
 	//返回值：受影响记录数
 	public function delQuestionRows($id)
 	{
-		$data = array('questionrows',array('qrstatus'=>'0'),array(array("AND","qrid = :qrid",'qrid',$id)));
+        $this->session = $this->G->make('session');
+        $this->_user = $this->session->getSessionUser();
+        $username = $this->_user['sessionusername'];
+	    $data = array('questionrows',array('qrstatus'=>'0','qrdeler'=>$username,'qrdeltime'=>TIME),array(array("AND","qrid = :qrid",'qrid',$id)));
 		$sql = $this->pdosql->makeUpdate($data);
 		return $this->db->exec($sql);
 		//$this->db->affectedRows();
@@ -613,8 +632,11 @@ class exam_exam
 	//返回值：受影响记录数
 	public function delRowsQuestions($id)
 	{
-		$r = $this->getQuestionByArgs(array(array("AND","questionid = :questionid",'questionid',$id)));
-		$data = array('questions',array('questionstatus'=>'0'),array(array("AND","questionid = :questionid",'questionid',$id)));
+        $this->session = $this->G->make('session');
+        $this->_user = $this->session->getSessionUser();
+        $username = $this->_user['sessionusername'];
+	    $r = $this->getQuestionByArgs(array(array("AND","questionid = :questionid",'questionid',$id)));
+		$data = array('questions',array('questionstatus'=>'0','questiondeler'=>$username,'questiondeltime'=>TIME),array(array("AND","questionid = :questionid",'questionid',$id)));
 		$sql = $this->pdosql->makeUpdate($data);
 		$num = $this->db->exec($sql);
 		if($r['questionparent'])

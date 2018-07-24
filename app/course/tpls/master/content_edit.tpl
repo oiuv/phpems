@@ -70,7 +70,7 @@
 				    	<div class="form-group">
 				            <label for="coursetext" class="control-label col-sm-2">内容</label>
 				            <div class="col-sm-9">
-							    <textarea id="coursetext" rows="7" cols="4" class="ckeditor" name="args[coursedescribe]">{x2;$content['coursedescribe']}</textarea>
+							    <textarea id="coursetext" rows="7" cols="4" class="ckeditor" name="args[coursedescribe]">{x2;realhtml:$content['coursedescribe']}</textarea>
 					        </div>
 				        </div>
 				        <div class="form-group">

@@ -20,8 +20,10 @@ class action extends app
 	{
 		$this->session->clearSessionUser();
 		$message = array(
-			'statusCode' => 301,
-			"message" => "操作成功"
+			'statusCode' => 201,
+			"message" => "操作成功",
+            "callbackType" => 'forward',
+            "forwardUrl" => "index.php"
 		);
 		$this->G->R($message);
 	}

@@ -205,15 +205,18 @@ class action extends app
 				exit;
 			}
 		}
-		$cdata = $this->course->getCourseContentStatus($course['csid'],$this->_user['sessionuserid']);
-		if($cdata['lock'][$contentid])
+		if($course['cstype'])
 		{
-			$message = array(
-				'statusCode' => 300,
-				"message" => "请先学完上节课程"
-			);
-			$this->G->R($message);
-		}
+			$cdata = $this->course->getCourseContentStatus($course['csid'],$this->_user['sessionuserid']);
+			if($cdata['lock'][$contentid])
+			{
+				$message = array(
+					'statusCode' => 300,
+					"message" => "请先学完上节课程"
+				);
+				$this->G->R($message);
+			}
+        }
 		$catbread = $this->category->getCategoryPos($course['cscatid']);
 		$cat = $this->category->getCategoryById($course['cscatid']);
 		$contents = $this->content->getCourseList(array(array("AND","coursecsid = :coursecsid",'coursecsid',$csid)),$page,5);

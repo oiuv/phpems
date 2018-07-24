@@ -41,7 +41,7 @@ CKEDITOR.editorConfig = function( config ) {
 		{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
 		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
 		{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
-		{ name: 'insert', items: [ 'Image', 'Mathjax', 'Table', 'HorizontalRule', 'SpecialChar','music'] },
+		{ name: 'insert', items: [ 'Image', 'Mathjax', 'Table', 'HorizontalRule', 'SpecialChar','music','video'] },
 		{ name: 'tools', items: [ 'Maximize' ] }
 		/**
 		{ name: 'about', items: [ 'Preview' , 'About' ] }**/
@@ -53,7 +53,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Set the most common block elements.
 	config.format_tags = 'p;h1;h2;h3;pre';
-	config.extraPlugins = 'mathjax,music,preview,font,colorbutton,justify,wikititle,lineheight';
+	config.extraPlugins = 'mathjax,music,preview,font,colorbutton,justify,wikititle,lineheight,video';
 	config.mathJaxLib = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML';
     config.mathJaxLib = 'app/core/styles/js/ckeditor/js/MathJax.js?config=TeX-AMS_HTML';
 	config.line_height = "1;1.5;2;2.5;3;4;";

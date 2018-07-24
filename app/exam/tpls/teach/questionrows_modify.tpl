@@ -68,7 +68,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2" for="qrquestion">题干：</label>
 							<div class="col-sm-9">
-								<textarea id="qrquestion" class="ckeditor" name="args[qrquestion]" id="question">{x2;$question['qrquestion']}</textarea>
+								<textarea id="qrquestion" class="ckeditor" name="args[qrquestion]" id="question">{x2;realhtml:$question['qrquestion']}</textarea>
 								<span class="help-block">需要填空处请以()表示。</span>
 							</div>
 						</div>
@@ -89,7 +89,9 @@
 								<input type="hidden" name="page" value="{x2;$page}"/>
 								<input type="hidden" name="questionid" value="{x2;$question['qrid']}"/>
 								<input type="hidden" name="modifyquestion" value="1"/>
-								{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+								{x2;tree:$search,arg,aid}
+								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;endtree}
 							</div>
 						</div>
 					</form>

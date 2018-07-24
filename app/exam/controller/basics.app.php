@@ -85,7 +85,8 @@ class action extends app
 			{
 				$args = array("usercoin" => $user['usercoin'] - $score);
 				$this->user->modifyUserInfo($args,$this->_user['sessionuserid']);
-			}
+                $this->G->make('consume','bank')->addConsumeLog(array('conluserid' => $this->_user['sessionuserid'],'conlcost' => $score,'conltype' => 1,'conltime' => TIME,'conlinfo' => '开通考场'.$basic['basic']."{$t['time']}天"));
+            }
 		}
 		$args = array('obuserid'=>$userid,'obbasicid'=>$basicid,'obendtime'=>TIME + $time);
 		$this->basic->openBasic($args);

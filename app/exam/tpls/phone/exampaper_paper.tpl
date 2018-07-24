@@ -4,12 +4,12 @@
 <div id="content">
 	<div class="pages" id="paper">
 {x2;endif}
-		<div class="pagecontent">
+		<div class="pagecontent" id="exampaper-paper-swiper">
 			<header class="container-fluid" style="background-color:#337AB7;">
 				<h5 class="text-center">
 					<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 					{x2;$sessionvars['examsession']}
-					<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+					<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 				</h5>
 			</header>
 			<div class="container-fluid" style="margin-bottom:2.5rem;">
@@ -30,14 +30,11 @@
 							<dt class="float_l"><h4 class="title">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}</h4></dt>
 							<dd class="tableindex">
 								{x2;eval: v:tid = 0}
-                                {x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 				                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 				                {x2;eval: v:tid++}
 				                {x2;eval: v:qmid++}
 								<a style="margin-bottom:0.5rem;" id="sign_{x2;v:question['questionid']}" href="javascript:;" onclick="javascript:$.leftMenu($('#questionbar'));gotoquestion('{x2;v:question['questionid']}');$('#form1').toggle();" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]} btn-danger{x2;endif}">{x2;v:tid}</a>
 								{x2;endtree}
-                                {x2;endif}
-                                {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 								{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 				                {x2;eval: v:tid++}
 				                {x2;tree:v:questionrow['data'],data,did}
@@ -45,7 +42,6 @@
 				                <a style="margin-bottom:0.5rem;" id="sign_{x2;v:data['questionid']}" href="javascript:;" onclick="javascript:$.leftMenu($('#questionbar'));gotoquestion('{x2;v:data['questionid']}');$('#form1').toggle();" class="btn btn-default{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]} btn-danger{x2;endif}">{x2;v:tid}-{x2;v:did}</a>
 		            			{x2;endtree}
 		            			{x2;endtree}
-                                {x2;endif}
 							</dd>
 							{x2;endif}
 							{x2;endif}
@@ -63,7 +59,6 @@
 						{x2;eval: v:oid++}
 						<h4 class="title questionpanel" id="questype_{x2;v:quest}">{x2;$ols[v:oid]}、{x2;$questype[v:quest]['questype']}{x2;$sessionvars['examsessionsetting']['examsetting']['questype'][v:quest]['describe']}</h4>
 						{x2;eval: v:tid = 0}
-                        {x2;if:is_array($sessionvars['examsessionquestion']['questions'][v:quest])}
 		                {x2;tree:$sessionvars['examsessionquestion']['questions'][v:quest],question,qnid}
 		                {x2;eval: v:tid++}
 		                {x2;eval: v:qcid++}
@@ -121,8 +116,6 @@
 							</div>
 						</div>
 						{x2;endtree}
-                        {x2;endif}
-						{x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 						{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 		                {x2;eval: v:tid++}
 		                {x2;tree:v:questionrow['data'],data,did}
@@ -189,7 +182,6 @@
 						{x2;endtree}
 						{x2;endif}
 						{x2;endif}
-						{x2;endif}
 						{x2;endtree}
 					</form>
 				</div>
@@ -247,7 +239,8 @@
 			}
 			function gotoindexquestion(index)
 			{
-				$(".questionpanel").hide();
+				qindex = index;
+			    $(".questionpanel").hide();
 				$(".paperexamcontent").hide();
 				$(".paperexamcontent").eq(index).show();
 				$("#questype_"+$(".paperexamcontent").eq(index).attr('rel')).show();
@@ -266,6 +259,16 @@
 					setting.lefttime = parseInt(data);
 					countdown(setting);
 				});
+                $('#exampaper-paper-swiper').on('swiperight',function(){
+                    if(qindex >= 1){
+                        gotoindexquestion(--qindex);
+                    }
+                });
+                $('#exampaper-paper-swiper').on('swipeleft',function(){
+                    if(qindex < ($('#exampaper-paper-swiper .paperexamcontent').length-1)){
+                        gotoindexquestion(++qindex);
+                    }
+                });
 
 				(function(){
 					$(".questionpanel").hide();

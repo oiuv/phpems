@@ -86,9 +86,12 @@
 							  	<select class="form-control" name="args[questionselectnumber]">
 							  		<option value="0">0</option>
 							  		<option value="2">2</option>
+							  		<option value="3">3</option>
 							  		<option value="4" selected>4</option>
 							  		<option value="5">5</option>
 							  		<option value="6">6</option>
+							  		<option value="7">7</option>
+							  		<option value="8">8</option>
 							  	</select>
 							</div>
 						</div>
@@ -111,6 +114,15 @@
 								  	<label class="radio-inline">
 								  		<input type="radio" name="targs[questionanswer1]" value="E">E
 								  	</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="F">F
+								  	</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="G">G
+								  	</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="H">H
+								  	</label>
 								</div>
 								<div id="answerbox_2" style="display:none;" class="answerbox">
 								  	<label class="checkbox-inline">
@@ -128,6 +140,15 @@
 								  	<label class="checkbox-inline">
 								  		<input type="checkbox" name="targs[questionanswer2][]" value="E">E
 								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="F">F
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="G">G
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="H">H
+								  	</label>
 								</div>
 								<div id="answerbox_3" style="display:none;" class="answerbox">
 								  	<label class="checkbox-inline">
@@ -144,6 +165,15 @@
 								  	</label>
 								  	<label class="checkbox-inline">
 								  		<input type="checkbox" name="targs[questionanswer3][]" value="E">E
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="F">F
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="G">G
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="H">H
 								  	</label>
 								</div>
 								<div id="answerbox_4" class="answerbox" style="display:none;">
@@ -184,7 +214,9 @@
 							  	<button class="btn btn-primary" type="submit">提交</button>
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
-							  	{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+							  	{x2;tree:$search,arg,aid}
+								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;endtree}
 							</div>
 						</div>
 					</form>

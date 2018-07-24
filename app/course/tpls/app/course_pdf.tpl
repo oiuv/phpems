@@ -54,7 +54,7 @@
 							{x2;if:$logs[v:content['courseid']] && $logs[v:content['courseid']]['logstatus'] == 1}
 							<span class="pull-right" style="color:green;">已学完</span>
 							{x2;elseif:$logs[v:content['courseid']] && $logs[v:content['courseid']]['logstatus'] == 0}
-							<span class="pull-right" style="color:green;">学习到{x2;$logs[v:content['courseid']]['logprogress']}秒</span>
+							<span class="pull-right" style="color:green;">上次学习到{x2;$logs[v:content['courseid']]['logprogress']}秒</span>
 							{x2;else}
 							<span class="pull-right" style="color:green;">未学习</span>
 							{x2;endif}

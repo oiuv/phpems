@@ -38,7 +38,9 @@
 					  	<input type="hidden" name="questionparent" value="{x2;$question['qrid']}" />
 					  	<input type="hidden" name="type" value="1"/>
 					  	<input type="hidden" name="insertquestion" value="1"/>
-					  	{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+					  	{x2;tree:$search,arg,aid}
+						<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+						{x2;endtree}
 					</div>
 				</div>
 			</form>

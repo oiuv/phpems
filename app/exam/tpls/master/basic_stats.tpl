@@ -27,15 +27,16 @@
 			        <table class="table table-hover table-bordered">
 						<thead>
 							<tr class="info">
-			                    <th>ID</th>
-			                    <th width="50%">试题名称</th>
-			                    <th>A</th>
-			                    <th>B</th>
-			                    <th>C</th>
-			                    <th>D</th>
-			                    <th>正确次数</th>
-			                    <th>出现次数</th>
-						        <th>正确率</th>
+			                    <th width="60">ID</th>
+			                    <th>试题名称</th>
+			                    <th width="80">A</th>
+			                    <th width="80">B</th>
+			                    <th width="80">C</th>
+			                    <th width="80">D</th>
+			                    <th width="80">正确次数</th>
+			                    <th width="80">出现次数</th>
+						        <th width="80">正确率</th>
+                                <th width="80">详情</th>
 			                </tr>
 			            </thead>
 			            <tbody>
@@ -67,6 +68,9 @@
 								</td>
 								<td>
 									{x2;eval: echo round(100 * v:stat['right']/v:stat['number'],2)}%
+								</td>
+								<td>
+									<a href="index.php?exam-master-basic-historyquestionbyuser&questionid={x2;v:stat['id']}&basicid={x2;$basicid}{x2;$u}">查看</a>
 								</td>
 							</tr>
 					        {x2;endtree}

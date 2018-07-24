@@ -410,7 +410,6 @@ class action extends app
 					unset($args['examsetting']['questype'][$key],$args['examquestions'][$key]);
 				}
 			}
-		
 
 			$id = $this->exam->addExamSetting($args);
 			$message = array(

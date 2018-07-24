@@ -425,29 +425,20 @@ class action extends app
 			$snumber = 0;
 			foreach($args['number'] as $key => $v)
 			{
-				if (!is_numeric($v)) $v = 0;
 				$snumber += $v;
 				if($snumber > 100)
 				{
 					$message = array(
 						'statusCode' => 300,
-						"message" => "强化练习一次最多只能抽取100道题"
+						"message" => "强化练习最多一次只能抽取100道题"
 					);
 					$this->G->R($message);
-				} elseif(!$snumber)
-                {
-                    $message = array(
-                        'statusCode' => 300,
-                        "message" => "请选择章节并至少抽取1道题"
-                    );
-                    $this->G->R($message);
-                }
+				}
 			}
 			$dt = key($args['number']);
 			$questionids = $this->question->selectQuestionsByKnows($args['knowsid'],$args['number'],$dt);
 			$questions = array();
 			$questionrows = array();
-			if (is_array($questionids['question']))
 			foreach($questionids['question'] as $key => $p)
 			{
 				$ids = "";
@@ -462,7 +453,6 @@ class action extends app
 					$questions[$key] = $this->exam->getQuestionListByIds($ids);
 				}
 			}
-			if (is_array($questionids['questionrow']))
 			foreach($questionids['questionrow'] as $key => $p)
 			{
 				$ids = "";

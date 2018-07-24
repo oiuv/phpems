@@ -26,7 +26,9 @@
 							<a data-toggle="dropdown" class="btn btn-primary" href="#">添加试题 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li><a href="index.php?{x2;$_app}-master-questions-addquestion&page={x2;$page}{x2;$u}">单题添加</a></li>
+								<!--
 								<li><a href="index.php?{x2;$_app}-master-questions-bataddquestion&page={x2;$page}{x2;$u}">批量添加</a></li>
+								-->
 								<li><a href="index.php?{x2;$_app}-master-questions-filebataddquestion&page={x2;$page}{x2;$u}">CSV导入</a></li>
 							</ul>
 						</span>
@@ -149,8 +151,8 @@
 					                    <th width="40">ID</th>
 								        <th width="80">试题类型</th>
 								        <th>试题内容</th>
-								        <th width="80">录入人</th>
-								        <th width="80">录入时间</th>
+										<th width="140">录入人/录入时间</th>
+										<th width="140">删除人/删除时间</th>
 								        <th width="48">难度</th>
 								        <th width="100">操作</th>
 					                </tr>
@@ -169,10 +171,10 @@
 											<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-master-questions-detail&questionid={x2;v:question['questionid']}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['question'])),135}</a>
 										</td>
 										<td>
-											{x2;v:question['questionusername']}
+                                            {x2;v:question['questionusername']}<br />{x2;date:v:question['questioncreatetime'],'Y-m-d'}
 										</td>
 										<td>
-											{x2;date:v:question['questioncreatetime'],'Y-m-d'}
+                                            {x2;if:v:question['questiondeler']}{x2;v:question['questiondeler']}<br />{x2;date:v:question['questiondeltime'],'Y-m-d'}{x2;endif}
 										</td>
 										<td>
 											{x2;if:v:question['questionlevel']==2}中{x2;elseif:v:question['questionlevel']==3}难{x2;elseif:v:question['questionlevel']==1}易{x2;endif}
@@ -192,11 +194,9 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-									{x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-									{x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>

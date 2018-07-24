@@ -16,58 +16,6 @@ class action extends app
 		exit;
 	}
 
-	private function coin()
-	{
-		$this->sc = 'exam@phpems.net';//密钥，需修改双方一致
-		$sign = $this->ev->get('sign');
-		$username = $this->ev->get('username');
-		$action = $this->ev->get('action');
-		$number = $this->ev->get('number');
-		$ts = $this->ev->get('ts');
-		if(TIME - $ts <= 5)
-		{
-			if($sign == md5($username.$action.$number.$this->sc.$ts))
-			{
-				$this->user = $this->G->make('user','user');
-				if($action == 'add')
-				{
-					$user = $this->user->getUserByUserName($username);
-					if($user)
-					{
-						$coin = $user['usercoin'] + intval($number);
-						$this->user->modifyUserInfo(array('usercoin' => $coin),$user['userid']);
-						exit(json_encode(array('status' => 200,'msg' => '操作成功')));
-					}
-					else
-					exit(json_encode(array('status' => 300,'msg' => '错误的用户')));
-				}
-				elseif($action == 'remove')
-				{
-					$user = $this->user->getUserByUserName($username);
-					if($user)
-					{
-						$coin = $user['usercoin'] - intval($number);
-						if($coin > 0)
-						{
-							$this->user->modifyUserInfo(array('usercoin' => $coin),$user['userid']);
-							exit(json_encode(array('status' => 200,'msg' => '操作成功')));
-						}
-						else
-						exit(json_encode(array('status' => 301,'msg' => '余额不足，扣除失败')));
-					}
-					else
-					exit(json_encode(array('status' => 300,'msg' => '错误的用户')));
-				}
-				else
-				exit(json_encode(array('status' => 300,'msg' => '错误的操作指令')));
-			}
-			else
-			exit(json_encode(array('status' => 300,'msg' => '签名验证错误')));
-		}
-		else
-		exit(json_encode(array('status' => 300,'msg' => '超时错误')));
-	}
-
 	private function index()
 	{
 		$this->sc = 'JOAa4HeKdq52b7jJZYXo';//密钥，需修改双方一致
@@ -84,7 +32,7 @@ class action extends app
 				$this->session->clearOutTimeUser();
 				$this->exam->clearOutTimeExamSession();
 			}
-			if(TIME - $ts < 1600)
+			if(TIME - $ts < 300)
 			{
 				if($sign == md5($userid.$username.$useremail.$this->sc.$ts))
 				{
@@ -105,15 +53,13 @@ class action extends app
 					header("location:".'index.php?'.$this->G->app.'-app');
 				}
 				else
-				exit('cc');
-				//header("location:".'index.php?exam');//更改为验证失败后要跳转的地址
+				header("location:".'index.php?exam');//更改为验证失败后要跳转的地址
 			}
 			else
-			exit('dd');
-			//header("location:".'index.php?exam');//更改为超时失败后要跳转的地址
+			header("location:".'index.php?exam');//更改为超时失败后要跳转的地址
 		}
 		else header("location:".'index.php?exam-api-login&checkyes=1&sign='.$sign.'&userid='.$userid.'&username='.$username.'&useremail='.$useremail.'&ts='.$ts);
-		exit(0);
+		exit();
 	}
 }
 

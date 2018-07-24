@@ -29,6 +29,64 @@ class action extends app
 		exit;
 	}
 
+    private function historyquestionbyuser()
+    {
+        $search = $this->ev->get('search');
+        $page = $this->ev->get('page');
+        if($page < 1)$page = 1;
+        $this->tpl->assign('page',$page);
+        $args = array();
+        $basicid = $this->ev->get('basicid');
+        $args[] =  array('AND',"ehbasicid = :ehbasicid",'ehbasicid',$basicid);
+        if($search['stime'])
+        {
+            $stime = strtotime($search['stime']);
+            $args[] = array('AND',"ehstarttime >= :stime",'stime',$stime);
+        }
+        if($search['etime'])
+        {
+            $etime = strtotime($search['etime']);
+            $args[] = array('AND',"ehstarttime <= :etime",'etime',$etime);
+        }
+        if($search['sscore'])
+        {
+            $args[] = array('AND',"ehscore >= :sscore",'sscore',$search['sscore']);
+        }
+        if($search['escore'])
+        {
+            $args[] = array('AND',"ehscore <= :escore",'escore',$search['escore']);
+        }
+        if($search['examid'])
+        {
+            $args[] = array('AND',"ehexamid = :ehexamid",'ehexamid',$search['examid']);
+        }
+        $rs = $this->favor->getStatsAllExamHistoryByArgs($args);
+        $number = count($rs);
+        $basic = $this->basic->getBasicById($basicid);
+        $this->tpl->assign('basic',$basic);
+        $stats = array();
+
+        $questionid = $this->ev->get('questionid');
+        $this->tpl->assign('questionid',$questionid);
+        $questiontype = $this->basic->getQuestypeList();
+        $member = array();
+        foreach($rs as $p)
+        {
+            if(isset($p['ehscorelist'][$questionid]))
+            {
+                if($p['ehscorelist'][$questionid] > 0)
+                {
+                    $member['right'][] = array('id' => $p['ehid'],'userid' => $p['ehuserid'],'username' => $p['ehusername']);
+                }
+                else
+                    $member['wrong'][] = array('id' => $p['ehid'],'userid' => $p['ehuserid'],'username' => $p['ehusername']);
+            }
+        }
+        $this->tpl->assign('member',$member);
+        $this->tpl->assign('basicid',$basicid);
+        $this->tpl->display('basic_uqstats');
+    }
+
 	private function stats()
 	{
 		$search = $this->ev->get('search');
@@ -73,6 +131,8 @@ class action extends app
 			$questiontype = $this->basic->getQuestypeList();
 			foreach($rs as $p)
 			{
+                $p['ehquestion'] = unserialize(gzuncompress(base64_decode($p['ehquestion'])));
+                $p['ehsetting'] = unserialize(gzuncompress(base64_decode($p['ehsetting'])));
 				foreach($p['ehquestion']['questions'] as $questions)
 				{
 					foreach($questions as $key => $question)
@@ -84,6 +144,7 @@ class action extends app
 						$stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
 						if($p['ehuseranswer'][$question['questionid']] && $questiontype[$question['questiontype']]['questsort'] == 0 && $questiontype[$question['questiontype']]['questchoice'] < 5)
 						{
+                            $p['ehuseranswer'][$question['questionid']] = implode("",$p['ehuseranswer'][$question['questionid']]);
 							foreach($os as $o)
 							{
 								if(strpos($p['ehuseranswer'][$question['questionid']],$o) !== false)
@@ -108,6 +169,7 @@ class action extends app
 							$stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
 							if($p['ehuseranswer'][$question['questionid']] && $questiontype[$question['questiontype']]['questsort'] == 0 && $questiontype[$question['questiontype']]['questchoice'] < 5)
 							{
+                                $p['ehuseranswer'][$question['questionid']] = implode("",$p['ehuseranswer'][$question['questionid']]);
 								foreach($os as $o)
 								{
 									if(strpos($p['ehuseranswer'][$question['questionid']],$o) !== false)
@@ -131,6 +193,8 @@ class action extends app
 		{
 			foreach($rs as $p)
 			{
+                $p['ehquestion'] = unserialize(gzuncompress(base64_decode($p['ehquestion'])));
+                $p['ehsetting'] = unserialize(gzuncompress(base64_decode($p['ehsetting'])));
 				foreach($p['ehquestion']['questions'] as $questions)
 				{
 					foreach($questions as $key => $question)
@@ -181,7 +245,7 @@ class action extends app
 		$app = $this->G->make('apps','core')->getApp($appid);
 		$this->tpl->assign('app',$app);
 		$fields = array();
-		$tpfields = explode(',',$app['appsetting']['regfields']);
+		$tpfields = explode(',',$app['appsetting']['outfields']);
 		foreach($tpfields as $f)
 		{
 			$tf = $this->module->getFieldByNameAndModuleid($f);
@@ -266,7 +330,7 @@ class action extends app
 		$app = $this->G->make('apps','core')->getApp($appid);
 		$this->tpl->assign('app',$app);
 		$fields = array();
-		$tpfields = explode(',',$app['appsetting']['regfields']);
+		$tpfields = explode(',',$app['appsetting']['outfields']);
 		foreach($tpfields as $f)
 		{
 			$tf = $this->module->getFieldByNameAndModuleid($f);

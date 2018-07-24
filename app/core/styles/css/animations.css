@@ -3,9 +3,9 @@
 /* move from / to  */
 
 .pt-page-moveToLeft {
-	-webkit-animation: moveToLeft .6s ease both;
-	-moz-animation: moveToLeft .6s ease both;
-	animation: moveToLeft .6s ease both;
+	-webkit-animation: moveToLeft 1s ease both;
+	-moz-animation: moveToLeft 1s ease both;
+	animation: moveToLeft 1s ease both;
 }
 
 .pt-page-moveFromLeft {

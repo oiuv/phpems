@@ -90,17 +90,27 @@
 			</div>
 			{x2;if:$content['course_files'] || $content['course_oggfile'] || $content['course_webmfile']}
 			<script type="text/javascript">
-				var cksetting = {
-                    container: '#movieplatform',//“#”代表容器的ID，“.”或“”代表容器的class
-                    variable: "$.ckplayeritem",//该属性必需设置，值等于下面的new chplayer()的对象
-                    video:'{x2;$content['course_files']}{x2;$content['course_oggfile']}{x2;$content['course_webmfile']}'//视频地址
-				};
+                var cksetting = {
+                    container: '#movieplatform',
+                    variable: "$.ckplayeritem",
+                    {x2;if:$logs[$content['courseid']]['logprogress']}
+                    seek:{x2;$logs[$content['courseid']]['logprogress']},
+                    {x2;endif}
+                    video:'{x2;$content['course_files']}{x2;$content['course_oggfile']}{x2;$content['course_webmfile']}'
+                };
                 $.ckplayeritem = new ckplayer(cksetting);
                 $.ckplayeritem.videoSeek = function(){return false;};
                 $.ckplayeritem.addListener('ended',function(){
 					$.get('index.php?course-phone-course-endstatus&courseid={x2;$content['courseid']}&'+Math.random());
                 });
-
+                $.ckplayeritem.addListener('time',function(time){
+                    $.ckplayeritem.currenttime = time;
+                });
+                if($.recordVideo)
+                clearInterval($.recordVideo);
+                $.recordVideo = setInterval(function(){
+                    $.get('index.php?course-phone-course-recordtime&courseid={x2;$content['courseid']}&time='+$.ckplayeritem.currenttime+'&'+Math.random());
+                },20000);
 			</script>
 			{x2;endif}
 		</div>

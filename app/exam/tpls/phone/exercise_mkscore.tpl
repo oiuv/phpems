@@ -3,7 +3,7 @@
 			<h5 class="text-center">
 				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 				强化训练主观题评分
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 			</h5>
 		</header>
 		<div class="container-fluid" id="datacontent">

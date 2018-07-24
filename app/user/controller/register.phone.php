@@ -52,6 +52,22 @@ class action extends app
 				);
 				exit(json_encode($message));
 			}
+            if($app['appsetting']['emailverify'])
+            {
+                $randcode = $this->ev->get('randcode');
+                if((!$randcode) || ($randcode != $_SESSION['phonerandcode']['reg']))
+                {
+                    $message = array(
+                        'statusCode' => 300,
+                        "message" => "验证码错误"
+                    );
+                    exit(json_encode($message));
+                }
+                else
+                {
+                    $_SESSION['phonerandcode']['reg'] = 0;
+                }
+            }
 			$username = $args['username'];
 			foreach($fob as $f)
 			{

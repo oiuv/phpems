@@ -7,11 +7,15 @@
 			<div class="box itembox" style="margin-bottom:0px;">
 				<div class="col-xs-12">
 					<ol class="breadcrumb">
-					  <li><a href="index.php">首页</a></li>
-					  <li><a href="index.php?exam-app">考试</a></li>
-					  <li><a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a></li>
-					  <li><a href="index.php?exam-app-lesson">课后练习</a></li>
-					  <li class="active">{x2;$knows['knows']}（{x2;$questype['questype']}）</li>
+						<li><a href="index.php">首页</a></li>
+						<li><a href="index.php?exam-app">考试</a></li>
+						<li><a href="index.php?exam-app-basics">{x2;$data['currentbasic']['basic']}</a></li>
+						<li><a href="index.php?exam-app-lesson">课后练习</a></li>
+						<li class="active">{x2;$knows['knows']}（{x2;$questype['questype']}）</li>
+						<span class="pull-right form-inline">
+							去第 <input type="text" style="width:80px;" class="form-control" id="lessonnumber" placeholder=""> 题
+							<button type="button" class="btn btn-primary" onclick="javascript:submitAjax({'url':'index.php?exam-app-lesson-ajax-questions&number='+$('#lessonnumber').val(),'target':'questionpanel'});">跳转</button>
+						</span>
 					</ol>
 				</div>
 			</div>

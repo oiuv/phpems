@@ -108,7 +108,7 @@
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer1]" value="G"{x2;if:$question['questionanswer'] == 'G'} checked{x2;endif}>G</label>
 									<label class="radio-inline"><input type="radio" name="targs[questionanswer1]" value="H"{x2;if:$question['questionanswer'] == 'H'} checked{x2;endif}>H</label>
 								</div>
-								<div id="answerbox_2" class="answerbox"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 2} style="display:none;"{x2;endif}>
+								<div id="answerbox_2" class="answerbox"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 2 || $questypes[$question['questiontype']]['questsort']} style="display:none;"{x2;endif}>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="A"{x2;if:strpos($question['questionanswer'],'A') !== false} checked{x2;endif}>A</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="B"{x2;if:strpos($question['questionanswer'],'B') !== false} checked{x2;endif}>B</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="C"{x2;if:strpos($question['questionanswer'],'C') !== false} checked{x2;endif}>C</label>
@@ -118,7 +118,7 @@
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="G"{x2;if:strpos($question['questionanswer'],'G') !== false} checked{x2;endif}>G</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="H"{x2;if:strpos($question['questionanswer'],'H') !== false} checked{x2;endif}>H</label>
 								</div>
-								<div id="answerbox_3" class="answerbox"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 3} style="display:none;"{x2;endif}>
+								<div id="answerbox_3" class="answerbox"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 3 || $questypes[$question['questiontype']]['questsort']} style="display:none;"{x2;endif}>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="A"{x2;if:strpos($question['questionanswer'],'A') !== false} checked{x2;endif}>A</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="B"{x2;if:strpos($question['questionanswer'],'B') !== false} checked{x2;endif}>B</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="C"{x2;if:strpos($question['questionanswer'],'C') !== false} checked{x2;endif}>C</label>
@@ -128,7 +128,7 @@
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="G"{x2;if:strpos($question['questionanswer'],'G') !== false} checked{x2;endif}>G</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="H"{x2;if:strpos($question['questionanswer'],'H') !== false} checked{x2;endif}>H</label>
 								</div>
-								<div id="answerbox_4" class="col-sm-9"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 4} style="display:none;"{x2;endif}>
+								<div id="answerbox_4" class="answerbox"{x2;if:$questypes[$question['questiontype']]['questchoice'] != 4 || $questypes[$question['questiontype']]['questsort']} style="display:none;"{x2;endif}>
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer4]" value="A"{x2;if:$question['questionanswer'] == 'A'} checked{x2;endif}>对</label>
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer4]" value="B"{x2;if:$question['questionanswer'] == 'B'} checked{x2;endif}>错</label>
 								</div>
@@ -164,7 +164,9 @@
 							  	<input type="hidden" name="args[questionparent]" value="{x2;$questionparent}"/>
 							  	<input type="hidden" name="questionid" value="{x2;$question['questionid']}"/>
 							  	<input type="hidden" name="modifyquestion" value="1"/>
-							  	{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+							  	{x2;tree:$search,arg,aid}
+								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;endtree}
 							</div>
 						</div>
 						</fieldset>

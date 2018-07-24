@@ -167,7 +167,9 @@ class action extends app
 		$knowsid = $this->ev->getCookie('knowsid');
 		$questype = $this->basic->getQuestypeById($questid);
 		$knows = $this->section->getKnowsByArgs(array(array("AND","knowsid = :knowsid",'knowsid',$knowsid)));
+        $allnumber = $this->exam->getQuestionNumberByQuestypeAndKnowsid($questid,$knowsid);
 		$this->tpl->assign('knows',$knows);
+        $this->tpl->assign('allnumber',$allnumber);
 		$this->tpl->assign('questype',$questype);
 		$this->tpl->display('lesson_paper');
 	}

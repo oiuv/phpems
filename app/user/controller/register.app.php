@@ -16,6 +16,68 @@ class action extends app
 		exit;
 	}
 
+    private function findpassword()
+    {
+        $appid = 'user';
+        $app = $this->G->make('apps','core')->getApp($appid);
+        $this->tpl->assign('app',$app);
+        if(!$app['appsetting']['emailverify'])
+		{
+            $message = array(
+                'statusCode' => 300,
+                "message" => "验证码错误"
+            );
+            $this->G->R($message);
+		}
+    	if($this->ev->get('findpassword'))
+        {
+            $randcode = $this->ev->get('randcode');
+            if((!$randcode) || ($randcode != $_SESSION['phonerandcode']['findpassword']))
+            {
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "验证码错误"
+                );
+                exit(json_encode($message));
+            }
+            else
+            {
+                $_SESSION['phonerandcode']['findpassword'] = 0;
+            }
+            $args = $this->ev->get('args');
+            $username = $args['username'];
+            $user = $this->user->getUserByUserName($username);
+            if(!$user)
+            {
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "此用户未注册"
+                );
+                exit(json_encode($message));
+            }
+            if($user['useremail'] != $args['useremail'])
+            {
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "邮箱与用户不对应"
+                );
+                exit(json_encode($message));
+            }
+            $this->user->modifyUserPassword(array('password' => $args['userpassword']),$user['userid']);
+            $message = array(
+                'statusCode' => 200,
+                "message" => "密码修改成功",
+                "callbackType" => 'forward',
+                "forwardUrl" => "index.php?user-app-login"
+            );
+            exit(json_encode($message));
+        }
+        else
+        {
+            $this->tpl->display('findpassword');
+        }
+    }
+
 	private function index()
 	{
 		$appid = 'user';
@@ -41,6 +103,22 @@ class action extends app
 				);
 				$this->G->R($message);
 			}
+            if($app['appsetting']['emailverify'])
+            {
+                $randcode = $this->ev->get('randcode');
+                if((!$randcode) || ($randcode != $_SESSION['phonerandcode']['reg']))
+                {
+                    $message = array(
+                        'statusCode' => 300,
+                        "message" => "验证码错误"
+                    );
+                    exit(json_encode($message));
+                }
+                else
+                {
+                    $_SESSION['phonerandcode']['reg'] = 0;
+                }
+            }
 			$fob = array('admin','管理员','站长');
 			$args = $this->ev->get('args');
 			$defaultgroup = $this->user->getDefaultGroup();
@@ -96,8 +174,6 @@ class action extends app
 			$message = array(
 				'statusCode' => 200,
 				"message" => "操作成功",
-			    "target" => "",
-			    "rel" => "",
 			    "callbackType" => 'forward',
 			    "forwardUrl" => "index.php?".$this->G->defaultApp
 			);

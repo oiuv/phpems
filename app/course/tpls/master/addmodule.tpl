@@ -53,7 +53,9 @@
 										<button class="btn btn-primary" type="submit">提交</button>
 										<input type="hidden" name="insertmodule" value="1"/>
 										<input type="hidden" name="page" value="{x2;$page}"/>
-										{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+										{x2;tree:$search,arg,aid}
+										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+										{x2;endtree}
 									</div>
 								</div>
 							</fieldset>

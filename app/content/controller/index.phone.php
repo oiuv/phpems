@@ -16,6 +16,11 @@ class action extends app
 		exit;
 	}
 
+	private function test()
+	{
+        $this->tpl->display('test');
+	}
+
 	private function index()
 	{
 		$catids = array();

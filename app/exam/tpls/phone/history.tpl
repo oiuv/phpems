@@ -3,7 +3,7 @@
 			<h5 class="text-center">
 				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
 				考试记录
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage($('#page1'));"></em>
+				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
 			</h5>
 		</header>
 		<div class="container-fluid">
@@ -11,13 +11,13 @@
 				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
 					<ul class="nav nav-pills">
 						<li{x2;if:$ehtype == 0} class="active"{x2;endif}>
-							<a href="index.php?exam-phone-history" class="ajax" data-target="history" data-page="history">强化训练</a>
+							<a href="index.php?exam-phone-history" class="ajax">强化训练</a>
 						</li>
 						<li{x2;if:$ehtype == 1} class="active"{x2;endif}>
-							<a href="index.php?exam-phone-history&ehtype=1" class="ajax" data-target="history" data-page="history">模拟考试</a>
+							<a href="index.php?exam-phone-history&ehtype=1" class="ajax">模拟考试</a>
 						</li>
 						<li{x2;if:$ehtype == 2} class="active"{x2;endif}>
-							<a href="index.php?exam-phone-history&ehtype=2" class="ajax" data-target="history" data-page="history">正式考试</a>
+							<a href="index.php?exam-phone-history&ehtype=2" class="ajax">正式考试</a>
 						</li>
 					</ul>
 				</div>

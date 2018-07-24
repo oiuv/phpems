@@ -56,9 +56,12 @@
 						  		<select class="combox form-control" id="questionselectnumber" name="args[questionselectnumber]">
 							  		<option value="0">0</option>
 							  		<option value="2">2</option>
+							  		<option value="3">3</option>
 							  		<option value="4" selected>4</option>
 							  		<option value="5">5</option>
 							  		<option value="6">6</option>
+							  		<option value="7">7</option>
+							  		<option value="8">8</option>
 							  	</select>
 							</div>
 						</div>
@@ -71,6 +74,15 @@
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer1]" value="C">C</label>
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer1]" value="D">D</label>
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer1]" value="E">E</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="F">F
+								  	</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="G">G
+								  	</label>
+								  	<label class="radio-inline">
+								  		<input type="radio" name="targs[questionanswer1]" value="H">H
+								  	</label>
 								</div>
 								<div id="rcianswerbox_2" style="display:none;" class="rcianswerbox">
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="A">A</label>
@@ -78,6 +90,15 @@
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="C">C</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="D">D</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer2][]" value="E">E</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="F">F
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="G">G
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer2][]" value="H">H
+								  	</label>
 								</div>
 								<div id="rcianswerbox_3" style="display:none;" class="rcianswerbox">
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="A">A</label>
@@ -85,6 +106,15 @@
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="C">C</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="D">D</label>
 								  	<label class="checkbox-inline"><input type="checkbox" name="targs[questionanswer3][]" value="E">E</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="F">F
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="G">G
+								  	</label>
+								  	<label class="checkbox-inline">
+								  		<input type="checkbox" name="targs[questionanswer3][]" value="H">H
+								  	</label>
 								</div>
 								<div id="rcianswerbox_4" class="rcianswerbox" style="display:none;">
 								  	<label class="radio-inline"><input type="radio" name="targs[questionanswer4]" value="A" checked>对</label>
@@ -111,7 +141,9 @@
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="args[questionparent]" value="{x2;$question['qrid']}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
-							  	{x2;if:is_array($search)}{x2;tree:$search,arg,aid}<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>{x2;endtree}{x2;endif}
+							  	{x2;tree:$search,arg,aid}
+								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+								{x2;endtree}
 							</div>
 						</div>
 					</form>

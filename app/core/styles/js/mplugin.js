@@ -6,7 +6,10 @@ jQuery.extend({
 	'pesheight':window.screen.availHeight,
 	'peswidth':window.screen.availWidth,
 	'preWebPage':[],
-	'currentPage':null,
+    'currentPage':$('#'+$.indexPage),
+    'actPage':null,
+    'currentAjax':null,
+    'allowpre':true,
 	'actPage':null,
     'videohide':function(){
 		if($.ckplayeritem)
@@ -28,6 +31,11 @@ jQuery.extend({
 	    e.preventDefault();
 	    else
         window.event.returnValue = false;
+        if($.ajaxing)
+        {
+            $.zoombox.show('ajax',{'message':'操作过于频繁！'});
+            return false;
+        }
 		var o = $(this);
 		if(!o.attr("data-url") || o.attr("data-url") == '')o.attr("data-url",o.attr("href"));
 		if(o.attr("data-url").substring(0,7) == 'http://')
@@ -35,18 +43,22 @@ jQuery.extend({
 			window.location = o.attr("data-url");
 			return;
 		}
+		if($.currentPage.attr('id') == o.attr("data-page"))o.attr("data-page",null);
 		var par = {'url':o.attr("data-url"),'target':o.attr("data-target"),'page':o.attr("data-page"),'action-before':o.attr("action-before"),'action-pageant':o.attr("action-pageant")};
+		/**
 		if(!document.getElementById(o.attr("data-page")))
 		{
 			$('<div class="pages" id="'+o.attr("data-page")+'">我在加载，请稍等</div>').appendTo($('#content')).hide();
 		}
+		 **/
 		if(o.attr('data-markPrepage') == 'no')$.markPrepage = false;
 		submitAjax(par);
 	},
 	'setPreWebPage':function(p,url){
 		if($.markPrepage)
 		{
-            $.preWebPage.push(p);
+            $.preWebPage.push(p.attr('id'));
+            $('body').data(p.attr('id'),p);
             history.pushState({'url':url},"","");
 		}
 		else
@@ -59,11 +71,18 @@ jQuery.extend({
 		$.actPage = p;
 	},
 	'goPrePage':function(){
+        if($.allowpre == false)
+        {
+            $.zoombox.show('ajax',{'message':'操作过于频繁！'})
+            return false;
+        }
+        if($.currentAjax)
+        $.currentAjax.abort();
 		if($.currentPage != null && $.preWebPage.length >= 1)
 		{
-			var p2 = $.preWebPage.pop();
-			var p1 = $.currentPage;
-			while(p2.attr('id') == p1.attr('id'))p2 = $.preWebPage.pop();
+            var p2 = $('body').data($.preWebPage.pop()).appendTo('#content');
+            var p1 = $.currentPage;
+            while(p2.attr('id') == p1.attr('id'))p2 = $.preWebPage.pop();
 			p1.attr('class','pages').addClass('pt-page-moveToRight');
 			p2.attr('class','pages').addClass('currentpage').addClass('pt-page-moveFromLeft');
 			$.setActPage(p1);
@@ -91,6 +110,13 @@ jQuery.extend({
         $.videohide();
 	},
 	'goPage':function(p,url,type){
+		if(!$(p).attr('id'))
+        {
+            p = $('body').data(p.substr(1,p.length - 1));
+            p.appendTo('#content');
+        }
+		else
+		p = $(p);
 		p.show();
 		if(type == 'pre')
 		{
@@ -140,6 +166,16 @@ jQuery.extend({
 			});
 		}
 	},
+	'mask':(function(){
+        $('#maskbox').remove();
+        var mask = $("<div class=\"maskbox\" id=\"maskbox\"><img src=\"app/core/styles/img/loading.gif\" /></div>");
+        return {'loading':function(){
+			$('body').append(mask);
+		},
+		'remove':function(){
+        	setTimeout(function(){$('#maskbox').remove();},500);
+		}};
+	})(),
 	'zoombox':(function(){
 		$('#zoombox').remove();
 		var m = $("<div class=\"modal fade\" id=\"zoombox\"></div>");
@@ -181,10 +217,26 @@ function submitAjax(parms){
 	if(!parms.query)parms.query = "";
 	parms.query += "&userhash="+Math.random();
 	if(parms['action-before'])eval(parms['action-before'])();
-	$.ajax({"url":parms.url,
+    $.currentAjax = $.ajax({"url":parms.url,
 		"type":"post",
 		"data":parms.query,
+		"beforeSend":function(){
+			$.mask.loading();
+            $.ajaxing = true;
+		},
+        'error':function(){
+            $.mask.remove();
+            $.zoombox.show('ajax',{'message':'网络异常，请检查网络设置！'});
+            setTimeout(function(){
+                $.ajaxing = false;
+            },500);
+        },
+        'timeout':20000,
 		"success":function(data){
+            setTimeout(function(){
+                $.ajaxing = false;
+            },500);
+    		$.mask.remove();
 			var tmp = null;
 			try{
 				tmp = $.parseJSON(data);
@@ -235,7 +287,7 @@ function submitAjax(parms){
 									if(data.page && data.page != '')
 									{
 										$.zoombox.hide();
-										$.goPage($('#'+data.page),null,parms['action-pageant']);
+										$.goPage('#'+data.page,null,parms['action-pageant']);
 									}
 								}
 							}
@@ -286,6 +338,18 @@ function submitAjax(parms){
 					else{
 						$.zoombox.show('ajax',data);
 					}
+                    if(data.jsondata)
+                    {
+                        for(x in data.jsondata)
+                        {
+                            var tp = data.jsondata[x];
+                            if($(tp.selector)[0].tagName.toUpperCase() != 'INPUT')
+                                $(tp.selector).html(tp.value);
+                            else
+                                $(tp.selector).val(tp.value);
+                        }
+                    }
+                    return;
 				}
 				else
 				{
@@ -315,11 +379,18 @@ function submitAjax(parms){
 								$.currentPage.find('.autoloaditem').each(function(){$(this).load($(this).attr('autoload')+"&current="+$(this).attr('current'));});
 							}
 						}
+                        try
+                        {
+                            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+                        }
+                        catch(e)
+                        {}
 						if(parms.page && parms.page != '')
 						{
-							$.goPage($('#'+parms.page),parms.url,parms['action-pageant']);
+							$.goPage('#'+parms.page,parms.url,parms['action-pageant']);
 						}
 					}
+                    $.mask.remove();
 				}
 				return data.statusCode;
 			}
@@ -717,14 +788,17 @@ $(function(){
 	$('.fineuploader').each(inituploader);
 	$(".autoloaditem").each(function(){$(this).load($(this).attr('autoload')+"&current="+$(this).attr('current'));});
 	$("body").delegate("select.combox","change",combox);
+    $("body").delegate("#mask","click",function(){$(this).remove();});
 	$("body").delegate(".pages","animationstart webkitAnimationStart oAnimationStart",function(){
 		$.actPage.css('visibility','visible');
 		$.currentPage.css('visibility','visible');
+        $.allowpre = false;
 	});
 	$("body").delegate(".pages","animationend webkitAnimationEnd oAnimationEnd",function(){
 		$(this).removeClass('pt-page-moveToLeft').removeClass('pt-page-moveFromLeft').removeClass('pt-page-moveToRight').removeClass('pt-page-moveFromRight');
-		$.actPage.css('visibility','hidden');
+		$.actPage.css('visibility','hidden').remove();
 		$.currentPage.css('visibility','visible');
+        $.allowpre = true;
 	});
     window.addEventListener("popstate", function(e) {
         $.goPrePage();

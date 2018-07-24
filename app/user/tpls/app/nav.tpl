@@ -1,4 +1,4 @@
-<div class="container-fluid box" style="margin:0px auto;padding-top:10px;">
+<div class="container-fluid box" style="margin:0px auto;padding-top:10px;overflow: visible">
 	<div class="row-fluid">
 		<div class="main">
 			<div class="col-xs-3">
@@ -8,11 +8,20 @@
 			</div>
 			<div class="col-xs-6" style="padding-top:22px;">
 				<div class="form-inline">
-					<div class="form-group">
-						<input type="text" style="width:380px;" class="form-control" id="keyword" placeholder="搜索课程/资料">
+					<div class="input-group">
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								课程 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a href="index.php?content-app">新闻</a></li>
+								<li><a href="index.php?course-app">课程</a></li>
+								<li><a href="index.php?docs-app">资料</a></li>
+							</ul>
+						</div>
+						<input type="text" style="width:380px;" class="form-control" id="keyword" placeholder="搜索课程">
 					</div>
-					<button type="button" class="btn btn-info" onclick="javascript:window.location='index.php?content-app-search&keyword='+$('#keyword').val();">搜资料</button>
-					<button type="button" class="btn btn-primary" onclick="javascript:window.location='index.php?course-app-search&keyword='+$('#keyword').val();">搜课程</button>
+					<button type="button" class="btn btn-primary" onclick="javascript:window.location='index.php?course-app-search&keyword='+$('#keyword').val();"> 搜 索 </button>
 				</div>
 			</div>
 			<div class="col-xs-2" style="padding-top:22px;">
@@ -34,7 +43,9 @@
 						</div>
 					</li>
 					{x2;else}
+					<!--
 					<li><a href="javascript:;" onclick="javascript:$.loginbox.show();" class="btn btn-default"> 登 录 </a></li>
+					-->
 					<li><a href="index.php?user-app-register" class="btn btn-default"> 注 册 </a></li>
 					{x2;endif}
 				</ul>
@@ -51,6 +62,7 @@
 					<li class="menu col-xs-1"><a href="index.php?course">课程</a></li>
 					<li class="menu col-xs-1"><a href="index.php?exam">考试</a></li>
 					<li class="menu col-xs-1"><a href="index.php?docs">文档</a></li>
+					<li class="menu col-xs-1"><a href="index.php?certificate">证书</a></li>
 				</ul>
 			</div>
 		</div>

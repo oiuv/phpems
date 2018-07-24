@@ -50,7 +50,7 @@
 								</td>
 								<td>
 									<div class="btn-group">
-			                    		<a class="btn" href="index.php?{x2;$_app}-teach-users-score&page={x2;$page}&ehid={x2;v:exam['ehid']}{x2;$u}" title="评卷"><em class="glyphicon glyphicon-check"></em></a>
+                                        <a class="btn" href="index.php?{x2;$_app}-teach-users-score&page={x2;$page}&ehid={x2;v:exam['ehid']}{x2;$u}" title="评卷"><em class="glyphicon glyphicon-check"></em></a>
 									</div>
 								</td>
 					        </tr>

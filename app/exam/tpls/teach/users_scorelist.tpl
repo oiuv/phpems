@@ -54,7 +54,9 @@
 								</td>
 								<td>
 								</td>
-								<td><button class="btn btn-primary" type="submit">提交</button> <a class="btn btn-primary" href="index.php?exam-teach-users-stats&basicid={x2;$basicid}{x2;$u}">统计</a></td>
+								<td><button class="btn btn-primary" type="submit">提交</button>
+									<a class="btn btn-primary" href="index.php?exam-teach-users-stats&basicid={x2;$basicid}{x2;$u}">统计</a>
+									<a class="btn btn-primary ajax" href="index.php?exam-teach-users-outanswer&basicid={x2;$basicid}{x2;$u}">导出答案</a></td>
 					        </tr>
 						</table>
 						<div class="input">

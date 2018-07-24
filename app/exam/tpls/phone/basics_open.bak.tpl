@@ -8,7 +8,7 @@
 			<h5 class="text-center">
 				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onClick="javascript:$.goPrePage();"></em>
 				题库列表
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onClick="javascript:$.goPage($('#page1'));"></em>
+				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onClick="javascript:$.goPage('#page1');"></em>
 			</h5>
 		</header>
 		<div class="container-fluid">

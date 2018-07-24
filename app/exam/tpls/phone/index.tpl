@@ -16,11 +16,11 @@
 			{x2;tree:$basics,basic,bid}
 			<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
 				<div class="col-xs-4">
-					<a data-markPrepage="no" href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic"><img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" style="width:10rem;margin-top:0.5rem"/></a>
+					<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic"><img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" style="width:10rem;margin-top:0.5rem"/></a>
 				</div>
 				<div class="col-xs-8" style="padding:0.2rem;">
 					<div class="text-left" style="padding:0.2rem;">
-						<a data-markPrepage="no" href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic">
+						<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic">
 							<h5>{x2;v:basic['basic']}</h5>
 							<p style="font-size:1rem;">{x2;v:basic['basicdescribe']}</p>
 						</a>

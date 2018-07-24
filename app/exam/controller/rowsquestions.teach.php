@@ -16,6 +16,21 @@ class action extends app
 		exit;
 	}
 
+    private function batdel()
+    {
+        $page = $this->ev->get('page');
+        $delids = $this->ev->get('delids');
+        foreach($delids as $questionid => $p)
+            $this->exam->delQuestionRows($questionid);
+        $message = array(
+            'statusCode' => 200,
+            "message" => "操作成功",
+            "callbackType" => "forward",
+            "forwardUrl" => "index.php?exam-teach-rowsquestions&page={$page}{$u}"
+        );
+        $this->G->R($message);
+    }
+
 	private function delquestion()
 	{
 		$page = $this->ev->get('page');

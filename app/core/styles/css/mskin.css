@@ -4,8 +4,17 @@ html{width:100%;height:100%;overflow:hidden;}
 body{
 background-color:#F5F5F5;
 height:100%;}
+.maskbox{
+position: absolute;
+opacity: 0.6;
+background-color: #202020;
+width:100%;
+height:100%;
+top:0px;
+left:0px;
+z-index:999999;}
 #content{
-font-family:"΢���ź�";
+font-family:"微软雅黑";
 display:block;
 width:100%;
 height:100%;

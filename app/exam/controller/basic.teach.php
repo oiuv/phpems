@@ -274,6 +274,21 @@ class action extends app
 		$this->G->R($message);
 	}
 
+    private function selectgroups()
+    {
+        $useframe = $this->ev->get('useframe');
+        $target = $this->ev->get('target');
+        $page = $this->ev->get('page');
+        $page = $page > 0?$page:1;
+        $this->pg->setUrlTarget('modal-body" class="ajax');
+        $args = 1;
+        $actors = $this->user->getUserGroupList($args,10,$page);
+        $this->tpl->assign('page',$page);
+        $this->tpl->assign('target',$target);
+        $this->tpl->assign('actors',$actors);
+        $this->tpl->display('basic_allowgroups');
+    }
+
 	private function offpaper()
 	{
 		$page = $this->ev->get('page');

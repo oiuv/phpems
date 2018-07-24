@@ -62,7 +62,7 @@
 				        <div class="form-group">
 				            <label for="contentdescribe" class="control-label col-sm-2">摘要：</label>
 				            <div class="col-sm-9">
-							    <textarea id="contentdescribe" class="form-control" name="args[docdescribe]" rows="7" cols="4">{x2;$doc['docdescribe']}</textarea>
+							    <textarea id="contentdescribe" class="form-control" name="args[docdescribe]" rows="7" cols="4">{x2;realhtml:$doc['docdescribe']}</textarea>
 					        </div>
 				        </div>
 				        <div class="form-group">

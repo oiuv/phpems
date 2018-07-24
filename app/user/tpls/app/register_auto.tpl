@@ -31,6 +31,19 @@
 							<input class="form-control"  name="args[userpassword]" datatype="password" needle="needle" msg="请你输入密码" placeholder="请输入密码" type="password">
 						</div>
 					</div>
+                    {x2;if:$app['appsetting']['emailverify']}
+					<div class="form-group" style="overflow:hidden;">
+						<div class="col-sm-8" style="padding-left:0px;">
+							<div class="input-group">
+								<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-exclamation-sign" style="font-size:15px;"></a></span>
+								<input class="form-control" type="text" maxlength="4" placeholder="请输入验证码" name="randcode" style="height:44px;line-height:24px;font-size:15px;width:150px;"/>
+							</div>
+						</div>
+						<div class="col-xs-4" style="padding-right: 0px;">
+							<button type="button" class="btn btn-danger pull-right" id="sendphonecode">发送验证码</button>
+						</div>
+					</div>
+                    {x2;endif}
 					{x2;tree:$forms,form,fid}
 					<div class="form-group">
 						<label class="col-sm-3 control-label">{x2;v:form['title']}</label>
@@ -51,6 +64,42 @@
 		</div>
 	</div>
 </div>
+{x2;if:$app['appsetting']['emailverify']}
+<script>
+    var sendstatus = true;
+    $('#sendphonecode').click(function(){
+        var _this = $(this);
+        if(sendstatus)
+        {
+            $.getJSON('index.php?core-api-index-sendmail&action=reg&email='+$('#email').val()+'&userhash='+Math.random(),function(data){
+                if(parseInt(data.statusCode) == 200)
+                {
+                    _this.html('120秒重发');
+                    sendstatus = false;
+                    sendtime = 120;
+                    sendevent = setInterval(function(){
+                        if(sendtime > 0)
+                        {
+                            sendtime--;
+                            _this.html(sendtime+'秒重发');
+                        }
+                        else
+                        {
+                            sendstatus = true;
+                            _this.html('发送验证码');
+                            clearInterval(sendevent);
+                        }
+                    },1000);
+                }
+                else
+                {
+                    $.zoombox.show('ajax',data);
+                }
+            });
+        }
+    });
+</script>
+{x2;endif}
 {x2;include:footer}
 </body>
 </html>

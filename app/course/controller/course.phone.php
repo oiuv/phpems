@@ -218,15 +218,18 @@ class action extends app
 			}
 		}
 		/**/
-		$cdata = $this->course->getCourseContentStatus($course['csid'],$userid);
-		if($cdata['lock'][$contentid])
+		if($course['cstype'])
 		{
-			$message = array(
-				'statusCode' => 300,
-				"message" => "该课程尚未解锁，请先通过前一课程"
-			);
-			$this->G->R($message);
-		}
+			$cdata = $this->course->getCourseContentStatus($course['csid'],$userid);
+			if($cdata['lock'][$contentid])
+			{
+				$message = array(
+					'statusCode' => 300,
+					"message" => "该课程尚未解锁，请先通过前一课程"
+				);
+				$this->G->R($message);
+			}
+        }
 		/** **/
 		$catbread = $this->category->getCategoryPos($course['cscatid']);
 		$cat = $this->category->getCategoryById($course['cscatid']);

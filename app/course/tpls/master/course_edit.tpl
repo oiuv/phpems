@@ -85,6 +85,17 @@
 							    <textarea id="contentdescribe" name="args[csdescribe]" class="form-control" rows="4">{x2;realhtml:$course['csdescribe']}</textarea>
 					        </div>
 				        </div>
+						<div class="form-group">
+							<label class="control-label col-sm-2">学习模式</label>
+							<div class="col-sm-9">
+								<label class="radio-inline">
+									<input name="args[cstype]" type="radio" value="0" {x2;if:!$course['cstype']}checked{x2;endif}/>开放模式
+								</label>
+								<label class="radio-inline">
+									<input name="args[cstype]" type="radio" value="1" {x2;if:$course['cstype']}checked{x2;endif}/>解锁模式
+								</label>
+							</div>
+						</div>
 				        <div class="form-group">
 							<label class="control-label col-sm-2">免费课程</label>
 							<div class="col-sm-9">

@@ -132,8 +132,8 @@
 					                    <th width="40">ID</th>
 								        <th width="80">试题类型</th>
 								        <th>试题内容</th>
-								        <th width="80">录入人</th>
-								        <th width="80">录入时间</th>
+										<th width="140">录入人/录入时间</th>
+										<th width="140">删除人/删除时间</th>
 								        <th width="48">难度</th>
 								        <th width="140">操作</th>
 					                </tr>
@@ -152,10 +152,10 @@
 											<a title="查看试题" class="selfmodal" href="javascript:;" url="index.php?exam-teach-rowsquestions-detail&questionid={x2;v:question['qrid']}&{x2;c:TIME}" data-target="#modal">{x2;substring:strip_tags(html_entity_decode(v:question['qrquestion'])),135}</a>
 										</td>
 										<td>
-											{x2;v:question['qrusername']}
+                                            {x2;v:question['qrusername']}<br />{x2;date:v:question['qrtime'],'Y-m-d'}
 										</td>
 										<td>
-											{x2;date:v:question['qrtime'],'Y-m-d'}
+                                            {x2;if:v:question['qrdeler']}{x2;v:question['qrdeler']}<br />{x2;date:v:question['qrdeltime'],'Y-m-d'}{x2;endif}
 										</td>
 										<td>
 											{x2;if:v:question['qrlevel']==2}中{x2;elseif:v:question['qrlevel']==3}难{x2;elseif:v:question['qrlevel']==1}易{x2;endif}

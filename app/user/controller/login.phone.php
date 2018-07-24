@@ -51,7 +51,7 @@ class action extends app
 					}
 					$this->session->setSessionUser(array('sessionuserid'=>$user['userid'],'sessionpassword'=>$user['userpassword'],'sessionip'=>$this->ev->getClientIp(),'sessiongroupid'=>$user['usergroupid'],'sessionlogintime'=>TIME,'sessionusername'=>$user['username']));
 					$message = array(
-						'statusCode' => 200,
+						'statusCode' => 201,
 						"message" => "操作成功",
 					    "callbackType" => 'forward',
 					    "forwardUrl" => "index.php?content-phone"
