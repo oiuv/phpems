@@ -31,7 +31,7 @@
             </div>
             <div class="container-fluid">
                 <div style="clear:both;overflow:hidden;" class="items">
-                    <div class="col-xs-3" style="padding:0.2rem;">
+                    <div class="col-xs-4" style="padding:0.2rem;">
                         <div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
                             <a href="index.php?exam-phone-index" class="ajax" data-page="mybasic" data-target="mybasic">
                                 <p>
@@ -41,6 +41,28 @@
                             </a>
                         </div>
                     </div>
+                    <div class="col-xs-4" style="padding:0.2rem;">
+                        <div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
+                            <a class="ajax" href="index.php?exam-phone-basics-open" data-target="course" data-page="course">
+                                <p>
+                                    <img src="app/core/styles/img/video.png" style="width:92%;"/>
+                                </p>
+                                <h5>开通考场</h5>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4" style="padding:0.2rem;">
+                        <div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
+                            <a href="index.php?exam-phone-basics" data-target="certificate" data-page="certificate"
+                               class="ajax">
+                                <p>
+                                    <img src="app/core/styles/img/t3.png" style="width:92%;"/>
+                                </p>
+                                <h5>最近考试</h5>
+                            </a>
+                        </div>
+                    </div>
+                    <!--
                     <div class="col-xs-3" style="padding:0.2rem;">
                         <div class="text-center" style="padding:0.2rem;padding-top:1.5rem;">
                             <a class="ajax" href="index.php?course-phone-index" data-target="course" data-page="course">
@@ -73,6 +95,7 @@
                             </a>
                         </div>
                     </div>
+                    -->
                 </div>
                 <h4 style="overflow:hidden;clear:both;padding-top:0.2rem;">
                     <span class="pull-left" style="width:35%"><hr/></span>
