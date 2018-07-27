@@ -1,16 +1,29 @@
 # phpems v5.0
-开源免费的PHP无纸化模拟考试系统
+开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net) 修改并修复BUG(包括所有非 E_NOTICE 级别错误提示)
 
-基于 [PHPEMS](http://www.phpems.net) 修改并修复BUG(包括所有非 E_NOTICE 级别错误提示)
+## 安装
 
-因原版系统老旧，计划在原系统基础上优化功能：
+    git clone git@github.com:oiuv/phpems.git
+    cd phpems
+    composer install
+    
+安装完成后，修改 `/lib/config.inc.php` 配置文件并导入数据库`phpems5.sql`
 
-## 修改新增功能
+
+## 优化&新增功能
 
 - 新增使用composer，可直接安装第三方扩展包
 - 默认集成 [illuminate/database](https://packagist.org/packages/illuminate/database)，为所有数据表定义 [Model](https://laravel-china.org/docs/laravel/5.6/eloquent/1403) 数据库操作更灵活方便。
 - 数据库可在线迁移，具体操作请参考根目录下 `Database.php`
-- 新增部分 laravel 字符串和数组辅助函数
+- 新增部分 laravel 字符串和数组辅助函数，如：dd()
+
+使用 ORM 操作数据库示例：
+````php
+// 获取userid为1的用户
+$users = \Model\User::find(1);
+
+dd($users);
+````
 
 
 ## 关于系统的二次开发说明：
