@@ -28,7 +28,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">知识点：</label>
 							<div class="col-sm-9">
-								<textarea cols="72" rows="4" class="form-control" name="args[qrknowsid]" id="questionknowsid" readonly>{x2;tree:$question['qrknowsid'],know,kid}{x2;v:know['knowsid']}:{x2;v:know['knows']}{x2;enter}{x2;endif}</textarea>
+								<textarea cols="72" rows="4" class="form-control" name="args[qrknowsid]" id="questionknowsid" readonly>{x2;if:is_array($question['qrknowsid'])}{x2;tree:$question['qrknowsid'],know,kid}{x2;v:know['knowsid']}:{x2;v:know['knows']}{x2;endtree}{x2;endif}</textarea>
 				  			</div>
 				  		</div>
 						<div class="form-group">
@@ -89,9 +89,11 @@
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="questionid" value="{x2;$question['qrid']}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
+                                {x2;if:is_array($search)}
 							  	{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 								{x2;endtree}
+                                {x2;endif}
 							</div>
 						</div>
 					</form>

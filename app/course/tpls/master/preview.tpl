@@ -35,6 +35,7 @@
 					</h4>
 					<form class="form-horizontal">
 						<fieldset>
+                            {x2;if:is_array($forms)}
 							{x2;tree:$forms,form,fid}
 							<div class="form-group">
 								<label for="{x2;v:form['id']}" class="control-label col-sm-2">{x2;v:form['title']}：</label>
@@ -43,6 +44,7 @@
 								</div>
 							</div>
 							{x2;endtree}
+                            {x2;endif}
 						</fieldset>
 					</form>
 				</div>

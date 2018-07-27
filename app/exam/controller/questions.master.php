@@ -27,6 +27,7 @@ class action extends app
 		exit;
 	}
 
+	// todo $u 是什么？怎么没定义
 	private function makequery()
 	{
 		$message = array(

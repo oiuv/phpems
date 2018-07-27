@@ -34,6 +34,7 @@
 							</tr>
 						</thead>
 						<tbody>
+                        {x2;if:is_array($poses)}
 							{x2;tree:$poses,pos,pid}
 							<tr>
 								<td>{x2;v:pos['posid']}</td>
@@ -47,6 +48,7 @@
 								</td>
 							</tr>
 							{x2;endtree}
+                        {x2;endif}
 						</tbody>
 					</table>
 				</div>

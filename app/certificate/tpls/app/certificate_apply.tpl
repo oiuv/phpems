@@ -61,9 +61,11 @@
 										<a class="btn btn-info" href="index.php?user-center-payfor">充值</a>
 										<input type="hidden" name="modifyuserinfo" value="1"/>
 										<input type="hidden" name="page" value="{x2;$page}"/>
+                                        {x2;if:is_array($search)}
                                         {x2;tree:$search,arg,aid}
 										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
                                         {x2;endtree}
+                                        {x2;endif}
 									</div>
 								</div>
 							</div>

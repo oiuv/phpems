@@ -64,9 +64,11 @@
 								<td width="150" align="center">
 									<select class="combox form-control" autocomplete="off" id="selectedsubjectid" msg="请选择科目" needle="needle" min="1" name="args[examsubject]" onchange="javascript:loadsubjectsetting(this);">
 										<option value="">请选择科目</option>
+                                        {x2;if:is_array($subjects)}
 										{x2;tree:$subjects,subject,sid}
 										<option value="{x2;v:subject['subjectid']}">{x2;v:subject['subject']}</option>
 										{x2;endtree}
+                                        {x2;endif}
 									</select>
 								</td>
 								<td width="120">

@@ -32,6 +32,7 @@
 			                </tr>
 			            </thead>
 			            <tbody>
+                            {x2;if:is_array($subjects)}
 		                    {x2;tree:$subjects,subject,sid}
 							<tr>
 								<td>{x2;v:subject['subjectid']}</td>
@@ -46,6 +47,7 @@
 								</td>
 							</tr>
 							{x2;endtree}
+                            {x2;endif}
 			        	</tbody>
 			        </table>
 				</div>

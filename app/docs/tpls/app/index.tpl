@@ -52,9 +52,11 @@
 			<div class="col-xs-3 box itembox" style="min-height:200px;">
 				<h4 class="title"><a href="index.php?docs-app-category&catid=1">{x2;v:cat['catname']}</a></h4>
 				<ul class="list-unstyled">
+                    {x2;if:is_array($categories[v:cat['catid']])}
 					{x2;tree:$categories[v:cat['catid']],ccat,ccid}
 					<li><a href="index.php?docs-app-category&catid={x2;v:ccat['catid']}" title="{x2;v:ccat['catname']}">{x2;v:ccat['catname']}</a></li>
 					{x2;endtree}
+                    {x2;endif}
 				</ul>
 			</div>
 			{x2;endtree}

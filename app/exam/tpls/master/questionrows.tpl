@@ -58,9 +58,11 @@
 								<td>
 					        		<select name="search[questionsubjectid]" class="combox form-control" target="sectionselect" refUrl="?exam-master-questions-ajax-getsectionsbysubjectid&subjectid={value}">
 					        		<option value="0">选择科目</option>
+                                        {x2;if:is_array($subjects)}
 							  		{x2;tree:$subjects,subject,sid}
 							  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['questionsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
 							  		{x2;endtree}
+                                        {x2;endif}
 							  		</select>
 					        	</td>
 					        	<td>
@@ -182,9 +184,11 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
+                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
+                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>

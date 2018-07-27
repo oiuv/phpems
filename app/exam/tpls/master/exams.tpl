@@ -59,9 +59,11 @@
 								<td>
 									<select name="search[examsubject]" class="form-control">
 										<option value="0">不限</option>
+                                        {x2;if:is_array($subjects)}
 										{x2;tree:$subjects,subject,sid}
 								  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['examsubject']} selected{x2;endif}>{x2;v:subject['subject']}</option>
 								  		{x2;endtree}
+                                        {x2;endif}
 									</select>
 								</td>
 								<td>

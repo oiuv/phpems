@@ -28,9 +28,11 @@
 						<ol class="breadcrumb">
 							<li><a href="index.php">首页</a></li>
 							<li><a href="index.php?docs">文档</a></li>
+                            {x2;if:is_array($catbread)}
 						  	{x2;tree:$catbread,cb,cbid}
 							<li><a href="index.php?docs-app-category-needmore&catid={x2;v:cb['catid']}">{x2;v:cb['catname']}</a></li>
 							{x2;endtree}
+                            {x2;endif}
 							{x2;if:$cat}
 							<li href="index.php?docs-app-category-needmore&catid={x2;$cat['catid']}">{x2;$cat['catname']}</li>
 							{x2;endif}

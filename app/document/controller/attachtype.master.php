@@ -16,6 +16,7 @@ class action extends app
 		exit;
 	}
 
+	// todo $u = ?
 	private function del()
 	{
 		$page = $this->ev->get('page');
