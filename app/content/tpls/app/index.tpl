@@ -80,9 +80,9 @@
 		</div>
 	</div>
 </div>
-<div class="container-fluid hide">
+<div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main"><img src="app/core/styles/img/ad.jpg"/></div>
+		<div class="main"><img src="//placeholder.qiniudn.com/1200x100/FF9500/000"/></div>
 	</div>
 </div>
 <div class="container-fluid">
@@ -112,9 +112,9 @@
 		</div>
 	</div>
 </div>
-<div class="container-fluid hide">
+<div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main"><img src="app/core/styles/img/ad2.png"/></div>
+		<div class="main"><img src="//placeholder.qiniudn.com/1200x100/FFcc00/000"/></div>
 	</div>
 </div>
 <div class="container-fluid">
