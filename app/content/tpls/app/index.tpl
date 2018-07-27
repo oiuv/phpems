@@ -82,7 +82,7 @@
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main"><img src="//placeholder.qiniudn.com/1200x100/FF9500/000"/></div>
+		<div class="main"><img src="https://dn-placeholder.qbox.me/1200x100/33DDEE/000"/></div>
 	</div>
 </div>
 <div class="container-fluid">
@@ -114,7 +114,7 @@
 </div>
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main"><img src="//placeholder.qiniudn.com/1200x100/FFcc00/000"/></div>
+		<div class="main"><img src="https://dn-placeholder.qbox.me/1200x100/FFcc00/000"/></div>
 	</div>
 </div>
 <div class="container-fluid">
