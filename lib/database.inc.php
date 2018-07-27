@@ -5,6 +5,7 @@
  * Date: 2018/3/14
  * Time: 23:28
  */
+require __DIR__.'/config.inc.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -12,20 +13,15 @@ $capsule = new Capsule;
 
 $capsule->addConnection([
     'driver' => 'mysql',
-    'host' => 'localhost',
-    'database' => 'phpems',
-    'username' => 'root',
-    'password' => '',
+    'host' => DH,
+    'database' => DB,
+    'username' => DU,
+    'password' => DP,
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
-    'prefix' => 'x2_',
-    ]);
+    'prefix' => DTH,
+]);
 // Make this Capsule instance available globally via static methods
 $capsule->setAsGlobal();
 // Setup the Eloquent ORM
 $capsule->bootEloquent();
-
-
-//$users = \Model\User::all();
-//$name = Capsule::table('user')->value('username');
-//dd($users);
