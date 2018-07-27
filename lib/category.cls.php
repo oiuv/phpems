@@ -123,7 +123,7 @@ class category
     public function getChildCategoryString($id, $withself = 1)
     {
         if ($this->getChildCategory($id))
-        $s = implode(',', $this->getChildCategory($id));
+            $s = implode(',', $this->getChildCategory($id));
         if ($withself) {
             if ($s)
                 $s = $id.','.$s; else $s = $id;
