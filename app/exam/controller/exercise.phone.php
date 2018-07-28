@@ -23,7 +23,8 @@ class action extends app
         $sessionvars = $this->exam->getExamSessionBySessionid();
         if ($sessionvars['examsessiontype']) {
             if ($sessionvars['examsessiontype'] == 1)
-                header("location:index.php?exam-phone-exampaper-view"); else
+                header("location:index.php?exam-phone-exampaper-view");
+            else
                 header("location:index.php?exam-phone-exam-view");
             exit;
         }
@@ -63,8 +64,8 @@ class action extends app
                 $sectionid = $this->ev->get('sectionid');
                 $knowids = $this->ev->get('knowsid');
                 if (!$knowids) {
-                    if (!$sectionid)
-                        $knows = $this->section->getAllKnowsBySubject($this->data['currentsubject']['subjectid']); else
+                    if (!$sectionid) $knows = $this->section->getAllKnowsBySubject($this->data['currentsubject']['subjectid']);
+                    else
                         $knows = $this->section->getKnowsListByArgs(array(array("AND", "knowssectionid = :knowssectionid", 'knowssectionid', $sectionid), array("AND", "knowsstatus = 1")));
                     foreach ($knows as $key => $p)
                         $knowids .= "{$key},";
@@ -83,8 +84,7 @@ class action extends app
             case 'saveUserAnswer':
                 $question = $this->ev->post('question');
                 foreach ($question as $key => $t) {
-                    if ($t == '')
-                        unset($question[$key]);
+                    if ($t == '') unset($question[$key]);
                 }
                 $this->exam->modifyExamSession(array('examsessionuseranswer' => $question));
                 echo is_array($question) ? count($question) : 0;
@@ -121,7 +121,12 @@ class action extends app
                 header("location:index.php?exam-phone-exercise-makescore&ehid={$ehid}");
                 exit;
             } else {
-                $message = array('statusCode' => 200, "message" => "操作成功", "callbackType" => 'forward', "forwardUrl" => "index.php?exam-phone-exercise-makescore&ehid={$ehid}");
+                $message = array(
+                    'statusCode' => 200,
+                    "message" => "操作成功",
+                    "callbackType" => 'forward',
+                    "forwardUrl" => "index.php?exam-phone-exercise-makescore&ehid={$ehid}",
+                );
                 $this->G->R($message);
             }
         } else {
@@ -137,7 +142,8 @@ class action extends app
                 'examsessiontime' => $eh['ehtime'],
                 'examsessionscorelist' => $eh['ehscorelist'],
                 'examsessionscore' => $eh['ehscore'],
-                'examsessionstarttime' => $eh['ehstarttime']);
+                'examsessionstarttime' => $eh['ehstarttime'],
+            );
 
             $questype = $this->basic->getQuestypeList();
             $number = array();
@@ -157,7 +163,7 @@ class action extends app
                             $right[$key]++;
                             $allright++;
                         }
-                        $score[$key] = floatval($score[$key]) + floatval($sessionvars['examsessionscorelist'][$p['questionid']]);
+                        $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }
                 }
                 if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
@@ -169,7 +175,7 @@ class action extends app
                                 $right[$key]++;
                                 $allright++;
                             }
-                            $score[$key] = floatval($score[$key]) + floatval($sessionvars['examsessionscorelist'][$p['questionid']]);
+                            $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                         }
                     }
                 }
@@ -195,7 +201,7 @@ class action extends app
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
             if (is_array($question))
-            foreach ($question as $key => $a) {
+            foreach ($question as $key => $a){
                 $sessionvars['examsessionuseranswer'][$key] = $a;
             }
             foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
@@ -206,8 +212,8 @@ class action extends app
                             $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
                             asort($answer);
                             $nanswer = implode("", $answer);
-                            if ($nanswer == $p['questionanswer'])
-                                $score = 1; else {
+                            if ($nanswer == $p['questionanswer']) $score = 1;
+                            else {
                                 if ($questype[$key]['questchoice'] == 3) {
                                     $alen = strlen($p['questionanswer']);
                                     $rlen = 0;
@@ -224,8 +230,8 @@ class action extends app
                             }
                         } else {
                             $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                            if ($answer == $p['questionanswer'])
-                                $score = 1; else $score = 0;
+                            if ($answer == $p['questionanswer']) $score = 1;
+                            else $score = 0;
                         }
                         $scorelist[$p['questionid']] = $score;
                     }
@@ -242,8 +248,8 @@ class action extends app
                                 $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
                                 asort($answer);
                                 $nanswer = implode("", $answer);
-                                if ($nanswer == $p['questionanswer'])
-                                    $score = 1; else {
+                                if ($nanswer == $p['questionanswer']) $score = 1;
+                                else {
                                     if ($questype[$key]['questchoice'] == 3) {
                                         $alen = strlen($p['questionanswer']);
                                         $rlen = 0;
@@ -260,8 +266,8 @@ class action extends app
                                 }
                             } else {
                                 $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                                if ($answer == $p['questionanswer'])
-                                    $score = 1; else $score = 0;
+                                if ($answer == $p['questionanswer']) $score = 1;
+                                else $score = 0;
                             }
                             $scorelist[$p['questionid']] = $score;
                         }
@@ -278,11 +284,21 @@ class action extends app
             if (!$needhand) {
                 $args['examsessionstatus'] = 2;
                 $this->exam->modifyExamSession($args);
-                $message = array('statusCode' => 200, "message" => "操作成功", "callbackType" => 'forward', "forwardUrl" => "index.php?exam-phone-exercise-makescore&makescore=1&direct=1");
+                $message = array(
+                    'statusCode' => 200,
+                    "message" => "操作成功",
+                    "callbackType" => 'forward',
+                    "forwardUrl" => "index.php?exam-phone-exercise-makescore&makescore=1&direct=1",
+                );
             } else {
                 $args['examsessionstatus'] = 1;
                 $this->exam->modifyExamSession($args);
-                $message = array('statusCode' => 200, "message" => "操作成功", "callbackType" => 'forward', "forwardUrl" => "index.php?exam-phone-exercise-score");
+                $message = array(
+                    'statusCode' => 200,
+                    "message" => "操作成功",
+                    "callbackType" => 'forward',
+                    "forwardUrl" => "index.php?exam-phone-exercise-score",
+                );
             }
             $this->G->R($message);
         } else {
@@ -326,27 +342,30 @@ class action extends app
             if (!$args['knowsid']) {
                 $args['knowsid'] = '';
                 if ($args['sectionid'])
-                    $knowsids = $this->section->getKnowsListByArgs(array(array("AND", "knowssectionid = :knowssectionid", 'knowssectionid', $args['sectionid']), array("AND", "knowsstatus = 1"))); else {
+                    $knowsids = $this->section->getKnowsListByArgs(array(array("AND", "knowssectionid = :knowssectionid", 'knowssectionid', $args['sectionid']), array("AND", "knowsstatus = 1")));
+                else {
                     $knowsids = $this->section->getAllKnowsBySubject($this->data['currentsubject']['subjectid']);
                 }
                 foreach ($knowsids as $key => $p)
                     $args['knowsid'] .= intval($key).",";
                 $args['knowsid'] = trim($args['knowsid'], " ,");
             }
-            if (is_null($args['number'])) {
-                $message = array('statusCode' => 300, "message" => "请选择章节知识点");
-                $this->G->R($message);
-            }
             arsort($args['number']);
             $snumber = 0;
             foreach ($args['number'] as $key => $v) {
-
-                $snumber += (integer)$v;
+                $snumber += (int)$v;
                 if ($snumber > 100) {
-                    $message = array('statusCode' => 300, "message" => "强化练习最多一次只能抽取100道题");
+                    $message = array(
+                        'statusCode' => 300,
+                        "message" => "强化练习最多一次只能抽取100道题",
+                    );
                     $this->G->R($message);
-                } elseif (!$snumber) {
-                    $message = array('statusCode' => 300, "message" => "请填写要练习的试题数量");
+                }
+                if (!$snumber) {
+                    $message = array(
+                        'statusCode' => 300,
+                        "message" => "强化练习的试题数量不能全为空",
+                    );
                     $this->G->R($message);
                 }
             }
@@ -355,29 +374,28 @@ class action extends app
             $questions = array();
             $questionrows = array();
             if (is_array($questionids['question']))
-                foreach ($questionids['question'] as $key => $p) {
-                    $ids = "";
+            foreach ($questionids['question'] as $key => $p) {
+                $ids = "";
+                if (count($p)) {
+                    foreach ($p as $t) {
+                        $ids .= $t.',';
+                    }
+                    $ids = trim($ids, " ,");
+                    if (!$ids) $ids = 0;
+                    $questions[$key] = $this->exam->getQuestionListByIds($ids);
+                }
+            }
+            if (is_array($questionids['questionrow']))
+            foreach ($questionids['questionrow'] as $key => $p) {
+                $ids = "";
+                if (is_array($p)) {
                     if (count($p)) {
                         foreach ($p as $t) {
-                            $ids .= $t.',';
+                            $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
                         }
-                        $ids = trim($ids, " ,");
-                        if (!$ids)
-                            $ids = 0;
-                        $questions[$key] = $this->exam->getQuestionListByIds($ids);
                     }
-                }
-            if (is_array($questionids['questionrow']))
-                foreach ($questionids['questionrow'] as $key => $p) {
-                    $ids = "";
-                    if (is_array($p)) {
-                        if (count($p)) {
-                            foreach ($p as $t) {
-                                $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
-                            }
-                        }
-                    } else $questionrows[$key][$p] = $this->exam->getQuestionRowsByArgs("qrid = '{$p}'");
-                }
+                } else $questionrows[$key][$p] = $this->exam->getQuestionRowsByArgs("qrid = '{$p}'");
+            }
             $sargs['examsessionquestion'] = array('questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows);
             $sargs['examsessionsetting'] = $args;
             $sargs['examsessionstarttime'] = TIME;
@@ -393,9 +411,15 @@ class action extends app
             $sargs['examsessionsign'] = '';
             $sargs['examsessionuserid'] = $this->_user['sessionuserid'];
             if ($sessionvars['examsessionid'])
-                $this->exam->modifyExamSession($sargs); else
+                $this->exam->modifyExamSession($sargs);
+            else
                 $this->exam->insertExamSession($sargs);
-            $message = array('statusCode' => 200, "message" => "抽题成功，正在转入试题页面", "callbackType" => 'forward', "forwardUrl" => "index.php?exam-phone-exercise-paper");
+            $message = array(
+                'statusCode' => 200,
+                "message" => "抽题成功，正在转入试题页面",
+                "callbackType" => 'forward',
+                "forwardUrl" => "index.php?exam-phone-exercise-paper",
+            );
             $this->G->R($message);
         } else {
             $sections = $this->section->getSectionListByArgs(array(array("AND", "sectionsubjectid = :sectionsubjectid", 'sectionsubjectid', $this->data['currentbasic']['basicsubjectid'])));
@@ -416,4 +440,3 @@ class action extends app
         }
     }
 }
-

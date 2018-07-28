@@ -169,8 +169,10 @@ class action extends app
         $needhand = 0;
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
-            foreach ($question as $key => $a)
+            if (is_array($question))
+            foreach ($question as $key => $a) {
                 $sessionvars['examsessionuseranswer'][$key] = $a;
+            }
             foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {
