@@ -127,7 +127,17 @@ class action extends app
         } else {
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
-            $sessionvars = array('examsession' => $eh['ehexam'], 'examsessiontype' => $eh['ehtype'] == 2 ? 1 : $eh['ehtype'], 'examsessionsetting' => $eh['ehsetting'], 'examsessionbasic' => $eh['ehbasicid'], 'examsessionquestion' => $eh['ehquestion'], 'examsessionuseranswer' => $eh['ehanswer'], 'examsessiontime' => $eh['ehtime'], 'examsessionscorelist' => $eh['ehscorelist'], 'examsessionscore' => $eh['ehscore'], 'examsessionstarttime' => $eh['ehstarttime']);
+            $sessionvars = array(
+                'examsession' => $eh['ehexam'],
+                'examsessiontype' => $eh['ehtype'] == 2 ? 1 : $eh['ehtype'],
+                'examsessionsetting' => $eh['ehsetting'],
+                'examsessionbasic' => $eh['ehbasicid'],
+                'examsessionquestion' => $eh['ehquestion'],
+                'examsessionuseranswer' => $eh['ehanswer'],
+                'examsessiontime' => $eh['ehtime'],
+                'examsessionscorelist' => $eh['ehscorelist'],
+                'examsessionscore' => $eh['ehscore'],
+                'examsessionstarttime' => $eh['ehstarttime']);
 
             $questype = $this->basic->getQuestypeList();
             $number = array();

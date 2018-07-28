@@ -594,7 +594,7 @@ CREATE TABLE `x2_docs` (
 DROP TABLE IF EXISTS `x2_examhistory`;
 CREATE TABLE `x2_examhistory` (
   `ehid` int(11) NOT NULL AUTO_INCREMENT,
-  `ehexamid` int(11) NOT NULL DEFAULT '0',
+  `ehexamid` varchar(240) NOT NULL DEFAULT '0',
   `ehexam` varchar(240) NOT NULL DEFAULT '',
   `ehtype` int(11) NOT NULL DEFAULT '0',
   `ehbasicid` int(11) NOT NULL DEFAULT '0',

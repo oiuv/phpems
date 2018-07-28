@@ -48,6 +48,7 @@ class action extends app
 
             case 'saveUserAnswer':
                 $question = $this->ev->post('question');
+                if (is_array($question))
                 foreach ($question as $key => $t) {
                     if ($t == '')
                         unset($question[$key]);
