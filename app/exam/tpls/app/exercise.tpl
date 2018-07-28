@@ -76,10 +76,12 @@
                     <div class="col-xs-6">
 	                    <ol id="questionnumbers" style="line-height:3.2em;">
 	                        {x2;tree:$questype,quest,qid}
+                            {x2;if:$numbers[v:quest['questid']]}
 	                        <li class="text_in">
-	                        	{x2;v:quest['questype']}（共{x2;$numbers[v:quest['questid']]}题），选 <input id="question_{x2;v:quest}" type="text" class="form-control" name="args[number][{x2;v:quest}]" style="width:60px;" onChange="javascript:check_num(this);" onBlur="" rel="{x2;$numbers[v:quest]}"/> 题
-	                        	<span id="question_{x2;v:quest['questid']}_error" class="red font_12 main_left0">选择的题数不能超过{x2;$numbers[v:quest]}</span>
+	                        	{x2;v:quest['questype']}（共{x2;$numbers[v:quest['questid']]}题），选 <input id="question_{x2;v:quest['questid']}" type="text" class="form-control" name="args[number][{x2;v:quest['questid']}]" style="width:60px;" onChange="javascript:check_num(this);" onBlur="" rel="{x2;$numbers[v:quest['questid']]}"/> 题
+	                        	<span id="question_{x2;v:quest['questid']}_error" class="red font_12 main_left0">选择的题数不能超过{x2;$numbers[v:quest['questid']]}</span>
 	                        </li>
+                            {x2;endif}
 	                    	{x2;endtree}
 	                    </ol>
                     </div>

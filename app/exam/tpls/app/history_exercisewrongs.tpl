@@ -92,6 +92,7 @@
 				</div>
 				{x2;endif}
 				{x2;endtree}
+                {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 				{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 	            {x2;eval: v:tid++}
 				<div class="box itembox paperexamcontent">
@@ -155,6 +156,7 @@
 					{x2;endtree}
 				</div>
 				{x2;endtree}
+				{x2;endif}
 				{x2;endif}
 				{x2;endif}
 				{x2;endtree}
