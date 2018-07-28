@@ -16,9 +16,9 @@
 ## 优化&新增功能
 
 - 新增使用composer，可直接安装第三方扩展包
-- 为所有数据表定义 [Model](https://laravel-china.org/docs/laravel/5.6/eloquent/1403) 数据库操作更灵活方便。
-- 数据库可在线迁移，具体操作请参考根目录下 `Database.php`，或参考[](https://laravel-china.org/docs/laravel/5.6/migrations/1400)
-- 新增部分 laravel 字符串和数组[辅助函数](https://laravel-china.org/docs/laravel/5.6/helpers/1391)，如：dd()
+- 为所有数据表定义 [Model](https://laravel-china.org/docs/laravel/5.6/eloquent/1403) ，数据库操作更灵活方便
+- 可在线[数据库迁移](https://laravel-china.org/docs/laravel/5.6/migrations/1400)，请参考根目录下 `Database.php`
+- 新增部分字符串和数组[辅助函数](https://laravel-china.org/docs/laravel/5.6/helpers/1391)，如：dd()
 
 使用 ORM 操作数据库示例：
 ````php
@@ -53,9 +53,7 @@ dd($user->getAttributes());
 
 > 该标签用于显示常量，注意，在以后的if,tree,loop等标签中，常量不需要c:，只在显示常量的本标签中需要c:
 
-#### 循环遍历
-
-    tree
+#### 循环遍历：tree
 
 tree标签是一个组合标签，用于遍历一个数组。规则如下
 ````
@@ -66,9 +64,7 @@ tree标签是一个组合标签，用于遍历一个数组。规则如下
 
 ````
 
-#### 逻辑判断
-
-    if
+#### 逻辑判断：if
 
 if标签格式：
 ````
