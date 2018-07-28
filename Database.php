@@ -1,7 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
+ * Created by oiuv
+ * User: i@oiuv.cn
  * Date: 2018-07-26
  * Time: 21:40
  */
@@ -12,7 +12,7 @@ use Illuminate\Database\Capsule\Manager as DB;
 class Database
 {
     // 运行迁移
-    public static function up()
+    public static function migrate()
     {
         $table = 'test_table';
         // 判断数据表是否存在
@@ -33,7 +33,7 @@ class Database
     }
 
     // 回滚迁移
-    public static function down()
+    public static function rollback()
     {
         $table = 'test_table';
         // 删除数据表
@@ -53,13 +53,25 @@ class Database
         if (DB::schema()->hasTable($table))
             DB::schema()->rename($table, 'test_demo');
     }
+
+    // 升级数据库：4.2 → 5.0
+    public static function up()
+    {
+        // todo
+    }
+
+    // 降级数据库：5.0 → 4.2
+    public static function down()
+    {
+        // todo
+    }
 }
 
 if (isset($_GET['action']))
     switch ($_GET['action']) {
         case 'migrate':
             try {
-                Database::up();
+                Database::migrate();
                 echo '数据库迁移成功';
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
@@ -67,7 +79,7 @@ if (isset($_GET['action']))
             break;
         case 'rollback':
             try {
-                Database::down();
+                Database::rollback();
                 echo '数据库滚回成功';
             } catch (PDOException $exception) {
                 echo $exception->getMessage();

@@ -49,7 +49,7 @@ class app
 		$this->tpl->assign('_user',$user);
 		$localapps = $this->apps->getLocalAppList();
 		$apps = $this->apps->getAppList();
-		if(!in_array($this->G->app,$user['manager_apps']) && $apps['user']['appsetting']['managemodel'])
+		if(is_array($user['manager_apps']) && !in_array($this->G->app,$user['manager_apps']) && $apps['user']['appsetting']['managemodel'])
 		{
 			header("location:index.php?core-master");
 			exit();
@@ -63,5 +63,3 @@ class app
 		$this->tpl->assign('apps',$apps);
 	}
 }
-
-?>
