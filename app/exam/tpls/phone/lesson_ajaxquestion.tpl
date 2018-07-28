@@ -30,7 +30,7 @@
                     {x2;if:v:key >= $question['questionselectnumber']}
                     {x2;eval: break;}
                     {x2;endif}
-                    <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox" name="question[{x2;$question['questionid']}][{x2;v:key}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][$question['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+                    <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox" name="question[{x2;$question['questionid']}][{x2;v:key}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][$question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][$question['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
                     {x2;endtree}
                 {x2;endif}
             </div>

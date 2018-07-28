@@ -147,7 +147,7 @@ class action extends app
                             $right[$key]++;
                             $allright++;
                         }
-                        $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                        $score[$key] = floatval($score[$key]) + floatval($sessionvars['examsessionscorelist'][$p['questionid']]);
                     }
                 }
                 if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
@@ -159,7 +159,7 @@ class action extends app
                                 $right[$key]++;
                                 $allright++;
                             }
-                            $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
+                            $score[$key] = floatval($score[$key]) + floatval($sessionvars['examsessionscorelist'][$p['questionid']]);
                         }
                     }
                 }
@@ -184,8 +184,10 @@ class action extends app
         $needhand = 0;
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
-            foreach ($question as $key => $a)
+            if (is_array($question))
+            foreach ($question as $key => $a) {
                 $sessionvars['examsessionuseranswer'][$key] = $a;
+            }
             foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {

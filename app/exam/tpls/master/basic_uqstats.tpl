@@ -44,6 +44,7 @@
 									</tr>
 									</thead>
 									<tbody>
+                                    {x2;if:is_array($member['right'])}
                                     {x2;tree:$member['right'],stat,sid}
 									<tr>
                                         <td>{x2;v:stat['id']}</td>
@@ -55,6 +56,7 @@
 										</td>
 									</tr>
                                     {x2;endtree}
+                                    {x2;endif}
 									</tbody>
 								</table>
 							</div>
@@ -68,6 +70,7 @@
 									</tr>
 									</thead>
 									<tbody>
+                                    {x2;if:is_array($member['wrong'])}
                                     {x2;tree:$member['wrong'],stat,sid}
 									<tr>
 										<td>{x2;v:stat['id']}</td>
@@ -79,6 +82,7 @@
 										</td>
 									</tr>
                                     {x2;endtree}
+                                    {x2;endif}
 									</tbody>
 								</table>
 							</div>

@@ -67,9 +67,9 @@
                             {x2;if:$numbers[v:quest['questid']]}
                             <li style="border-bottom:1px dotted #CCCCCC;padding:0.5rem;">
                                 {x2;v:quest['questype']}（共{x2;$numbers[v:quest['questid']]}题），选 <input
-                                        id="question_{x2;v:quest}" type="text"
+                                        id="question_{x2;v:quest['questid']}" type="text"
                                         style="width:6rem;height:34px;padding: 1.2rem;background-color: #fff;border: 1px solid #ccc;border-radius: 4px;"
-                                        name="args[number][{x2;v:quest}]" rel="{x2;$numbers[v:quest]}"/> 题
+                                        name="args[number][{x2;v:quest['questid']}]" rel="{x2;$numbers[v:quest['questid']]}"/> 题
                             </li>
                             {x2;endif}
                             {x2;endtree}

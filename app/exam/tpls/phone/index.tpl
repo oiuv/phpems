@@ -13,6 +13,7 @@
 			</h5>
 		</header>
 		<div class="container-fluid">
+            {x2;if:is_array($basics)}
 			{x2;tree:$basics,basic,bid}
 			<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
 				<div class="col-xs-4">
@@ -28,6 +29,7 @@
 				</div>
 			</div>
 			{x2;endtree}
+            {x2;endif}
 		</div>
 		{x2;include:footer}
 		</div>

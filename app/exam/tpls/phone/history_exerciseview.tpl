@@ -23,7 +23,7 @@
 	                {x2;eval: v:qcid++}
 					<div class="paperexamcontent" id="questions_{x2;v:question['questionid']}" rel="{x2;v:quest}" style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
 						<h4 class="title">
-						
+
 							第{x2;v:tid}题
 							<span class="pull-right">
 								<a class="btn text-primary qicon" onclick="javascript:favorquestion('{x2;v:question['questionid']}');"><i class="glyphicon glyphicon-heart-empty"></i></a>
@@ -71,6 +71,7 @@
 		                </div>
 					</div>
 					{x2;endtree}
+                    {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 					{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 	                {x2;eval: v:tid++}
 					<div class="paperexamcontent" id="questions_{x2;v:data['questionid']}" rel="{x2;v:quest}" style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;">
@@ -130,6 +131,7 @@
 						{x2;endtree}
 					</div>
 					{x2;endtree}
+					{x2;endif}
 					{x2;endif}
 					{x2;endif}
 					{x2;endtree}

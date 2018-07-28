@@ -129,7 +129,7 @@
                                                                                                   name="question[{x2;v:question['questionid']}][{x2;v:key}]"
                                                                                                   rel="{x2;v:question['questionid']}"
                                                                                                   value="{x2;v:so}"
-                                                                                                  {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so}
+                                                                                                  {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so}
                                 </label>
                                 {x2;endtree}
                                 {x2;endif}
