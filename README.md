@@ -1,8 +1,8 @@
-# phpems v5.0
+# [phpems v5.0](https://phpems.is.js.cn)
 开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net) 修改。
 重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。
 
-源码默认开启错误提示，生产环境一定要修改 `init.cls.php` 文件关闭。
+> 源码默认开启错误提示，生产环境一定要修改 `init.cls.php` 文件关闭。
 
 ## 安装
 
@@ -11,7 +11,6 @@
     composer install
     
 安装完成后，修改 `/lib/config.inc.php` 配置文件并导入数据库`phpems5.sql`
-
 
 ## 优化&新增功能
 
@@ -25,9 +24,20 @@
 // 获取userid为1的用户
 $user = \Model\User::find(1);
 
-dd($user->getAttributes());
-````
+// 获取用户名
+echo $user->username;
 
+// 调试输出用户所有信息
+dd($user->getAttributes());
+
+// 获取用户的考试记录
+$eh = $user->examHistories;
+
+foreach($eh as $exam)
+{
+    //...
+}
+````
 
 ## 关于系统的二次开发说明：
 
