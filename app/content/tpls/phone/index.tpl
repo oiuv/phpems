@@ -97,6 +97,32 @@
                     </div>
                     -->
                 </div>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <div class="alert alert-info">好好刷题，天天进步，祝同学们封考必过哦！^_^</div>
+                        </div>
+                        {x2;tree:$eh,eh,ehid}
+                        <div class="item">
+                            {x2;if:v:eh['ehscore']>=80}
+                            <div class="alert alert-success">{x2;v:eh['ehusername']}
+                                于 {x2;date:v:eh['ehstarttime'],'H:i'} 参加《{x2;$basic[v:eh['ehbasicid']]}》测试，得分 {x2;v:eh['ehscore']}</div>
+                            {x2;elseif:v:eh['ehscore']>60 && v:eh['ehscore']<80}
+                            <div class="alert alert-warning">{x2;v:eh['ehusername']}
+                                于 {x2;date:v:eh['ehstarttime'],'H:i'} 参加《{x2;$basic[v:eh['ehbasicid']]}》测试，得分 {x2;v:eh['ehscore']}</div>
+                            {x2;else}
+                            <div class="alert alert-danger">{x2;v:eh['ehusername']}
+                                于 {x2;date:v:eh['ehstarttime'],'H:i'} 参加《{x2;$basic[v:eh['ehbasicid']]}》测试，得分 {x2;v:eh['ehscore']}</div>
+                            {x2;endif}
+                        </div>
+                        {x2;endtree}
+                    </div>
+
+                    <!-- Controls -->
+                </div>
                 <h4 style="overflow:hidden;clear:both;padding-top:0.2rem;">
                     <span class="pull-left" style="width:35%"><hr/></span>
                     <span class="col-xs-4 text-center" style="width:30%;line-height:4rem;">热门考场</span>
