@@ -9,7 +9,7 @@ define('CS',md5(base64_encode($_SERVER['HTTP_HOST'])));
 define('HE','utf-8');
 define('PN',10);
 define('TIME',time());
-define('USEWX',TRUE);
+define('USEWX',false);
 if(dirname($_SERVER['SCRIPT_NAME']))
 define('WP','http://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']));
 else
