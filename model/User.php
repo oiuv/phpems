@@ -14,4 +14,10 @@ class User extends Model
     protected $table = 'user';
     protected $primaryKey = 'userid';
     public $timestamps = false;
+
+    // 获取考试记录
+    public function examHistories()
+    {
+        return $this->hasMany(ExamHistory::class, 'ehuserid');
+    }
 }
