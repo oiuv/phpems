@@ -60,8 +60,7 @@
                         </dl>
                     </div>
                     <form id="form1" name="form1" method="post" action="index.php?exam-phone-exercise-score"
-                          class="col-xs-12" style="padding:0px;margin-bottom:4.8rem;" data-page="paper"
-                          data-target="paper">
+                          class="col-xs-12" style="padding:0px;margin-bottom:4.8rem;">
                         <input type="hidden" name="insertscore" value="1"/>
                         {x2;eval: v:oid = 0}
                         {x2;eval: v:qcid = 0}
