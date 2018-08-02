@@ -9,13 +9,13 @@ require __DIR__.'/../vendor/autoload.php';
 
 class Cache
 {
-    // 缓存统计做题数据
+    // 根据已做试题统计错题率
     public static function questions()
     {
         $eh = \Model\ExamHistory::all();
         $stats = [];
-        // 根据试题统计
         $os = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
         // 获取试题类型并转为数组
         $questiontype = \Model\Questype::all();
         $questiontype = json_decode($questiontype->toJson(), true);
@@ -80,7 +80,7 @@ class Cache
         return $stats;
     }
 
-    // 根据知识点统计
+    // 根据知识点统计错题率
     public static function knows()
     {
         $eh = \Model\ExamHistory::all();
@@ -126,7 +126,15 @@ class Cache
     }
 }
 
+// 缓存统计结果到 redis
 $client = new Predis\Client('tcp://127.0.0.1:6379');
 $client->set('phpems:questions', json_encode(Cache::questions()));
 $client->set('phpems:knows', json_encode(Cache::knows()));
-echo('已考试题和知识点缓存完成');
+echo('已考试题和知识点缓存完成^_^');
+
+/* 在控制器中可以直接读取缓存并在模板中使用
+    $client = new Predis\Client('tcp://127.0.0.1:6379');
+    $questions = $client->get('phpems:questions');
+    $questions = json_decode($questions,true);
+    $this->tpl->assign('questions', $questions);
+ */
