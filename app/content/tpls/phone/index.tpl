@@ -103,7 +103,7 @@
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <div class="alert alert-info">好好刷题，天天进步，祝同学们封考必过哦！^_^</div>
+                            <div class="alert alert-info">好好刷题，天天进步，祝同学们封考必过哦！^_^<div class="text-right">--考神</div></div>
                         </div>
                         {x2;tree:$eh,eh,ehid}
                         <div class="item">
