@@ -5,7 +5,7 @@
  * Date: 2018-07-26
  * Time: 21:40
  */
-require __DIR__.'/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as DB;
 
