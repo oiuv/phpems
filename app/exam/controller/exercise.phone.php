@@ -325,6 +325,10 @@ class action extends app
             header("location:index.php?exam-phone-exercise-score");
             exit;
         } else {
+            $client = new Predis\Client('tcp://127.0.0.1:6379');
+            $questions = $client->get('phpems:questions');
+            $questions = json_decode($questions,true);
+            $this->tpl->assign('questions', $questions);
             $this->tpl->assign('questype', $questype);
             $this->tpl->assign('sessionvars', $sessionvars);
             $this->tpl->assign('lefttime', $lefttime);

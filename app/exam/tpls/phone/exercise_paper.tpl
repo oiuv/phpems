@@ -82,18 +82,18 @@
                                 <span class="pull-right">
 									<a class="btn text-primary qicon"
                                        onclick="javascript:favorquestion('{x2;v:question['questionid']}');"><i
-                                                class="glyphicon glyphicon-heart-empty"></i></a>
+                                            class="glyphicon glyphicon-heart-empty"></i></a>
 									<a class="btn {x2;if:$sessionvars['examsessionsign'][v:question['questionid']]}text-danger{x2;else}text-info{x2;endif} qicon"
                                        href="javascript:;"
                                        onclick="javascript:signQuestion('{x2;v:question['questionid']}',this);"><i
-                                                class="glyphicon glyphicon-bookmark"></i></a>
-									<a name="question_{x2;v:question['questionid']}">
+                                            class="glyphicon glyphicon-bookmark"></i></a>
+									<a name="question_{x2;v:question['questionid']}"></a>
 									<input id="time_{x2;v:question['questionid']}" type="hidden"
                                            name="time[{x2;v:question['questionid']}]"/>
 								</span>
                             </h4>
                             <div class="choice">
-                                </a>{x2;realhtml:v:question['question']}
+                                {x2;realhtml:v:question['question']}
                             </div>
                             {x2;if:!$questype[v:quest]['questsort']}
                             {x2;if:v:question['questionselect'] && $questype[v:quest]['questchoice'] != 5}
@@ -107,11 +107,12 @@
                                 {x2;if:v:key == v:question['questionselectnumber']}
                                 {x2;eval: break;}
                                 {x2;endif}
-                                <label class="radio-inline" style="line-height:2.8rem;"><input type="radio"
-                                                                                               name="question[{x2;v:question['questionid']}]"
-                                                                                               rel="{x2;v:question['questionid']}"
-                                                                                               value="{x2;v:so}"
-                                                                                               {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/>{x2;v:so}
+                                <label class="radio-inline" style="line-height:2.8rem;">
+                                    <input type="radio"
+                                           name="question[{x2;v:question['questionid']}]"
+                                           rel="{x2;v:question['questionid']}"
+                                           value="{x2;v:so}"
+                                           {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:question['questionid']]}checked{x2;endif}/>{x2;v:so}
                                 </label>
                                 {x2;endtree}
                                 {x2;elseif:$questype[v:quest]['questchoice'] == 5}
@@ -124,11 +125,12 @@
                                 {x2;if:v:key >= v:question['questionselectnumber']}
                                 {x2;eval: break;}
                                 {x2;endif}
-                                <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox"
-                                                                                                  name="question[{x2;v:question['questionid']}][{x2;v:key}]"
-                                                                                                  rel="{x2;v:question['questionid']}"
-                                                                                                  value="{x2;v:so}"
-                                                                                                  {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so}
+                                <label class="checkbox-inline" style="line-height:2.8rem;">
+                                    <input type="checkbox"
+                                           name="question[{x2;v:question['questionid']}][{x2;v:key}]"
+                                           rel="{x2;v:question['questionid']}"
+                                           value="{x2;v:so}"
+                                           {x2;if:is_array($sessionvars['examsessionuseranswer'][v:question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][v:question['questionid']])}checked{x2;endif}/>{x2;v:so}
                                 </label>
                                 {x2;endtree}
                                 {x2;endif}
@@ -139,16 +141,23 @@
                                 {x2;include:plugin_editor}
                             </div>
                             {x2;endif}
+                            {x2;if:$questions[v:question['questionid']]['number']}
+                            <div class="alert alert-info">
+                                提示：截止目前本题共有 {x2;$questions[v:question['questionid']]['number']} 人回答，
+                                {x2;$questions[v:question['questionid']]['right']} 人答对，
+                                正确率 {x2;eval: echo round($questions[v:question['questionid']]['right']/$questions[v:question['questionid']]['number']*100,2);}%。
+                            </div>
+                            {x2;endif}
                             <div class="toolbar" style="padding:1rem 0.5rem;margin-top:1rem;">
                                 {x2;if:v:qcid > 1}
                                 <a class="btn btn-default"
                                    onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2;});"><span
-                                            class="glyphicon glyphicon-chevron-left"></span>上一题</a>
+                                        class="glyphicon glyphicon-chevron-left"></span>上一题</a>
                                 {x2;endif}
                                 {x2;if:v:qcid < v:qmid}
                                 <a class="pull-right btn btn-primary"
                                    onclick="javascript:gotoindexquestion({x2;v:qcid});">下一题<span
-                                            class="glyphicon glyphicon-chevron-right"></span></a>
+                                        class="glyphicon glyphicon-chevron-right"></span></a>
                                 {x2;endif}
                             </div>
                         </div>
@@ -164,11 +173,11 @@
                                 <span class="pull-right">
 									<a class="btn text-primary qicon"
                                        onclick="javascript:favorquestion('{x2;v:data['questionid']}');"><i
-                                                class="glyphicon glyphicon-heart-empty"></i></a>
+                                            class="glyphicon glyphicon-heart-empty"></i></a>
 									<a class="btn {x2;if:$sessionvars['examsessionsign'][v:data['questionid']]}text-danger{x2;else}text-info{x2;endif} qicon"
                                        href="javascript:;"
                                        onclick="javascript:signQuestion('{x2;v:data['questionid']}',this);"><i
-                                                class="glyphicon glyphicon-bookmark"></i></a>
+                                            class="glyphicon glyphicon-bookmark"></i></a>
 									<a name="question_{x2;v:data['questionid']}"></a>
 									<input id="time_{x2;v:data['questionid']}" type="hidden"
                                            name="time[{x2;v:data['questionid']}]"/>
@@ -194,11 +203,12 @@
                                     {x2;if:v:key == v:data['questionselectnumber']}
                                     {x2;eval: break;}
                                     {x2;endif}
-                                    <label class="radio-inline" style="line-height:2.8rem;"><input type="radio"
-                                                                                                   name="question[{x2;v:data['questionid']}]"
-                                                                                                   rel="{x2;v:data['questionid']}"
-                                                                                                   value="{x2;v:so}"
-                                                                                                   {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:data['questionid']]}checked{x2;endif}/>{x2;v:so}
+                                    <label class="radio-inline" style="line-height:2.8rem;">
+                                        <input type="radio"
+                                               name="question[{x2;v:data['questionid']}]"
+                                               rel="{x2;v:data['questionid']}"
+                                               value="{x2;v:so}"
+                                               {x2;if:v:so == $sessionvars['examsessionuseranswer'][v:data['questionid']]}checked{x2;endif}/>{x2;v:so}
                                     </label>
                                     {x2;endtree}
                                     {x2;elseif:$questype[v:quest]['questchoice'] == 5}
@@ -211,11 +221,12 @@
                                     {x2;if:v:key >= v:data['questionselectnumber']}
                                     {x2;eval: break;}
                                     {x2;endif}
-                                    <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox"
-                                                                                                      name="question[{x2;v:data['questionid']}][{x2;v:key}]"
-                                                                                                      rel="{x2;v:data['questionid']}"
-                                                                                                      value="{x2;v:so}"
-                                                                                                      {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}/>{x2;v:so}
+                                    <label class="checkbox-inline" style="line-height:2.8rem;">
+                                        <input type="checkbox"
+                                               name="question[{x2;v:data['questionid']}][{x2;v:key}]"
+                                               rel="{x2;v:data['questionid']}"
+                                               value="{x2;v:so}"
+                                               {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][v:data['questionid']])}checked{x2;endif}/>{x2;v:so}
                                     </label>
                                     {x2;endtree}
                                     {x2;endif}
@@ -227,16 +238,23 @@
                                 </div>
                                 {x2;endif}
                             </div>
+                            {x2;if:$questions[v:data['questionid']]['number']}
+                            <div class="alert alert-info">
+                                提示：截止目前本题共有 {x2;$questions[v:data['questionid']]['number']} 人回答，
+                                {x2;$questions[v:data['questionid']]['right']} 人答对，
+                                正确率 {x2;eval: echo round($questions[v:data['questionid']]['right']/$questions[v:data['questionid']]['number']*100,2);}%。
+                            </div>
+                            {x2;endif}
                             <div class="toolbar" style="padding:1rem 0.5rem;">
                                 {x2;if:v:qcid > 1}
                                 <a class="btn btn-default"
                                    onclick="javascript:gotoindexquestion({x2;eval: echo v:qcid - 2;});"><span
-                                            class="glyphicon glyphicon-chevron-left"></span>上一题</a>
+                                        class="glyphicon glyphicon-chevron-left"></span>上一题</a>
                                 {x2;endif}
                                 {x2;if:v:qcid < v:qmid}
                                 <a class="pull-right btn btn-primary"
                                    onclick="javascript:gotoindexquestion({x2;v:qcid});">下一题<span
-                                            class="glyphicon glyphicon-chevron-right"></span></a>
+                                        class="glyphicon glyphicon-chevron-right"></span></a>
                                 {x2;endif}
                             </div>
                         </div>
@@ -254,7 +272,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
+                                    aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="myModalLabel">交卷</h4>
                         </div>
                         <div class="modal-body">
@@ -271,8 +289,9 @@
             </div>
             <div class="container-fluid text-center"
                  style="background-color:#337AB7;z-index:9999;position:fixed;bottom:0px;border-top:1px solid #E9E9E9;">
-                <div style="clear:both;background-color:#337AB7;padding-top:0px;border:0px;padding:0rem;padding-bottom:0.8rem;"
-                     class="input-group-addon footer">
+                <div
+                    style="clear:both;background-color:#337AB7;padding-top:0px;border:0px;padding:0rem;padding-bottom:0.8rem;"
+                    class="input-group-addon footer">
                     <div class="col-xs-3">
                         <div class="text-center" style="height:4.2rem;padding:0.2rem;">
                             <a href="javascript:;"
@@ -287,7 +306,7 @@
                             <a href="index.php?item-phone-cart" class="ajax" data-page="cart" data-target="cart">
                                 <h4 style="line-height:3.2rem;color:#FFFFFF;"><em class="glyphicon glyphicon-time"></em>
                                     <span id="timer_h">00</span><span>：</span><span id="timer_m">00</span><span>：</span><span
-                                            id="timer_s">00</span></h4>
+                                        id="timer_s">00</span></h4>
                             </a>
                         </div>
                     </div>
@@ -296,7 +315,7 @@
                             <a href="#submodal" onclick="javascript:$('#submodal').appendTo('body');" role="button"
                                data-toggle="modal">
                                 <h5 style="line-height:3.2rem;color:#FFFFFF;"><em
-                                            class="glyphicon glyphicon-list-alt"></em> 交卷</h5>
+                                        class="glyphicon glyphicon-list-alt"></em> 交卷</h5>
                             </a>
                         </div>
                     </div>
