@@ -11,7 +11,7 @@
     cd phpems
     composer install
     
-安装完成后，修改 lib 目录下config.inc.php配置文件并导入数据库`phpems5.sql`
+安装完成后，重命名 lib 目录下 `config.inc.example.php` 为 `config.inc.php` 并修改配置，然后导入数据库 `phpems5.sql` 即可。
 
 ## 优化&新增功能
 
@@ -40,6 +40,13 @@ foreach($eh as $exam)
     //...
 }
 ````
+
+使用 Redis 缓存数据库示例：
+```php
+$client = new Predis\Client('tcp://127.0.0.1:6379');
+$client->set('phpems:questions', json_encode(Cache::questions()));
+$client->set('phpems:knows', json_encode(Cache::knows()));
+```
 
 ## 关于系统的二次开发说明：
 
