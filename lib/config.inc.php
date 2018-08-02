@@ -21,6 +21,7 @@ define('DU','homestead');//MYSQL数据库用户名
 define('DP','secret');//MYSQL数据库用户密码
 define('DTH','x2_');//系统表前缀，不用改
 
+define('REDIS',true);
 
 define('WXAPPID','wxeb0ce70607ad267f');
 define('WXAPPSECRET','5b0b87722c268d89a82bcb40e3853f29');

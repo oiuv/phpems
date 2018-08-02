@@ -201,9 +201,9 @@ class action extends app
         if ($this->ev->get('insertscore')) {
             $question = $this->ev->get('question');
             if (is_array($question))
-            foreach ($question as $key => $a){
-                $sessionvars['examsessionuseranswer'][$key] = $a;
-            }
+                foreach ($question as $key => $a) {
+                    $sessionvars['examsessionuseranswer'][$key] = $a;
+                }
             foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
                 if (!$questype[$key]['questsort']) {
                     foreach ($tmp as $p) {
@@ -325,9 +325,12 @@ class action extends app
             header("location:index.php?exam-phone-exercise-score");
             exit;
         } else {
-            $client = new Predis\Client('tcp://127.0.0.1:6379');
-            $questions = $client->get('phpems:questions');
-            $questions = json_decode($questions,true);
+            $questions = null;
+            if (REDIS) {
+                $client = new Predis\Client('tcp://127.0.0.1:6379');
+                $questions = $client->get('phpems:questions');
+                $questions = json_decode($questions, true);
+            }
             $this->tpl->assign('questions', $questions);
             $this->tpl->assign('questype', $questype);
             $this->tpl->assign('sessionvars', $sessionvars);
@@ -378,28 +381,28 @@ class action extends app
             $questions = array();
             $questionrows = array();
             if (is_array($questionids['question']))
-            foreach ($questionids['question'] as $key => $p) {
-                $ids = "";
-                if (count($p)) {
-                    foreach ($p as $t) {
-                        $ids .= $t.',';
-                    }
-                    $ids = trim($ids, " ,");
-                    if (!$ids) $ids = 0;
-                    $questions[$key] = $this->exam->getQuestionListByIds($ids);
-                }
-            }
-            if (is_array($questionids['questionrow']))
-            foreach ($questionids['questionrow'] as $key => $p) {
-                $ids = "";
-                if (is_array($p)) {
+                foreach ($questionids['question'] as $key => $p) {
+                    $ids = "";
                     if (count($p)) {
                         foreach ($p as $t) {
-                            $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
+                            $ids .= $t.',';
                         }
+                        $ids = trim($ids, " ,");
+                        if (!$ids) $ids = 0;
+                        $questions[$key] = $this->exam->getQuestionListByIds($ids);
                     }
-                } else $questionrows[$key][$p] = $this->exam->getQuestionRowsByArgs("qrid = '{$p}'");
-            }
+                }
+            if (is_array($questionids['questionrow']))
+                foreach ($questionids['questionrow'] as $key => $p) {
+                    $ids = "";
+                    if (is_array($p)) {
+                        if (count($p)) {
+                            foreach ($p as $t) {
+                                $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
+                            }
+                        }
+                    } else $questionrows[$key][$p] = $this->exam->getQuestionRowsByArgs("qrid = '{$p}'");
+                }
             $sargs['examsessionquestion'] = array('questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows);
             $sargs['examsessionsetting'] = $args;
             $sargs['examsessionstarttime'] = TIME;
