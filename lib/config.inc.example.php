@@ -23,12 +23,11 @@ define('DTH','x2_');//系统表前缀，不用改
 
 define('REDIS',true);
 
-define('WXAPPID','wxeb0ce70607ad267f');
-define('WXAPPSECRET','5b0b87722c268d89a82bcb40e3853f29');
-define('WXMCHID','7300637');
-define('WXKEY','zhelishi32weidewxkey');
+define('WXAPPID','***');
+define('WXAPPSECRET','***');
+define('WXMCHID','***');
+define('WXKEY','***');
 
-
-define('ALIPART','7300637');
-define('ALIKEY','5b0b87722c268d89a82bcb40e3853f29');
+define('ALIPART','***');
+define('ALIKEY','***');
 define('ALIACC','i@oiuv.cn');

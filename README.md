@@ -11,7 +11,7 @@
     cd phpems
     composer install
     
-安装完成后，修改 `/lib/config.inc.php` 配置文件并导入数据库`phpems5.sql`
+安装完成后，修改 lib 目录下config.inc.php配置文件并导入数据库`phpems5.sql`
 
 ## 优化&新增功能
 

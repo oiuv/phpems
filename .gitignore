@@ -1,4 +1,5 @@
 /.idea
+/lib/config.inc.php
 /test
 /vendor
 .DS_Store
