@@ -132,7 +132,7 @@
 							</span>
                 </h4>
                 <div class="choice">
-                    </a>{x2;realhtml:v:question['question']}
+                    {x2;realhtml:v:question['question']}
                 </div>
                 {x2;if:!$questype[v:question['questiontype']]['questsort']}
                 {x2;if:v:question['questionselect'] && $questype[v:question['questiontype']]['questchoice'] != 5}

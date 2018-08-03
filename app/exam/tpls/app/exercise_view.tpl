@@ -40,7 +40,7 @@
 						<div class="media well">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<span class="badge badge-info questionindex">{x2;v:tid}</span></a>
+									<span class="badge badge-info questionindex">{x2;v:tid}</span>
 								</li>
 								<li class="btn-group pull-right">
 									<button class="btn" type="button" onclick="javascript:favorquestion('{x2;v:question['questionid']}');"><em class="icon-heart" title="收藏"></em></button>
@@ -89,7 +89,7 @@
 								{x2;if:$sessionvars['examsessionscorelist'][v:data['questionid']] && $sessionvars['examsessionscorelist'][v:data['questionid']] == 1}<div class="right"></div>{x2;else}<div class="wrong"></div>{x2;endif}
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<span class="badge questionindex">{x2;v:did}</span></a>
+										<span class="badge questionindex">{x2;v:did}</span>
 									</li>
 									<li class="btn-group pull-right">
 										<button class="btn" type="button" onclick="javascript:favorquestion('{x2;v:data['questionid']}');"><em class="icon-heart" title="收藏"></em></button>

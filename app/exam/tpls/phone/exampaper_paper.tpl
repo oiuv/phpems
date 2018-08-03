@@ -85,13 +85,13 @@
                                        href="javascript:;"
                                        onclick="javascript:signQuestion('{x2;v:question['questionid']}',this);"><i
                                                 class="glyphicon glyphicon-bookmark"></i></a>
-									<a name="question_{x2;v:question['questionid']}">
+									<a name="question_{x2;v:question['questionid']}"> </a>
 									<input id="time_{x2;v:question['questionid']}" type="hidden"
                                            name="time[{x2;v:question['questionid']}]"/>
 								</span>
                             </h4>
                             <div class="choice">
-                                </a>{x2;realhtml:v:question['question']}
+                               {x2;realhtml:v:question['question']}
                             </div>
                             {x2;if:!$questype[v:quest]['questsort']}
                             {x2;if:v:question['questionselect'] && $questype[v:quest]['questchoice'] != 5}
