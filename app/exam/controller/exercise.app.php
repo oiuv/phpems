@@ -425,7 +425,7 @@ class action extends app
 			$snumber = 0;
 			foreach($args['number'] as $key => $v)
 			{
-				$snumber += $v;
+				$snumber += (int)$v;
 				if($snumber > 100)
 				{
 					$message = array(
@@ -516,6 +516,3 @@ class action extends app
 		}
 	}
 }
-
-
-?>
