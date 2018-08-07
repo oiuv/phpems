@@ -63,7 +63,7 @@
 			<div class="col-xs-9 split pull-right" style="padding:0px;position:relative;">
 				<div class="scoreArea">{x2;$sessionvars['examsessionscore']}</div>
 				<div class="box itembox">
-					<h2 class="text-center tt">{x2;$sessionvars['examsession']}ccc</h2>
+					<h2 class="text-center tt">{x2;$sessionvars['examsession']}</h2>
 				</div>
 				{x2;eval: v:oid = 0}
 				{x2;tree:$questype,quest,qid}
