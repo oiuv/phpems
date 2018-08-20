@@ -33,4 +33,10 @@ class Basic extends Model
     {
         return $this->hasMany(ExamHistory::class, 'ehbasicid');
     }
+
+    // 获取开通考场的用户
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'openbasics', 'obbasicid', 'obuserid')->withPivot('obtime', 'obendtime');
+    }
 }

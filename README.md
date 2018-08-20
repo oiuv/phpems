@@ -34,11 +34,43 @@ dd($user->getAttributes());
 
 // 获取用户的考试记录
 $eh = $user->examHistories;
-
-foreach($eh as $exam)
-{
-    //...
+foreach ($eh as $result){
+    print_r($result->getAttributes());
 }
+
+// 获取用户开通的考场
+$ob = $use->basics;
+foreach($ob as $basic)
+{
+    // 考场信息
+    print_r($basic->getAttributes());
+    // 开通时间等信息
+    print_r($basic->pivot->getAttributes());
+}
+
+// 获取basicid为1的考场
+$basic = \Model\Basic::find(1);
+
+// 获取考场考试科目信息
+print_r($basic->subject->getAttributes());
+
+// 获取考场的考试记录
+$eh = $basic->examHistories;
+foreach ($eh as $result){
+    print_r($result->getAttributes());
+}
+
+// 获取开通考场的用户
+$ou = $basic->users;
+foreach($ou as $user)
+{
+    // 用户信息
+    print_r($user->getAttributes());
+    // 开通时间等信息
+    print_r($user->pivot->getAttributes());
+}
+
+// 更多方法参考 model 目录
 ````
 
 使用 Redis 缓存数据库示例：
