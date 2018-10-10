@@ -5,21 +5,22 @@
 
 > 源码默认开启错误提示，生产环境请修改 `init.cls.php` 文件关闭提示并务必删除 `examples` 目录
 
-## 安装
+因使用部分第三方扩展包，系统要求`php>=7.0`，具体集成扩展包如下：
 
-    git clone git@github.com:oiuv/phpems.git
-    cd phpems
-    composer install
-    
-安装完成后，重命名 lib 目录下 `config.inc.example.php` 为 `config.inc.php` 并修改配置，然后导入数据库 `phpems5.sql` 即可。
+| 扩展包 | 说明 |
+| --- | --- |
+| [illuminate/database](https://packagist.org/packages/illuminate/database) | Eloquent ORM，以[Model](https://laravel-china.org/docs/laravel/5.6/eloquent/1403)的方式操作数据库 |
+| [overtrue/easy-sms](https://packagist.org/packages/overtrue/easy-sms) | 一款满足你的多种发送需求的短信发送组件 |
+| [overtrue/wechat](https://packagist.org/packages/overtrue/wechat) | 开源的微信非官方 SDK，方便在考试系统开发微信服务号相关功能 |
+| [predis/predis](https://packagist.org/packages/predis/predis) | 缓存驱动 Redis 基础扩展包，使系统支持Redis缓存 |
 
 ## 优化&新增功能
 
 - 新增使用composer，可直接安装第三方扩展包
 - 为所有数据表定义 [Model](https://laravel-china.org/docs/laravel/5.6/eloquent/1403) ，数据库操作更灵活方便
-- 可在线[数据库迁移](https://laravel-china.org/docs/laravel/5.6/migrations/1400)，请参考examples目录下 `Database.php`
+- 可在线[数据库迁移](https://laravel-china.org/docs/laravel/5.6/migrations/1400)，请参考 `examples` 目录下 `Database.php`
 - 新增部分字符串和数组[辅助函数](https://laravel-china.org/docs/laravel/5.6/helpers/1391)，如：dd()
-- 新增 Redis 缓存支持，请参考examples目录中的 `Cache.php`
+- 新增 Redis 缓存支持，请参考 `examples` 目录中的 `Cache.php`
 
 使用 ORM 操作数据库示例：
 ````php
@@ -79,6 +80,26 @@ $client = new Predis\Client('tcp://127.0.0.1:6379');
 $client->set('phpems:questions', json_encode(Cache::questions()));
 $client->set('phpems:knows', json_encode(Cache::knows()));
 ```
+
+## 安装
+
+    git clone git@github.com:oiuv/phpems.git
+    cd phpems
+    composer install
+    
+安装完成后，重命名 lib 目录下 `config.inc.example.php` 为 `config.inc.php` 并修改配置，然后导入数据库 `phpems5.sql` 即可。
+
+## 使用
+
+演示：https://phpems.is.js.cn/
+
+### 考试设置
+1. 考试模块：考试设计—>科目管理（ID影响教师阅卷）—>章节—>知识点(ID影响试卷生成)
+2. 考试模块：试题管理—>普通试题管理—>添加试题—>CSV导入(对应知识点ID)
+3. 考试模块：试卷管理—>随机组卷—>试卷管理—>随机组卷
+4. 考试模块：考试设计—>考场列表
+5. 教师管理：1、教师管理—>用户模块—>模型管理—>教师模型（字段管理）—>Teacher_subjects(修改字段）—>可选值列表（科目名称=ID）—>提交；2、用户管理—>用户名—>修改（可管理科目打钩）；3、登录—>成绩管理
+6. 用户模块：用户管理-添加用户
 
 ## 关于系统的二次开发说明：
 
@@ -148,3 +169,26 @@ if标签格式：
     realhtml
 
 > 取消转义并显示带html的内容，{x2;realhtml:变量}
+
+### 数据表说明
+
+| 数据表 | 说明 |
+|---|---|
+| basic | 考场表 |
+| examhistory | 考试记录表 |
+| exams | 试卷表 |
+| examsession | 会话表 |
+| favor | 收藏表 |
+| knows | 知识点表 |
+| sections | 章节表 |
+| subject | 科目表 |
+| openbasics | 开通的考场记录表 |
+| quest2knows | 知识点与试题关系表 |
+| questionrows | 题冒题表 |
+| questions | 试题表 |
+| questype | 题型表 |
+| session | 用户会话表 |
+| user | 用户表 |
+| user_group | 用户组表 |
+| module | 模型表 |
+| module_fields | 模型字段表 |
