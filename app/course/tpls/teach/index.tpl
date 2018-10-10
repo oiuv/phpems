@@ -30,7 +30,7 @@
 							使用帮助
 						</h5>
 						<p>
-							帮助论坛：<a href="http://www.phpems.net/bbs/">http://www.phpems.net/bbs/</a>
+							帮助论坛：<a href="https://github.com/oiuv/phpems">https://github.com/oiuv/phpems</a>
 						</p>
 						<p>
 							微信公众号：PHPEMS
