@@ -6,8 +6,9 @@
     }
   },
   "require": {
-    "illuminate/database": "^5.4",
-    "predis/predis": "^1.1"
+    "illuminate/database": "^5.5",
+    "predis/predis": "^1.1",
+    "overtrue/wechat": "~4.0"
   },
   "autoload": {
     "classmap": [
