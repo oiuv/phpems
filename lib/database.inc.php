@@ -5,7 +5,7 @@
  * Date: 2018/3/14
  * Time: 23:28
  */
-require __DIR__.'/config.inc.php';
+require_once __DIR__.'/config.inc.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
