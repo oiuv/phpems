@@ -8,7 +8,8 @@
   "require": {
     "illuminate/database": "^5.5",
     "predis/predis": "^1.1",
-    "overtrue/wechat": "~4.0"
+    "overtrue/wechat": "~4.0",
+    "overtrue/easy-sms": "^1.1"
   },
   "autoload": {
     "classmap": [

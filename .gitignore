@@ -3,3 +3,4 @@
 /test
 /vendor
 .DS_Store
+composer.lock
