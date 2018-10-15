@@ -1,7 +1,6 @@
 # [phpems v5.0](https://phpems.is.js.cn)
 
-开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net) 修改。
-重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。
+开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net) 修改。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。如果在安装和使用中发现ＢＵＧ，欢迎反馈，或联系本人（ＱＱ：7300637）。
 
 > 源码默认开启错误提示，生产环境请修改 `init.cls.php` 文件 `error_reporting` 关闭提示，并务必删除 `examples` 目录
 

@@ -20,5 +20,7 @@
     "files": [
       "lib/database.inc.php"
     ]
+  },
+  "require-dev": {
   }
 }
