@@ -12,7 +12,7 @@ class pepdo
     public $G;
     private $queryid = 0;
     private $linkid = 0;
-    private $log = 1;
+    private $log = DEBUG;
 
     public function __construct(&$G)
     {
@@ -23,7 +23,7 @@ class pepdo
     private function _log($sql, $query)
     {
         if ($this->log) {
-            $fp = fopen(__DIR__.'/../data/error.log', 'a');
+            $fp = fopen(__DIR__.'/../data/log/'.date('Ymd').'.log', 'a');
             fputs($fp, print_r($sql, true).print_r($query->errorInfo(), true));
             fclose($fp);
         }

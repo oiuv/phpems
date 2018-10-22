@@ -1,7 +1,11 @@
 <?php
-
-ini_set("display_errors", "on"); //生产环境请改为 off
-error_reporting(E_ALL ^ E_NOTICE);
+if (DEBUG) {
+    ini_set("display_errors", 1);
+    error_reporting(E_ALL ^ E_NOTICE);
+} else {
+    ini_set("display_errors", 0);
+    error_reporting(0);
+}
 
 class ginkgo
 {
