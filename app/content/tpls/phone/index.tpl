@@ -211,7 +211,7 @@
         {x2;if:!$userhash}
     </div>
 </div>
-<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
 <script>
     wx.config({
         debug: false,
