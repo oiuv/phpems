@@ -1,12 +1,14 @@
 <?php
+
 /*
- * Created on 2013-5-31
+ * This file is part of the phpems/phpems.
  *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
+
 class config_course
 {
-	public $fields = array('courseid','coursetitle','coursecsid','coursethumb','courseuserid','coursemoduleid','courseinputtime','coursemodifytime','coursesequence','coursedescribe');
+    public $fields = ['courseid', 'coursetitle', 'coursecsid', 'coursethumb', 'courseuserid', 'coursemoduleid', 'courseinputtime', 'coursemodifytime', 'coursesequence', 'coursedescribe'];
 }
-?>

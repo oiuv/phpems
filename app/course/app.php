@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
+ */
+
 class app
 {
     public $G;
@@ -18,31 +26,27 @@ class app
         $this->files = $this->G->make('files');
         $this->session = $this->G->make('session');
         $this->category = $this->G->make('category');
-        $this->course = $this->G->make('course','course');
-        $this->content = $this->G->make('content','course');
-        $this->user = $this->G->make('user','user');
+        $this->course = $this->G->make('course', 'course');
+        $this->content = $this->G->make('content', 'course');
+        $this->user = $this->G->make('user', 'user');
         $this->_user = $_user = $this->session->getSessionUser();
-        if(!$this->_user['sessionuserid'])
-        {
-            if($this->ev->get('userhash'))
-                exit(json_encode(array(
+        if (!$this->_user['sessionuserid']) {
+            if ($this->ev->get('userhash')) {
+                exit(json_encode([
                     'statusCode' => 301,
-                    "message" => "请您重新登陆",
-                    "callbackType" => 'forward',
-                    "forwardUrl" => "index.php?user-app-login"
-                )));
-            else
-            {
-                header("location:index.php?user-app-login");
-                exit;
+                    'message' => '请您重新登陆',
+                    'callbackType' => 'forward',
+                    'forwardUrl' => 'index.php?user-app-login',
+                ]));
             }
+
+            header('location:index.php?user-app-login');
+            exit;
         }
-        $this->tpl->assign('_user',$this->user->getUserById($this->_user['sessionuserid']));
+        $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
         $this->rcats = $rcats = $this->category->getCategoriesByArgs("catparent  = '0'");
-        $this->tpl->assign('rcats',$rcats);
-        $this->tpl->assign('userhash',$this->ev->get('userhash'));
-        $this->log = $this->G->make('log','course');
+        $this->tpl->assign('rcats', $rcats);
+        $this->tpl->assign('userhash', $this->ev->get('userhash'));
+        $this->log = $this->G->make('log', 'course');
     }
 }
-
-?>

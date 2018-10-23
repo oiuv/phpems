@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by [oiuv](https://github.com/oiuv).
- * User: i@oiuv.cn
- * Date: 2018-07-29
- * Time: 13:35
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
 
 namespace Model;

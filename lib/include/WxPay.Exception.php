@@ -1,13 +1,17 @@
 <?php
-/**
- * 
- * 微信支付API异常类
- * @author widyhu
+
+/*
+ * This file is part of the phpems/phpems.
  *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
-class WxPayException extends Exception {
-	public function errorMessage()
-	{
-		return $this->getMessage();
-	}
+
+class WxPayException extends Exception
+{
+    public function errorMessage()
+    {
+        return $this->getMessage();
+    }
 }

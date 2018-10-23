@@ -1,15 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: wuxiaomin
- * Date: 2018/3/14
- * Time: 23:28
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
+
 require_once __DIR__.'/config.inc.php';
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-$capsule = new Capsule;
+$capsule = new Capsule();
 
 $capsule->addConnection([
     'driver' => 'mysql',

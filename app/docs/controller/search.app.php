@@ -1,31 +1,32 @@
 <?php
+
 /*
- * Created on 2016-5-19
+ * This file is part of the phpems/phpems.
  *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
+
 class action extends app
 {
-	public function display()
-	{
-		$action = $this->ev->url(3);
-		if(!method_exists($this,$action))
-		$action = "index";
-		$this->$action();
-		exit;
-	}
+    public function display()
+    {
+        $action = $this->ev->url(3);
+        if (!method_exists($this, $action)) {
+            $action = 'index';
+        }
+        $this->$action();
+        exit;
+    }
 
-	private function index()
-	{
-		$page = $this->ev->get('page');
-		$keyword = $this->ev->get('keyword');
-		$docs = $this->doc->getDocList(array(array("AND","doctitle LIKE :doctitle",'doctitle',"%{$keyword}%")),$page);
-		$this->tpl->assign('page',$page);
-		$this->tpl->assign('docs',$docs);
-		$this->tpl->display('search_default');
-	}
+    private function index()
+    {
+        $page = $this->ev->get('page');
+        $keyword = $this->ev->get('keyword');
+        $docs = $this->doc->getDocList([['AND', 'doctitle LIKE :doctitle', 'doctitle', "%{$keyword}%"]], $page);
+        $this->tpl->assign('page', $page);
+        $this->tpl->assign('docs', $docs);
+        $this->tpl->display('search_default');
+    }
 }
-
-
-?>

@@ -1,11 +1,13 @@
 <?php
+
 /*
- * Created on 2011-12-5
+ * This file is part of the phpems/phpems.
  *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
-$lang['exam'] = array(
-	'questiontype' => array('单选题','多选题','不定项选择题','判断题','单选题',)
-);
-?>
+
+$lang['exam'] = [
+    'questiontype' => ['单选题', '多选题', '不定项选择题', '判断题', '单选题'],
+];

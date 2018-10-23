@@ -1,6 +1,6 @@
 <?php
 $header = <<<EOF
-This file is part of the oiuv/demo.
+This file is part of the phpems/phpems.
 
 (c) oiuv <i@oiuv.cn>
 

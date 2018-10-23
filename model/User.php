@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: xuefeng
- * Date: 2018/3/14
- * Time: 23:42
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
 
 namespace Model;

@@ -1,10 +1,13 @@
 <?php
-/**
- * Created by oiuv
- * User: i@oiuv.cn
- * Date: 2018-07-26
- * Time: 21:40
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
+
 require __DIR__.'/../vendor/autoload.php';
 
 use Illuminate\Database\Capsule\Manager as DB;
@@ -29,7 +32,6 @@ class Database
                 $table->timestamps();
             });
         }
-
     }
 
     // 回滚迁移
@@ -50,8 +52,9 @@ class Database
     public static function rename()
     {
         $table = 'test_table';
-        if (DB::schema()->hasTable($table))
+        if (DB::schema()->hasTable($table)) {
             DB::schema()->rename($table, 'test_demo');
+        }
     }
 
     // 升级数据库：4.2 → 5.0
@@ -67,7 +70,7 @@ class Database
     }
 }
 
-if (isset($_GET['action']))
+if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'migrate':
             try {
@@ -86,7 +89,8 @@ if (isset($_GET['action']))
             }
             break;
         default:
-            echo "没有数据库迁移操作";
+            echo '没有数据库迁移操作';
     }
-else
+} else {
     echo "<a href='https://laravel-china.org/docs/laravel/5.6/migrations/1400#renaming-and-dropping-tables' target='_blank'>数据库迁移操作指南</a>";
+}

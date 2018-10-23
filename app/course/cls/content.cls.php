@@ -1,111 +1,125 @@
 <?php
 
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
+ */
+
 class content_course
 {
-	public $G;
+    public $G;
 
-	public function __construct(&$G)
-	{
-		$this->G = $G;
-	}
+    public function __construct(&$G)
+    {
+        $this->G = $G;
+    }
 
-	public function _init()
-	{
-		$this->categories = NULL;
-		$this->tidycategories = NULL;
-		$this->sql = $this->G->make('sql');
-		$this->pdosql = $this->G->make('pdosql');
-		$this->db = $this->G->make('pepdo');
-		$this->pg = $this->G->make('pg');
-		$this->ev = $this->G->make('ev');
-		$this->module = $this->G->make('module');
-		$this->user = $this->G->make('user','user');
-	}
+    public function _init()
+    {
+        $this->categories = null;
+        $this->tidycategories = null;
+        $this->sql = $this->G->make('sql');
+        $this->pdosql = $this->G->make('pdosql');
+        $this->db = $this->G->make('pepdo');
+        $this->pg = $this->G->make('pg');
+        $this->ev = $this->G->make('ev');
+        $this->module = $this->G->make('module');
+        $this->user = $this->G->make('user', 'user');
+    }
 
-	public function getCourseContentNumber($courseid)
-	{
-		$data = array("count(*) AS number",'course',array(array('AND',"coursecsid = :coursecsid",'coursecsid',$courseid)));
-		$sql = $this->pdosql->makeSelect($data);
-		$r = $this->db->fetch($sql);
-		return $r['number'];
-	}
+    public function getCourseContentNumber($courseid)
+    {
+        $data = ['count(*) AS number', 'course', [['AND', 'coursecsid = :coursecsid', 'coursecsid', $courseid]]];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetch($sql);
 
-	public function getCourseList($args = 1,$page = 1,$number = 20,$order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
-	{
-		$data = array(
-			'select' => false,
-			'table' => 'course',
-			'query' => $args,
-			'orderby' => $order
-		);
-		$r = $this->db->listElements($page,$number,$data);
-		return $r;
-	}
+        return $r['number'];
+    }
 
-	public function delCourse($id)
-	{
-		return $this->db->delElement(array('table' => 'course','query' => array(array('AND',"courseid = :courseid",'courseid',$id))));
-	}
+    public function getCourseList($args = 1, $page = 1, $number = 20, $order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
+    {
+        $data = [
+            'select' => false,
+            'table' => 'course',
+            'query' => $args,
+            'orderby' => $order,
+        ];
+        $r = $this->db->listElements($page, $number, $data);
 
-	public function modifyCourse($id,$args)
-	{
-		if(isset($args['coursemoduleid']))
-		unset($args['coursemoduleid']);
-		$data = array(
-			'table' => 'course',
-			'value' => $args,
-			'query' => array(array('AND',"courseid = :courseid",'courseid',$id))
-		);
-		return $this->db->updateElement($data);
-	}
+        return $r;
+    }
 
-	public function addCourse($args)
-	{
-		return $this->db->insertElement(array('table' => 'course','query' => $args));
-	}
+    public function delCourse($id)
+    {
+        return $this->db->delElement(['table' => 'course', 'query' => [['AND', 'courseid = :courseid', 'courseid', $id]]]);
+    }
 
-	private function _getBasicCourseById($id)
-	{
-		$data = array(false,'course',array(array('AND',"courseid = :courseid",'courseid',$id)));
-		$sql = $this->pdosql->makeSelect($data);
-		return $this->db->fetch($sql);
-	}
+    public function modifyCourse($id, $args)
+    {
+        if (isset($args['coursemoduleid'])) {
+            unset($args['coursemoduleid']);
+        }
+        $data = [
+            'table' => 'course',
+            'value' => $args,
+            'query' => [['AND', 'courseid = :courseid', 'courseid', $id]],
+        ];
 
-	private function _modifyBasicCourseById($id,$args)
-	{
-		$data = array('course',$args,array(array('AND',"courseid = :courseid",'courseid',$id)));
-		$sql = $this->pdosql->makeUpdate($data);
-		return $this->db->exec($sql);
-	}
+        return $this->db->updateElement($data);
+    }
 
-	public function modifyBasciCourse($id,$args)
-	{
-		$this->_modifyBasiccourseById($id,$args);
-	}
+    public function addCourse($args)
+    {
+        return $this->db->insertElement(['table' => 'course', 'query' => $args]);
+    }
 
-	public function getBasicCourseById($id)
-	{
-		return $this->_getBasiccourseById($id);
-	}
+    private function _getBasicCourseById($id)
+    {
+        $data = [false, 'course', [['AND', 'courseid = :courseid', 'courseid', $id]]];
+        $sql = $this->pdosql->makeSelect($data);
 
-	public function getCourseById($id)
-	{
-		$data = array(false,'course',array(array('AND',"courseid = :courseid",'courseid',$id)));
-		$sql = $this->pdosql->makeSelect($data);
-		return $this->db->fetch($sql);
-	}
+        return $this->db->fetch($sql);
+    }
 
-	public function getNearCourseById($id,$catid)
-	{
-		$r = array();
-		$data = array(false,'course',array(array('AND',"courseid < :courseid",'courseid',$id),array('AND',"coursecatid = :catid",'catid',$catid)),false,"courseid DESC",5);
-		$sql = $this->pdosql->makeSelect($data);
-		$r['pre'] = $this->db->fetchAll($sql);
-		$data = array(false,'course',array(array('AND',"courseid > :courseid",'courseid',$id),array('AND',"coursecatid = :catid",'catid',$catid)),false,"courseid ASC",5);
-		$sql = $this->pdosql->makeSelect($data);
-		$r['next'] = $this->db->fetchAll($sql);
-		return $r;
-	}
+    private function _modifyBasicCourseById($id, $args)
+    {
+        $data = ['course', $args, [['AND', 'courseid = :courseid', 'courseid', $id]]];
+        $sql = $this->pdosql->makeUpdate($data);
+
+        return $this->db->exec($sql);
+    }
+
+    public function modifyBasciCourse($id, $args)
+    {
+        $this->_modifyBasiccourseById($id, $args);
+    }
+
+    public function getBasicCourseById($id)
+    {
+        return $this->_getBasiccourseById($id);
+    }
+
+    public function getCourseById($id)
+    {
+        $data = [false, 'course', [['AND', 'courseid = :courseid', 'courseid', $id]]];
+        $sql = $this->pdosql->makeSelect($data);
+
+        return $this->db->fetch($sql);
+    }
+
+    public function getNearCourseById($id, $catid)
+    {
+        $r = [];
+        $data = [false, 'course', [['AND', 'courseid < :courseid', 'courseid', $id], ['AND', 'coursecatid = :catid', 'catid', $catid]], false, 'courseid DESC', 5];
+        $sql = $this->pdosql->makeSelect($data);
+        $r['pre'] = $this->db->fetchAll($sql);
+        $data = [false, 'course', [['AND', 'courseid > :courseid', 'courseid', $id], ['AND', 'coursecatid = :catid', 'catid', $catid]], false, 'courseid ASC', 5];
+        $sql = $this->pdosql->makeSelect($data);
+        $r['next'] = $this->db->fetchAll($sql);
+
+        return $r;
+    }
 }
-
-?>

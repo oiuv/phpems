@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by oiuv.
- * User: i@oiuv.cn
- * Date: 2018-07-29
- * Time: 12:06
+
+/*
+ * This file is part of the phpems/phpems.
+ *
+ * (c) oiuv <i@oiuv.cn>
+ *
+ * This source file is subject to the MIT license that is bundled.
  */
 
 namespace Model;
@@ -17,7 +19,8 @@ class Area extends Model
     public $timestamps = false;
 
     // 获取地区考场
-    public function basics(){
+    public function basics()
+    {
         return $this->hasMany(Basic::class, 'basicareaid');
     }
 }
