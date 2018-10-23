@@ -2,8 +2,6 @@
 
 开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net) 修改。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。如果在安装和使用中发现ＢＵＧ，欢迎反馈，或联系本人（ＱＱ：7300637）。
 
-> 源码默认开启错误提示，生产环境请修改 `config.inc.php` 文件关闭 `DEBUG` 提示，并务必删除 `examples` 目录
-
 因使用部分第三方扩展包，系统要求`php>=7.0`，具体集成扩展包如下：
 
 | 扩展包 | 说明 |
@@ -82,11 +80,13 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 ## 安装
 
-    git clone git@github.com:oiuv/phpems.git
-    cd phpems
-    composer install
+    composer create-project --prefer-dist phpems/phpems phpems
     
-安装完成后，重命名 lib 目录下 `config.inc.example.php` 为 `config.inc.php` 并修改配置，然后导入数据库 `phpems5.sql` 即可。
+安装完成后，修改lib 目录下 `config.inc.php` 文件配置，然后导入 `exapmples` 目录下的数据库文件 `phpems.sql` 即可。
+
+默认管理员账号：peadmin，密码：peadmin
+
+> 源码默认开启错误提示，生产环境请修改 `config.inc.php` 文件关闭 `DEBUG` 提示，并务必删除 `examples` 目录
 
 ## 使用
 
