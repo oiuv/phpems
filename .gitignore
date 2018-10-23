@@ -2,5 +2,6 @@
 /lib/config.inc.php
 /test
 /vendor
-.DS_Store
+*.DS_Store
+.php_cs.cache
 composer.lock
