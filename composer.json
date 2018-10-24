@@ -34,7 +34,7 @@
   },
   "support": {
     "email": "i@oiuv.cn",
-    "source": "https://phpems.is.js.cn"
+    "source": "https://github.com/phpems/phpems"
   },
   "scripts": {
     "post-root-package-install": [

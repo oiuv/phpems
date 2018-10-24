@@ -5,6 +5,8 @@
  *
  * (c) oiuv <i@oiuv.cn>
  *
+ * 项目维护：oiuv(QQ:7300637) | 定制服务：火眼(QQ:278768688)
+ *
  * This source file is subject to the MIT license that is bundled.
  */
 
@@ -89,9 +91,9 @@ class db2
             return mysql_fetch_assoc($this->queryid);
         } elseif (2 == $type) {
             return mysql_fetch_object($this->queryid);
-        } else {
-            return mysql_fetch_array($this->queryid);
         }
+
+        return mysql_fetch_array($this->queryid);
     }
 
     //获取单条记录

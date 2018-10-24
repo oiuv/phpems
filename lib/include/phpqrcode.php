@@ -1582,7 +1582,7 @@
                     $remain = $payload - $chunks * 11;
                     $size = $chunks * 2;
                     if ($remain >= 6) {
-                        $size++;
+                        ++$size;
                     }
                     break;
                 case QR_MODE_8:
