@@ -94,5 +94,5 @@ if (isset($_GET['action'])) {
             echo '没有数据库迁移操作';
     }
 } else {
-    echo "<a href='https://laravel-china.org/docs/laravel/5.6/migrations/1400#renaming-and-dropping-tables' target='_blank'>数据库迁移操作指南</a>";
+    echo "<a href='https://laravel-china.org/docs/laravel/5.7/migrations/1400#renaming-and-dropping-tables' target='_blank'>数据库迁移操作指南</a>";
 }

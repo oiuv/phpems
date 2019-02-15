@@ -201,7 +201,7 @@ if标签格式：
 | module | 模型表 |
 | module_fields | 模型字段表 |
 
-#### 不使用model生成select sql
+#### 不使用model生成CURD sql
 ```php
 // 查询
 // $sql = 'SELECT '.$db_fields.' FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.' LIMIT '.$db_limits;
