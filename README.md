@@ -201,6 +201,46 @@ if标签格式：
 | module | 模型表 |
 | module_fields | 模型字段表 |
 
+#### 不使用model生成select sql
+```php
+// 查询
+// $sql = 'SELECT '.$db_fields.' FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.' LIMIT '.$db_limits;
+$args = [
+            $db_fields, // 多列使用数组
+            $db_tables, // 多表使用数组
+            $db_query, // [['AND','usergroupid = 1'],['AND','userid >= :userid','userid',$userid]]
+            $db_groups, // 可选
+            $db_orders, // 可选
+            $db_limits, // 可选
+        ];
+$sql = $this->pdosql->makeSelect($args);
+return $this->db->fetch($sql);
+
+// 新增
+// $sql = 'INSERT INTO '.$db_tables.' ('.implode(',', $db_field).') VALUES ('.implode(',', $db_value).')';
+args = [
+            'username' => $username,
+            'userpassword' => md5($userpassword),
+            'useremail' => $email
+        ];
+$data = ['user', $args];
+$sql = $this->pdosql->makeInsert($data);
+$this->db->exec($sql);
+return $this->db->lastInsertId();
+
+// 更新
+// $sql = 'UPDATE '.$db_tables.' SET '.$parsql.' WHERE '.$db_query.$db_groups.$db_orders.' LIMIT '.$db_limits;
+args = ['useremail' => $email];
+$data = ['user', $args, [['AND', 'userid = :userid', 'userid', $userid]]];
+$sql = $this->pdosql->makeUpdate($data);
+return $this->db->exec($sql);
+
+// 删除
+// $sql = 'DELETE FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.' LIMIT '.$db_limits;
+$data = ['user', [['AND', 'userid = :userid', 'userid', $userid]]];
+$sql = $this->pdosql->makeDelete($data);
+return $this->db->exec($sql);
+```
 ## 版权说明
 
 PHPEMS属于开源免费程序，开发者为火眼，您可以自由修改其中属于PHPEMS原创部分的代码，原则上您只要不通过出售PHPEMS相关源代码盈利，即可免费使用本软件。
