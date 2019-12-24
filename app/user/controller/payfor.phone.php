@@ -41,15 +41,15 @@ class action extends app
         $order = $this->order->getOrderById($ordersn, $this->_user['sessionuserid']);
         if (2 == $order['orderstatus']) {
             $message = [
-                'statusCode' => 200,
-                'message' => '订单支付成功',
+                'statusCode'   => 200,
+                'message'      => '订单支付成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-center-payfor-orderdetail&ordersn='.$ordersn,
+                'forwardUrl'   => 'index.php?user-center-payfor-orderdetail&ordersn='.$ordersn,
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '订单未支付成功，请刷新页面重新支付',
+            'message'    => '订单未支付成功，请刷新页面重新支付',
         ];
         }
         $this->G->R($message);
@@ -62,15 +62,15 @@ class action extends app
         if (1 == $order['orderstatus']) {
             $this->order->delOrder($oid);
             $message = [
-                'statusCode' => 200,
-                'message' => '订单删除成功',
+                'statusCode'   => 200,
+                'message'      => '订单删除成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '订单操作失败',
+            'message'    => '订单操作失败',
         ];
         }
         exit(json_encode($message));
@@ -82,7 +82,7 @@ class action extends app
         if (!$oid) {
             $message = [
                 'statusCode' => 300,
-                'message' => '非法参数',
+                'message'    => '非法参数',
             ];
             exit(json_encode($message));
         }
@@ -103,7 +103,7 @@ class action extends app
             if ($money < 1) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '最少需要充值1元',
+                    'message'    => '最少需要充值1元',
                 ];
                 exit(json_encode($message));
             }
@@ -117,10 +117,10 @@ class action extends app
             $args['orderuserinfo'] = ['username' => $this->_user['sessionusername']];
             $this->order->addOrder($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '订单创建成功',
+                'statusCode'   => 200,
+                'message'      => '订单创建成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-phone-payfor-orderdetail&ordersn='.$args['ordersn'],
+                'forwardUrl'   => 'index.php?user-phone-payfor-orderdetail&ordersn='.$args['ordersn'],
             ];
             exit(json_encode($message));
         }

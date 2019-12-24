@@ -59,10 +59,10 @@ class action extends app
             $args = $this->module->tidyNeedFieldsPars($args, $args['contentmoduleid'], ['group' => $group]);
             $id = $this->content->addContent($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?content-master-contents&catid={$args['contentcatid']}",
+                'forwardUrl'   => "index.php?content-master-contents&catid={$args['contentcatid']}",
             ];
             exit(json_encode($message));
         }
@@ -107,12 +107,12 @@ class action extends app
             $args = $this->module->tidyNeedFieldsPars($args, $content['contentmoduleid'], ['group' => $group]);
             $this->content->modifyContent($contentid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
-                'target' => '',
-                'rel' => '',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'target'       => '',
+                'rel'          => '',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?content-master-contents&catid={$content['contentcatid']}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?content-master-contents&catid={$content['contentcatid']}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -148,12 +148,12 @@ class action extends app
         $content = $this->content->getContentById($contentid);
         $this->content->delContent($contentid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
-            'target' => '',
-            'rel' => '',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
+            'target'       => '',
+            'rel'          => '',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?content-master-contents&catid={$content['contentcatid']}&page={$page}",
+            'forwardUrl'   => "index.php?content-master-contents&catid={$content['contentcatid']}&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -219,10 +219,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('movecposition')) {
@@ -237,15 +237,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl'   => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -259,15 +259,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "?content-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl'   => "?content-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -286,15 +286,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl'   => "index.php?content-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -302,7 +302,7 @@ class action extends app
 
         $message = [
                 'statusCode' => 300,
-                'message' => '无效访问',
+                'message'    => '无效访问',
             ];
         exit(json_encode($message));
     }

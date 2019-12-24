@@ -56,10 +56,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         } elseif ('nowuse' == $this->ev->get('action')) {
@@ -67,17 +67,17 @@ class action extends app
             $history = $this->doc->getDocHistroyById($dhid);
             $this->doc->modifyDoc($history['dhdocid'], ['doccontentid' => $dhid]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
 
         $message = [
                 'statusCode' => 300,
-                'message' => '无效访问',
+                'message'    => '无效访问',
             ];
         exit(json_encode($message));
     }
@@ -116,10 +116,10 @@ class action extends app
             $args['docneedmore'] = 1;
             $id = $this->doc->addDoc($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?docs-master-docs&catid={$args['doccatid']}",
+                'forwardUrl'   => "index.php?docs-master-docs&catid={$args['doccatid']}",
             ];
             exit(json_encode($message));
         }
@@ -142,10 +142,10 @@ class action extends app
             unset($args['doccatid']);
             $this->doc->modifyDoc($docid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?docs-master-docs&catid={$doc['doccatid']}&page={$page}{$this->u}",
+                'forwardUrl'   => "index.php?docs-master-docs&catid={$doc['doccatid']}&page={$page}{$this->u}",
             ];
             exit(json_encode($message));
         }
@@ -169,10 +169,10 @@ class action extends app
             $this->doc->delDoc($docid);
         }
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -240,10 +240,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?docs-master-docs&catid={$catid}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?docs-master-docs&catid={$catid}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('movecategory')) {
@@ -256,15 +256,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?docs-master-docs&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl'   => "index.php?docs-master-docs&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -272,7 +272,7 @@ class action extends app
 
         $message = [
                 'statusCode' => 300,
-                'message' => '无效访问',
+                'message'    => '无效访问',
             ];
         exit(json_encode($message));
     }

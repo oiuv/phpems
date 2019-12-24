@@ -27,7 +27,7 @@ class pepdo
     {
         if ($this->log) {
             $fp = fopen(__DIR__.'/../data/log/'.date('Ymd').'.log', 'a');
-            fputs($fp, print_r($sql, true).print_r($query->errorInfo(), true));
+            fwrite($fp, print_r($sql, true).print_r($query->errorInfo(), true));
             fclose($fp);
         }
     }
@@ -200,7 +200,7 @@ class pepdo
         return $this->lastInsertId();
     }
 
-    public function listElements($page, $number = 20, $args, $tablepre = DTH)
+    public function listElements($page, $number, $args, $tablepre = DTH)
     {
         if (!is_array($args)) {
             return false;

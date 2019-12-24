@@ -33,9 +33,9 @@ class block_content
     public function getBlockList($args, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'block',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'block',
+            'query'   => $args,
             'orderby' => 'blockid DESC',
         ];
 

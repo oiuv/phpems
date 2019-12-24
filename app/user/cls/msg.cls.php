@@ -33,11 +33,11 @@ class msg_user
         $data = [false, 'message', "messageposter = '{$userid}' OR messagereciver = '{$userid}'", false, 'messageid DESC', false];
         $sql = $this->sql->makeSelect($data);
         $data = [
-            'select' => false,
-            'table' => '('.$sql.')',
-            'index' => false,
-            'serial' => false,
-            'query' => 1,
+            'select'  => false,
+            'table'   => '('.$sql.')',
+            'index'   => false,
+            'serial'  => false,
+            'query'   => 1,
             'orderby' => 'messageid DESC',
             'groupby' => 'messagerelative',
         ];
@@ -48,11 +48,11 @@ class msg_user
     public function getMessageListContents($page, $relative)
     {
         $data = [
-            'select' => false,
-            'table' => 'message',
-            'index' => false,
-            'serial' => false,
-            'query' => "messagerelative = '{$relative}'",
+            'select'  => false,
+            'table'   => 'message',
+            'index'   => false,
+            'serial'  => false,
+            'query'   => "messagerelative = '{$relative}'",
             'orderby' => 'messageid DESC',
             'groupby' => false,
         ];

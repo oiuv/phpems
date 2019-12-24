@@ -79,15 +79,15 @@ class action extends app
         if ($this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid)) {
             $message = [
                 'statusCode' => 300,
-                'message' => '您已经开通了本考场',
+                'message'    => '您已经开通了本考场',
             ];
         } else {
             $this->basic->openBasic(['obuserid' => $userid, 'obbasicid' => $basicid, 'obendtime' => TIME + 30 * 24 * 3600]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-master-users-basics&userid={$userid}{$u}",
+                'forwardUrl'   => "index.php?exam-master-users-basics&userid={$userid}{$u}",
             ];
         }
         $this->G->R($message);
@@ -100,10 +100,10 @@ class action extends app
         $ob = $this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid);
         $this->basic->delOpenBasic($ob['obid']);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }
@@ -126,7 +126,7 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message' => '操作成功',
+                    'message'    => '操作成功',
                 ];
             } elseif ($usernames && $basics && $days) {
                 $usernames = implode(',', array_unique(explode(',', $usernames)));
@@ -139,7 +139,7 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message' => '操作成功',
+                    'message'    => '操作成功',
                 ];
             } elseif ($usergroupids && $basics && $days) {
                 $usergroupids = implode(',', array_unique(explode(',', $usergroupids)));
@@ -152,12 +152,12 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message' => '操作成功',
+                    'message'    => '操作成功',
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '参数错误',
+                    'message'    => '参数错误',
                 ];
             }
             $this->G->R($message);
