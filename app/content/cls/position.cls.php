@@ -70,9 +70,9 @@ class position_content
     public function getPosContentList($args, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'poscontent',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'poscontent',
+            'query'   => $args,
             'orderby' => 'pcsequence DESC, pcid DESC',
         ];
 

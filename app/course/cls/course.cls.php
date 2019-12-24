@@ -32,9 +32,9 @@ class course_course
     public function getCourseList($args, $page, $number = 20, $order = 'cstime DESC,csid DESC')
     {
         $data = [
-            'select' => false,
-            'table' => 'coursesubject',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'coursesubject',
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -70,7 +70,7 @@ class course_course
             if ($rs['logstatus']) {
                 $cdata['content'][$i] = $rs['logid'];
             }
-            ++$i;
+            $i++;
         }
         foreach ($cdata['course'] as $key => $p) {
             if ($key) {
@@ -167,9 +167,9 @@ class course_course
     {
         $args[] = ['AND', 'opencourse.ocuserid = user.userid'];
         $data = [
-            'select' => false,
-            'table' => ['opencourse', 'user'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['opencourse', 'user'],
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -233,9 +233,9 @@ class course_course
     public function getOpenCourseListByUserid($userid, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => ['opencourse', 'coursesubject'],
-            'query' => [['AND', 'opencourse.ocuserid = :userid', 'userid', $userid], ['AND', 'opencourse.occourseid = coursesubject.csid'], ['AND', 'opencourse.ocendtime > :ocendtime', 'ocendtime', TIME]],
+            'select'  => false,
+            'table'   => ['opencourse', 'coursesubject'],
+            'query'   => [['AND', 'opencourse.ocuserid = :userid', 'userid', $userid], ['AND', 'opencourse.occourseid = coursesubject.csid'], ['AND', 'opencourse.ocendtime > :ocendtime', 'ocendtime', TIME]],
             'orderby' => 'opencourse.ocendtime DESC,ocid DESC',
         ];
         $r = $this->db->listElements($page, $number, $data);

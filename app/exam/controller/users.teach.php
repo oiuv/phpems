@@ -248,21 +248,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'statusCode'   => 200,
+                    'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                     'callbackType' => 'forward',
-                    'forwardUrl' => "{$fname}",
+                    'forwardUrl'   => "{$fname}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '导出失败',
+                    'message'    => '导出失败',
                 ];
             }
         } else {
             $message = [
                 'statusCode' => 300,
-                'message' => '请选择好考场',
+                'message'    => '请选择好考场',
             ];
         }
         exit(json_encode($message));
@@ -322,21 +322,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode' => 200,
-                'message' => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'statusCode'   => 200,
+                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                 'callbackType' => 'forward',
-                'forwardUrl' => "{$fname}",
+                'forwardUrl'   => "{$fname}",
             ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '成绩导出失败',
+                'message'    => '成绩导出失败',
             ];
             }
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '请选择好考场',
+            'message'    => '请选择好考场',
         ];
         }
         exit(json_encode($message));
@@ -364,7 +364,7 @@ class action extends app
             if ($sessionvars['ehteacher'] != $this->_user['username']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => "本试卷已被{$sessionvars['ehteacher']}锁定批改中",
+                    'message'    => "本试卷已被{$sessionvars['ehteacher']}锁定批改中",
                 ];
                 exit(json_encode($message));
             }
@@ -386,7 +386,7 @@ class action extends app
             $this->favor->modifyExamHistory($args, $ehid);
             $message = [
                 'statusCode' => 200,
-                'message' => '评分完成',
+                'message'    => '评分完成',
                 'forwardUrl' => "index.php?exam-teach-users-exams&basicid={$sessionvars['ehbasicid']}",
             ];
             exit(json_encode($message));
@@ -394,7 +394,7 @@ class action extends app
 
         $message = [
                 'statusCode' => 300,
-                'message' => '非法参数',
+                'message'    => '非法参数',
             ];
         exit(json_encode($message));
         $number = [];
@@ -408,11 +408,11 @@ class action extends app
             $score[$key] = 0;
             if ($sessionvars['ehquestion']['questions'][$key]) {
                 foreach ($sessionvars['ehquestion']['questions'][$key] as $p) {
-                    ++$number[$key];
-                    ++$allnumber;
+                    $number[$key]++;
+                    $allnumber++;
                     if ($sessionvars['ehscorelist'][$p['questionid']] == $sessionvars['ehsetting']['examsetting']['questype'][$key]['score']) {
-                        ++$right[$key];
-                        ++$allright;
+                        $right[$key]++;
+                        $allright++;
                     }
                     $score[$key] = $score[$key] + $sessionvars['ehscorelist'][$p['questionid']];
                 }
@@ -420,11 +420,11 @@ class action extends app
             if ($sessionvars['ehquestion']['questionrows'][$key]) {
                 foreach ($sessionvars['ehquestion']['questionrows'][$key] as $v) {
                     foreach ($v['data'] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if ($sessionvars['ehscorelist'][$p['questionid']] == $sessionvars['ehsetting']['examsetting']['questype'][$key]['score']) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['ehscorelist'][$p['questionid']];
                     }
@@ -521,7 +521,7 @@ class action extends app
         $this->favor->modifyExamHistory(['ehneedresit' => 1], $ehid);
         $message = [
             'statusCode' => 200,
-            'message' => '设置成功',
+            'message'    => '设置成功',
             'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));

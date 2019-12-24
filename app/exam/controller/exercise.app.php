@@ -133,26 +133,26 @@ class action extends app
             }
 
             $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?exam-app-exercise-makescore&ehid={$ehid}",
+                    'forwardUrl'   => "index.php?exam-app-exercise-makescore&ehid={$ehid}",
                 ];
             $this->G->R($message);
         } else {
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
             $sessionvars = [
-                'examsession' => $eh['ehexam'],
-                'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
-                'examsessionsetting' => $eh['ehsetting'],
-                'examsessionbasic' => $eh['ehbasicid'],
-                'examsessionquestion' => $eh['ehquestion'],
+                'examsession'           => $eh['ehexam'],
+                'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
+                'examsessionsetting'    => $eh['ehsetting'],
+                'examsessionbasic'      => $eh['ehbasicid'],
+                'examsessionquestion'   => $eh['ehquestion'],
                 'examsessionuseranswer' => $eh['ehanswer'],
-                'examsessiontime' => $eh['ehtime'],
-                'examsessionscorelist' => $eh['ehscorelist'],
-                'examsessionscore' => $eh['ehscore'],
-                'examsessionstarttime' => $eh['ehstarttime'],
+                'examsessiontime'       => $eh['ehtime'],
+                'examsessionscorelist'  => $eh['ehscorelist'],
+                'examsessionscore'      => $eh['ehscore'],
+                'examsessionstarttime'  => $eh['ehstarttime'],
             ];
 
             $questype = $this->basic->getQuestypeList();
@@ -167,11 +167,11 @@ class action extends app
                 $score[$key] = 0;
                 if ($sessionvars['examsessionquestion']['questions'][$key]) {
                     foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if (1 == $sessionvars['examsessionscorelist'][$p['questionid']]) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }
@@ -179,11 +179,11 @@ class action extends app
                 if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
                     foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                         foreach ($v['data'] as $p) {
-                            ++$number[$key];
-                            ++$allnumber;
+                            $number[$key]++;
+                            $allnumber++;
                             if (1 == $sessionvars['examsessionscorelist'][$p['questionid']]) {
-                                ++$right[$key];
-                                ++$allright;
+                                $right[$key]++;
+                                $allright++;
                             }
                             $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                         }
@@ -233,7 +233,7 @@ class action extends app
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = floatval($rlen / $alen);
                                 } else {
@@ -276,7 +276,7 @@ class action extends app
                                                 break;
                                             }
 
-                                            ++$rlen;
+                                            $rlen++;
                                         }
                                         $score = $rlen / $alen;
                                     } else {
@@ -308,19 +308,19 @@ class action extends app
                 $args['examsessionstatus'] = 2;
                 $this->exam->modifyExamSession($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exercise-makescore&makescore=1&direct=1',
+                    'forwardUrl'   => 'index.php?exam-app-exercise-makescore&makescore=1&direct=1',
                 ];
             } else {
                 $args['examsessionstatus'] = 1;
                 $this->exam->modifyExamSession($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exercise-score',
+                    'forwardUrl'   => 'index.php?exam-app-exercise-score',
                 ];
             }
             $this->G->R($message);
@@ -381,7 +381,7 @@ class action extends app
                 if ($snumber > 100) {
                     $message = [
                         'statusCode' => 300,
-                        'message' => '强化练习最多一次只能抽取100道题',
+                        'message'    => '强化练习最多一次只能抽取100道题',
                     ];
                     $this->G->R($message);
                 }
@@ -437,10 +437,10 @@ class action extends app
                 $this->exam->insertExamSession($sargs);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '抽题成功，正在转入试题页面',
+                'statusCode'   => 200,
+                'message'      => '抽题成功，正在转入试题页面',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-app-exercise-paper',
+                'forwardUrl'   => 'index.php?exam-app-exercise-paper',
             ];
             $this->G->R($message);
         } else {

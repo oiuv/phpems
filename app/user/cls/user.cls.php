@@ -163,10 +163,10 @@ class user_user
     public function getUserListByArgs($page, $args, $number = 10)
     {
         $args = [
-            'table' => ['user', 'user_group'],
-            'query' => $args,
+            'table'  => ['user', 'user_group'],
+            'query'  => $args,
             'serial' => ['userinfo', 'groupright'],
-            'index' => 'userid',
+            'index'  => 'userid',
         ];
 
         return $this->db->listElements($page, $number, $args);
@@ -175,8 +175,8 @@ class user_user
     public function getUserListByGroupid($groupid, $number = 10, $page = 1)
     {
         $args = [
-            'table' => ['user', 'user_group'],
-            'query' => [['AND', 'user.usergroupid = :usergroupid', 'usergroupid', $groupid], ['AND', 'user.usergroupid = user_group.groupid']],
+            'table'  => ['user', 'user_group'],
+            'query'  => [['AND', 'user.usergroupid = :usergroupid', 'usergroupid', $groupid], ['AND', 'user.usergroupid = user_group.groupid']],
             'serial' => ['userinfo', 'groupright'],
         ];
 
@@ -245,9 +245,9 @@ class user_user
     public function getUserGroupList($args, $number = 10, $page = 1)
     {
         $args = [
-            'table' => 'user_group',
-            'query' => $args,
-            'index' => 'groupid',
+            'table'  => 'user_group',
+            'query'  => $args,
+            'index'  => 'groupid',
             'serial' => 'groupright',
         ];
 

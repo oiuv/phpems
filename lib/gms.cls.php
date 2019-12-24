@@ -41,13 +41,13 @@ class sphinx
     {
         $hexstring = iconv('UTF-8', 'UCS-2BE', $str);
         $str = '';
-        for ($i = 0; $i < strlen($hexstring) / 2; ++$i) {
+        for ($i = 0; $i < strlen($hexstring) / 2; $i++) {
             $str .= sprintf('%02X', ord(substr($hexstring, $i * 2 + 1, 1)));
             $str .= sprintf('%02X', ord(substr($hexstring, $i * 2, 1)));
         }
         $t = [];
         $number = strlen($str);
-        for ($i = 0; $i < $number; ++$i) {
+        for ($i = 0; $i < $number; $i++) {
             $m = intval($i / 4);
             if (0 == $i % 4) {
                 $l = $m * 4 + 2;

@@ -68,7 +68,7 @@ class session
         if (!$randCode) {
             $array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
             $randCode = '';
-            for ($i = 0; $i < 4; ++$i) {
+            for ($i = 0; $i < 4; $i++) {
                 $randCode .= $array[intval(rand(0, 35))];
             }
         }
@@ -242,11 +242,11 @@ class session
     public function getSessionUserList($page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'session',
-            'index' => false,
-            'serial' => false,
-            'query' => [['AND', 'sessionuserid > 0']],
+            'select'  => false,
+            'table'   => 'session',
+            'index'   => false,
+            'serial'  => false,
+            'query'   => [['AND', 'sessionuserid > 0']],
             'orderby' => 'sessionlogintime DESC',
             'groupby' => false,
         ];

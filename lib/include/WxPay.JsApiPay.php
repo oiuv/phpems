@@ -168,12 +168,12 @@ class JsApiPay
         $addrSign = sha1($params);
 
         $afterData = [
-            'addrSign' => $addrSign,
-            'signType' => 'sha1',
-            'scope' => 'jsapi_address',
-            'appId' => WxPayConfig::APPID,
+            'addrSign'  => $addrSign,
+            'signType'  => 'sha1',
+            'scope'     => 'jsapi_address',
+            'appId'     => WxPayConfig::APPID,
             'timeStamp' => $data['timestamp'],
-            'nonceStr' => $data['noncestr'],
+            'nonceStr'  => $data['noncestr'],
         ];
         $parameters = json_encode($afterData);
 

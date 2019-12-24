@@ -36,33 +36,33 @@ class action extends app
                         $group = $this->user->getGroupById($user['groupid']);
                         if (1 != $group['groupmoduleid']) {
                             exit(json_encode([
-                                'statusCode' => 300,
-                                'message' => '您无权进入后台',
+                                'statusCode'   => 300,
+                                'message'      => '您无权进入后台',
                                 'callbackType' => 'forward',
-                                'forwardUrl' => 'index.php?core-master-login',
+                                'forwardUrl'   => 'index.php?core-master-login',
                             ]));
                         }
 
                         $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                         $message = [
-                                'statusCode' => 200,
-                                'message' => '操作成功，正在转入目标页面',
+                                'statusCode'   => 200,
+                                'message'      => '操作成功，正在转入目标页面',
                                 'callbackType' => 'forward',
-                                'forwardUrl' => 'index.php?core-master',
+                                'forwardUrl'   => 'index.php?core-master',
                             ];
                         exit(json_encode($message));
                     }
 
                     $message = [
                             'statusCode' => 300,
-                            'message' => '操作失败，您的用户名或者密码错误！',
+                            'message'    => '操作失败，您的用户名或者密码错误！',
                         ];
                     exit(json_encode($message));
                 }
             }
             $message = [
                 'statusCode' => 300,
-                'message' => '操作失败，验证码错误！'.$_user['sessionrandcode'],
+                'message'    => '操作失败，验证码错误！'.$_user['sessionrandcode'],
             ];
             exit(json_encode($message));
         }

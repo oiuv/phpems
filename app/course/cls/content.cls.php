@@ -44,9 +44,9 @@ class content_course
     public function getCourseList($args = 1, $page = 1, $number = 20, $order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
     {
         $data = [
-            'select' => false,
-            'table' => 'course',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'course',
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);

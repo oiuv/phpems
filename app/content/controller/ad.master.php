@@ -30,12 +30,12 @@ class action extends app
             $adid = $this->ev->get('adid');
             $this->ad->modifyAd($adid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
-                'target' => '',
-                'rel' => '',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'target'       => '',
+                'rel'          => '',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?content-master-ad&page={$page}",
+                'forwardUrl'   => "index.php?content-master-ad&page={$page}",
             ];
             exit(json_encode($message));
         }

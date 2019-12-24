@@ -29,10 +29,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->favor->delExamHistory($ehid, $this->_user['sessionuserid']);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }
@@ -95,20 +95,20 @@ class action extends app
         $ehid = $this->ev->get('ehid');
         $eh = $this->favor->getExamHistoryById($ehid);
         $args = [
-                        'examsession' => $eh['ehexam'].'重做',
-                        'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
-                        'examsessionuserid' => $this->_user['sessionuserid'],
-                        'examsessionkey' => $eh['examid'],
-                        'examsessionsetting' => $eh['ehsetting'],
-                        'examsessionbasic' => $eh['ehbasicid'],
-                        'examsessionquestion' => $eh['ehquestion'],
+                        'examsession'           => $eh['ehexam'].'重做',
+                        'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
+                        'examsessionuserid'     => $this->_user['sessionuserid'],
+                        'examsessionkey'        => $eh['examid'],
+                        'examsessionsetting'    => $eh['ehsetting'],
+                        'examsessionbasic'      => $eh['ehbasicid'],
+                        'examsessionquestion'   => $eh['ehquestion'],
                         'examsessionuseranswer' => '',
-                        'examsessiontime' => $eh['ehtime'],
-                        'examsessionscorelist' => '',
-                        'examsessionscore' => 0,
-                        'examsessionstarttime' => TIME,
-                        'examsessionissave' => 0,
-                        'examsessionstatus' => 0,
+                        'examsessiontime'       => $eh['ehtime'],
+                        'examsessionscorelist'  => '',
+                        'examsessionscore'      => 0,
+                        'examsessionstarttime'  => TIME,
+                        'examsessionissave'     => 0,
+                        'examsessionstatus'     => 0,
                     ];
         $es = $this->exam->getExamSessionBySessionid();
         if ($es['examsessionid']) {
@@ -118,24 +118,24 @@ class action extends app
         }
         if (1 == $eh['ehtype']) {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
         ];
         } elseif (2 == $eh['ehtype']) {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
         ];
         } else {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
         ];
         }
         $this->G->R($message);
@@ -159,15 +159,15 @@ class action extends app
                         foreach ($q as $qid => $t) {
                             if (0 == $p['ehtype']) {
                                 if (1 != $scorelist[$qid]) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             } elseif (1 == $p['ehtype']) {
                                 if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             } else {
                                 if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             }
                         }
@@ -179,15 +179,15 @@ class action extends app
                             foreach ($q['data'] as $qid => $t) {
                                 if (0 == $p['ehtype']) {
                                     if (1 != $scorelist[$qid]) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 } elseif (1 == $p['ehtype']) {
                                     if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 } else {
                                     if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 }
                             }

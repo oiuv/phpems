@@ -49,9 +49,9 @@ class ad
     public function getAdList($args, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'ad',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'ad',
+            'query'   => $args,
             'orderby' => 'adid DESC',
         ];
 

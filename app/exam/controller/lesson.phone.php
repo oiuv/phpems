@@ -31,15 +31,15 @@ class action extends app
                 $args['fbuserid'] = $this->_user['sessionuserid'];
                 $this->feedback->addFeedBack($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '提交成功，请等待管理员处理',
+                    'statusCode'   => 200,
+                    'message'      => '提交成功，请等待管理员处理',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'back',
+                    'forwardUrl'   => 'back',
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '缺少参数',
+                'message'    => '缺少参数',
             ];
             }
             $this->G->R($message);
@@ -67,10 +67,10 @@ class action extends app
             $knowsid = $this->ev->getCookie('knowsid');
             if (!$questid || !$knowsid) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作超时，请重新开始练习',
+                    'statusCode'   => 200,
+                    'message'      => '操作超时，请重新开始练习',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-phone-lesson',
+                    'forwardUrl'   => 'index.php?exam-phone-lesson',
                 ];
                 $this->G->R($message);
             }
@@ -89,7 +89,7 @@ class action extends app
                         if ($question['qrnumber'] >= 1) {
                             $qunumber = $qunumber + $question['qrnumber'];
                             if ($number > $qunumber) {
-                                ++$i;
+                                $i++;
                             }
                         } else {
                             break;
@@ -110,7 +110,7 @@ class action extends app
                             if ($tmpn == $pi) {
                                 $vq = $p;
                             }
-                            ++$pi;
+                            $pi++;
                         }
                         $this->tpl->assign('vquestion', $vq);
                         $this->tpl->assign('tmpn', $tmpn + 1);
@@ -118,7 +118,7 @@ class action extends app
                 } else {
                     $message = [
                         'statusCode' => 300,
-                        'message' => '您已经做完所有的题了',
+                        'message'    => '您已经做完所有的题了',
                     ];
                     $this->G->R($message);
                 }
@@ -144,15 +144,15 @@ class action extends app
                 $this->ev->setCookie('knowsid', $knowsid, 3600 * 24);
                 $this->ev->setCookie('number', $number);
                 $message = [
-                    'statusCode' => 200,
+                    'statusCode'   => 200,
                     'callbackType' => 'forward',
-                    'message' => '系统正在抽题，请稍等',
-                    'forwardUrl' => 'index.php?exam-phone-lesson-paper',
+                    'message'      => '系统正在抽题，请稍等',
+                    'forwardUrl'   => 'index.php?exam-phone-lesson-paper',
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '非法参数',
+                    'message'    => '非法参数',
                 ];
             }
             $this->G->R($message);

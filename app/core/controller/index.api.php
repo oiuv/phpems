@@ -40,7 +40,7 @@ class action extends app
         if (!$this->G->make('strings')->isEmail($email)) {
             $message = [
                 'statusCode' => 300,
-                'message' => '错误的邮箱',
+                'message'    => '错误的邮箱',
             ];
             exit(json_encode($message));
         }
@@ -49,14 +49,14 @@ class action extends app
         if (!$user && 'reg' != $action) {
             $message = [
                 'statusCode' => 300,
-                'message' => '该邮箱未注册',
+                'message'    => '该邮箱未注册',
             ];
             exit(json_encode($message));
         }
         if ($user && 'reg' == $action) {
             $message = [
                 'statusCode' => 300,
-                'message' => '该邮箱已注册',
+                'message'    => '该邮箱已注册',
             ];
             exit(json_encode($message));
         }
@@ -71,7 +71,7 @@ class action extends app
         if (!$app['appsetting']['emailverify']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '管理员未开启邮箱验证',
+                'message'    => '管理员未开启邮箱验证',
             ];
             exit(json_encode($message));
         }
@@ -84,7 +84,7 @@ class action extends app
         } else {
             $message = [
                 'statusCode' => 300,
-                'message' => '管理邮箱设置错误，请联系管理员',
+                'message'    => '管理邮箱设置错误，请联系管理员',
             ];
             exit(json_encode($message));
         }

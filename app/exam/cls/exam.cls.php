@@ -135,11 +135,11 @@ class exam_exam
     {
         $args[] = ['AND', 'examsession.examsessionuserid = user.userid'];
         $data = [
-            'select' => false,
-            'table' => ['examsession', 'user'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['examsession', 'user'],
+            'query'   => $args,
             'orderby' => 'examsessionstarttime DESC',
-            'serial' => ['examsessionsetting'],
+            'serial'  => ['examsessionsetting'],
         ];
         $r = $this->db->listElements($page, $number, $data);
 

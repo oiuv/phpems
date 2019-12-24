@@ -28,17 +28,17 @@ class action extends app
         if ($this->data['openbasics'][$basicid]) {
             $this->session->setSessionValue(['sessioncurrent' => $basicid]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-phone-basics',
+                'forwardUrl'   => 'index.php?exam-phone-basics',
             ];
         } else {
             $message = [
-                'statusCode' => 200,
-                'message' => '您尚未开通本考场，系统将引导您开通',
+                'statusCode'   => 200,
+                'message'      => '您尚未开通本考场，系统将引导您开通',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-phone-basics-detail&basicid='.$basicid,
+                'forwardUrl'   => 'index.php?exam-phone-basics-detail&basicid='.$basicid,
             ];
         }
         $this->G->R($message);

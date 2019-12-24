@@ -31,9 +31,9 @@ class coupon_bank
     public function getCouponList($args, $page, $number = 10)
     {
         $data = [
-            'select' => false,
-            'table' => 'coupon',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'coupon',
+            'query'   => $args,
             'orderby' => 'couponaddtime DESC',
         ];
 

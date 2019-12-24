@@ -30,10 +30,10 @@ class action extends app
             $this->exam->delQuestionRows($questionid);
         }
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -46,16 +46,16 @@ class action extends app
         if ($question['data']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '操作失败，请先删除子试题',
+                'message'    => '操作失败，请先删除子试题',
             ];
             exit(json_encode($message));
         }
         $this->exam->delQuestionRows($questionid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
         ];
         exit(json_encode($message));
     }
@@ -68,10 +68,10 @@ class action extends app
         $this->exam->delQuestions($questionid);
         $this->exam->resetRowsQuestionNumber($questionparent);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
         ];
         exit(json_encode($message));
     }
@@ -82,10 +82,10 @@ class action extends app
         $questionid = $this->ev->get('questionid');
         $questions = $this->exam->backQuestionRows($questionid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-recyle-rows&page={$page}",
+            'forwardUrl'   => "index.php?exam-teach-recyle-rows&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -98,10 +98,10 @@ class action extends app
             $questionid = $this->ev->get('questionid');
             $this->exam->modifyQuestionRows($questionid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -141,10 +141,10 @@ class action extends app
             }
             $this->exam->modifyQuestions($questionid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$args['questionparent']}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$args['questionparent']}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -219,10 +219,10 @@ class action extends app
             $this->exam->addQuestions($args);
             $this->exam->resetRowsQuestionNumber($questionparent);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -246,7 +246,7 @@ class action extends app
             $this->exam->resetRowsQuestionNumber($questionparent);
             $message = [
                 'statusCode' => 200,
-                'message' => '操作成功',
+                'message'    => '操作成功',
                 'forwardUrl' => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
             ];
             $this->G->R($message);
@@ -269,10 +269,10 @@ class action extends app
             $this->exam->modifyQuestionSequence($key, ['questionsequence' => $l]);
         }
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-rowsquestions-rowsdetail&questionid={$questionparent}&page={$page}{$u}",
         ];
         exit(json_encode($message));
     }
@@ -284,10 +284,10 @@ class action extends app
             $content = $this->ev->get('content');
             $this->exam->insertQuestionRowsBat($content);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -306,10 +306,10 @@ class action extends app
             $args['qrusername'] = $this->_user['username'];
             $this->exam->addQuestionRows($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-rowsquestions&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }

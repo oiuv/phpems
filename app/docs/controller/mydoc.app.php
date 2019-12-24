@@ -18,10 +18,10 @@ class action extends app
         if (!$this->_user['sessionuserid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                    'statusCode' => 301,
-                    'message' => '请您重新登录',
+                    'statusCode'   => 301,
+                    'message'      => '请您重新登录',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?user-app-login',
+                    'forwardUrl'   => 'index.php?user-app-login',
                 ]));
             }
 
@@ -70,10 +70,10 @@ class action extends app
                 $this->doc->addDocHistory($args);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功,请等待管理员审核',
+                'statusCode'   => 200,
+                'message'      => '操作成功,请等待管理员审核',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?docs-app-docs&docid={$docid}",
+                'forwardUrl'   => "index.php?docs-app-docs&docid={$docid}",
             ];
             exit(json_encode($message));
         }

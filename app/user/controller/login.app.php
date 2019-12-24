@@ -32,7 +32,7 @@ class action extends app
             if (TIME - $tmp['sessionlasttime'] < 1) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败',
+                    'message'    => '操作失败',
                 ];
                 exit(json_encode($message));
             }
@@ -45,17 +45,17 @@ class action extends app
                     }
                     $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                     $message = [
-                        'statusCode' => 201,
-                        'message' => '操作成功',
+                        'statusCode'   => 201,
+                        'message'      => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'reload',
+                        'forwardUrl'   => 'reload',
                     ];
                     $this->G->R($message);
                 } else {
                     $message = [
                         'statusCode' => 300,
                         'errorinput' => 'args[username]',
-                        'message' => '登录失败，因为用户名或密码错误',
+                        'message'    => '登录失败，因为用户名或密码错误',
                     ];
                     exit(json_encode($message));
                 }
@@ -63,7 +63,7 @@ class action extends app
                 $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message' => '登录失败，因为用户名不存在',
+                    'message'    => '登录失败，因为用户名不存在',
                 ];
                 exit(json_encode($message));
             }

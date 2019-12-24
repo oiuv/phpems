@@ -40,12 +40,12 @@ class action extends app
             unset($args['blocktype']);
             $this->block->modifyBlock($posid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
-                'target' => '',
-                'rel' => '',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'target'       => '',
+                'rel'          => '',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?content-master-positions&page={$page}",
+                'forwardUrl'   => "index.php?content-master-positions&page={$page}",
             ];
             exit(json_encode($message));
         }
@@ -75,10 +75,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->position->addPos($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?content-master-positions',
+                'forwardUrl'   => 'index.php?content-master-positions',
             ];
             exit(json_encode($message));
         }
@@ -94,10 +94,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->position->modifyPos($posid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -121,15 +121,15 @@ class action extends app
         if ($this->position->getPosContentNumber($posid)) {
             $message = [
                 'statusCode' => 300,
-                'message' => '请先删除本推荐位下的内容',
+                'message'    => '请先删除本推荐位下的内容',
             ];
         } else {
             $this->position->delPos($posid);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
         }
         exit(json_encode($message));
@@ -141,10 +141,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->position->delPosContent($pcid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -178,17 +178,17 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
 
         $message = [
                 'statusCode' => 300,
-                'message' => '无效访问',
+                'message'    => '无效访问',
             ];
         exit(json_encode($message));
     }

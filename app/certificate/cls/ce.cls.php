@@ -30,9 +30,9 @@ class ce_certificate
     {
         $data = [
             'select' => false,
-            'table' => 'certificate',
-            'query' => 1,
-            'index' => 'ceid',
+            'table'  => 'certificate',
+            'query'  => 1,
+            'index'  => 'ceid',
         ];
         $r = $this->db->listElements($page, $number, $data);
 
@@ -46,12 +46,12 @@ class ce_certificate
     {
         $args[] = ['AND', 'ceid = ceqceid'];
         $data = [
-            'select' => false,
-            'table' => ['cequeue', 'certificate'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['cequeue', 'certificate'],
+            'query'   => $args,
             'orderby' => 'ceqid desc',
-            'index' => 'ceqid',
-            'serial' => 'ceqinfo',
+            'index'   => 'ceqid',
+            'serial'  => 'ceqinfo',
         ];
         $r = $this->db->listElements($page, $number, $data);
 

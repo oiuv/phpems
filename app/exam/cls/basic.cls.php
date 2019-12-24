@@ -87,9 +87,9 @@ class basic_exam
     {
         $args[] = ['AND', 'openbasics.obuserid = user.userid'];
         $data = [
-            'select' => false,
-            'table' => ['openbasics', 'user'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['openbasics', 'user'],
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);

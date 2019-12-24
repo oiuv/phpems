@@ -312,45 +312,45 @@ class favor_exam
             $t = $exam['examsessiontime'] * 60;
         }
         $args = [
-                    'ehtype' => $exam['examsessiontype'],
-                    'ehtimelist' => $exam['examsessiontimelist'],
-                    'ehexam' => $exam['examsession'],
-                    'ehexamid' => $exam['examsessionkey'],
-                    'ehbasicid' => $exam['examsessionbasic'],
-                    'ehquestion' => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
-                    'ehsetting' => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
+                    'ehtype'       => $exam['examsessiontype'],
+                    'ehtimelist'   => $exam['examsessiontimelist'],
+                    'ehexam'       => $exam['examsession'],
+                    'ehexamid'     => $exam['examsessionkey'],
+                    'ehbasicid'    => $exam['examsessionbasic'],
+                    'ehquestion'   => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
+                    'ehsetting'    => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
                     'ehuseranswer' => $exam['examsessionuseranswer'],
-                    'ehstarttime' => $exam['examsessionstarttime'],
-                    'ehtime' => $t,
-                    'ehscore' => $exam['examsessionscore'],
-                    'ehscorelist' => $exam['examsessionscorelist'],
-                    'ehuserid' => $exam['examsessionuserid'],
-                    'ehusername' => $user['username'],
-                    'ehdecide' => intval($exam['examsessionsetting']['examdecide']),
-                    'ehstatus' => $status,
-                    'ehispass' => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
+                    'ehstarttime'  => $exam['examsessionstarttime'],
+                    'ehtime'       => $t,
+                    'ehscore'      => $exam['examsessionscore'],
+                    'ehscorelist'  => $exam['examsessionscorelist'],
+                    'ehuserid'     => $exam['examsessionuserid'],
+                    'ehusername'   => $user['username'],
+                    'ehdecide'     => intval($exam['examsessionsetting']['examdecide']),
+                    'ehstatus'     => $status,
+                    'ehispass'     => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
         ];
         /**
-        try
-        {
-            $this->db->beginTransaction();
-            $data = array('examhistory',$args);
-            $sql = $this->pdosql->makeInsert($data);
-            $aff = $this->db->exec($sql);
-            if(!$aff)
-            throw new PDOException("Insert Examhsitory Error");
-            $ehid = $this->db->lastInsertId();
-            $aff = $this->exam->delExamSession($sessionid);
-            if(!$aff)
-            throw new PDOException("Delete Examsession Error");
-            $this->db->commit();
-            return $ehid;
-        }
-        catch(PDOException $e)
-        {
-            $this->db->rollback();
-            return false;
-        }
+         * try
+         * {
+         * $this->db->beginTransaction();
+         * $data = array('examhistory',$args);
+         * $sql = $this->pdosql->makeInsert($data);
+         * $aff = $this->db->exec($sql);
+         * if(!$aff)
+         * throw new PDOException("Insert Examhsitory Error");
+         * $ehid = $this->db->lastInsertId();
+         * $aff = $this->exam->delExamSession($sessionid);
+         * if(!$aff)
+         * throw new PDOException("Delete Examsession Error");
+         * $this->db->commit();
+         * return $ehid;
+         * }
+         * catch(PDOException $e)
+         * {
+         * $this->db->rollback();
+         * return false;
+         * }
          **/
         $data = ['examhistory', $args];
         $sql = $this->pdosql->makeInsert($data);
@@ -382,9 +382,9 @@ class favor_exam
     public function getExamScoreListByBasicId($basicid, $page)
     {
         $data = [
-            'select' => false,
-            'table' => ['examhistory', 'user'],
-            'query' => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
+            'select'  => false,
+            'table'   => ['examhistory', 'user'],
+            'query'   => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
             'orderby' => 'ehscore DESC,ehid DESC',
         ];
 
