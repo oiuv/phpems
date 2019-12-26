@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -28,7 +28,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-2">知识点：</label>
 							<div class="col-sm-9">
-								<textarea cols="72" rows="4" class="form-control" name="args[qrknowsid]" id="questionknowsid" readonly>{x2;if:is_array($question['qrknowsid'])}{x2;tree:$question['qrknowsid'],know,kid}{x2;v:know['knowsid']}:{x2;v:know['knows']}{x2;endtree}{x2;endif}</textarea>
+								<textarea cols="72" needle="needle" msg="请选择知识点" rows="4" class="form-control" name="args[qrknowsid]" id="questionknowsid" readonly>{x2;tree:$question['qrknowsid'],know,kid}{x2;v:know['knowsid']}:{x2;v:know['knows']}{x2;enter}{x2;endif}</textarea>
 				  			</div>
 				  		</div>
 						<div class="form-group">
@@ -53,6 +53,8 @@
 					  		<div class="col-sm-9">
 					  			<input type="button" class="btn btn-primary" value="选定" onclick="javascript:setKnowsList('questionknowsid','iknowsselect','+');"/>
 					  			<input type="button" class="btn btn-danger" value="清除" onclick="javascript:setKnowsList('questionknowsid','iknowsselect','-');"/>
+								<input type="button" class="btn btn-warning" value="储存" onclick="javascript:$.cookie('phpems-knowsselector',$('#questionknowsid').val());alert('储存成功');"/>
+								<input type="button" class="btn btn-info" value="载入" onclick="javascript:$('#questionknowsid').val($.cookie('phpems-knowsselector'));"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -89,11 +91,9 @@
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="questionid" value="{x2;$question['qrid']}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
-                                {x2;if:is_array($search)}
 							  	{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 								{x2;endtree}
-                                {x2;endif}
 							</div>
 						</div>
 					</form>

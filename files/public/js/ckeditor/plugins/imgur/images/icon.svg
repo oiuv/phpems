@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+    <g transform="translate(-384.57-499.8)">
+        <path d="m-170.49-27.421h87.55c3.577 0 6.458 2.783 6.458 6.241v87.978c0 3.457-2.88 6.241-6.457 6.241h-87.55c-3.577 0-6.457-2.783-6.457-6.241v-87.978c0-3.457 2.88-6.241 6.457-6.241" color="black" fill-rule="evenodd" transform="matrix(.4778 0 0 .4778 469.11 512.9)" />
+        <g transform="translate(0 .32)">
+            <path d="m405.93 539.14c0 3.4 5.28 3.32 5.28 0v-18.84c0-3.4-5.28-3.28-5.28 0z" fill="#e2e6e7" stroke="#e3e6e7" stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" />
+            <circle r="5" cy="509.8" cx="408.57" color-interpolation-filters="linearRGB" color="#000" image-rendering="auto" color-rendering="auto" fill-rule="evenodd" color-interpolation="sRGB" fill="#c0f41b" shape-rendering="auto" />
+        </g>
+    </g>
+</svg>

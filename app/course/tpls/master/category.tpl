@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -20,7 +20,7 @@
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
-						分类管理
+                        {x2;if:$parent}{x2;$categories[$parent]['catname']}{x2;else}一级分类{x2;endif}
 						<span class="dropdown pull-right">
 							<a class="btn btn-primary" href="#" data-toggle="dropdown">添加分类 <strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
@@ -29,7 +29,6 @@
 		                    </ul>
 						</span>
 					</h4>
-					<h4>{x2;if:$parent}{x2;$categories[$parent]['catname']}{x2;else}一级分类{x2;endif}</h4>
 					<form action="index.php?{x2;$_app}-master-category-lite" method="post">
 						<fieldset>
 							<table class="table table-hover table-bordered">
@@ -63,11 +62,9 @@
 							</table>
 							<div class="control-group">
 					            <div class="controls">
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">更改排序</button>
 						            </label>

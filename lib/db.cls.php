@@ -67,7 +67,7 @@ class db2
         if (!$this->linkid) {
             $this->connect();
         }
-        $this->q++;
+        ++$this->q;
         $this->queryid = mysql_query($sql);
         if (mysql_errno($this->linkid) && $this->debug) {
             exit('ERRO:'.$sql.':'.mysql_error());
@@ -91,9 +91,9 @@ class db2
             return mysql_fetch_assoc($this->queryid);
         } elseif (2 == $type) {
             return mysql_fetch_object($this->queryid);
+        } else {
+            return mysql_fetch_array($this->queryid);
         }
-
-        return mysql_fetch_array($this->queryid);
     }
 
     //获取单条记录
@@ -162,7 +162,7 @@ class db2
     }
 
     //列出数据
-    public function listElements($page, $number, $args, $type = 1)
+    public function listElements($page, $number = 20, $args, $type = 1)
     {
         if (!is_array($args)) {
             return false;

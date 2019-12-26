@@ -89,10 +89,10 @@ class work
     public function getWorkList($args, $page, $number = 10)
     {
         $data = [
-            'select'  => false,
-            'table'   => 'work',
-            'query'   => $args,
-            'serial'  => 'workinfo',
+            'select' => false,
+            'table' => 'work',
+            'query' => $args,
+            'serial' => 'workinfo',
             'orderby' => 'workday DESC',
         ];
         $r = $this->db->listElements($page, $number, $data);

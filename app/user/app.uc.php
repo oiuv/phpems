@@ -33,10 +33,10 @@ class app
         if ($_user['sessionuserid'] && 'logout' != $this->ev->url(2)) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 200,
-                'message'      => '您已经登录',
+                'statusCode' => 200,
+                'message' => '您已经登录',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-center',
+                'forwardUrl' => 'index.php?user-center',
             ]));
             }
 
@@ -74,32 +74,32 @@ class app
                 $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message'    => '登录失败',
+                    'message' => '登录失败',
                 ];
                 exit(json_encode($message));
             }
             /**
-             * exit;
-             * $tmp = $this->session->getSessionValue();
-             * if(TIME - $tmp['sessionlasttime'] < 1)
-             * {
-             * $message = array(
-             * 'statusCode' => 300,
-             * "message" => "操作失败"
-             * );
-             * exit(json_encode($message));
-             * }
-             * $args = $this->ev->get('args');
+            exit;
+            $tmp = $this->session->getSessionValue();
+            if(TIME - $tmp['sessionlasttime'] < 1)
+            {
+                $message = array(
+                    'statusCode' => 300,
+                    "message" => "操作失败"
+                );
+                exit(json_encode($message));
+            }
+            $args = $this->ev->get('args');
              **/
             $user = $this->user->getUserByUserName($username);
             if ($user['userid']) {
                 $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                 $message = [
-                        'statusCode'   => 201,
-                        'message'      => '操作成功',
-                        'loadJs'       => $ucsynlogin,
+                        'statusCode' => 201,
+                        'message' => '操作成功',
+                        'loadJs' => $ucsynlogin,
                         'callbackType' => 'forward',
-                        'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+                        'forwardUrl' => 'index.php?'.$this->G->defaultApp,
                     ];
                 $this->G->R($message);
             } else {
@@ -107,11 +107,11 @@ class app
                 $id = $this->user->insertUser(['username' => $username, 'usergroupid' => $defaultgroup['groupid'], 'userpassword' => md5($password), 'useremail' => $email]);
                 $this->session->setSessionUser(['sessionuserid' => $id, 'sessionpassword' => md5($password), 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $defaultgroup['groupid'], 'sessionlogintime' => TIME, 'sessionusername' => $username]);
                 $message = [
-                    'statusCode'   => 201,
-                    'message'      => '操作成功',
-                    'loadJs'       => $ucsynlogin,
+                    'statusCode' => 201,
+                    'message' => '操作成功',
+                    'loadJs' => $ucsynlogin,
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+                    'forwardUrl' => 'index.php?'.$this->G->defaultApp,
                 ];
                 $this->G->R($message);
             }
@@ -145,7 +145,7 @@ class app
                 }
                 $message = [
                     'statusCode' => 300,
-                    'message'    => $msg,
+                    'message' => $msg,
                 ];
                 exit(json_encode($message));
             }
@@ -171,11 +171,11 @@ class app
                 }
             }
             $message = [
-                'statusCode'   => 201,
-                'message'      => '操作成功',
-                'loadJs'       => $ucsynlogin,
+                'statusCode' => 201,
+                'message' => '操作成功',
+                'loadJs' => $ucsynlogin,
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+                'forwardUrl' => 'index.php?'.$this->G->defaultApp,
             ];
             exit(json_encode($message));
         }
@@ -198,11 +198,11 @@ class app
             }
         }
         $message = [
-            'statusCode'   => 201,
-            'message'      => '操作成功',
-            'loadJs'       => $ucsynlogin,
+            'statusCode' => 201,
+            'message' => '操作成功',
+            'loadJs' => $ucsynlogin,
             'callbackType' => 'forward',
-            'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+            'forwardUrl' => 'index.php?'.$this->G->defaultApp,
         ];
         $this->G->R($message);
         //header("location:index.php");

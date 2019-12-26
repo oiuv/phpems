@@ -22,6 +22,15 @@ class action extends app
         exit;
     }
 
+    private function addpage()
+    {
+        $courseid = intval($this->ev->get('courseid'));
+        $modules = $this->module->getModulesByApp($this->G->app);
+        $this->tpl->assign('courseid', $courseid);
+        $this->tpl->assign('modules', $modules);
+        $this->tpl->display('addpage');
+    }
+
     private function add()
     {
         if ($this->ev->get('submit')) {
@@ -33,27 +42,30 @@ class action extends app
             $args = $this->module->tidyNeedFieldsPars($args, $args['coursemoduleid'], ['group' => $group]);
             $id = $this->content->addCourse($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'target'       => '',
-                'rel'          => '',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?course-master-contents&courseid={$args['coursecsid']}",
+                'forwardUrl' => "index.php?course-master-contents&courseid={$args['coursecsid']}",
             ];
             exit(json_encode($message));
         }
 
         $courseid = intval($this->ev->get('courseid'));
-        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+        $moduleid = intval($this->ev->get('moduleid'));
+        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'course'"]]);
         $modules = $this->module->getModulesByApp($this->G->app);
+        $fields = $this->module->getMoudleFields($moduleid, 1);
+        $forms = $this->html->buildHtml($fields);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {
             $tpls[] = substr(basename($p), 0, -4);
         }
         $this->tpl->assign('tpls', $tpls);
+        $this->tpl->assign('moduleid', $moduleid);
         $this->tpl->assign('modules', $modules);
         $this->tpl->assign('parentcat', $parentcat);
         $this->tpl->assign('courseid', $courseid);
+        $this->tpl->assign('forms', $forms);
         $this->tpl->display('content_add');
     }
 
@@ -69,10 +81,10 @@ class action extends app
             $args = $this->module->tidyNeedFieldsPars($args, $content['coursemoduleid'], ['group' => $group]);
             $this->content->modifyCourse($contentid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?course-master-contents&courseid={$content['coursecsid']}&page={$page}{$u}",
+                'forwardUrl' => "index.php?course-master-contents&courseid={$content['coursecsid']}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -80,7 +92,7 @@ class action extends app
         $userid = $this->_user['sessionuserid'];
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($content['coursemoduleid'], $this->user->getModuleUserInfo());
+        $fields = $this->module->getMoudleFields($content['coursemoduleid'], 1);
         $forms = $this->html->buildHtml($fields, $content);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {
@@ -101,10 +113,10 @@ class action extends app
         $contentid = intval($this->ev->get('contentid'));
         $this->content->delCourse($contentid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -170,10 +182,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('movecposition')) {
@@ -188,15 +200,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?course-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl' => "index.php?course-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message'    => '操作失败',
+                'message' => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -210,15 +222,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "?course-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl' => "?course-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message'    => '操作失败',
+                'message' => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -237,15 +249,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?course-master-contents&catid={$catid}&page={$page}{$u}",
+                    'forwardUrl' => "index.php?course-master-contents&catid={$catid}&page={$page}{$u}",
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message'    => '操作失败',
+                'message' => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -253,7 +265,7 @@ class action extends app
 
         $message = [
                 'statusCode' => 300,
-                'message'    => '无效访问',
+                'message' => '无效访问',
             ];
         exit(json_encode($message));
     }

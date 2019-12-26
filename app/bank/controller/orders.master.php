@@ -29,15 +29,15 @@ class action extends app
         if (1 == $order['orderstatus'] || 99 == $order['orderstatus']) {
             $this->orders->delOrder($oid);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '订单删除成功',
+                'statusCode' => 200,
+                'message' => '订单删除成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message'    => '订单操作失败',
+            'message' => '订单操作失败',
         ];
         }
         exit(json_encode($message));
@@ -53,10 +53,10 @@ class action extends app
             }
         }
         $message = [
-            'statusCode'   => 200,
-            'message'      => '订单删除成功',
+            'statusCode' => 200,
+            'message' => '订单删除成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -68,12 +68,12 @@ class action extends app
         $args = ['orderstatus' => $orderstatus];
         $this->orders->modifyOrderById($ordersn, $args);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'target'       => '',
-            'rel'          => '',
+            'statusCode' => 200,
+            'message' => '操作成功',
+            'target' => '',
+            'rel' => '',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }

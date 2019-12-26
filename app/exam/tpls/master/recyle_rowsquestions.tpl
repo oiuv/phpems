@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -22,7 +22,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						已删题冒题
-						<a class="btn btn-primary pull-right" href="index.php?exam-master-recyle">回收站</a>
+						<a msg="本操作将清空回收站所有题冒题且不能恢复，确定吗？" class="btn btn-danger pull-right confirm" href="index.php?exam-master-recyle-clearquestionrows&clearall=1">清空</a>
 					</h4>
 			        <table class="table table-hover table-bordered">
 						<thead>

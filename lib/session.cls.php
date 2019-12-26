@@ -23,13 +23,12 @@ class session
         $this->db = $this->G->make('pepdo');
         $this->ev = $this->G->make('ev');
         $this->pdosql = $this->G->make('pdosql');
-        $this->sql = $this->G->make('sql');
         $this->strings = $this->G->make('strings');
         $this->sessionid = $this->getSessionId();
     }
 
     //获取会话ID
-    public function getSessionId()
+    public function getSessionId2()
     {
         if (!$this->sessionid) {
             if ($_SESSION['currentuser']) {
@@ -62,13 +61,41 @@ class session
         return $this->sessionid;
     }
 
+    private function _getOnlySessionid()
+    {
+        $code = uniqid($this->ev->getClientIp().print_r($_SERVER, true).microtime()).rand(100000, 999999);
+        $this->sessionid = md5($code);
+        if ($this->getSessionValue($this->sessionid)) {
+            $this->_getOnlySessionid();
+        }
+    }
+
+    public function getSessionId()
+    {
+        if (!$this->sessionid) {
+            $cookie = $this->strings->decode($this->ev->getCookie($this->sessionname));
+            if ($cookie) {
+                $this->sessionid = $cookie['sessionid'];
+            }
+        }
+        if (!$this->sessionid) {
+            $this->_getOnlySessionid();
+            $this->setSessionUser(['sessionid' => $this->sessionid, 'sessionip' => $this->ev->getClientIp()]);
+        }
+        if (!$this->getSessionValue()) {
+            $this->setSessionUser(['sessionid' => $this->sessionid, 'sessionip' => $this->ev->getClientIp()]);
+        }
+
+        return $this->sessionid;
+    }
+
     //设置随机参数
     public function setRandCode($randCode)
     {
         if (!$randCode) {
             $array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
             $randCode = '';
-            for ($i = 0; $i < 4; $i++) {
+            for ($i = 0; $i < 4; ++$i) {
                 $randCode .= $array[intval(rand(0, 35))];
             }
         }
@@ -138,8 +165,8 @@ class session
         $data = ['session', $args];
         $sql = $this->pdosql->makeInsert($data);
         $this->db->exec($sql);
+        $ck = ['sessionid' => $this->sessionid, 'sessionuserid' => $args['sessionuserid'], 'sessionpassword' => $args['sessionpassword'], 'sessionip' => $args['sessionip']];
         $this->ev->setCookie($this->sessionname, $this->strings->encode($args), 3600 * 24);
-        $_SESSION['currentuser'] = $args;
 
         return true;
     }
@@ -168,19 +195,9 @@ class session
             return $this->sessionuser;
         }
         $cookie = $this->strings->decode($this->ev->getCookie($this->sessionname));
-        if (!$cookie && $this->ev->get(CH.'currentuser') && $this->ev->get(CH.'psid')) {
-            $this->sessionid = $this->ev->get(CH.'psid');
-            $cookie = $this->strings->decode($this->ev->get(CH.'currentuser'));
-        }
-        if (!$cookie) {
-            $cookie = $_SESSION['currentuser'];
-            if ($cookie) {
-                $this->ev->setCookie($this->sessionname, $this->strings->encode($cookie), 3600 * 24);
-            }
-        }
         if ($cookie['sessionuserid']) {
             $user = $this->getSessionValue();
-            if ($cookie['sessionuserid'] == $user['sessionuserid'] && $cookie['sessionpassword'] == $user['sessionpassword']) {
+            if ($cookie['sessionuserid'] == $user['sessionuserid'] && $cookie['sessionpassword'] == $user['sessionpassword'] && $cookie['sessionip'] == $user['sessionip']) {
                 $this->sessionuser = $user;
 
                 return $user;
@@ -242,11 +259,11 @@ class session
     public function getSessionUserList($page, $number = 20)
     {
         $data = [
-            'select'  => false,
-            'table'   => 'session',
-            'index'   => false,
-            'serial'  => false,
-            'query'   => [['AND', 'sessionuserid > 0']],
+            'select' => false,
+            'table' => 'session',
+            'index' => false,
+            'serial' => false,
+            'query' => [['AND', 'sessionuserid > 0']],
             'orderby' => 'sessionlogintime DESC',
             'groupby' => false,
         ];

@@ -1,34 +1,56 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
-<div class="container-fluid">
+<div class="container-fluid" style="height: 100vh;background:radial-gradient(circle at 50% 30%, #4f4f7a, #000);">
 	<div class="row-fluid">
-		<div class="main box">
-			<div class="col-xs-7" style="padding:15px;">
-				<img src="app/core/styles/img/login.jpg"/>
-			</div>
-			<div class="col-xs-4 pull-right" style="margin:30px 30px 0px auto;background-color:#FFFFFF;">
-				<form class="col-xs-12" method="post" action="index.php?user-app-login">
-					<h4 class="title" style="line-height:3em;margin-bottom:40px;">用户登录</h4>
-					<div class="form-group input-group">
-						<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-user" style="font-size:16px;"></a></span>
-						<input class="form-control" name="args[username]" datatype="userName" needle="needle" msg="请您输入正确的用户名" placeholder="请输入用户名" style="height:44px;line-height:24px;font-size:16px;">
+		<div class="pages">
+			<div class="content" style="margin-top: 10vh;">
+				<div class="col-xs-3 padding"></div>
+				<div class="col-xs-6 nopadding">
+					<div class="content-box padding">
+						<h2 class="title">
+							用户登陆
+							<a href="index.php" class="badge pull-right">首页</a>
+						</h2>
+						<form method="post" action="index.php?user-app-login">
+							<fieldset class="logbox">
+								<div class="form-group underline">
+									<label class="block">
+										<div class="col-xs-4 tip">
+											用户名
+										</div>
+										<div class="col-xs-8">
+											<input class="noborder" name="args[username]" datatype="userName" needle="needle" msg="请您输入正确的用户名" placeholder="请输入用户名">
+										</div>
+									</label>
+								</div>
+								<div class="form-group underline">
+									<label class="block">
+										<div class="col-xs-4 tip">
+											密码
+										</div>
+										<div class="col-xs-8">
+											<input type="password" name="args[userpassword]" datatype="password" needle="needle" msg="请您输入正确的密码" placeholder="请输入密码">
+										</div>
+									</label>
+								</div>
+                                {x2;if:$app['appsetting']['emailverify']}
+								<div class="form-group text-right">
+									<a href="index.php?user-app-register-findpassword">忘记密码？</a>
+								</div>
+								{x2;endif}
+								<div class="form-group text-center">
+									<button class="btn btn-primary login">登陆</button>
+									<input type="hidden" value="1" name="userlogin"/>
+									<a href="index.php?user-app-register" class="btn btn-default login">注册</a>
+								</div>
+							</fieldset>
+						</form>
 					</div>
-					<div class="form-group input-group">
-						<span class="input-group-addon" id="basic-addon1"><a class="glyphicon glyphicon-lock" style="font-size:16px;"></a></span>
-						<input class="form-control" name="args[userpassword]" datatype="password" needle="needle" msg="请您输入正确的密码" placeholder="请输入密码" type="password" style="height:44px;line-height:24px;font-size:16px;">
-					</div>
-					<input type="hidden" value="1" name="userlogin"/>
-					<button type="submit" class="btn btn-primary btn-block" style="height:44px;line-height:32px;font-size:16px;margin-top:30px;">登录</button>
-					<a class="btn btn-default btn-block" href="index.php?user-app-register" style="height:44px;line-height:32px;font-size:16px;margin-top:10px;">注册</a>
-                    {x2;if:$app['appsetting']['emailverify']}
-					<a class="btn btn-danger btn-block" href="index.php?user-app-register-findpassword" style="height:44px;line-height:32px;font-size:16px;margin-top:10px;">忘记密码</a>
-                    {x2;endif}
-				</form>
+				</div>
+				<div class="col-xs-3 padding"></div>
 			</div>
 		</div>
 	</div>
 </div>
-{x2;include:footer}
 </body>
 </html>

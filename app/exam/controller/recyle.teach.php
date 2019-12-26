@@ -52,10 +52,10 @@ class action extends app
         $questionid = $this->ev->get('questionid');
         $this->exam->fanalDelQuestions($questionid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-teach-recyle&page={$page}",
+            'forwardUrl' => "index.php?exam-teach-recyle&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -67,10 +67,10 @@ class action extends app
         $this->exam->finalDelQuestionRows($questionid);
         $this->exam->fanalDelQuestionsByArgs("questionparent = '{$questionid}'");
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-teach-recyle-rows&page={$page}",
+            'forwardUrl' => "index.php?exam-teach-recyle-rows&page={$page}",
         ];
         exit(json_encode($message));
     }

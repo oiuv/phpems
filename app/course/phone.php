@@ -35,10 +35,10 @@ class app
         if (!$this->_user['sessionuserid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 301,
-                'message'      => '请您重新登录',
+                'statusCode' => 301,
+                'message' => '请您重新登录',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-phone-login',
+                'forwardUrl' => 'index.php?user-phone-login',
             ]));
             }
 

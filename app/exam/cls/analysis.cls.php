@@ -31,14 +31,14 @@ class analysis_exam
         return $this->db->lastInsertId();
     }
 
-    public function getAnalysisList($page, $number, $args)
+    public function getAnalysisList($page, $number = 20, $args)
     {
         $data = [
-            'select'  => false,
-            'table'   => ['questionanalysis', 'questions'],
-            'index'   => false,
-            'serial'  => false,
-            'query'   => $args,
+            'select' => false,
+            'table' => ['questionanalysis', 'questions'],
+            'index' => false,
+            'serial' => false,
+            'query' => $args,
             'orderby' => 'qaid DESC',
             'groupby' => false,
         ];

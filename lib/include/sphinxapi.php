@@ -372,7 +372,7 @@ function sphUnpackI64($v)
     $h = $q * 4294967296.0 + $r * 429.0 + $mq;
     if (10000000 == $l) {
         $l = 0;
-        $h++;
+        ++$h;
     }
 
     $h = sprintf('%.0f', $h);
@@ -1127,7 +1127,7 @@ class SphinxClient
 
         // send query, get response
         $nreqs = count($this->_reqs);
-        $req = implode('', $this->_reqs);
+        $req = join('', $this->_reqs);
         $len = 4 + strlen($req);
         $req = pack('nnNN', SEARCHD_COMMAND_SEARCH, VER_COMMAND_SEARCH, $len, $nreqs).$req; // add header
 
@@ -1152,7 +1152,7 @@ class SphinxClient
         $max = strlen($response); // max position for checks, to protect against broken responses
 
         $results = [];
-        for ($ires = 0; $ires < $nreqs && $p < $max; $ires++) {
+        for ($ires = 0; $ires < $nreqs && $p < $max; ++$ires) {
             $results[] = [];
             $result = &$results[$ires];
 
@@ -1214,7 +1214,7 @@ class SphinxClient
             $idx = -1;
             while ($count-- > 0 && $p < $max) {
                 // index into result array
-                $idx++;
+                ++$idx;
 
                 // parse document id and weight
                 if ($id64) {
@@ -1414,7 +1414,7 @@ class SphinxClient
         $pos = 0;
         $res = [];
         $rlen = strlen($response);
-        for ($i = 0; $i < count($docs); $i++) {
+        for ($i = 0; $i < count($docs); ++$i) {
             list(, $len) = unpack('N*', substr($response, $pos, 4));
             $pos += 4;
 
@@ -1485,7 +1485,7 @@ class SphinxClient
         $rlen = strlen($response);
         list(, $nwords) = unpack('N*', substr($response, $pos, 4));
         $pos += 4;
-        for ($i = 0; $i < $nwords; $i++) {
+        for ($i = 0; $i < $nwords; ++$i) {
             list(, $len) = unpack('N*', substr($response, $pos, 4));
             $pos += 4;
             $tokenized = $len ? substr($response, $pos, $len) : '';
@@ -1670,8 +1670,8 @@ class SphinxClient
         $p += 8;
 
         $res = [];
-        for ($i = 0; $i < $rows; $i++) {
-            for ($j = 0; $j < $cols; $j++) {
+        for ($i = 0; $i < $rows; ++$i) {
+            for ($j = 0; $j < $cols; ++$j) {
                 list(, $len) = unpack('N*', substr($response, $p, 4));
                 $p += 4;
                 $res[$i][] = substr($response, $p, $len);

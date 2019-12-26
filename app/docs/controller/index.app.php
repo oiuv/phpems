@@ -28,23 +28,23 @@ class action extends app
 
     private function index()
     {
-        $number = [];
-        $number['more'] = $this->doc->getDocNumber([['AND', 'docneedmore = 1']]);
-        $number['all'] = $this->doc->getDocNumber([]);
-        $docs = [];
-        $args = [];
-        $args[] = ['AND', 'docneedmore = 0'];
-        $docs['new'] = $this->doc->getDocList($args, 1, 10);
+        $catids = $this->category->getCategoriesByArgs([['AND', 'catinmenu = 0'], ['AND', "catapp = 'docs'"], ['AND', 'catparent = 0']]);
+        $contents = [];
+        if ($catids) {
+            foreach ($catids as $p) {
+                if ($p['catindex']) {
+                    $catstring = $this->category->getChildCategoryString($p['catid']);
+                    $docs[$p['catid']] = $this->doc->getDocList([['AND', 'find_in_set(doccatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 10);
+                }
+            }
+        }
         $args = [];
         $args[] = ['AND', 'docneedmore = 1'];
-        $docs['more'] = $this->doc->getDocList($args, 1, 10);
-        $args = [];
-        $args[] = ['AND', 'docistop = 1'];
-        $docs['top'] = $this->doc->getDocList($args, 1, 4);
-        $this->category->getAllCategory();
-        $this->tpl->assign('categories', $this->category->tidycategories);
-        $this->tpl->assign('number', $number);
+        $more = $this->doc->getDocList($args, 1, 10);
+        $this->tpl->assign('categories', $this->category->categories);
+        $this->tpl->assign('catids', $catids);
         $this->tpl->assign('docs', $docs);
+        $this->tpl->assign('more', $more);
         $this->tpl->display('index');
     }
 }

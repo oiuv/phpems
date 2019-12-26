@@ -1,11 +1,10 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: 120px;">
 	<div class="row-fluid">
-		<div class="main box">
+		<div class="main box" style="width: 1200px;">
 			<div class="col-xs-7" style="padding:15px;">
-				<img src="app/core/styles/img/login.jpg" />
+				<img src="files/public/img/login.jpg" />
 			</div>
 			<div class="col-xs-4 pull-right" style="margin:30px 30px 0px auto;background-color:#FFFFFF;">
 				<form class="col-xs-12" method="post" action="index.php?core-master-login">
@@ -34,6 +33,5 @@
 		</div>
 	</div>
 </div>
-{x2;include:footer}
 </body>
 </html>

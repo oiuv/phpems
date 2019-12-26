@@ -53,40 +53,17 @@ class favor_exam
     //通过用户ID获取收藏试题列表
     //参数：当前页码，单页显示数量，查询参数（数组或字符串）
     //返回值：试题列表数组
-    public function getFavorListByUserid($page, $number = 20, $args = [], $type = 0)
+    public function getFavorListByUserid($args = [], $page, $number = 20, $orderby = 'favorid desc')
     {
-        $page = $page > 0 ? $page : 1;
-        $r = [];
-        if ($type) {
-            $args[] = ['AND', 'favor.favorquestionid = questions.questionid'];
-            $args[] = ['AND', 'questions.questionparent = questionrows.qrid'];
-            $args[] = ['AND', 'questionrows.qrid = quest2knows.qkquestionid'];
-            $args[] = ['AND', 'quest2knows.qktype = 1'];
-            $data = ['DISTINCT questions.*, favor.favorid, questionrows.*', ['favor', 'questionrows', 'questions', 'quest2knows'], $args, false, 'favortime DESC,questionparent DESC,questionsequence ASC', [intval($page - 1) * $number, $number]];
-            $sql = $this->pdosql->makeSelect($data);
-            $r['data'] = $this->db->fetchAll($sql, false, ['questionknowsid', 'qrknowsid']);
-            $data = ['count(DISTINCT questions.questionid) AS number', ['favor', 'questionrows', 'questions', 'quest2knows'], $args];
-            $sql = $this->pdosql->makeSelect($data);
-            $t = $this->db->fetch($sql);
-            $pages = $this->pg->outPage($this->pg->getPagesNumber($t['number'], $number), $page);
-            $r['pages'] = $pages;
-            $r['number'] = $t['number'];
-        } else {
-            $args[] = ['AND', 'favor.favorquestionid = questions.questionid'];
-            $args[] = ['AND', 'questions.questionid = quest2knows.qkquestionid'];
-            $args[] = ['AND', 'quest2knows.qktype = 0'];
-            $data = ['DISTINCT questions.*, favor.*', ['favor', 'questions', 'quest2knows'], $args, false, 'favorid DESC', [intval($page - 1) * $number, $number]];
-            $sql = $this->pdosql->makeSelect($data);
-            $r['data'] = $this->db->fetchAll($sql, false, 'questionknowsid');
-            $data = ['count(DISTINCT questions.questionid) AS number', ['favor', 'questions', 'quest2knows'], $args];
-            $sql = $this->pdosql->makeSelect($data);
-            $t = $this->db->fetch($sql);
-            $pages = $this->pg->outPage($this->pg->getPagesNumber($t['number'], $number), $page);
-            $r['pages'] = $pages;
-            $r['number'] = $t['number'];
-        }
+        $args[] = ['AND', 'favor.favorquestionid = questions.questionid'];
+        $data = [
+            'select' => false,
+            'table' => ['favor', 'questions'],
+            'query' => $args,
+            'orderby' => $orderby,
+        ];
 
-        return $r;
+        return $this->db->listElements($page, $number, $data);
     }
 
     //收藏试题
@@ -186,12 +163,12 @@ class favor_exam
     }
 
     //根据用户和科目获取考试记录列表
-    public function getExamHistoryListByArgs($page, $number = 20, $args = [], $fields = false)
+    public function getExamHistoryListByArgs($args = [], $page, $number = 20, $fields = false, $orderby = 'ehscore DESC,ehid DESC')
     {
         $page = $page > 0 ? $page : 1;
         $r = [];
         $args[] = ['AND', 'examhistory.ehuserid = user.userid'];
-        $data = [$fields, ['examhistory', 'user'], $args, false, 'ehscore DESC,ehid DESC', [intval($page - 1) * $number, $number]];
+        $data = [$fields, ['examhistory', 'user'], $args, false, $orderby, [intval($page - 1) * $number, $number]];
         $sql = $this->pdosql->makeSelect($data);
         $r['data'] = $this->db->fetchAll($sql, 'ehid');
         $data = ['count(*) AS number', ['examhistory', 'user'], $args];
@@ -247,7 +224,7 @@ class favor_exam
     }
 
     //根据ID修改一个考试记录
-    public function modifyExamHistory($args, $ehid)
+    public function modifyExamHistory($ehid, $args)
     {
         $data = ['examhistory', $args, [['AND', 'ehid = :ehid', 'ehid', $ehid]]];
         $sql = $this->pdosql->makeUpdate($data);
@@ -300,64 +277,44 @@ class favor_exam
     }
 
     //添加一个考试记录
-    public function addExamHistory($sessionid = false, $status = 1)
+    public function addExamHistory($exam, $status = 1)
     {
-        $exam = $this->exam->getExamSessionBySessionid($sessionid);
         if (!$exam) {
             return false;
         }
         $t = TIME - $exam['examsessionstarttime'];
-        $user = $this->G->make('user', 'user')->getUserById($exam['examsessionuserid']);
         if ($t >= $exam['examsessiontime'] * 60) {
             $t = $exam['examsessiontime'] * 60;
         }
+        $user = $this->G->make('user', 'user')->getUserById($exam['examsessionuserid']);
         $args = [
-                    'ehtype'       => $exam['examsessiontype'],
-                    'ehtimelist'   => $exam['examsessiontimelist'],
-                    'ehexam'       => $exam['examsession'],
-                    'ehexamid'     => $exam['examsessionkey'],
-                    'ehbasicid'    => $exam['examsessionbasic'],
-                    'ehquestion'   => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
-                    'ehsetting'    => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
-                    'ehuseranswer' => $exam['examsessionuseranswer'],
-                    'ehstarttime'  => $exam['examsessionstarttime'],
-                    'ehtime'       => $t,
-                    'ehscore'      => $exam['examsessionscore'],
-                    'ehscorelist'  => $exam['examsessionscorelist'],
-                    'ehuserid'     => $exam['examsessionuserid'],
-                    'ehusername'   => $user['username'],
-                    'ehdecide'     => intval($exam['examsessionsetting']['examdecide']),
-                    'ehstatus'     => $status,
-                    'ehispass'     => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
+            'ehtype' => $exam['examsessiontype'],
+            'ehtimelist' => $exam['examsessiontimelist'],
+            'ehexam' => $exam['examsession'],
+            'ehexamid' => $exam['examsessionkey'],
+            'ehbasicid' => $exam['examsessionbasic'],
+            'ehquestion' => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
+            'ehsetting' => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
+            'ehuseranswer' => $exam['examsessionuseranswer'],
+            'ehstarttime' => $exam['examsessionstarttime'],
+            'ehtime' => $t,
+            'ehscore' => $exam['examsessionscore'],
+            'ehscorelist' => $exam['examsessionscorelist'],
+            'ehuserid' => $exam['examsessionuserid'],
+            'ehusername' => $user['username'],
+            'ehdecide' => intval($exam['examsessionsetting']['examdecide']),
+            'ehstatus' => $status,
+            'ehispass' => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
         ];
-        /**
-         * try
-         * {
-         * $this->db->beginTransaction();
-         * $data = array('examhistory',$args);
-         * $sql = $this->pdosql->makeInsert($data);
-         * $aff = $this->db->exec($sql);
-         * if(!$aff)
-         * throw new PDOException("Insert Examhsitory Error");
-         * $ehid = $this->db->lastInsertId();
-         * $aff = $this->exam->delExamSession($sessionid);
-         * if(!$aff)
-         * throw new PDOException("Delete Examsession Error");
-         * $this->db->commit();
-         * return $ehid;
-         * }
-         * catch(PDOException $e)
-         * {
-         * $this->db->rollback();
-         * return false;
-         * }
-         **/
         $data = ['examhistory', $args];
         $sql = $this->pdosql->makeInsert($data);
         $aff = $this->db->exec($sql);
         $ehid = $this->db->lastInsertId();
-        $this->exam->delExamSession($sessionid);
-
+        //		if($args['ehtype'] == 2 && $args['ehispass'])
+        //		{
+        //			$this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid']),array("AND","prsexamstatus = 0")),array('prsexamstatus' => 1));
+        //			$this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prscoursestatus = 1"),array("AND","prsexamstatus = 1"),array("AND","prstatus = 0"),array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid'])),array('prstatus' => 1,'prsendtime' => TIME));
+        //		}
         return $ehid;
     }
 
@@ -379,16 +336,16 @@ class favor_exam
         return $r['number'];
     }
 
-    public function getExamScoreListByBasicId($basicid, $page)
+    public function getExamScoreListByBasicId($basicid, $page, $number = 10)
     {
         $data = [
-            'select'  => false,
-            'table'   => ['examhistory', 'user'],
-            'query'   => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
+            'select' => false,
+            'table' => ['examhistory', 'user'],
+            'query' => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
             'orderby' => 'ehscore DESC,ehid DESC',
         ];
 
-        return $this->db->listElements($page, 10, $data);
+        return $this->db->listElements($page, $number, $data);
     }
 
     public function getUserScoreIndex($basicid, $userid, $score)

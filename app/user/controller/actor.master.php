@@ -29,15 +29,15 @@ class action extends app
         if ($group) {
             $this->user->selectDefaultActor($groupid);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message'    => '操作失败，存在同名角色！',
+            'message' => '操作失败，存在同名用户组！',
         ];
         }
         exit(json_encode($message));
@@ -52,15 +52,15 @@ class action extends app
             $r = $this->user->modifyActor($groupid, $args);
             if ($r) {
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?user-master-actor',
+                    'forwardUrl' => 'index.php?user-master-actor',
                 ];
             } else {
                 $message = [
-                    'statusCode'   => 300,
-                    'message'      => '操作失败，存在同名角色！',
+                    'statusCode' => 300,
+                    'message' => '操作失败，存在同名用户组！',
                     'callbackType' => '',
                 ];
             }
@@ -80,15 +80,15 @@ class action extends app
         $r = $this->user->delActorById($groupid);
         if ($r) {
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?user-master-actor&page={$page}",
+                'forwardUrl' => "index.php?user-master-actor&page={$page}",
             ];
         } else {
             $message = [
                 'statusCode' => 300,
-                'message'    => '操作失败，该角色下存在用户，请删除所有用户后再删除本角色',
+                'message' => '操作失败，该用户组下存在用户，请删除所有用户后再删除本用户组',
             ];
         }
         exit(json_encode($message));
@@ -100,10 +100,10 @@ class action extends app
             $args = $this->ev->post('args');
             $id = $this->user->insertActor($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?user-master-actor&moduleid={$args['groupmoduleid']}",
+                'forwardUrl' => 'index.php?user-master-actor',
             ];
             exit(json_encode($message));
         }
@@ -120,7 +120,7 @@ class action extends app
         if ($search['groupmoduleid']) {
             $args = [['AND', 'groupmoduleid = :groupmoduleid', 'groupmoduleid', $search['groupmoduleid']]];
         }
-        $actors = $this->user->getUserGroupList($args, 10, $page);
+        $actors = $this->user->getUserGroupList($args, $page, 10);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('actors', $actors);
         $this->tpl->display('actor');

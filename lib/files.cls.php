@@ -123,6 +123,7 @@ class files
         if (function_exists('file_get_contents')) {
             $content = file_get_contents($file);
         } else {
+            $content = '';
             $ay = file($file);
             if (!$ay) {
                 return false;
@@ -387,14 +388,14 @@ class files
         $par = intval($width / 4);
         $randCode = strval($randCode);
         $image = imagecreatetruecolor($width, $height);
-        $gray = imagecolorallocate($image, 55, 55, 55);
+        $gray = ImageColorAllocate($image, 55, 55, 55);
         imagefill($image, 0, 0, $gray);
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; ++$i) {
             $text_color = imagecolorallocate($image, rand(128, 255), rand(128, 255), rand(128, 255));
-            imagettftext($image, 14, intval(rand(0, 60)), 10 + $i * $par, 23 + rand(3, 8), $text_color, 'files/public/font/Symbola.ttf', $randCode[$i]);
+            imagettftext($image, 14, intval(rand(0, 60)), 10 + $i * $par, 23 + rand(3, 8), $text_color, PEPATH.'/files/public/fonts/VERDANA.TTF', $randCode[$i]);
         }
-        for ($i = 0; $i < 250; $i++) {
-            $randcolor = imagecolorallocate($image, rand(0, 255), rand(0, 255), rand(0, 255));
+        for ($i = 0; $i < 255; ++$i) {
+            $randcolor = ImageColorallocate($image, rand(0, 255), rand(0, 255), rand(0, 255));
             imagesetpixel($image, rand(1, $width), rand(1, $height), $randcolor);
         }
         imagepng($image);

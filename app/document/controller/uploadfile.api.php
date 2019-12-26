@@ -25,9 +25,9 @@ class action extends app
     private function index()
     {
         /**
-         * $path = 'files/attach/images/content/'.date('Ymd').'/';
-         * $fileurl = $this->files->uploadFile($this->ev->getFile('Filedata'),$path,NULL,NULL,$this->allowexts);
-         * echo $fileurl;
+        $path = 'files/attach/images/content/'.date('Ymd').'/';
+        $fileurl = $this->files->uploadFile($this->ev->getFile('Filedata'),$path,NULL,NULL,$this->allowexts);
+        echo $fileurl;
          **/
         $fn = $this->ev->get('CKEditorFuncNum');
         $upfile = $this->ev->getFile('upload');

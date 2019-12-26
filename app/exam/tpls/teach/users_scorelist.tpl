@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -31,13 +31,13 @@
 									考试时间：
 								</td>
 								<td>
-									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
+									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="15" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="15" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
 								</td>
 								<td>
 									分数段：
 								</td>
 								<td>
-									<input class="form-control" name="search[sscore]" id="sscore" type="text" value="{x2;$search['sscore']}"/> - <input class="form-control" type="text" name="search[escore]" id="escore" value="{x2;$search['escore']}"/>
+									<input class="form-control" name="search[sscore]" id="sscore" type="text" value="{x2;$search['sscore']}" size="10"/> - <input class="form-control" type="text" name="search[escore]" id="escore" value="{x2;$search['escore']}" size="10"/>
 								</td>
 							</tr>
 					        <tr>
@@ -56,7 +56,7 @@
 								</td>
 								<td><button class="btn btn-primary" type="submit">提交</button>
 									<a class="btn btn-primary" href="index.php?exam-teach-users-stats&basicid={x2;$basicid}{x2;$u}">统计</a>
-									<a class="btn btn-primary ajax" href="index.php?exam-teach-users-outanswer&basicid={x2;$basicid}{x2;$u}">导出答案</a></td>
+									<a class="btn btn-primary ajax hide" href="index.php?exam-teach-users-outanswer&basicid={x2;$basicid}{x2;$u}">导出答案</a></td>
 					        </tr>
 						</table>
 						<div class="input">
@@ -78,7 +78,7 @@
 						        <th>考试名称</th>
 						        <th>考试时间</th>
 						        <th>考试用时</th>
-						        <th>操作</th>
+						        <th width="170">操作</th>
 			                </tr>
 			            </thead>
 			            <tbody>

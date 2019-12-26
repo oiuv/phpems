@@ -21,17 +21,14 @@ class exam_exam
 
     public function _init()
     {
-        if (!$this->init) {
-            $this->sql = $this->G->make('sql');
-            $this->pdosql = $this->G->make('pdosql');
-            $this->db = $this->G->make('pepdo');
-            $this->pg = $this->G->make('pg');
-            $this->ev = $this->G->make('ev');
-            $this->section = $this->G->make('section', 'exam');
-            $this->session = $this->G->make('session');
-            $this->question = $this->G->make('question', 'exam');
-            $this->init = 1;
-        }
+        $this->pdosql = $this->G->make('pdosql');
+        $this->db = $this->G->make('pepdo');
+        $this->pg = $this->G->make('pg');
+        $this->ev = $this->G->make('ev');
+        $this->section = $this->G->make('section', 'exam');
+        $this->favor = $this->G->make('favor', 'exam');
+        $this->session = $this->G->make('session');
+        $this->init = 1;
     }
 
     //增加一个考试会话
@@ -41,6 +38,7 @@ class exam_exam
     {
         $args['examsessionid'] = $this->session->getSessionId();
         $args['examsessionstarttime'] = TIME;
+        $args['examsessiontoken'] = md5(serialize($args));
         $data = ['examsession', $args];
         $sql = $this->pdosql->makeInsert($data);
         $this->db->exec($sql);
@@ -86,7 +84,7 @@ class exam_exam
     }
 
     //清除会话内容
-    public function delExamSession($sessionid)
+    public function delExamSession($sessionid = false)
     {
         if (!$sessionid) {
             $sessionid = $this->session->getSessionId();
@@ -131,15 +129,15 @@ class exam_exam
         return $this->db->fetch($sql, ['examsessionquestion', 'examsessionsign', 'examsessionsetting', 'examsessionuseranswer', 'examsessionscorelist']);
     }
 
-    public function getExamSessionByArgs($args, $page = 1, $number = 20)
+    public function getExamSessionByArgs($args = [], $page = 1, $number = 20)
     {
         $args[] = ['AND', 'examsession.examsessionuserid = user.userid'];
         $data = [
-            'select'  => false,
-            'table'   => ['examsession', 'user'],
-            'query'   => $args,
+            'select' => false,
+            'table' => ['examsession', 'user'],
+            'query' => $args,
             'orderby' => 'examsessionstarttime DESC',
-            'serial'  => ['examsessionsetting'],
+            'serial' => ['examsessionsetting'],
         ];
         $r = $this->db->listElements($page, $number, $data);
 
@@ -149,24 +147,20 @@ class exam_exam
     //获取考试设置信息列表
     //参数：当前页码，每页显示数，查询条件数组
     //返回值：考试设置信息列表数组
-    public function getExamSettingList($page, $number = 20, $args = [])
+    public function getExamSettingList($args = [], $page, $number = 20)
     {
-        $page = $page > 0 ? $page : 1;
-        $r = [];
-        $data = [false, 'exams', $args, false, 'examid DESC', [intval($page - 1) * $number, $number]];
-        $sql = $this->pdosql->makeSelect($data);
-        $r['data'] = $this->db->fetchAll($sql, false, ['examsetting', 'examquestions', 'examscore']);
-        $data = ['count(*) AS number', 'exams', $args];
-        $sql = $this->pdosql->makeSelect($data);
-        $t = $this->db->fetch($sql);
-        $pages = $this->pg->outPage($this->pg->getPagesNumber($t['number'], $number), $page);
-        $r['pages'] = $pages;
-        $r['number'] = $t['number'];
+        $data = [
+            'select' => false,
+            'table' => 'exams',
+            'query' => $args,
+            'orderby' => 'examid DESC',
+            'serial' => 'examsetting',
+        ];
 
-        return $r;
+        return $this->db->listElements($page, $number, $data);
     }
 
-    public function getExamSettingsByArgs($args)
+    public function getExamSettingsByArgs($args = [])
     {
         $data = [false, 'exams', $args, false, 'examid DESC', false];
         $sql = $this->pdosql->makeSelect($data);
@@ -231,7 +225,7 @@ class exam_exam
     //根据参数获取一个考试设置
     //参数：考试设置查询参数（数组或者字符串）
     //返回值：考试设置信息数组
-    public function getExamSettingByArgs($args)
+    public function getExamSettingByArgs($args = [])
     {
         $data = [false, 'exams', $args];
         $sql = $this->pdosql->makeSelect($data);
@@ -242,7 +236,7 @@ class exam_exam
     //根据参数修改一个考试设置
     //参数：考试ID，参数（数组）
     //返回值：受影响记录数
-    public function modifyExamSetting($id, $args)
+    public function modifyExamSetting($id, $args = [])
     {
         $data = ['exams', $args, [['AND', 'examid = :examid', 'examid', $id]]];
         $sql = $this->pdosql->makeUpdate($data);
@@ -267,7 +261,7 @@ class exam_exam
     //增加考试设置
     //参数：考试设置参数（数组）
     //返回值：插入ID
-    public function addExamSetting($args)
+    public function addExamSetting($args = [])
     {
         $args['examtime'] = TIME;
         $data = ['exams', $args];
@@ -280,7 +274,7 @@ class exam_exam
     //增加试题
     //参数：试题参数（数组）
     //返回值：插入ID
-    public function addQuestions($args)
+    public function addQuestions($args = [])
     {
         $args['questionstatus'] = 1;
         $data = ['questions', $args];
@@ -294,7 +288,6 @@ class exam_exam
         }
         $question = $this->getQuestionByArgs([['AND', 'questionid = :questionid', 'questionid', $r]]);
         $questionknowsid = $this->parseQuestionKnows($args['questionknowsid'], $r, $qktype);
-        //$questionhtml = $this->ev->addSlashes(serialize($this->question->parse($question)));
         $data = ['questions', ['questionknowsid' => $questionknowsid], [['AND', 'questionid = :questionid', 'questionid', $r]]];
         $sql = $this->pdosql->makeUpdate($data);
         $this->db->exec($sql);
@@ -740,7 +733,6 @@ class exam_exam
         $nargs = [];
         if ($args['questionknowsid']) {
             $nargs['questionknowsid'] = $this->parseQuestionKnows($args['questionknowsid'], $id, 0);
-            //$nargs['questionhtml'] = $this->ev->addSlashes(serialize($this->question->parse($r)));
             $data = ['questions', $nargs, [['AND', 'questionid = :questionid', 'questionid', $id]]];
             $sql = $this->pdosql->makeUpdate($data);
             $rs = $this->db->exec($sql);
@@ -838,12 +830,12 @@ class exam_exam
         return $this->db->fetchAll($sql);
     }
 
-    public function getQuestionRowsById($id, $fields = false)
+    public function getQuestionRowsById($id, $fields = false, $childs = true)
     {
         $data = [$fields, 'questionrows', [['AND', 'qrid = :qrid', 'qrid', $id], ['AND', 'qrstatus = 1']]];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetch($sql, ['qrknowsid']);
-        if ($r['qrid']) {
+        if ($r['qrid'] && $childs) {
             $r['data'] = $this->getSimpleQuestionListByArgs([['AND', 'questionparent = :qrid', 'qrid', $r['qrid']], ['AND', 'questionstatus = 1']]);
         }
 
@@ -855,6 +847,7 @@ class exam_exam
     //返回值：试题内容列表数组
     public function getQuestionListByArgs($args, $fields = false)
     {
+        $args[] = ['AND', 'quest2knows.qkquestionid = questions.questionid'];
         $data = [$fields, ['questions', 'quest2knows'], $args, false, ['questionsequence ASC', 'questionid ASC'], false];
         $sql = $this->pdosql->makeSelect($data);
 
@@ -871,10 +864,13 @@ class exam_exam
 
     public function getQuestionListByIds($ids, $fields = false)
     {
-        $data = [$fields, 'questions', [['AND', 'find_in_set(questionid,:ids)', 'ids', $ids], ['AND', 'questionstatus = 1']], false, ['questionsequence ASC', 'questionid ASC'], false];
+        if (!is_array($ids)) {
+            $ids = explode(',', $ids);
+        }
+        $data = [$fields, 'questions', [['AND', 'questionid in (:ids)', 'ids', $ids], ['AND', 'questionstatus = 1']], false, ['questionsequence ASC', 'questionid ASC'], false];
         $sql = $this->pdosql->makeSelect($data);
 
-        return $this->db->fetchAll($sql, 'questionid', ['questionhtml', 'questionknowsid']);
+        return $this->db->fetchAll($sql, 'questionid', ['questionknowsid']);
     }
 
     //根据知识点获取试题列表
@@ -932,5 +928,155 @@ class exam_exam
         $r['number'] = $t['number'];
 
         return $r;
+    }
+
+    public function markscore($sessionvars, $questypes)
+    {
+        if (!$sessionvars['examsessionid']) {
+            return false;
+        }
+        $token = $this->ev->get('token');
+
+        if (!$token || $token != $sessionvars['examsessiontoken']) {
+            $message = [
+                    'statusCode' => 300,
+                    'message' => '系统检测到试卷错误，请联系监考老师！',
+                ];
+            $this->G->R($message);
+        }
+
+        if (!$sessionvars['examsessiontype']) {
+            foreach ($questypes as $questype) {
+                $sessionvars['examsessionsetting']['examsetting']['questype'][$questype['questid']]['score'] = 1;
+            }
+        }
+        foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
+            if (!empty($tmp)) {
+                if (!$questypes[$key]['questsort']) {
+                    foreach ($tmp as $p) {
+                        if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                            $nanswer = '';
+                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            asort($answer);
+                            $nanswer = implode('', $answer);
+                            if ($nanswer == $p['questionanswer']) {
+                                $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
+                            } else {
+                                if (3 == $questypes[$key]['questchoice']) {
+                                    $alen = strlen($p['questionanswer']);
+                                    $rlen = 0;
+                                    foreach ($answer as $t) {
+                                        if (false === strpos($p['questionanswer'], $t)) {
+                                            $rlen = 0;
+                                            break;
+                                        }
+
+                                        ++$rlen;
+                                    }
+                                    $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
+                                } else {
+                                    $score = 0;
+                                }
+                            }
+                        } else {
+                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                            if ($answer == $p['questionanswer']) {
+                                $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
+                            } else {
+                                $score = 0;
+                            }
+                        }
+                        $scorelist[$p['questionid']] = $score;
+                    }
+                } else {
+                    $needhand = 1;
+                }
+            }
+        }
+        foreach ($sessionvars['examsessionquestion']['questionrows'] as $key => $tmp) {
+            if (!empty($tmp)) {
+                foreach ($tmp as $tmp2) {
+                    foreach ($tmp2['data'] as $p) {
+                        if (!$questypes[$p['questiontype']]['questsort']) {
+                            if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
+                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                                asort($answer);
+                                $nanswer = implode('', $answer);
+                                if ($nanswer == $p['questionanswer']) {
+                                    $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
+                                } else {
+                                    if (3 == $questypes[$key]['questchoice']) {
+                                        $alen = strlen($p['questionanswer']);
+                                        $rlen = 0;
+                                        foreach ($answer as $t) {
+                                            if (false === strpos($p['questionanswer'], $t)) {
+                                                $rlen = 0;
+                                                break;
+                                            }
+                                            ++$rlen;
+                                        }
+                                        $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
+                                    } else {
+                                        $score = 0;
+                                    }
+                                }
+                            } else {
+                                $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
+                                if ($answer == $p['questionanswer']) {
+                                    $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
+                                } else {
+                                    $score = 0;
+                                }
+                            }
+                            $scorelist[$p['questionid']] = $score;
+                        } else {
+                            $needhand = 1;
+                        }
+                    }
+                }
+            }
+        }
+        $sessionvars['examsessionscorelist'] = $scorelist;
+        $sessionvars['examsessionscore'] = array_sum($scorelist);
+        if ($needhand) {
+            $ehid = $this->favor->addExamHistory($sessionvars, 0);
+        } else {
+            $ehid = $this->favor->addExamHistory($sessionvars);
+        }
+        $this->delExamSession($sessionvars['examsessionid']);
+
+        return ['ehid' => $ehid, 'needhand' => $needhand];
+    }
+
+    public function clearDeletedQuestions($args = [])
+    {
+        $args[] = ['AND', 'questionid = qkquestionid'];
+        $args[] = ['AND', 'qktype = 0'];
+        $args[] = ['AND', 'questionstatus = 0'];
+        $args[] = ['AND', 'questionparent = 0'];
+        $data = [['questions', 'quest2knows'], $args, false, false, false];
+        $sql = $this->pdosql->makeDelete($data);
+
+        return $this->db->exec($sql);
+    }
+
+    public function clearDeletedQuestionrows($args = [])
+    {
+        $args[] = ['AND', 'qrid = qkquestionid'];
+        $args[] = ['AND', 'qktype = 1'];
+        $args[] = ['AND', 'qrstatus = 0'];
+        $data = ['qrid', ['questionrows', 'quest2knows'], $args, false, false, false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        foreach ($r as $q) {
+            $data = ['questionrows', [['AND', 'qrid = :qrid', 'qrid', $q['qrid']]], false, false, false];
+            $sql = $this->pdosql->makeDelete($data);
+            $this->db->exec($sql);
+            $data = ['questions', [['AND', 'questionparent = :questionparent', 'questionparent', $q['qrid']]], false, false, false];
+            $sql = $this->pdosql->makeDelete($data);
+            $this->db->exec($sql);
+        }
+
+        return true;
     }
 }

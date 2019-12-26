@@ -31,9 +31,9 @@ class consume_bank
     {
         $args[] = ['AND', 'conluserid = userid'];
         $data = [
-            'select'  => false,
-            'table'   => ['consumelog', 'user'],
-            'query'   => $args,
+            'select' => false,
+            'table' => ['consumelog', 'user'],
+            'query' => $args,
             'orderby' => 'conltime DESC',
         ];
 

@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -26,11 +26,7 @@
 						<table class="table form-inline">
 							<thead>
 				                <tr>
-							        <th colspan="2">搜索</th>
-							        <th></th>
-							        <th></th>
-							        <th></th>
-							        <th></th>
+							        <th colspan="6" style="border-bottom: 0px;">搜索</th>
 				                </tr>
 				            </thead>
 							<tr>
@@ -89,20 +85,16 @@
 			        <table class="table table-hover table-bordered">
 						<thead>
 							<tr class="info">
-			                    <th><input type="checkbox" class="checkall"/></th>
-			                    <th>考场ID</th>
+			                    <th width="80">考场ID</th>
 						        <th>考场名称</th>
 						        <th>考场地区</th>
 						        <th>考试科目</th>
-						        <th>操作</th>
+						        <th width="100">操作</th>
 			                </tr>
 			            </thead>
 			            <tbody>
 			                {x2;tree:$basics['data'],basic,bid}
 					        <tr>
-								<td>
-									<input type="checkbox" name="delids[{x2;v:basic['basicid']}]" value="1"/>
-								</td>
 								<td>
 									{x2;v:basic['basicid']}
 								</td>

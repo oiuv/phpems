@@ -33,6 +33,36 @@ class action extends app
         exit;
     }
 
+    private function orderpoint()
+    {
+        $delids = $this->ev->get('delids');
+        foreach ($delids as $knowsid => $v) {
+            $this->section->modifyKnows($knowsid, ['knowssequence' => $v]);
+        }
+        $message = [
+            'statusCode' => 200,
+            'message' => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl' => 'reload',
+        ];
+        exit(json_encode($message));
+    }
+
+    private function ordersection()
+    {
+        $delids = $this->ev->get('delids');
+        foreach ($delids as $sectionid => $v) {
+            $this->section->modifySection($sectionid, ['sectionsequence' => $v]);
+        }
+        $message = [
+            'statusCode' => 200,
+            'message' => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl' => 'reload',
+        ];
+        exit(json_encode($message));
+    }
+
     private function historyquestionbyuser()
     {
         $search = $this->ev->get('search');
@@ -135,9 +165,7 @@ class action extends app
                         }
                         $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                         if ($p['ehuseranswer'][$question['questionid']] && 0 == $questiontype[$question['questiontype']]['questsort'] && $questiontype[$question['questiontype']]['questchoice'] < 5) {
-                            if (is_array($p['ehuseranswer'][$question['questionid']])) {
-                                $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
-                            }
+                            $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
                             foreach ($os as $o) {
                                 if (false !== strpos($p['ehuseranswer'][$question['questionid']], $o)) {
                                     $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
@@ -273,22 +301,22 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                    'callbackType' => 'forward',
-                    'forwardUrl'   => "{$fname}",
-                ];
+                'statusCode' => 200,
+                'message' => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'callbackType' => 'forward',
+                'forwardUrl' => "{$fname}",
+            ];
             } else {
                 $message = [
-                    'statusCode' => 300,
-                    'message'    => '成绩导出失败',
-                ];
+                'statusCode' => 300,
+                'message' => '成绩导出失败',
+            ];
             }
         } else {
             $message = [
-                'statusCode' => 300,
-                'message'    => '请选择好考场',
-            ];
+            'statusCode' => 300,
+            'message' => '请选择好考场',
+        ];
         }
         exit(json_encode($message));
     }
@@ -334,7 +362,7 @@ class action extends app
         if ($search['examid']) {
             $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
         }
-        $exams = $this->favor->getExamHistoryListByArgs($page, 30, $args);
+        $exams = $this->favor->getExamHistoryListByArgs($args, $page, 30);
         $ids = trim($basic['basicexam']['self'], ', ');
         if (!$ids) {
             $ids = '0';
@@ -370,19 +398,20 @@ class action extends app
                     $this->basic->openBasic(['obuserid' => $userid, 'obbasicid' => $basicid, 'obendtime' => TIME + $days * 24 * 3600]);
                 }
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?exam-master-basic-members&basicid='.$basicid,
+                    'forwardUrl' => 'index.php?exam-master-basic-members&basicid='.$basicid,
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败',
+                    'message' => '操作失败',
                 ];
             }
             exit(json_encode($message));
         }
+
         $args = [];
         if ($search['userid']) {
             $args[] = ['AND', 'userid = :userid', 'userid', $search['userid']];
@@ -409,7 +438,7 @@ class action extends app
                 $args[] = ['AND', 'userregtime <= :userregtime', 'userregtime', $etime];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $this->tpl->assign('basic', $basic);
         $this->tpl->assign('users', $users);
         $this->tpl->assign('search', $search);
@@ -449,8 +478,8 @@ class action extends app
         $page = $this->ev->get('page');
         $page = $page > 0 ? $page : 1;
         $this->pg->setUrlTarget('modal-body" class="ajax');
-        $args = 1;
-        $actors = $this->user->getUserGroupList($args, 10, $page);
+        $args = [];
+        $actors = $this->user->getUserGroupList($args, $page, 10);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('target', $target);
         $this->tpl->assign('actors', $actors);
@@ -509,7 +538,7 @@ class action extends app
         } else {
             $message = [
                 'statusCode' => 300,
-                'message'    => '参数错误',
+                'message' => '参数错误',
             ];
             $this->G->R($message);
         }
@@ -530,16 +559,16 @@ class action extends app
         }
         if ($this->files->outCsv($fname, $r)) {
             $message = [
-                'statusCode'   => 200,
-                'message'      => "试题导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                'callbackType' => 'forward',
-                'forwardUrl'   => "{$fname}",
-            ];
+            'statusCode' => 200,
+            'message' => "试题导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+            'callbackType' => 'forward',
+            'forwardUrl' => "{$fname}",
+        ];
         } else {
             $message = [
-                'statusCode' => 300,
-                'message'    => '试题导出失败',
-            ];
+            'statusCode' => 300,
+            'message' => '试题导出失败',
+        ];
         }
         $this->G->R($message);
     }
@@ -565,15 +594,15 @@ class action extends app
             if ($section) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败，该科目下已经存在同名的章节',
+                    'message' => '操作失败，该科目下已经存在同名的章节',
                 ];
             } else {
                 $this->section->addSection($args);
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-master-basic-section&subjectid={$args['sectionsubjectid']}",
+                    'forwardUrl' => "index.php?exam-master-basic-section&subjectid={$args['sectionsubjectid']}",
                 ];
             }
             $this->G->R($message);
@@ -597,16 +626,16 @@ class action extends app
             if ($tpsection) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败，本科目下已经存在这个章节',
+                    'message' => '操作失败，本科目下已经存在这个章节',
                     'forwardUrl' => "index.php?exam-master-basic-section&subjectid={$section['sectionsubjectid']}&page={$page}",
                 ];
             } else {
                 $this->section->modifySection($sectionid, $args);
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-master-basic-section&subjectid={$section['sectionsubjectid']}&page={$page}",
+                    'forwardUrl' => "index.php?exam-master-basic-section&subjectid={$section['sectionsubjectid']}&page={$page}",
                 ];
             }
             $this->G->R($message);
@@ -628,10 +657,10 @@ class action extends app
         $section = $this->section->getSectionByArgs([['AND', 'sectionid = :sectionid', 'sectionid', $sectionid]]);
         $this->section->delSection($sectionid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic-section&subjectid={$section['sectionsubjectid']}&page={$page}",
+            'forwardUrl' => "index.php?exam-master-basic-section&subjectid={$section['sectionsubjectid']}&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -646,6 +675,7 @@ class action extends app
             header('location:index.php?exam-master-subject');
             exit;
         }
+
         $subjects = $this->basic->getSubjectList();
         $knows = $this->section->getKnowsList($page, 10, [['AND', 'knowssectionid = :sectionid', 'sectionid', $sectionid], ['AND', 'knowsstatus = 1']]);
         $this->tpl->assign('section', $section);
@@ -676,7 +706,7 @@ class action extends app
             }
             $message = [
                 'statusCode' => 200,
-                'message'    => '操作成功！'.$errmsg,
+                'message' => '操作成功！'.$errmsg,
                 'forwardUrl' => "index.php?exam-master-basic-point&sectionid={$args['knowssectionid']}",
             ];
             $this->G->R($message);
@@ -689,12 +719,40 @@ class action extends app
                 header('location:index.php?exam-master-subject');
                 exit;
             }
+
             $subjects = $this->basic->getSubjectList();
             $knows = $this->section->getKnowsList($page, 10, [['AND', 'knowssectionid = :sectionid', 'sectionid', $sectionid], ['AND', 'knowsstatus = 1']]);
             $this->tpl->assign('section', $section);
             $this->tpl->assign('subjects', $subjects);
             $this->tpl->display('basic_addpoint');
         }
+    }
+
+    private function clearpoint()
+    {
+        $subjectid = $this->ev->get('subjectid');
+        $sectionid = $this->ev->get('sectionid');
+        $knowsid = $this->ev->get('knowsid');
+        if ($knowsid) {
+            $this->section->modifyKnows($knowsid, ['knowsnumber' => '', 'knowsquestions' => '']);
+        } elseif ($sectionid) {
+            $tpknows = $this->section->getKnowsListByArgs([['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $sectionid]]);
+            foreach ($tpknows as $p) {
+                $this->section->modifyKnows($p['knowsid'], ['knowsnumber' => '', 'knowsquestions' => '']);
+            }
+        } elseif ($subjectid) {
+            $tpknows = $this->section->getAllKnowsBySubject($subjectid);
+            foreach ($tpknows as $p) {
+                $this->section->modifyKnows($p['knowsid'], ['knowsnumber' => '', 'knowsquestions' => '']);
+            }
+        }
+        $message = [
+            'statusCode' => 200,
+            'message' => '操作成功！',
+            'callbackType' => 'forward',
+            'forwardUrl' => 'reload',
+        ];
+        $this->G->R($message);
     }
 
     private function modifypoint()
@@ -708,15 +766,15 @@ class action extends app
             if ($tpknows) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败，该章节下已经存在同名的知识点',
+                    'message' => '操作失败，该章节下已经存在同名的知识点',
                 ];
             } else {
                 $this->section->modifyKnows($knowsid, $args);
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-master-basic-point&sectionid={$knows['knowssectionid']}&page={$page}",
+                    'forwardUrl' => "index.php?exam-master-basic-point&sectionid={$knows['knowssectionid']}&page={$page}",
                 ];
             }
             $this->G->R($message);
@@ -738,10 +796,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->section->delKnows($knowsid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功！',
+            'statusCode' => 200,
+            'message' => '操作成功！',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -760,17 +818,17 @@ class action extends app
             $data = $this->basic->getSubjectByName($args['subject']);
             if ($data) {
                 $message = [
-                    'statusCode' => 300,
-                    'message'    => '操作失败，该科目已经存在',
+                'statusCode' => 300,
+                'message' => '操作失败，该科目已经存在',
                 ];
                 $this->G->R($message);
             }
             $this->basic->addSubject($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?exam-master-basic-subject',
+                'forwardUrl' => 'index.php?exam-master-basic-subject',
             ];
             $this->G->R($message);
         } else {
@@ -789,10 +847,10 @@ class action extends app
             $subjectid = $this->ev->get('subjectid');
             $this->basic->modifySubject($subjectid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?exam-master-basic-subject',
+                'forwardUrl' => 'index.php?exam-master-basic-subject',
             ];
             $this->G->R($message);
         } else {
@@ -811,16 +869,16 @@ class action extends app
         $section = $this->section->getSectionByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $subjectid]]);
         if ($section) {
             $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败，请删除该科目下所有章节后再删除本科目',
-            ];
+            'statusCode' => 300,
+            'message' => '操作失败，请删除该科目下所有章节后再删除本科目',
+        ];
         } else {
             $this->basic->delSubject($subjectid);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?exam-master-basic-subject',
+                'forwardUrl' => 'index.php?exam-master-basic-subject',
             ];
         }
         $this->G->R($message);
@@ -840,10 +898,10 @@ class action extends app
             $page = $this->ev->get('page');
             $this->basic->addQuestype($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-questype&page={$page}",
+                'forwardUrl' => "index.php?exam-master-basic-questype&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -859,10 +917,10 @@ class action extends app
             $questid = $this->ev->get('questid');
             $this->basic->modifyQuestype($questid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-questype&page={$page}",
+                'forwardUrl' => "index.php?exam-master-basic-questype&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -879,10 +937,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->basic->delQuestype($questid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic-questype&page={$page}",
+            'forwardUrl' => "index.php?exam-master-basic-questype&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -892,10 +950,10 @@ class action extends app
         $areaid = intval($this->ev->get('areaid'));
         $this->area->delArea($areaid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+            'forwardUrl' => "index.php?exam-master-basic-area&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -907,10 +965,10 @@ class action extends app
             $areaid = $this->ev->get('areaid');
             $this->area->modifyArea($areaid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-basic-area&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -930,16 +988,16 @@ class action extends app
             $id = $this->area->addArea($args);
             if (!$id) {
                 $message = [
-                    'statusCode' => 300,
-                    'message'    => '操作失败，区号已存在',
-                ];
+                'statusCode' => 300,
+                'message' => '操作失败，区号已存在',
+            ];
             } else {
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
-                    'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
-                ];
+                'statusCode' => 200,
+                'message' => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl' => "index.php?exam-master-basic-area&page={$page}{$u}",
+            ];
             }
             $this->G->R($message);
         } else {
@@ -963,10 +1021,10 @@ class action extends app
         $basicid = $this->ev->get('basicid');
         $this->basic->delBasic($basicid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+            'forwardUrl' => "index.php?exam-master-basic&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -974,13 +1032,15 @@ class action extends app
     private function batdelbasic()
     {
         $page = $this->ev->get('page');
-        $basicid = $this->ev->get('basicid');
-        $this->basic->delBasic($basicid);
+        $delids = $this->ev->get('delids');
+        foreach ($delids as $basicid => $p) {
+            $this->basic->delBasic($basicid);
+        }
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -993,10 +1053,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->basic->setBasicConfig($basicid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-basic&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -1049,7 +1109,8 @@ class action extends app
                                         $rlen = 0;
                                         break;
                                     }
-                                    $rlen++;
+
+                                    ++$rlen;
                                 }
                                 $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                             } else {
@@ -1091,7 +1152,8 @@ class action extends app
                                             $rlen = 0;
                                             break;
                                         }
-                                        $rlen++;
+
+                                        ++$rlen;
                                     }
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                 } else {
@@ -1123,10 +1185,10 @@ class action extends app
         $this->exam->modifyExamSession($args, $sessionid);
         $this->favor->addExamHistory($sessionid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -1150,10 +1212,10 @@ class action extends app
             $args['basicexam'] = $args['basicexam'];
             $this->basic->setBasicConfig($basicid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-basic&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -1190,10 +1252,10 @@ class action extends app
             $page = $this->ev->get('page');
             $id = $this->basic->addBasic($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-setexamrange&basicid={$id}&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-basic-setexamrange&basicid={$id}&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -1240,7 +1302,7 @@ class action extends app
                 $args[] = ['AND', 'basicclosed = :basicclosed', 'basicclosed', $basicclosed];
             }
         }
-        $basics = $this->basic->getBasicList($page, 10, $args);
+        $basics = $this->basic->getBasicList($args, $page, 10);
         $areas = $this->area->getAreaList();
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);

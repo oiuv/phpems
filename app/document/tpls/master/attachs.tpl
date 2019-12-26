@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 	{x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -116,11 +116,9 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>

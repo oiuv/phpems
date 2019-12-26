@@ -10,7 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-set_include_path('../');
+define('PEPATH', dirname(dirname(__FILE__)));
 class app
 {
     public $G;
@@ -19,14 +19,11 @@ class app
     {
         $this->G = $G;
         $this->ev = $this->G->make('ev');
-        $this->tpl = $this->G->make('tpl');
-        $this->tpl->dir = 'tpls/';
         $this->sql = $this->G->make('pdosql');
         $this->db = $this->G->make('pepdo');
         $this->module = $this->G->make('module');
         $this->session = $this->G->make('session');
         $this->user = $this->G->make('user', 'user');
-        $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->order = $this->G->make('orders', 'bank');
     }
 
@@ -44,7 +41,7 @@ class app
                     $orderobj->modifyOrderById($orderid, ['orderstatus' => 2]);
                     $user = $this->user->getUserById($order['orderuserid']);
                     $args['usercoin'] = $user['usercoin'] + $order['orderprice'] * 10;
-                    $this->user->modifyUserInfo($args, $order['orderuserid']);
+                    $this->user->modifyUserInfo($order['orderuserid'], $args);
                 }
             }
         }
@@ -53,6 +50,6 @@ class app
         exit();
     }
 }
-include '../lib/api.cls.php';
-$ginkgo = new ginkgo();
-$ginkgo->run();
+include PEPATH.'/lib/init.cls.php';
+$app = new app(new ginkgo());
+$app->run();

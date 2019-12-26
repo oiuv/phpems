@@ -31,19 +31,19 @@ class action extends app
             if (!is_numeric($questionid)) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '即时组卷试题不能收藏！',
+                    'message' => '即时组卷试题不能收藏！',
                 ];
             }
             if ($this->favor->getFavorByQuestionAndUserId($questionid, $this->_user['sessionuserid'])) {
                 $message = [
                     'statusCode' => 200,
-                    'message'    => '收藏成功！',
+                    'message' => '收藏成功！',
                 ];
             } else {
                 $this->favor->favorQuestion($questionid, $this->_user['sessionuserid'], $this->data['currentbasic']['basicsubjectid']);
                 $message = [
                     'statusCode' => 200,
-                    'message'    => '收藏成功！',
+                    'message' => '收藏成功！',
                 ];
             }
             $this->G->R($message);
@@ -54,10 +54,10 @@ class action extends app
             $favorid = $this->ev->get('questionid');
             $this->favor->delFavorById($favorid);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             $this->G->R($message);
             break;

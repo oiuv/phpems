@@ -5,7 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-12" id="datacontent">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -19,27 +22,27 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
                         {x2;if:$course}{x2;$course['cstitle']}{x2;else}所有课件{x2;endif}
-						<a class="btn btn-primary pull-right" href="index.php?course-teach-contents-add&courseid={x2;$course['csid']}&page={x2;$page}">添加课件</a>
+						<a class="btn btn-primary pull-right" href="index.php?course-teach-contents-addpage&courseid={x2;$course['csid']}&page={x2;$page}">添加课件</a>
 					</h4>
 					<form action="index.php?course-teach-contents" method="post" class="form-inline">
 						<table class="table">
 					        <tr>
-								<td>
+								<td style="border-top: 0px;">
 									课件ID：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input name="search[courseid]" class="form-control" size="15" type="text" class="number" value="{x2;$search['courseid']}"/>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									录入时间
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									关键字：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input class="form-control" name="search[keyword]" size="15" type="text" value="{x2;$search['keyword']}"/>
 								</td>
 							</tr>
@@ -55,7 +58,7 @@
 								</td>
 								<td>
 									<select name="search[coursemoduleid]" class="form-control">
-								  		<option value="0">Unlimited</option>
+								  		<option value="0">不限</option>
 								  		{x2;tree:$modules,module,mid}
 								  		<option value="{x2;v:module['moduleid']}"{x2;if:$search['coursemoduleid'] == v:module['moduleid']} selected{x2;endif}>{x2;v:module['modulename']}</option>
 								  		{x2;endtree}
@@ -106,7 +109,9 @@
                                                 {x2;if:$_user['userid'] == v:content['courseuserid']}
 												<a class="btn" href="index.php?course-teach-contents-edit&courseid={x2;v:content['coursecsid']}&contentid={x2;v:content['courseid']}&page={x2;$page}{x2;$u}" title="Modify"><em class="glyphicon glyphicon-edit"></em></a>
 												<a class="btn confirm" href="index.php?course-teach-contents-del&courseid={x2;v:content['coursecsid']}&contentid={x2;v:content['courseid']}&page={x2;$page}{x2;$u}" title="Delete"><em class="glyphicon glyphicon-remove"></em></a>
-					                    		{x2;endif}
+					                    		{x2;else}
+												<a title="仅上传人可修改和删除">-</a>
+												{x2;endif}
 											</div>
 					                    </td>
 					                </tr>

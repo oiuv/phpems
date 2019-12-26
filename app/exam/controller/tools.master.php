@@ -31,15 +31,15 @@ class action extends app
             }
             $this->exam->clearOutTimeExamSession($time);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message'    => '请先选择查询条件',
+            'message' => '请先选择查询条件',
         ];
         }
         $this->G->R($message);
@@ -54,15 +54,15 @@ class action extends app
             }
             $this->session->clearOutTimeUser($time);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message'    => '请先选择查询条件',
+            'message' => '请先选择查询条件',
         ];
         }
         $this->G->R($message);
@@ -123,16 +123,16 @@ class action extends app
                 $this->exam->finalDelQuestionRows($n['qrid']);
             }
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             $this->G->R($message);
         } else {
             $message = [
                 'statusCode' => 300,
-                'message'    => '请先选择查询条件',
+                'message' => '请先选择查询条件',
             ];
             $this->G->R($message);
         }
@@ -152,16 +152,16 @@ class action extends app
                 }
                 $this->favor->clearExamHistory($args);
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'reload',
+                    'forwardUrl' => 'reload',
                 ];
                 $this->G->R($message);
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '请先选择起止时间',
+                    'message' => '请先选择起止时间',
                 ];
                 $this->G->R($message);
             }
@@ -217,16 +217,16 @@ class action extends app
                 $this->exam->fanalDelQuestions($n['questionid']);
             }
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             $this->G->R($message);
         } else {
             $message = [
                 'statusCode' => 300,
-                'message'    => '请先选择查询条件',
+                'message' => '请先选择查询条件',
             ];
             $this->G->R($message);
         }

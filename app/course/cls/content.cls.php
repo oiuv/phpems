@@ -41,12 +41,21 @@ class content_course
         return $r['number'];
     }
 
-    public function getCourseList($args = 1, $page = 1, $number = 20, $order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
+    public function getCoursesByCsid($csid, $order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
+    {
+        $data = [false, 'course', [['AND', 'coursecsid = :coursecsid', 'coursecsid', $csid]], false, $order, false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+
+        return ['data' => $r];
+    }
+
+    public function getCourseList($args = [], $page = 1, $number = 20, $order = 'coursesequence DESC,courseinputtime ASC,courseid ASC')
     {
         $data = [
-            'select'  => false,
-            'table'   => 'course',
-            'query'   => $args,
+            'select' => false,
+            'table' => 'course',
+            'query' => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);

@@ -1,161 +1,175 @@
-			{x2;if:$question['questionid']}
-			<h4 class="title">
-				第{x2;$number}题
-				<span class="pull-right">
-					<a class="btn text-primary qicon ajax" href="index.php?exam-phone-lesson-reporterror&questionid={x2;$question['questionid']}" data-target="reporterror" data-page="reporterror"><i class="glyphicon glyphicon-erase"></i></a>
-					<a class="btn text-primary qicon" onclick="javascript:favorquestion('{x2;$question['questionid']}');"><i class="glyphicon glyphicon-heart-empty"></i></a>
-				</span>
-			</h4>
-			<div class="choice">
-				</a>{x2;realhtml:$question['question']}
-			</div>
-			{x2;if:!$questype['questsort']}
-			{x2;if:$question['questionselect'] && $questype['questchoice'] != 5}
-			<div class="choice" style="padding-bottom:0.5rem;">
-            	{x2;realhtml:$question['questionselect']}
-            </div>
-            {x2;endif}
-			<div class="selector">
-            	{x2;if:$questype['questchoice'] == 1 || $questype['questchoice'] == 4}
+<div class="page-header">
+	<div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+	<div class="col-8">{x2;$knows['knows']}</div>
+	<div class="col-1"><span class="iconfont icon-menu hide"></span></div>
+</div>
+<div class="page-content header footer" data-refresh="yes">
+	<form class="list-box bg top">
+		<ol>
+			<li class="unstyled">
+				<h4 class="title">
+					第 {x2;$number} 题
+				</h4>
+			</li>
+            {x2;if:$parent}
+            <li class="unstyled">
+				<div class="rows">
+					<p>{x2;realhtml:$parent['qrquestion']}</p>
+				</div>
+			</li>
+			{x2;endif}
+			<li class="unstyled">
+				<div class="rows">
+					<p>{x2;realhtml:$question['question']}</p>
+				</div>
+			</li>
+            {x2;if:!$questype[$questiont['questiontype']]['questsort'] && $questype[$questiont['questiontype']]['questchoice'] != 5}
+			<li class="unstyled">
+				<div class="rows">
+					<p>{x2;realhtml:$question['questionselect']}</p>
+				</div>
+			</li>
+			{x2;endif}
+            {x2;if:$questype['questsort']}
+			<li class="unstyled">
+				<textarea rows="4" id="editor{x2;$question['questionid']}" name="question[{x2;$question['questionid']}]" rel="{x2;$question['questionid']}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$question['questionid']]}</textarea>
+			</li>
+			<li class="unstyled text-center">
+				<button class="primary badge" onclick="javascript:$(this).parents('li').hide().parents('.list-box').find('.rightanswer').removeClass('hide');">查看答案</button>
+			</li>
+            {x2;else}
+			<li class="unstyled">
+				<div class="rows">
+                    {x2;if:$questype['questchoice'] == 1 || $questype['questchoice'] == 4}
                     {x2;tree:$selectorder,so,sid}
                     {x2;if:v:key == $question['questionselectnumber']}
                     {x2;eval: break;}
                     {x2;endif}
-                    <label class="radio-inline" style="line-height:2.8rem;"><input type="radio" name="question[{x2;$question['questionid']}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][$question['questionid']]}checked{x2;endif}/>{x2;v:so} </label>
+					<label class="inline"><input type="radio" name="question[{x2;$question['questionid']}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][$question['questionid']]}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
                     {x2;endtree}
-                {x2;elseif:$questype['questchoice'] == 5}
-                	<input type="text" style="width:100%;height:2em;" name="question[{x2;$question['questionid']}]" value="{x2;$sessionvars['examsessionuseranswer'][$question['questionid']]}" rel="{x2;$question['questionid']}"/>
-                {x2;else}
+                    {x2;elseif:$questype['questchoice'] == 5}
+					<input type="text" name="question[{x2;$question['questionid']}]" placeholder="点击此处填写答案" value="{x2;$sessionvars['examsessionuseranswer'][$question['questionid']]}" rel="{x2;$question['questionid']}"/>
+					<label class="inline pull-right"><button class="btn btn-primary badge finish fill" rel="{x2;$question['questionid']}">答题完毕</button></label>
+                    {x2;else}
                     {x2;tree:$selectorder,so,sid}
                     {x2;if:v:key >= $question['questionselectnumber']}
                     {x2;eval: break;}
                     {x2;endif}
-                    <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox" name="question[{x2;$question['questionid']}][{x2;v:key}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:is_array($sessionvars['examsessionuseranswer'][$question['questionid']]) && in_array(v:so,$sessionvars['examsessionuseranswer'][$question['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
+					<label class="inline"><input type="checkbox" name="question[{x2;$question['questionid']}][{x2;v:key}]" rel="{x2;$question['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][$question['questionid']])}checked{x2;endif}/><span class="selector">{x2;v:so}</span> </label>
                     {x2;endtree}
-                {x2;endif}
-            </div>
-			{x2;else}
-			<div class="selector">
-				{x2;eval: $dataid = $question['questionid']}
-				<textarea class="jckeditors form-control" etype="simple" id="editor{x2;$dataid}" name="question[{x2;$dataid}]" rel="{x2;$question['questionid']}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$dataid]}</textarea>
-			</div>
-			{x2;endif}
-			<div class="choice" style="margin-top:20px;overflow:hidden;">
-				<div class="btn-group hide answerbox pull-right">
-            		{x2;if:$number > 1}
-            		<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
-            		{x2;endif}
-					<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
-            	</div>
-            	<div class="btn-group pull-right">
-            		<a class="btn btn-primary questionbtn" href="javascript:;" onclick="javascript:$('.questionbtn').addClass('hide');$('.answerbox').removeClass('hide');" title="查看答案">查看答案</a>
-            	</div>
-        	</div>
-			<div class="answerbox hide" style="border-left:10px solid #CCCCCC;margin-top:20px;">
-				<table class="table table-hover table-bordered">
-            		<tr class="info">
-                		<td width="20%">答案</td>
-                		<td>{x2;realhtml:$question['questionanswer']}</td>
-                	</tr>
-                	<tr>
-                		<td>解析</td>
-                		<td>{x2;realhtml:$question['questiondescribe']}</td>
-                	</tr>
-            	</table>
-			</div>
-			<div id="rightanswer_{x2;$question['questionid']}" class="hide">{x2;realhtml:$question['questionanswer']}</div>
-			{x2;else}
-			<h4 class="title">
-				第{x2;$number}题
-				<span class="pull-right">
-					<a class="btn text-primary qicon ajax" href="index.php?exam-phone-lesson-reporterror&questionid={x2;$vquestion['questionid']}" data-target="reporterror" data-page="reporterror"><i class="glyphicon glyphicon-erase"></i></a>
-					<a class="btn text-primary qicon" onclick="javascript:favorquestion('{x2;$vquestion['questionid']}');"><i class="glyphicon glyphicon-heart-empty"></i></a>
-					<a name="question_{x2;$vquestion['questionid']}"></a>
-					<input id="time_{x2;$vquestion['questionid']}" type="hidden" name="time[{x2;$vquestion['questionid']}]"/>
-				</span>
-			</h4>
-			<div class="choice">
-				{x2;realhtml:$question['qrquestion']}
-			</div>
-			<hr />
-            <div class="paperexamcontent_{x2;$vquestion['questionid']} form-horizontal" style="padding:0rem 1.5rem;">
-				<div class="choice">
-					<a name="qrchild_{x2;$vquestion['questionid']}"></a>
-					{x2;realhtml:$vquestion['question']}
+                    {x2;endif}
 				</div>
-				{x2;if:!$questype['questsort']}
-				{x2;if:$vquestion['questionselect'] && $questype['questchoice'] != 5}
-				<div class="choice" style="padding-bottom:0.5rem;">
-	            	{x2;realhtml:$vquestion['questionselect']}
-	            </div>
-	            {x2;endif}
-	            <div class="selector questionanswerbox">
-		        	{x2;if:$questype['questchoice'] == 1 || $questype['questchoice'] == 4}
-		                {x2;tree:$selectorder,so,sid}
-		                {x2;if:v:key == $vquestion['questionselectnumber']}
-		                {x2;eval: break;}
-		                {x2;endif}
-		                <label class="radio-inline" style="line-height:2.8rem;"><input type="radio" name="question[{x2;$vquestion['questionid']}]" rel="{x2;$vquestion['questionid']}" value="{x2;v:so}" {x2;if:v:so == $sessionvars['examsessionuseranswer'][$vquestion['questionid']]}checked{x2;endif}/>{x2;v:so} </label>
-		                {x2;endtree}
-		            {x2;elseif:$questype['questchoice'] == 5}
-		            	<input type="text" class="form-control" name="question[{x2;$vquestion['questionid']}]" value="{x2;$sessionvars['examsessionuseranswer'][$vquestion['questionid']]}" rel="{x2;$vquestion['questionid']}"/>
-		            {x2;else}
-		                {x2;tree:$selectorder,so,sid}
-		                {x2;if:v:key >= $vquestion['questionselectnumber']}
-		                {x2;eval: break;}
-		                {x2;endif}
-		                <label class="checkbox-inline" style="line-height:2.8rem;"><input type="checkbox" name="question[{x2;$vquestion['questionid']}][{x2;v:key}]" rel="{x2;$vquestion['questionid']}" value="{x2;v:so}" {x2;if:in_array(v:so,$sessionvars['examsessionuseranswer'][$vquestion['questionid']])}checked{x2;endif}/>{x2;v:so} </label>
-		                {x2;endtree}
-		            {x2;endif}
-		        </div>
-				{x2;else}
-				<div class="selector questionanswerbox">
-					{x2;eval: $dataid = $vquestion['questionid']}
-					<textarea class="jckeditors form-control" etype="simple" id="editor{x2;$dataid}" name="question[{x2;$dataid}]" rel="{x2;$vquestion['questionid']}">{x2;realhtml:$sessionvars['examsessionuseranswer'][$dataid]}</textarea>
+			</li>
+			{x2;if:$questype['questchoice'] == 2 || $questype['questchoice'] == 3}
+			<li class="unstyled text-center">
+				<button class="primary badge finish" rel="{x2;$question['questionid']}">答题完毕</button>
+			</li>
+            {x2;endif}
+            {x2;endif}
+			<li class="unstyled rightanswer hide">
+				<div class="rows">
+                    {x2;if:$questype['questsort']}
+					<div class="intro">
+						<span class="badge">正确答案</span>
+					</div>
+					<div class="intro">
+						{x2;realhtml:$question['questionanswer']}
+					</div>
+					{x2;else}
+					<div class="col-4x intro">
+						<span class="badge">正确答案</span>
+					</div>
+					<div class="col-4l intro">
+						<b id="rightanswer_{x2;$question['questionid']}">{x2;$question['questionanswer']}</b>
+					</div>
+					{x2;endif}
 				</div>
-				{x2;endif}
-				<div class="choice" style="margin-top:20px;overflow:hidden;">
-					<div class="btn-group pull-right hide answerbox">
-		            		{x2;if:$number > 1}
-		            		<a class="btn btn-primary ajax" action-pageant="pre" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number - 1)}" title="上一题">上一题</a>
-		            		{x2;endif}
-		            		{x2;if:(v:did + $number) < $allnumber}
-							<a class="btn btn-primary ajax" data-target="lessonpaper-questionpanel" href="index.php?{x2;$_app}-phone-lesson-ajax-questions&number={x2;eval: echo intval($number + 1)}" title="下一题">下一题</a>
-							{x2;endif}
-		        	</div>
-		        	<div class="btn-group pull-right">
-		        		<a class="btn btn-primary questionbtn" href="javascript:;" onclick="javascript:$('.paperexamcontent_{x2;$vquestion['questionid']}').find('.questionbtn').addClass('hide');$('.paperexamcontent_{x2;$vquestion['questionid']}').find('.answerbox').removeClass('hide');" title="查看答案">查看答案</a>
-		        	</div>
-		    	</div>
-		    	<div id="rightanswer_{x2;$vquestion['questionid']}" class="hide">{x2;realhtml:$vquestion['questionanswer']}</div>
-				<div class="answerbox hide" style="margin-top:20px;">
-					<table class="table table-hover table-bordered">
-	            		<tr class="info">
-	                		<td width="20%">答案</td>
-	                		<td>{x2;realhtml:$vquestion['questionanswer']}</td>
-	                	</tr>
-	                	<tr>
-	                		<td>解析</td>
-	                		<td>{x2;realhtml:$vquestion['questiondescribe']}</td>
-	                	</tr>
-	            	</table>
+			</li>
+			<li class="unstyled rightanswer hide">
+				<div class="rows">
+					{x2;if:strlen($question['questiondescribe']) >= 10}
+					<div class="intro">
+						<span class="badge">试题解析</span>
+					</div>
+					<div class="intro">
+						{x2;realhtml:$question['questiondescribe']}
+					</div>
+					{x2;else}
+					<div class="col-4x">
+						<span class="badge">试题解析</span>
+					</div>
+					<div class="col-4l intro">
+                        {x2;realhtml:$question['questiondescribe']}
+					</div>
+					{x2;endif}
 				</div>
-			</div>
-		</div>
-		{x2;endif}
-		<script type="text/javascript">
-			$("input:radio").click(function(){
-				var _this = $(this);
-				var qid = _this.attr('rel');
-				_this.parents('.selector').parent().find('.questionbtn').addClass('hide');
-				_this.parents('.selector').parent().find('.answerbox').removeClass('hide');
-				if(_this.val() == $("#rightanswer_"+qid).html())
-				{
-					_this.parents('.selector').addClass('alert-success').addClass('alert').html('恭喜您回答正确！');
-				}
-				else
-				{
-					_this.parents('.selector').addClass('alert-danger').addClass('alert').html('回答错误，正确答案为：'+$("#rightanswer_"+qid).html()+'，您选择的答案是：'+_this.val());
-				}
-			});
-		</script>
+			</li>
+			<li class="unstyled"></li>
+		</ol>
+	</form>
+</div>
+<div class="page-footer">
+	<ol class="pagination">
+		<li class="col-8x{x2;if:$number > 1} jump" data-number="{x2;eval: echo $number - 1}{x2;endif}">
+            <span class="iconfont icon-left-circle"></span>
+		</li>
+		<li class="col-8x favor" data-questionid="{x2;$question['questionid']}">
+			<span class="iconfont icon-star"></span>
+		</li>
+		<li class="col-5">
+			<form method="post" data-target="questionpanel" action="index.php?exam-app-lesson-ajax-questions&knowsid={x2;$knows['knowsid']}">
+				共{x2;$allnumber}题，转到 <input class="text-center" name="number" placeholder="{x2;$number}" type="search" size="3"> 题
+			</form>
+		</li>
+		<li class="col-8x">
+			<a href="index.php?exam-phone-lesson-reporterror&questionid={x2;$question['questionid']}" class="ajax">
+				<span class="iconfont icon-wrench"></span>
+			</a>
+		</li>
+		<li class="col-8x{x2;if:$number < $allnumber} jump" data-number="{x2;eval: echo $number + 1}{x2;endif}">
+			<span class="iconfont icon-right-circle"></span>
+		</li>
+	</ol>
+</div>
+<script type="text/javascript">
+    $(function(){
+        var sumquestion = function(value,qid){
+            $('.rightanswer').removeClass('hide');
+            if(value == $("#rightanswer_"+qid).html())
+            {
+                $("#rightanswer_"+qid).attr('class','text-success');
+            }
+            else
+            {
+                pep.mask.show(null,{message:'回答错误'});
+                $("#rightanswer_"+qid).attr('class','text-danger');
+            }
+            setTimeout(pep.mask.hide,1000);
+        }
+        $("input:radio").click(function(){
+            var _this = $(this);
+            var qid = _this.attr('rel');
+            sumquestion(_this.val(),qid);
+        });
+        $(".finish").click(function(){
+            var _this = $(this);
+            var qid = _this.attr('rel');
+            var parent = _this.parents("form:first");
+            var value = '';
+            if(_this.hasClass('fill')){
+                value = parent.find("input").val();
+            }
+            else{
+                parent.find("input:checked").each(function(){
+                    value += $(this).val().toUpperCase();
+                });
+            }
+            if(value == '')
+            {
+                pep.mask.show(null,{message:'请先答题'});
+                return;
+            }
+            sumquestion(value,qid);
+        });
+    });
+</script>

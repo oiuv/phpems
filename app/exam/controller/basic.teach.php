@@ -37,60 +37,6 @@ class action extends app
         exit(json_encode($r));
     }
 
-    private function delbasic()
-    {
-        $page = $this->ev->get('page');
-        $basicid = $this->ev->get('basicid');
-        $this->basic->delBasic($basicid);
-        $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-teach-basic&page={$page}{$u}",
-        ];
-        exit(json_encode($message));
-    }
-
-    private function batdelbasic()
-    {
-        $page = $this->ev->get('page');
-        $basicid = $this->ev->get('basicid');
-        $this->basic->delBasic($basicid);
-        $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-teach-basic&page={$page}{$u}",
-        ];
-        exit(json_encode($message));
-    }
-
-    private function modifybasic()
-    {
-        $page = $this->ev->get('page');
-        if ($this->ev->get('modifybasic')) {
-            $basicid = $this->ev->get('basicid');
-            $args = $this->ev->get('args');
-            $this->basic->setBasicConfig($basicid, $args);
-            $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-teach-basic&page={$page}{$u}",
-            ];
-            exit(json_encode($message));
-        }
-
-        $basicid = $this->ev->get('basicid');
-        $basic = $this->basic->getBasicById($basicid);
-        $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
-        $areas = $this->area->getAreaList();
-        $this->tpl->assign('areas', $areas);
-        $this->tpl->assign('subjects', $subjects);
-        $this->tpl->assign('basic', $basic);
-        $this->tpl->display('basic_modify');
-    }
-
     private function setexamrange()
     {
         $page = $this->ev->get('page');
@@ -110,10 +56,10 @@ class action extends app
             $args['basicexam'] = $args['basicexam'];
             $this->basic->setBasicConfig($basicid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-teach-basic&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-teach-basic&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -170,7 +116,7 @@ class action extends app
                                         break;
                                     }
 
-                                    $rlen++;
+                                    ++$rlen;
                                 }
                                 $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                             } else {
@@ -213,7 +159,7 @@ class action extends app
                                             break;
                                         }
 
-                                        $rlen++;
+                                        ++$rlen;
                                     }
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                 } else {
@@ -245,10 +191,10 @@ class action extends app
         $this->exam->modifyExamSession($args, $sessionid);
         $this->favor->addExamHistory($sessionid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -261,7 +207,7 @@ class action extends app
         $page = $page > 0 ? $page : 1;
         $this->pg->setUrlTarget('modal-body" class="ajax');
         $args = 1;
-        $actors = $this->user->getUserGroupList($args, 10, $page);
+        $actors = $this->user->getUserGroupList($args, $page, 10);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('target', $target);
         $this->tpl->assign('actors', $actors);
@@ -287,28 +233,6 @@ class action extends app
         echo $number;
     }
 
-    private function add()
-    {
-        if ($this->ev->get('insertbasic')) {
-            $args = $this->ev->get('args');
-            $page = $this->ev->get('page');
-            $id = $this->basic->addBasic($args);
-            $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-teach-basic-setexamrange&basicid={$id}&page={$page}{$u}",
-            ];
-            exit(json_encode($message));
-        }
-
-        $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
-        $areas = $this->area->getAreaList();
-        $this->tpl->assign('areas', $areas);
-        $this->tpl->assign('subjects', $subjects);
-        $this->tpl->display('basic_add');
-    }
-
     private function index()
     {
         $page = $this->ev->get('page');
@@ -332,7 +256,7 @@ class action extends app
                 $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
             }
         }
-        $basics = $this->basic->getBasicList($page, 10, $args);
+        $basics = $this->basic->getBasicList($args, $page, 10);
         $areas = $this->area->getAreaList();
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);

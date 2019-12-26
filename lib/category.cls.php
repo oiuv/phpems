@@ -24,10 +24,8 @@ class category
     {
         $this->categories = null;
         $this->tidycategories = null;
-        $this->sql = $this->G->make('sql');
         $this->pdosql = $this->G->make('pdosql');
         $this->db = $this->G->make('pepdo');
-        $this->pg = $this->G->make('pg');
         $this->ev = $this->G->make('ev');
         $this->app = $this->G->app;
     }
@@ -59,7 +57,14 @@ class category
         } else {
             $args[] = ['AND', 'catapp = :catapp', 'catapp', $this->app];
         }
-        $data = ['select' => false, 'table' => 'category', 'index' => 'catid', 'query' => $args, 'orderby' => 'catlite DESC,catid DESC', 'serial' => 'catmanager'];
+        $data = [
+            'select' => false,
+            'table' => 'category',
+            'index' => 'catid',
+            'query' => $args,
+            'orderby' => 'catlite DESC,catid DESC',
+            'serial' => 'catmanager',
+        ];
 
         return $this->db->listElements($page, $number, $data);
     }
@@ -68,8 +73,6 @@ class category
     {
         if (!is_array($args)) {
             $args = [['AND', 'catapp = :catapp', 'catapp', $this->app]];
-        } else {
-            $args[] = ['AND', 'catapp = :catapp', 'catapp', $this->app];
         }
         $data = [false, 'category', $args, false, 'catlite DESC,catid DESC', false];
         $sql = $this->pdosql->makeSelect($data);
@@ -85,15 +88,23 @@ class category
     public function modifyCategory($id, $args)
     {
         unset($args['catapp']);
-        $data = ['table' => 'category', 'value' => $args, 'query' => [['AND', 'catid = :catid', 'catid', $id]], 'orderby' => 'catlite DESC,catid DESC'];
+        $data = [
+            'table' => 'category',
+            'value' => $args,
+            'query' => [['AND', 'catid = :catid', 'catid', $id]],
+            'orderby' => 'catlite DESC,catid DESC',
+        ];
 
         return $this->db->updateElement($data);
     }
 
-    public function getAllCategory()
+    public function getAllCategory($app = false)
     {
+        if (!$app) {
+            $app = $this->app;
+        }
         if (null === $this->categories) {
-            $data = [false, 'category', [['AND', 'catapp = :catapp', 'catapp', $this->app]], false, 'catlite DESC,catid DESC', false];
+            $data = [false, 'category', [['AND', 'catapp = :catapp', 'catapp', $app]], false, 'catlite DESC,catid DESC', false];
             $sql = $this->pdosql->makeSelect($data);
             $this->categories = $this->db->fetchAll($sql, 'catid', 'catmanager');
             $this->tidyCategory();
@@ -140,7 +151,7 @@ class category
                     $parent[] = $n['catid'];
                 }
             }
-            $i++;
+            ++$i;
         }
 
         return $child;
@@ -148,9 +159,7 @@ class category
 
     public function getChildCategoryString($id, $withself = 1)
     {
-        if ($this->getChildCategory($id)) {
-            $s = implode(',', $this->getChildCategory($id));
-        }
+        $s = implode(',', $this->getChildCategory($id));
         if ($withself) {
             if ($s) {
                 $s = $id.','.$s;

@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -54,6 +54,8 @@
 					  		<div class="col-sm-9">
 					  			<input type="button" class="btn btn-primary" value="选定" onclick="javascript:setKnowsList('questionknowsid','iknowsselect','+');"/>
 					  			<input type="button" class="btn btn-danger" value="清除" onclick="javascript:setKnowsList('questionknowsid','iknowsselect','-');"/>
+								<input type="button" class="btn btn-warning" value="储存" onclick="javascript:$.cookie('phpems-knowsselector',$('#questionknowsid').val());alert('储存成功');"/>
+								<input type="button" class="btn btn-info" value="载入" onclick="javascript:$('#questionknowsid').val($.cookie('phpems-knowsselector'));"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -214,11 +216,9 @@
 							  	<button class="btn btn-primary" type="submit">提交</button>
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="insertquestion" value="1"/>
-                                {x2;if:is_array($search)}
 							  	{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 								{x2;endtree}
-                                {x2;endif}
 							</div>
 						</div>
 					</form>

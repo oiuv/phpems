@@ -22,17 +22,16 @@ class action extends app
         exit;
     }
 
-    // todo $u = ?
     private function del()
     {
         $page = $this->ev->get('page');
         $atid = $this->ev->get('atid');
         $this->attach->delAttachtypeById($atid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?document-master-attachtype&page={$page}{$u}",
+            'forwardUrl' => "index.php?document-master-attachtype&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -45,10 +44,10 @@ class action extends app
             $this->attach->delAttachtypeById($atid);
         }
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?document-master-attachtype&page={$page}{$u}",
+            'forwardUrl' => "index.php?document-master-attachtype&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -61,10 +60,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->attach->modifyAttachtypeById($args, $atid);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?document-master-attachtype&page={$page}{$u}",
+                'forwardUrl' => "index.php?document-master-attachtype&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -80,10 +79,10 @@ class action extends app
             $args = $this->ev->get('args');
             $id = $this->attach->addAttachtype($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?document-master-attachtype{$u}",
+                'forwardUrl' => "index.php?document-master-attachtype{$u}",
             ];
             $this->G->R($message);
         } else {

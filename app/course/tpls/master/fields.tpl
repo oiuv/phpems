@@ -5,11 +5,11 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
-{x2;endif}
+			<div id="datacontent">
+                {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
@@ -21,7 +21,7 @@
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
-						{x2;$module['modulename']}
+                        {x2;$module['modulename']}
 						<span class="pull-right">
 							<a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">添加字段&nbsp;<strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
@@ -32,11 +32,11 @@
 							</ul>
 						</span>
 					</h4>
-				    <form action="index.php?{x2;$_app}-master-module-fields" method="post">
-					    <fieldset>
+					<form action="index.php?{x2;$_app}-master-module-fields" method="post">
+						<fieldset>
 							<form action="index.php?{x2;$_app}-master-user-batdel" method="post">
-							<table class="table table-hover table-bordered">
-								<thead>
+								<table class="table table-hover table-bordered">
+									<thead>
 									<tr class="info">
 										<th>ID</th>
 										<th>排序</th>
@@ -47,12 +47,11 @@
 										<th>数据类型</th>
 										<th>HTML类型</th>
 										<th>索引</th>
-										<th>操作</th>
+										<th width="140">操作</th>
 									</tr>
-								</thead>
-								<tbody>
-                                {x2;if:is_array($fields)}
-									{x2;tree:$fields,field,fid}
+									</thead>
+									<tbody>
+                                    {x2;tree:$fields,field,fid}
 									<tr>
 										<td>{x2;v:field['fieldid']}</td>
 										<td class="form-inline"><input type="text" size="1" name="ids[{x2;v:field['fieldid']}]" value="{x2;v:field['fieldsequence']}" class="form-control"/></td>
@@ -65,40 +64,37 @@
 										<td>{x2;if:v:field['fieldindextype']}{x2;v:field['fieldindextype']}{x2;else}NULL{x2;endif}</td>
 										<td nowrap>
 											<div class="btn-group">
-												{x2;if:v:field['fieldlock']}
+                                                {x2;if:$module['modulelockfields'][v:field['field']]}
 												<a class="btn ajax" href="index.php?{x2;$_app}-master-module-forbiddenfield&fieldid={x2;v:field['fieldid']}&moduleid={x2;$moduleid}&page={x2;$page}{x2;$u}" title="启用"><em class="glyphicon glyphicon-ban-circle"></em></a>
-												{x2;else}
+                                                {x2;else}
 												<a class="btn ajax" href="index.php?{x2;$_app}-master-module-forbiddenfield&fieldid={x2;v:field['fieldid']}&moduleid={x2;$moduleid}&page={x2;$page}{x2;$u}" title="禁用"><em class="glyphicon glyphicon-ok-circle"></em></a>
-												{x2;endif}
+                                                {x2;endif}
 												<a class="btn" href="index.php?{x2;$_app}-master-module-modifyfield&fieldid={x2;v:field['fieldid']}&page={x2;$page}{x2;$u}" title="修改字段"><em class="glyphicon glyphicon-edit"></em></a>
-												{x2;if:!v:field['fieldsystem']}
-												<a class="btn ajax" href="index.php?{x2;$_app}-master-module-delfield&fieldid={x2;v:field['fieldid']}&moduleid={x2;$moduleid}&page={x2;$page}{x2;$u}" title="删除字段"><em class="glyphicon glyphicon-remove"></em></a>
-												{x2;endif}
+                                                {x2;if:!v:field['fieldsystem']}
+												<a class="btn confirm" href="index.php?{x2;$_app}-master-module-delfield&fieldid={x2;v:field['fieldid']}&moduleid={x2;$moduleid}&page={x2;$page}{x2;$u}" title="删除字段"><em class="glyphicon glyphicon-remove"></em></a>
+                                                {x2;endif}
 											</div>
 										</td>
 									</tr>
-									{x2;endtree}
-                                {x2;endif}
-								</tbody>
-							</table>
-							<div class="control-group">
-								<div class="controls">
-									<button class="btn btn-primary" type="submit">更改排序</button>
-						            <input type="hidden" name="page" value="{x2;$page}">
-						            <input type="hidden" name="modifyfieldsequence" value="1"/>
-			          				<input type="hidden" name="moduleid" value="{x2;$moduleid}"/>
-                                    {x2;if:is_array($search)}
-									{x2;tree:$search,arg,aid}
-									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-									{x2;endtree}
-                                    {x2;endif}
+                                    {x2;endtree}
+									</tbody>
+								</table>
+								<div class="control-group">
+									<div class="controls">
+										<button class="btn btn-primary" type="submit">更改排序</button>
+										<input type="hidden" name="page" value="{x2;$page}">
+										<input type="hidden" name="modifyfieldsequence" value="1"/>
+										<input type="hidden" name="moduleid" value="{x2;$moduleid}"/>
+                                        {x2;tree:$search,arg,aid}
+										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
+                                        {x2;endtree}
+									</div>
 								</div>
-							</div>
 						</fieldset>
 					</form>
 				</div>
 			</div>
-{x2;if:!$userhash}
+            {x2;if:!$userhash}
 		</div>
 	</div>
 </div>

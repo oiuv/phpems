@@ -32,10 +32,10 @@ class action extends app
             $args['cetime'] = strtotime($args['cetime']);
             $this->ce->modifyCe($ceid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -48,10 +48,10 @@ class action extends app
         $ceid = $this->ev->get('ceid');
         $this->ce->delCe($ceid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -63,10 +63,10 @@ class action extends app
             $args['cetime'] = strtotime($args['cetime']);
             $this->ce->addCe($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?certificate-master-certificate',
+                'forwardUrl' => 'index.php?certificate-master-certificate',
             ];
             exit(json_encode($message));
         }
@@ -80,10 +80,10 @@ class action extends app
         $status = $this->ev->get('status');
         $this->ce->modifyCeQueue($ceqid, ['ceqstatus' => $status]);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -142,10 +142,10 @@ class action extends app
         $fname = 'data/out/'.TIME.'.xlsx';
         $objWriter->save($fname);
         $message = [
-            'statusCode'   => 200,
-            'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+            'statusCode' => 200,
+            'message' => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
             'callbackType' => 'forward',
-            'forwardUrl'   => "{$fname}",
+            'forwardUrl' => "{$fname}",
         ];
         exit(json_encode($message));
     }

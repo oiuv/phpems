@@ -438,7 +438,8 @@ class WxPayApi
     public static function notify($callback, &$msg)
     {
         //获取通知的数据
-        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        //$xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $xml = file_get_contents('php://input');
         //如果返回成功则验证签名
         try {
             $result = WxPayResults::Init($xml);
@@ -462,7 +463,7 @@ class WxPayApi
     {
         $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         $str = '';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
         }
 
@@ -597,7 +598,6 @@ class WxPayApi
         }
         $error = curl_errno($ch);
         curl_close($ch);
-
         throw new WxPayException("curl出错，错误码:$error");
     }
 

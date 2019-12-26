@@ -26,10 +26,8 @@ class action extends app
     {
         $page = $this->ev->get('page');
         $page = $page < 1 ? 1 : $page;
-        $this->pg->isPhone = 1;
-        $this->pg->target = 'class="ajax" data-target="scores" data-page="scores" ';
         $s = $this->favor->getUserTopScore($this->data['currentbasic']['basicid'], $this->_user['sessionuserid']);
-        $scores = $this->favor->getExamScoreListByBasicId($this->data['currentbasic']['basicid'], $page);
+        $scores = $this->favor->getExamScoreListByBasicId($this->data['currentbasic']['basicid'], $page, 10);
         $this->tpl->assign('s', $s);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('scores', $scores);

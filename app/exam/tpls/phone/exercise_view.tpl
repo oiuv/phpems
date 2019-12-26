@@ -38,7 +38,7 @@
 						<div class="media well">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<span class="badge badge-info questionindex">{x2;v:tid}</span>
+									<span class="badge badge-info questionindex">{x2;v:tid}</span></a>
 								</li>
 								<li class="btn-group pull-right">
 									<button class="btn" type="button" onclick="javascript:favorquestion('{x2;v:question['questionid']}');"><em class="icon-heart" title="收藏"></em></button>
@@ -86,7 +86,7 @@
 							<div class="paperexamcontent decidediv">
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<span class="badge questionindex">{x2;v:did}</span>
+										<span class="badge questionindex">{x2;v:did}</span></a>
 									</li>
 									<li class="btn-group pull-right">
 										<button class="btn" type="button" onclick="javascript:favorquestion('{x2;v:data['questionid']}');"><em class="icon-heart" title="收藏"></em></button>

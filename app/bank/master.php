@@ -32,10 +32,10 @@ class app
         if (1 != $group['groupid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 300,
-                'message'      => '请您重新登录',
+                'statusCode' => 300,
+                'message' => '请您重新登录',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?core-master-login',
+                'forwardUrl' => 'index.php?core-master-login',
             ]));
             }
 
@@ -45,7 +45,7 @@ class app
         $user['manager_apps'] = unserialize($user['manager_apps']);
         $this->tpl->assign('_user', $user);
         $apps = $this->apps->getAppList();
-        if (is_array($user['manager_apps']) && !in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
+        if (!in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
             header('location:index.php?core-master');
             exit();
         }

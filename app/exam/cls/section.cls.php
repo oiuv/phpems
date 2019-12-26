@@ -36,7 +36,7 @@ class section_exam
     //根据参数查询章节列表
     public function getSectionListByArgs($args)
     {
-        $data = [false, 'sections', $args];
+        $data = [false, 'sections', $args, false, 'sectionsequence desc,sectionid asc'];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'sectionid');
@@ -47,7 +47,7 @@ class section_exam
     {
         $page = $page > 0 ? $page : 1;
         $r = [];
-        $data = [false, 'sections', $args, false, 'sectionid ASC', [intval($page - 1) * $number, $number]];
+        $data = [false, 'sections', $args, false, 'sectionsequence desc,sectionid asc', [intval($page - 1) * $number, $number]];
         $sql = $this->pdosql->makeSelect($data);
         $r['data'] = $this->db->fetchAll($sql);
         $data = ['count(*) AS number', 'sections', $args];
@@ -91,7 +91,7 @@ class section_exam
     //获取所有知识点
     public function getAllKnowsBySubject($subjectid)
     {
-        $data = [false, ['sections', 'knows'], [['AND', 'sections.sectionsubjectid = :subjectid', 'subjectid', $subjectid], ['AND', 'sections.sectionid = knows.knowssectionid'], ['AND', 'knows.knowsstatus = 1']], false, false, false];
+        $data = [false, ['sections', 'knows'], [['AND', 'sections.sectionsubjectid = :subjectid', 'subjectid', $subjectid], ['AND', 'sections.sectionid = knows.knowssectionid'], ['AND', 'knows.knowsstatus = 1']], false, 'knowssequence desc,knowsid asc', false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'knowsid');
@@ -100,7 +100,7 @@ class section_exam
     //获取多科目所有知识点
     public function getAllKnowsBySubjects($subjectids)
     {
-        $data = [false, ['sections', 'knows'], [['AND', 'find_in_set(sections.sectionsubjectid,:subjectids)', 'subjectids', $subjectids], ['AND', 'sections.sectionid = knows.knowssectionid'], ['AND', 'knows.knowsstatus = 1']], false, false, false];
+        $data = [false, ['sections', 'knows'], [['AND', 'find_in_set(sections.sectionsubjectid,:subjectids)', 'subjectids', $subjectids], ['AND', 'sections.sectionid = knows.knowssectionid'], ['AND', 'knows.knowsstatus = 1']], false, 'knowssequence desc,knowsid asc', false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'knowsid');
@@ -111,7 +111,7 @@ class section_exam
     {
         $page = $page > 0 ? $page : 1;
         $r = [];
-        $data = [false, 'knows', $args, false, 'knowsid ASC', [intval($page - 1) * $number, $number]];
+        $data = [false, 'knows', $args, false, 'knowssequence desc,knowsid asc', [intval($page - 1) * $number, $number]];
         $sql = $this->pdosql->makeSelect($data);
         $r['data'] = $this->db->fetchAll($sql);
         $data = ['count(*) AS number', 'knows', $args];
@@ -127,16 +127,24 @@ class section_exam
     //根据参数获取全部匹配的知识点列表
     public function getKnowsListByArgs($args)
     {
-        $data = [false, 'knows', $args, false, 'knowsid ASC', false];
+        $data = [false, 'knows', $args, false, 'knowssequence desc,knowsid asc', false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'knowsid');
     }
 
+    public function getKnowsById($knowsid)
+    {
+        $data = [false, 'knows', [['AND', 'knowsid = :knowsid', 'knowsid', $knowsid]]];
+        $sql = $this->pdosql->makeSelect($data);
+
+        return $this->db->fetch($sql);
+    }
+
     //根据参数获取某一知识点
     public function getKnowsByArgs($args)
     {
-        $data = [false, 'knows', $args];
+        $data = [false, 'knows', $args, false, false, false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetch($sql);
@@ -194,5 +202,40 @@ class section_exam
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetch($sql);
+    }
+
+    public function getQuestionsByKnows($knowsid)
+    {
+        $knows = $this->getKnowsById($knowsid);
+        $knows['knowsnumber'] = unserialize($knows['knowsnumber']);
+        $knows['knowsquestions'] = unserialize($knows['knowsquestions']);
+        if (!$knows['knowsquestions']) {
+            $data = ['DISTINCT questionid,questiontype', ['questions', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowsid)', 'knowsid', $knowsid], ['AND', 'quest2knows.qktype = 0'], ['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', 'questions.questionstatus = 1']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
+            $sql = $this->pdosql->makeSelect($data);
+            $r = $this->db->fetchAll($sql);
+            $t = [];
+            $n = [];
+            foreach ($r as $p) {
+                $t[$p['questiontype']][] = $p['questionid'];
+            }
+            $data = ['DISTINCT questionid,qrtype', ['questions', 'questionrows', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowsid)', 'knowsid', $knowsid], ['AND', 'quest2knows.qktype = 1'], ['AND', 'quest2knows.qkquestionid = questionrows.qrid'], ['AND', 'questions.questionparent = questionrows.qrid'], ['AND', 'questionrows.qrstatus = 1']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
+            $sql = $this->pdosql->makeSelect($data);
+            $r = $this->db->fetchAll($sql);
+            foreach ($r as $p) {
+                $t[$p['qrtype']][] = $p['questionid'];
+            }
+            foreach ($t as $key => $v) {
+                $n[$key] = count($v);
+            }
+            $knows['knowsquestions'] = $t;
+            $knows['knowsnumber'] = $n;
+            $args = [
+                'knowsquestions' => $t,
+                'knowsnumber' => $n,
+            ];
+            $this->modifyKnows($knowsid, $args);
+        }
+
+        return $knows;
     }
 }

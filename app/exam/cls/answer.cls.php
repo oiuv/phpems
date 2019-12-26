@@ -38,14 +38,14 @@ class answer_exam
     //获取提问问题的列表
     //参数：页码，每页显示数量，其他参数形成的数组
     //返回值：数组，包括页数地址、问题列表、总数目
-    public function getAskList($page, $number, $args)
+    public function getAskList($page, $number = 20, $args)
     {
         $data = [
-            'select'  => 'asks.*, questions.question',
-            'table'   => ['asks', 'questions'],
-            'index'   => false,
-            'serial'  => false,
-            'query'   => $args,
+            'select' => 'asks.*, questions.question',
+            'table' => ['asks', 'questions'],
+            'index' => false,
+            'serial' => false,
+            'query' => $args,
             'orderby' => 'asks.askid DESC',
             'groupby' => false,
         ];
@@ -56,14 +56,14 @@ class answer_exam
     //获取追问问题及答案的列表
     //参数：页码，每页显示数量，其他参数形成的数组
     //返回值：数组，包括页数地址、问题列表、总数目
-    public function getAnswerList($page, $number, $args)
+    public function getAnswerList($page, $number = 20, $args)
     {
         $data = [
-            'select'  => false,
-            'table'   => 'answer',
-            'index'   => false,
-            'serial'  => false,
-            'query'   => $args,
+            'select' => false,
+            'table' => 'answer',
+            'index' => false,
+            'serial' => false,
+            'query' => $args,
             'orderby' => 'answerid DESC',
             'groupby' => false,
         ];

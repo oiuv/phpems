@@ -28,9 +28,9 @@ class action extends app
         $this->exam->clearOutTimeExamSession();
         $message = [
             'statusCode' => 200,
-            'message'    => '操作成功',
-            'navTabId'   => '',
-            'rel'        => '',
+            'message' => '操作成功',
+            'navTabId' => '',
+            'rel' => '',
         ];
         exit(json_encode($message));
     }

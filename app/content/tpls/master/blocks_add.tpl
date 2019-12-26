@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -55,9 +55,9 @@
 							        	</div>
 							        </div>
 							        <div class="form-group">
-							            <label for="blockcontent_content" class="control-label col-sm-2">内容：</label>
+							            <label class="control-label col-sm-2">内容：</label>
 					            		<div class="col-sm-9">
-					            			<textarea class="ckeditor" id="blockcontent_content" class="ckeditor" name="args[blockcontent][content]" rows="7" cols="4">{x2;$block['blockcontent']['content']}</textarea>
+					            			<textarea class="ckeditor" class="ckeditor" name="args[blockcontent][content]" rows="7" cols="4">{x2;$block['blockcontent']['content']}</textarea>
 							        	</div>
 							        </div>
 							        <div class="form-group">
@@ -119,13 +119,14 @@
 							        <div class="form-group">
 							            <label for="blockcontent_template" class="control-label col-sm-2">模板：</label>
 					            		<div class="col-sm-9">
-							            	<textarea class="form-control" id="blockcontent_template" name="args[blockcontent][template]" rows="7" needle="needle" cols="4" msg="您必须输入模板内容">{x2;$block['blockcontent']['template']}</textarea>
+											<div class="Codemirror"></div>
+											<textarea class="form-control hide blockcontent_content" id="blockcontent_template" name="args[blockcontent][template]" rows="7" needle="needle" cols="4" msg="您必须输入模板内容">{x2;$block['blockcontent']['template']}</textarea>
 							        	</div>
 							        </div>
 							        <div class="form-group">
 							            <label class="control-label col-sm-2"></label>
 							            <div class="col-sm-9">
-							            	<button class="btn btn-primary" type="submit">提交</button>
+							            	<button class="btn btn-primary" type="button" class="tplbutton">提交</button>
 								            <input type="hidden" name="page" value="{x2;$apge}">
 								            <input type="hidden" name="args[blocktype]" value="2">
 									        <input type="hidden" name="addblock" value="1">
@@ -202,13 +203,14 @@
 							        <div class="form-group">
 							            <label for="blockcontent_template" class="control-label col-sm-2">模板：</label>
 					            		<div class="col-sm-9">
-							            	<textarea class="form-control" id="blockcontent_template" name="args[blockcontent][template]" needle="needle" rows="7" cols="4" msg="您必须输入模板内容">{x2;$block['blockcontent']['template']}</textarea>
+											<div class="Codemirror"></div>
+											<textarea class="form-control hide blockcontent_content" id="blockcontent_template" name="args[blockcontent][template]" needle="needle" rows="7" cols="4" msg="您必须输入模板内容">{x2;$block['blockcontent']['template']}</textarea>
 							        	</div>
 							        </div>
 							        <div class="form-group">
 							            <label class="control-label col-sm-2"></label>
 							            <div class="col-sm-9">
-							            	<button class="btn btn-primary" type="submit">提交</button>
+							            	<button class="btn btn-primary" type="button" class="tplbutton">提交</button>
 								            <input type="hidden" name="page" value="{x2;$apge}">
 								            <input type="hidden" name="args[blocktype]" value="3">
 									        <input type="hidden" name="addblock" value="1">
@@ -233,13 +235,14 @@
 							        <div class="form-group">
 							            <label for="blockcontent_content" class="control-label col-sm-2">内容：</label>
 					            		<div class="col-sm-9">
-							            	<textarea class="form-control" id="blockcontent_content" name="args[blockcontent][content]" rows="7" cols="4">{x2;$block['blockcontent']['content']}</textarea>
+											<div class="Codemirror"></div>
+											<textarea class="form-control hide blockcontent_content" name="args[blockcontent][content]" rows="7" cols="4">{x2;$block['blockcontent']['content']}</textarea>
 							        	</div>
 							        </div>
 							        <div class="form-group">
 							            <label class="control-label col-sm-2"></label>
 							            <div class="col-sm-9">
-							            	<button class="btn btn-primary" type="submit">提交</button>
+											<button class="btn btn-primary" type="button" class="tplbutton">提交</button>
 								            <input type="hidden" name="args[blocktype]" value="4">
 									        <input type="hidden" name="addblock" value="1">
 								            <input type="hidden" name="page" value="{x2;$apge}">
@@ -255,6 +258,7 @@
 		</div>
 	</div>
 </div>
+{x2;include:code}
 {x2;include:footer}
 </body>
 </html>

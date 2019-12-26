@@ -1,4 +1,4 @@
-# [phpems v5.0](https://phpems.is.js.cn)
+# [phpems v6.0](https://phpems.is.js.cn)
 
 开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS（www.phpems.net）](http://www.phpems.net) 修改。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。
 
@@ -104,7 +104,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 默认管理员账号：peadmin，密码：peadmin
 
-> 源码默认开启错误提示，生产环境请修改 `config.inc.php` 文件关闭 `DEBUG` 提示，并务必删除 `examples` 目录
+> 源码默认关闭错误提示，如需调试请修改 `config.inc.php` 中 `DEBUG` 为 `true`，并务必删除 `tasks` 目录
 
 ## 使用
 
@@ -132,13 +132,13 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 ### PHPEMS 路由说明
 
     index.php?user-phone-login-index
-    
+
 > 访问 `app` 目录下 user/controller/login.phone.php 文件的index方法
 
 ### PHPEMS smarty模板标签
 
 #### 变量
-    
+
     {x2;$var}
 
 > 该标签会被翻译为<?php echo 变量; ?>该变量必须为在php程序中被$this->tpl->assign过后的变量。

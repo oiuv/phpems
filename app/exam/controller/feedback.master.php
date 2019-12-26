@@ -28,10 +28,10 @@ class action extends app
         $fbid = $this->ev->get('fbid');
         $this->feedback->delFeedBack($fbid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -42,10 +42,10 @@ class action extends app
         $status = $this->ev->get('status');
         $this->feedback->modifyFeedBackById($fbid, ['fbstatus' => $status, 'fbdoneuserid' => $this->_user['sessionuserid'], 'fbdonetime' => TIME]);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }

@@ -32,24 +32,24 @@ class action extends app
             if (md5($oldpassword) != $user['userpassword']) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败，原密码验证失败'.$oldpassword,
+                    'message' => '操作失败，原密码验证失败',
                 ];
                 exit(json_encode($message));
             }
             if ($args['password'] == $args['password2'] && $userid) {
-                $id = $this->user->modifyUserPassword($args, $userid);
+                $id = $this->user->modifyUserPassword($userid, $args);
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
+                    'statusCode' => 200,
+                    'message' => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'reload',
+                    'forwardUrl' => 'index.php?user-phone-logout',
                 ];
                 exit(json_encode($message));
             }
 
             $message = [
                     'statusCode' => 300,
-                    'message'    => '操作失败',
+                    'message' => '操作失败',
                 ];
             exit(json_encode($message));
         }
@@ -85,12 +85,12 @@ class action extends app
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
             $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => 1, 'group' => $group]);
             unset($args['userischeck']);
-            $id = $this->user->modifyUserInfo($args, $userid);
+            $id = $this->user->modifyUserInfo($userid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
+                'forwardUrl' => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -98,7 +98,7 @@ class action extends app
         $userid = $this->_user['sessionuserid'];
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $group]);
+        $fields = $this->module->getMoudleFields($group['groupmoduleid']);
         $forms = $this->html->buildHtml($fields, $user);
         $actors = $this->user->getGroupsByModuleid($group['groupmoduleid']);
         $this->tpl->assign('moduleid', $group['groupmoduleid']);

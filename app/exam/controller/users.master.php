@@ -60,7 +60,7 @@ class action extends app
                 $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
             }
         }
-        $basics = $this->basic->getBasicList($page, 10, $args);
+        $basics = $this->basic->getBasicList($args, $page, 10);
         $areas = $this->area->getAreaList();
         $openbasics = $this->basic->getOpenBasicsByUserid($userid);
         $this->tpl->assign('basics', $basics);
@@ -79,15 +79,15 @@ class action extends app
         if ($this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid)) {
             $message = [
                 'statusCode' => 300,
-                'message'    => '您已经开通了本考场',
+                'message' => '您已经开通了本考场',
             ];
         } else {
             $this->basic->openBasic(['obuserid' => $userid, 'obbasicid' => $basicid, 'obendtime' => TIME + 30 * 24 * 3600]);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-users-basics&userid={$userid}{$u}",
+                'forwardUrl' => "index.php?exam-master-users-basics&userid={$userid}{$u}",
             ];
         }
         $this->G->R($message);
@@ -100,10 +100,10 @@ class action extends app
         $ob = $this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid);
         $this->basic->delOpenBasic($ob['obid']);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -126,7 +126,7 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message'    => '操作成功',
+                    'message' => '操作成功',
                 ];
             } elseif ($usernames && $basics && $days) {
                 $usernames = implode(',', array_unique(explode(',', $usernames)));
@@ -139,7 +139,7 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message'    => '操作成功',
+                    'message' => '操作成功',
                 ];
             } elseif ($usergroupids && $basics && $days) {
                 $usergroupids = implode(',', array_unique(explode(',', $usergroupids)));
@@ -152,12 +152,12 @@ class action extends app
                 }
                 $message = [
                     'statusCode' => 200,
-                    'message'    => '操作成功',
+                    'message' => '操作成功',
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '参数错误',
+                    'message' => '参数错误',
                 ];
             }
             $this->G->R($message);
@@ -177,10 +177,10 @@ class action extends app
             foreach ($search as $key => $arg) {
                 $u .= "&search[{$key}]={$arg}";
             }
-            $args = [];
-        } else {
-            $args = 1;
+            $this->tpl->assign('search', $search);
+            $this->tpl->assign('u', $u);
         }
+        $args = [];
         if ($search['userid']) {
             $args[] = ['AND', 'userid = :userid', 'userid', $search['userid']];
         } elseif ($search['groupid'] || $search['username']) {
@@ -192,7 +192,7 @@ class action extends app
                 $args[] = ['AND', 'username LIKE :username', 'username', "%{$search['username']}%"];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $groups = $this->user->getUserGroups();
         $this->tpl->assign('groups', $groups);
         $this->tpl->assign('users', $users);

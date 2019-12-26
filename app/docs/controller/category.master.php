@@ -35,12 +35,12 @@ class action extends app
                 $parent = 0;
             }
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'target'       => '',
-                'rel'          => '',
+                'statusCode' => 200,
+                'message' => '操作成功',
+                'target' => '',
+                'rel' => '',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?docs-master-category&parent={$parent}&page={$page}",
+                'forwardUrl' => "index.php?docs-master-category&parent={$parent}&page={$page}",
             ];
             exit(json_encode($message));
         }
@@ -63,10 +63,10 @@ class action extends app
             $this->category->modifyCategory($key, $args);
         }
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -86,7 +86,7 @@ class action extends app
             if ($out) {
                 $message = [
                     'statusCode' => 200,
-                    'html'       => $out,
+                    'html' => $out,
                 ];
                 exit(json_encode($message));
             }
@@ -122,10 +122,10 @@ class action extends app
             $cat = $this->category->getCategoryById($catid);
             $this->category->modifyCategory($catid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?docs-master-category&parent={$cat['catparent']}&page={$page}",
+                'forwardUrl' => "index.php?docs-master-category&parent={$cat['catparent']}&page={$page}",
             ];
             exit(json_encode($message));
         }
@@ -149,22 +149,20 @@ class action extends app
         $page = $this->ev->get('page');
         $cat = $this->category->getCategoryById($catid);
         $catstring = $this->category->getChildCategoryString($catid, 0);
-        $contents = $this->content->getContentList([['AND', 'contentcatid = :contentcatid', 'contentcatid', $catid]]);
+        $contents = $this->doc->getDocList([['AND', 'doccatid = :doccatid', 'doccatid', $catid]]);
         if ($catstring || $contents['number']) {
             $message = [
                 'statusCode' => 300,
-                'message'    => '操作失败，请先删除该分类下所有子分类和内容',
+                'message' => '操作失败，请先删除该分类下所有子分类和内容',
             ];
             exit(json_encode($message));
         }
         $this->category->delCategory($catid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'target'       => '',
-            'rel'          => '',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?docs-master-category&parent={$cat['catparent']}&page={$page}",
+            'forwardUrl' => "index.php?docs-master-category&parent={$cat['catparent']}&page={$page}",
         ];
         exit(json_encode($message));
     }

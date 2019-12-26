@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 						<div class="col-xs-12">
@@ -22,9 +22,9 @@
 					<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 						<h4 class="title" style="padding:10px;">
 							{x2;$module['modulename']}
-							<a class="pull-right btn btn-primary" href="index.php?user-master-module">模型列表</a>
+							<a class="pull-right btn btn-primary" href="index.php?{x2;$_app}-master-module">模型列表</a>
 						</h4>
-				    	<form action="index.php?user-master-module-modify" method="post" class="form-horizontal" style="margin-top:20px;">
+				    	<form action="index.php?{x2;$_app}-master-module-modify" method="post" class="form-horizontal" style="margin-top:20px;">
 							<fieldset>
 								<div class="form-group">
 									<label for="modulename" class="control-label col-sm-2">模型名称：</label>
@@ -45,11 +45,9 @@
 							        	<input type="hidden" name="moduleid" value="{x2;$module['moduleid']}"/>
 							        	<input type="hidden" name="modifymodule" value="1"/>
 										<input type="hidden" name="page" value="{x2;$page}"/>
-                                        {x2;if:is_array($search)}
 										{x2;tree:$search,arg,aid}
 										<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 										{x2;endtree}
-                                        {x2;endif}
 									</div>
 								</div>
 							</fieldset>

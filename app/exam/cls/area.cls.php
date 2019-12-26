@@ -42,9 +42,9 @@ class area_exam
     {
         $data = [
             'select' => false,
-            'table'  => 'area',
-            'query'  => 1,
-            'index'  => 'areaid',
+            'table' => 'area',
+            'query' => 1,
+            'index' => 'areaid',
         ];
         $r = $this->db->listElements($page, $number, $data);
 

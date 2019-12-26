@@ -32,12 +32,12 @@ class action extends app
             unset($args['blocktype']);
             $this->block->modifyBlock($blockid, $args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'target'       => '',
-                'rel'          => '',
+                'statusCode' => 200,
+                'message' => '操作成功',
+                'target' => '',
+                'rel' => '',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?content-master-blocks&page={$page}",
+                'forwardUrl' => "index.php?content-master-blocks&page={$page}",
             ];
             exit(json_encode($message));
         }
@@ -66,12 +66,12 @@ class action extends app
             $args['blockcontent'] = $args['blockcontent'];
             $this->block->addBlock($args);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'target'       => '',
-                'rel'          => '',
+                'statusCode' => 200,
+                'message' => '操作成功',
+                'target' => '',
+                'rel' => '',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?content-master-blocks',
+                'forwardUrl' => 'index.php?content-master-blocks',
             ];
             exit(json_encode($message));
         }
@@ -93,12 +93,12 @@ class action extends app
         $blockid = $this->ev->get('blockid');
         $this->block->delBlock($blockid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'target'       => '',
-            'rel'          => '',
+            'statusCode' => 200,
+            'message' => '操作成功',
+            'target' => '',
+            'rel' => '',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?content-master-blocks&page={$page}",
+            'forwardUrl' => "index.php?content-master-blocks&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -109,12 +109,12 @@ class action extends app
         $blocktype = $this->ev->get('blocktype');
         $this->block->modifyBlock($blockid, ['blocktype' => $blocktype]);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
-            'target'       => '',
-            'rel'          => '',
+            'statusCode' => 200,
+            'message' => '操作成功',
+            'target' => '',
+            'rel' => '',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?content-master-blocks&page={$page}",
+            'forwardUrl' => "index.php?content-master-blocks&page={$page}",
         ];
         exit(json_encode($message));
     }

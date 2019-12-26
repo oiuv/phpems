@@ -31,15 +31,15 @@ class action extends app
             if ($user['usercoin'] < $ce['ceprice']) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '余额不足，请到个人中心充值',
+                    'message' => '余额不足，请到个人中心充值',
                 ];
                 exit(json_encode($message));
             }
-            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
-            if (!$eh) {
+            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
+            if (!$eh['ehid']) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '您需要通过考试后才能申请',
+                    'message' => '您需要通过考试后才能申请',
                 ];
                 exit(json_encode($message));
             }
@@ -55,10 +55,10 @@ class action extends app
             $this->G->make('consume', 'bank')->addConsumeLog(['conluserid' => $this->_user['sessionuserid'], 'conlcost' => $ce['ceprice'], 'conltype' => 1, 'conltime' => TIME, 'conlinfo' => '申请证书'.$ce['cetitle']]);
             $user = $this->user->getUserById($this->_user['sessionuserid']);
             $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?certificate',
+                'forwardUrl' => 'index.php?certificate',
             ];
             exit(json_encode($message));
         }

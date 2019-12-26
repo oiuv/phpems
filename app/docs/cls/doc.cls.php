@@ -37,9 +37,9 @@ class doc_docs
     public function getDocList($args, $page, $number = 20, $order = 'docsequence desc,docid DESC')
     {
         $data = [
-            'select'  => false,
-            'table'   => 'docs',
-            'query'   => $args,
+            'select' => false,
+            'table' => 'docs',
+            'query' => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -105,9 +105,9 @@ class doc_docs
     public function getDocHistoryListByDocid($id, $page, $number = 20, $order = 'dhid DESC')
     {
         $data = [
-            'select'  => false,
-            'table'   => 'dochistory',
-            'query'   => [['AND', 'dhdocid = :dhdocid', 'dhdocid', $id]],
+            'select' => false,
+            'table' => 'dochistory',
+            'query' => [['AND', 'dhdocid = :dhdocid', 'dhdocid', $id]],
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -118,9 +118,9 @@ class doc_docs
     public function getDocHistoryListByArgs($args, $page, $number = 20, $order = 'dhid DESC')
     {
         $data = [
-            'select'  => false,
-            'table'   => 'dochistory',
-            'query'   => $args,
+            'select' => false,
+            'table' => 'dochistory',
+            'query' => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);

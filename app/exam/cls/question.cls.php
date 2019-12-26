@@ -22,7 +22,6 @@ class question_exam
     public function _init()
     {
         if (!$this->init) {
-            $this->sql = $this->G->make('sql');
             $this->pdosql = $this->G->make('pdosql');
             $this->db = $this->G->make('pepdo');
             $this->ev = $this->G->make('ev');
@@ -90,6 +89,26 @@ class question_exam
         $r['answer'] = implode('', $r['answer']);
 
         return $r;
+    }
+
+    public function getQuestionsByKnows($knowid)
+    {
+        $data = ['DISTINCT questionid,questiontype', ['questions', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowid)', 'knowid', $knowid], ['AND', 'quest2knows.qktype = 0'], ['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', 'questions.questionstatus = 1']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        $t = [];
+        $n = [];
+        foreach ($r as $p) {
+            $t[$p['questiontype']][] = $p['questionid'];
+        }
+        foreach ($t as $key => $v) {
+            $n[$key] = count($v);
+        }
+
+        return [
+            'knowsquestions' => $t,
+            'knowsnumber' => $n,
+        ];
     }
 
     //获取某些指定知识点的试题列表
@@ -236,7 +255,7 @@ class question_exam
                     $par = 0;
                     foreach ($number as $nkey => $t) {
                         if (!$par && ($t > 0)) {
-                            $par++;
+                            ++$par;
                             $trand = rand(1, 4);
                             if ($trand < 3) {
                                 $qrs = $this->getRandQuestionRowsList([['AND', 'find_in_set(quest2knows.qkknowsid,:knowsids)', 'knowsids', $knowsids], ['AND', 'questionrows.qrlevel = :qrlevel', 'qrlevel', $nkey], ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $key], ['AND', 'questionrows.qrnumber <= :qrnumber', 'qrnumber', $t]]);
@@ -320,7 +339,7 @@ class question_exam
                     $par = 0;
                     $t = $num;
                     if (!$par) {
-                        $par++;
+                        ++$par;
                         $trand = rand(1, 4);
                         if ($trand < 3) {
                             $qrs = $this->getRandQuestionRowsList([['AND', 'find_in_set(quest2knows.qkknowsid,:knowsids)', 'knowsids', $knowsids], ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $key], ['AND', 'questionrows.qrnumber <= :qrnumber', 'qrnumber', $t]]);
@@ -427,7 +446,7 @@ class question_exam
             $par = 0;
             foreach ($number as $nkey => $t) {
                 if (!$par) {
-                    $par++;
+                    ++$par;
                     $trand = rand(1, 4);
                     if ($trand < 3) {
                         $qrs = $this->getRandQuestionRowsList([['AND', 'find_in_set(quest2knows.qkknowsid,:knowsids)', 'knowsids', $knowsids], ['AND', 'questionrows.qrlevel = :qrlevel', 'qrlevel', $nkey], ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $key], ['AND', 'questionrows.qrnumber <= :qrnumber', 'qrnumber', $t]]);
@@ -522,7 +541,7 @@ class question_exam
             $qrid = 0;
             $par = 0;
             if (!$par) {
-                $par++;
+                ++$par;
                 $trand = rand(1, 4);
                 if ($trand < 3) {
                     $qrs = $this->getRandQuestionRowsList([['AND', 'find_in_set(quest2knows.qkknowsid,:knowsids)', 'knowsids', $knowsids], ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $key], ['AND', 'questionrows.qrnumber <= :qrnumber', 'qrnumber', $t]]);
@@ -540,7 +559,7 @@ class question_exam
                     if ((count($r) >= $t)) {
                         if ($t <= 1) {
                             $question[$key][] = $r[array_rand($r, 1)];
-                            $t--;
+                            --$t;
                         } else {
                             $ts = array_rand($r, $t);
                             foreach ($ts as $tmp) {

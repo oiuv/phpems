@@ -248,21 +248,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                    'statusCode'   => 200,
-                    'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'statusCode' => 200,
+                    'message' => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "{$fname}",
+                    'forwardUrl' => "{$fname}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '导出失败',
+                    'message' => '导出失败',
                 ];
             }
         } else {
             $message = [
                 'statusCode' => 300,
-                'message'    => '请选择好考场',
+                'message' => '请选择好考场',
             ];
         }
         exit(json_encode($message));
@@ -307,14 +307,14 @@ class action extends app
             if ($search['examid']) {
                 $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
             }
-            $sf = ['ehusername', 'ehscore', 'ehtime'];
+            $sf = ['ehusername', 'ehscore', 'ehtime', 'ehstarttime'];
             foreach ($fields as $p) {
                 $sf[] = $p['field'];
             }
             $rs = $this->favor->getAllExamHistoryByArgs($args, $sf);
             $r = [];
             foreach ($rs as $p) {
-                $tmp = ['ehusername' => iconv('UTF-8', 'GBK', $p['ehusername']), 'ehscore' => $p['ehscore'], 'ehtime' => $p['ehtime']];
+                $tmp = ['ehusername' => iconv('UTF-8', 'GBK', $p['ehusername']), 'ehscore' => $p['ehscore'], 'ehtime' => $p['ehtime'], 'ehstrattime' => date('Y-m-d H:i:s', $p['ehstarttime'])];
                 foreach ($fields as $ps) {
                     $tmp[$ps['field']] = iconv('UTF-8', 'GBK', $p[$ps['field']]);
                 }
@@ -322,21 +322,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'statusCode' => 200,
+                'message' => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                 'callbackType' => 'forward',
-                'forwardUrl'   => "{$fname}",
+                'forwardUrl' => "{$fname}",
             ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message'    => '成绩导出失败',
+                'message' => '成绩导出失败',
             ];
             }
         } else {
             $message = [
             'statusCode' => 300,
-            'message'    => '请选择好考场',
+            'message' => '请选择好考场',
         ];
         }
         exit(json_encode($message));
@@ -359,12 +359,12 @@ class action extends app
     {
         $questype = $this->basic->getQuestypeList();
         $ehid = $this->ev->get('ehid');
-        $sessionvars = $this->favor->getExamHistoryById($ehid);
+        $eh = $this->favor->getExamHistoryById($ehid);
         if ($this->ev->get('makescore')) {
-            if ($sessionvars['ehteacher'] != $this->_user['username']) {
+            if ($eh['ehteacher'] != $this->_user['username']) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => "本试卷已被{$sessionvars['ehteacher']}锁定批改中",
+                    'message' => "本试卷已被{$eh['ehteacher']}锁定批改中",
                 ];
                 exit(json_encode($message));
             }
@@ -372,74 +372,27 @@ class action extends app
             $sumscore = 0;
             if (is_array($score)) {
                 foreach ($score as $key => $p) {
-                    $sessionvars['ehscorelist'][$key] = $p;
+                    $eh['ehscorelist'][$key] = $p;
                 }
             }
-            foreach ($sessionvars['ehscorelist'] as $p) {
+            foreach ($eh['ehscorelist'] as $p) {
                 $sumscore = $sumscore + floatval($p);
             }
-            $sessionvars['ehscore'] = $sumscore;
-            $args['ehscorelist'] = $sessionvars['ehscorelist'];
-            $allnumber = floatval(count($sessionvars['ehscorelist']));
-            $args['ehscore'] = $sessionvars['ehscore'];
+            $eh['ehscore'] = $sumscore;
+            $args['ehscorelist'] = $eh['ehscorelist'];
+            $args['ehscore'] = $eh['ehscore'];
             $args['ehstatus'] = 1;
-            $this->favor->modifyExamHistory($args, $ehid);
+            if ($eh['ehscore'] >= $eh['ehsetting']['examsetting']['passscore']) {
+                $args['ehispass'] = 1;
+            }
+            $this->favor->modifyExamHistory($ehid, $args);
             $message = [
                 'statusCode' => 200,
-                'message'    => '评分完成',
-                'forwardUrl' => "index.php?exam-teach-users-exams&basicid={$sessionvars['ehbasicid']}",
+                'message' => '评分完成',
+                'forwardUrl' => "index.php?exam-teach-users-exams&basicid={$eh['ehbasicid']}",
             ];
             exit(json_encode($message));
         }
-
-        $message = [
-                'statusCode' => 300,
-                'message'    => '非法参数',
-            ];
-        exit(json_encode($message));
-        $number = [];
-        $right = [];
-        $score = [];
-        $allnumber = 0;
-        $allright = 0;
-        foreach ($questype as $key => $q) {
-            $number[$key] = 0;
-            $right[$key] = 0;
-            $score[$key] = 0;
-            if ($sessionvars['ehquestion']['questions'][$key]) {
-                foreach ($sessionvars['ehquestion']['questions'][$key] as $p) {
-                    $number[$key]++;
-                    $allnumber++;
-                    if ($sessionvars['ehscorelist'][$p['questionid']] == $sessionvars['ehsetting']['examsetting']['questype'][$key]['score']) {
-                        $right[$key]++;
-                        $allright++;
-                    }
-                    $score[$key] = $score[$key] + $sessionvars['ehscorelist'][$p['questionid']];
-                }
-            }
-            if ($sessionvars['ehquestion']['questionrows'][$key]) {
-                foreach ($sessionvars['ehquestion']['questionrows'][$key] as $v) {
-                    foreach ($v['data'] as $p) {
-                        $number[$key]++;
-                        $allnumber++;
-                        if ($sessionvars['ehscorelist'][$p['questionid']] == $sessionvars['ehsetting']['examsetting']['questype'][$key]['score']) {
-                            $right[$key]++;
-                            $allright++;
-                        }
-                        $score[$key] = $score[$key] + $sessionvars['ehscorelist'][$p['questionid']];
-                    }
-                }
-            }
-        }
-        $this->tpl->assign('ehid', $ehid);
-        $this->tpl->assign('allright', $allright);
-        $this->tpl->assign('allnumber', $allnumber);
-        $this->tpl->assign('right', $right);
-        $this->tpl->assign('score', $score);
-        $this->tpl->assign('number', $number);
-        $this->tpl->assign('questype', $questype);
-        $this->tpl->assign('sessionvars', $sessionvars);
-        $this->tpl->display('exam_score');
     }
 
     private function score()
@@ -450,7 +403,7 @@ class action extends app
             $args = [];
             $sessionvars['ehteacher'] = $args['ehteacher'] = $this->_user['username'];
             $sessionvars['ehdecidetime'] = $args['ehdecidetime'] = TIME;
-            $this->favor->modifyExamHistory($args, $ehid);
+            $this->favor->modifyExamHistory($ehid, $args);
         }
         $questype = $this->basic->getQuestypeList();
         $this->tpl->assign('ehid', $ehid);
@@ -472,7 +425,6 @@ class action extends app
                 $fields[$tf['fieldid']] = $tf;
             }
         }
-
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
         $basicid = intval($this->ev->get('basicid'));
@@ -499,7 +451,7 @@ class action extends app
         if ($search['examid']) {
             $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
         }
-        $exams = $this->favor->getExamHistoryListByArgs($page, 30, $args);
+        $exams = $this->favor->getExamHistoryListByArgs($args, $page, 30);
         $ids = trim($basic['basicexam']['self'], ', ');
         if (!$ids) {
             $ids = '0';
@@ -518,10 +470,10 @@ class action extends app
     private function setresit()
     {
         $ehid = $this->ev->get('ehid');
-        $this->favor->modifyExamHistory(['ehneedresit' => 1], $ehid);
+        $this->favor->modifyExamHistory($ehid, ['ehneedresit' => 1]);
         $message = [
             'statusCode' => 200,
-            'message'    => '设置成功',
+            'message' => '设置成功',
             'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
@@ -532,7 +484,8 @@ class action extends app
         $page = $this->ev->get('page');
         $basicid = intval($this->ev->get('basicid'));
         $page = $page > 0 ? $page : 1;
-        $exams = $this->favor->getExamHistoryListByArgs($page, 10, [['AND', "ehstatus = '0'"], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid]]);
+        $args = [['AND', "ehstatus = '0'"], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid]];
+        $exams = $this->favor->getExamHistoryListByArgs($args, $page, 10, false, 'ehid desc');
         $this->tpl->assign('page', $page);
         $this->tpl->assign('exams', $exams);
         $this->tpl->display('users_history');
@@ -561,7 +514,7 @@ class action extends app
                 $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
             }
         }
-        $basics = $this->basic->getBasicList($page, 10, $args);
+        $basics = $this->basic->getBasicList($args, $page, 10);
         $areas = $this->area->getAreaList();
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);

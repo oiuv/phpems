@@ -31,9 +31,9 @@ class coupon_bank
     public function getCouponList($args, $page, $number = 10)
     {
         $data = [
-            'select'  => false,
-            'table'   => 'coupon',
-            'query'   => $args,
+            'select' => false,
+            'table' => 'coupon',
+            'query' => $args,
             'orderby' => 'couponaddtime DESC',
         ];
 
@@ -65,7 +65,7 @@ class coupon_bank
 
     public function getAllOKCoupon($stime, $etime)
     {
-        $data = ['couponsn', 'coupon', [['AND', 'couponaddtime >= :couponaddstime', 'couponaddstime', $stime], ['AND', 'couponaddtime <= :couponaddetime', 'couponaddetime', $etime], ['AND', 'couponstatus = 0']], false, false, false];
+        $data = ['couponsn,couponvalue', 'coupon', [['AND', 'couponaddtime >= :couponaddstime', 'couponaddstime', $stime], ['AND', 'couponaddtime <= :couponaddetime', 'couponaddetime', $etime], ['AND', 'couponstatus = 0']], false, false, false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql);
@@ -90,7 +90,7 @@ class coupon_bank
         $u = $user->getUserById($userid);
         $coin = $u['usercoin'] + $r['couponvalue'];
         $args = ['usercoin' => $coin];
-        $user->modifyUserInfo($args, $userid);
+        $user->modifyUserInfo($userid, $args);
         $args = ['couponstatus' => 1];
         $data = ['coupon', $args, [['AND', 'couponsn = :couponsn', 'couponsn', $id]]];
         $sql = $this->pdosql->makeUpdate($data);

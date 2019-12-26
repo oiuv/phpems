@@ -28,10 +28,10 @@ class action extends app
         $attid = $this->ev->get('attid');
         $this->attach->delAttach($attid);
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -44,10 +44,10 @@ class action extends app
             $this->attach->delAttach($attid);
         }
         $message = [
-            'statusCode'   => 200,
-            'message'      => '操作成功',
+            'statusCode' => 200,
+            'message' => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            'forwardUrl' => 'reload',
         ];
         $this->G->R($message);
     }
@@ -72,17 +72,17 @@ class action extends app
             $this->exam->modifyQuestions($questionid, $args);
             if ($args['questionparent']) {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-questions&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-questions&page={$page}{$u}",
             ];
             } else {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
+                'statusCode' => 200,
+                'message' => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-questions&page={$page}{$u}",
+                'forwardUrl' => "index.php?exam-master-questions&page={$page}{$u}",
             ];
             }
             $this->G->R($message);

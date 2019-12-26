@@ -1,33 +1,68 @@
+{x2;if:!$userhash}
 {x2;include:header}
 <body>
-{x2;include:nav}
-{x2;tree:$catids,cat,cid}
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main box itembox">
-			<h4 class="title"><a href="index.php?course-app-category&catid={x2;v:cat['catid']}">{x2;v:cat['catname']}</a></h4>
-			<div class="col-xs-3" style="padding:0px;">
-				<a href="index.php?course-app-category&catid={x2;v:cat['catid']}" class="">
-					<img src="{x2;v:cat['catimg']}" alt="" width="287">
-				</a>
-			</div>
-			<div class="col-xs-9" style="padding-left:0px;">
-				{x2;tree:$contents[v:cat['catid']]['data'],content,cid}
-				<div class="col-xs-3">
-					<a href="index.php?course-app-course&csid={x2;v:content['csid']}" class="thumbnail">
-						<img src="{x2;v:content['csthumb']}" alt="" width="180">
-					</a>
-					<h5 class="text-center">{x2;v:content['cstitle']}</h5>
+		<div class="pages">
+            {x2;include:nav}
+			<div class="content">
+                {x2;endif}
+				<div class="col-xs-9">
+                    {x2;tree:$contents,contents,cid}
+					<div class="content-box padding">
+						<h2 class="title">
+                            {x2;$catids[v:key]['catname']}
+							<a href="index.php?course-app-category&catid={x2;$catids[v:key]['catid']}" class="badge pull-right">更多 <em class="glyphicon glyphicon-plus"></em> </a>
+						</h2>
+						<ul class="list-unstyled list-box">
+                            {x2;tree:v:contents['data'],content,cid}
+							<li class="col-xs-4 box">
+								<a href="index.php?course-app-course&csid={x2;v:content['csid']}">
+									<div class="img">
+										<img src="{x2;if:v:content['csthumb']}{x2;v:content['csthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+									</div>
+									<h5 class="box-title">{x2;v:content['cstitle']}</h5>
+									<div class="intro">
+										<p>{x2;substring:v:content['csdescribe'],78}</p>
+									</div>
+								</a>
+							</li>
+                            {x2;if:v:cid < count(v:contents['data']) && v:cid % 3 == 0}
+						</ul>
+						<ul class="list-box list-unstyled">
+                            {x2;endif}
+                            {x2;endtree}
+						</ul>
+					</div>
+                    {x2;endtree}
 				</div>
-				{x2;if:v:cid % 4 == 0}
-				<div class="col-xs-12"><hr /></div>
-				{x2;endif}
-				{x2;endtree}
+				<div class="col-xs-3 nopadding">
+					<div class="content-box padding">
+						<h2 class="title">推荐课程</h2>
+						<ul class="list-unstyled list-img">
+                            {x2;tree:$news,content,cid}
+							<li class="border padding">
+								<a href="index.php?course-app-course&csid={x2;v:content['csid']}">
+									<div class="intro">
+										<div class="col-xs-5 img noleftpadding">
+											<img src="{x2;if:v:content['csthumb']}{x2;v:content['csthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+										</div>
+										<div class="desc">
+											<p>{x2;v:content['cstitle']}</p>
+										</div>
+									</div>
+								</a>
+							</li>
+                            {x2;endtree}
+						</ul>
+					</div>
+				</div>
+                {x2;if:!$userhash}
 			</div>
+            {x2;include:footer}
 		</div>
 	</div>
 </div>
-{x2;endtree}
-{x2;include:footer}
 </body>
 </html>
+{x2;endif}
