@@ -78,11 +78,29 @@ $client->set('phpems:questions', json_encode(Cache::questions()));
 $client->set('phpems:knows', json_encode(Cache::knows()));
 ```
 
-## 安装
+## 安装和配置
+
+### 安装
+
+#### 方式1：使用 composer 创建项目
+
+通过 [composer](https://getcomposer.org/)以下指令直接创建项目
 
     composer create-project --prefer-dist phpems/phpems phpems
-    
-安装完成后，修改lib 目录下 `config.inc.php` 文件配置，然后导入 `exapmples` 目录下的数据库文件 `phpems.sql` 即可。
+
+#### 方式2：使用 git 创建项目
+
+使用 git 复制项目后使用 composer 安装依赖
+
+    git clone https://github.com/oiuv/phpems.git
+    cd phpems && composer install
+    cd lib && cp config.inc.example.php config.inc.php
+
+### 配置
+
+安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `exapmples` 目录下的数据库文件 `phpems.sql` 创建数据库。
+
+如果是 linux 系统，需要保证 `data` 目录具有可写权限，否则网站无法正常访问。
 
 默认管理员账号：peadmin，密码：peadmin
 
