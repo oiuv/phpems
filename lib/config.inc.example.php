@@ -53,4 +53,4 @@ define('ALIKEY', '***');
 define('ALIACC', 'i@oiuv.cn');
 
 define('PAYJSMCHID', '1551052561');
-define('PAYJSKEY', 'Zz8ks1ZP3UPKeTGi')
+define('PAYJSKEY', 'Zz8ks1ZP3UPKeTGi');
