@@ -15,9 +15,9 @@
 
 - 新增使用composer，可直接安装第三方扩展包
 - 为所有数据表定义 [Model](https://learnku.com/docs/laravel/5.8/eloquent/3931) ，数据库操作更灵活方便
-- 可在线[数据库迁移](https://learnku.com/docs/laravel/5.8/migrations/3928)，请参考 `examples` 目录下 `Database.php`
+- 可在线[数据库迁移](https://learnku.com/docs/laravel/5.8/migrations/3928)，请参考 `tasks` 目录下 `Database.php`
 - 新增部分字符串和数组[辅助函数](https://learnku.com/docs/laravel/5.8/helpers/3919)，如：dd()
-- 新增 Redis 缓存支持，请参考 `examples` 目录中的 `Cache.php`
+- 新增 Redis 缓存支持，请参考 `tasks` 目录中的 `Cache.php`
 
 使用 ORM 操作数据库示例：
 ````php
@@ -98,13 +98,13 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 ### 配置
 
-安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `exapmples` 目录下的数据库文件 `phpems.sql` 创建数据库。
+安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `tasks` 目录下的数据库文件 `phpems.sql` 创建数据库。项目上线后务必删除 `tasks` 目录
 
 如果是 linux 系统，需要保证 `data` 目录具有可写权限，否则网站无法正常访问。
 
 默认管理员账号：peadmin，密码：peadmin
 
-> 源码默认关闭错误提示，如需调试请修改 `config.inc.php` 中 `DEBUG` 为 `true`，并务必删除 `tasks` 目录
+> 源码默认关闭错误提示，如需调试请修改 `config.inc.php` 中 `DEBUG` 为 `true`。
 
 ## 使用
 
