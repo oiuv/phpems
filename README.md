@@ -98,13 +98,13 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 ### 配置
 
-安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `exapmples` 目录下的数据库文件 `phpems.sql` 创建数据库。
+安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `exapmples` 目录下的数据库文件 `phpems.sql` 创建数据库。**项目上线后请删除 `examples` 目录**。
 
 如果是 linux 系统，需要保证 `data` 目录具有可写权限，否则网站无法正常访问。
 
 默认管理员账号：peadmin，密码：peadmin
 
-> 源码默认开启错误提示，生产环境请修改 `config.inc.php` 文件关闭 `DEBUG` 提示，并务必删除 `examples` 目录
+> 源码默认关闭错误提示，如需调试请修改 `config.inc.php` 文件中 `DEBUG` 为 `true`。
 
 ## 使用
 
@@ -132,13 +132,13 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 ### PHPEMS 路由说明
 
     index.php?user-phone-login-index
-    
+
 > 访问 `app` 目录下 user/controller/login.phone.php 文件的index方法
 
 ### PHPEMS smarty模板标签
 
 #### 变量
-    
+
     {x2;$var}
 
 > 该标签会被翻译为<?php echo 变量; ?>该变量必须为在php程序中被$this->tpl->assign过后的变量。

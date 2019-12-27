@@ -105,6 +105,7 @@
                         <div class="item active">
                             <div class="alert alert-info">好好刷题，天天进步，祝同学们封考必过哦！^_^<div class="text-right">--考神</div></div>
                         </div>
+                        {x2;if:is_array($eh)}
                         {x2;tree:$eh,eh,ehid}
                         <div class="item">
                             {x2;if:v:eh['ehscore']>=80}
@@ -119,6 +120,7 @@
                             {x2;endif}
                         </div>
                         {x2;endtree}
+                        {x2;endif}
                     </div>
 
                     <!-- Controls -->

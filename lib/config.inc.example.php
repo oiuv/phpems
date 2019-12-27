@@ -19,7 +19,7 @@ define('CS', md5(base64_encode($_SERVER['HTTP_HOST'])));
 define('HE', 'utf-8');
 define('PN', 10);
 define('TIME', time());
-define('DEBUG', true); //开启日志和错误调试
+define('DEBUG', false); //开启日志和错误调试
 if (dirname($_SERVER['SCRIPT_NAME'])) {
     define('WP', '//'.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']).'/');
 } else {
