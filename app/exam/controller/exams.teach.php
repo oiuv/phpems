@@ -39,7 +39,7 @@ class action extends app
         if (!count($args)) {
             $args = 1;
         }
-        $exams = $this->exam->getExamSettingList($page, 10, $args);
+        $exams = $this->exam->getExamSettingList($args, $page, 10);
         $subjects = $this->basic->getSubjectList();
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('target', $target);
@@ -484,7 +484,7 @@ class action extends app
         if (!count($args)) {
             $args = 1;
         }
-        $exams = $this->exam->getExamSettingList($page, 10, $args);
+        $exams = $this->exam->getExamSettingList($args, $page, 10);
         $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         //$subjects = $this->basic->getSubjectList("subjectid IN ({$this->teachsubjects})");
         $this->tpl->assign('subjects', $subjects);

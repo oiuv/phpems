@@ -55,7 +55,7 @@ class action extends app
                     $message = [
                         'statusCode' => 300,
                         'errorinput' => 'args[username]',
-                        'message'    => '登录失败，因为用户名或密码错误',
+                        'message'    => '登录失败，请检查用户名和密码后重试',
                     ];
                     exit(json_encode($message));
                 }
@@ -63,7 +63,7 @@ class action extends app
                 $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message'    => '登录失败，因为用户名不存在',
+                    'message'    => '登录失败，请检查用户名和密码后重试',
                 ];
                 exit(json_encode($message));
             }

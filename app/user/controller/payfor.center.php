@@ -33,6 +33,17 @@ class action extends app
         $this->tpl->display('payfor_wxpay');
     }
 
+    private function payjs()
+    {
+        $ordersn = $this->ev->get('ordersn');
+        $order = $this->order->getOrderById($ordersn, $this->_user['sessionuserid']);
+        $payjs = $this->G->make('payjs');
+        $result = $payjs->outQrcodePay($order);
+        $this->tpl->assign('order', $order);
+        $this->tpl->assign('result', $result);
+        $this->tpl->display('payfor_payjs');
+    }
+
     private function ispayfor()
     {
         $ordersn = $this->ev->get('ordersn');

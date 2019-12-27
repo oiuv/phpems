@@ -5,17 +5,17 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
 							<li><a href="index.php?{x2;$_app}-master">{x2;$apps[$_app]['appname']}</a></li>
 							<li><a href="index.php?{x2;$_app}-master-module">用户模型</a></li>
-							<li><a href="index.php?user-master-module-fields&moduleid={x2;$module['moduleid']}">字段管理</a></li>
+							<li><a href="index.php?{x2;$_app}-master-module-fields&moduleid={x2;$module['moduleid']}">字段管理</a></li>
 							<li class="active">编辑{x2;if:$fieldpublic}公共{x2;else}模型{x2;endif}字段</li>
 						</ol>
 					</div>
@@ -32,11 +32,11 @@
 							<li>
 								<a href="#panel-788842" data-toggle="tab">数据编辑</a>
 							</li>
-							<a class="pull-right btn btn-primary" href="index.php?user-master-module-fields&moduleid={x2;$module['moduleid']}">字段列表</a>
+							<a class="pull-right btn btn-primary" href="index.php?{x2;$_app}-master-module-fields&moduleid={x2;$module['moduleid']}">字段列表</a>
 						</ul>
 						<div class="tab-content">
 							<div id="panel-344373" class="tab-pane active">
-								<form action="index.php?user-master-module-modifyfield" method="post" class="form-horizontal">
+								<form action="index.php?{x2;$_app}-master-module-modifyfield" method="post" class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-sm-2"></label>
 									</div>
@@ -93,13 +93,9 @@
 								          	<label class="checkbox-inline">
 								          		<input type="checkbox" name="args[fieldforbidactors][]" value="-1" {x2;if:strpos($field['fieldforbidactors'],',-1,') !== false}checked="true"{x2;endif}/> 本用户
 								          	</label>
-								          	{x2;tree:$groups,group,gid}
-								          	{x2;if:v:group['groupmoduleid'] == 1}
-								          	<label class="checkbox-inline">
-								          		<input type="checkbox" name="args[fieldforbidactors][]" value="{x2;v:group['groupid']}" {x2;if:strpos($field['fieldforbidactors'],','.v:group['groupid'].',') !== false}checked="true"{x2;endif}/> {x2;v:group['groupname']}
-								          	</label>
-								          	{x2;endif}
-								          	{x2;endtree}
+											<label class="checkbox-inline">
+												<input type="checkbox" name="args[fieldforbidactors][]" value="1" {x2;if:strpos($field['fieldforbidactors'],',1,') !== false}checked="true"{x2;endif}/> 管理员
+											</label>
 							          	</div>
 							        </div>
 							        <div class="form-group">
@@ -132,7 +128,7 @@
 								</form>
 							</div>
 							<div id="panel-788842" class="tab-pane">
-								<form action="index.php?user-master-module-modifyfield" method="post" class="form-horizontal">
+								<form action="index.php?{x2;$_app}-master-module-modifyfield" method="post" class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-sm-2"></label>
 									</div>

@@ -38,7 +38,7 @@
 				<thead>
 					<tr class="info">
 	                    <th>ID</th>
-				        <th>角色名</th>
+				        <th>用户组名</th>
 	                </tr>
 	            </thead>
 	            <tbody>
@@ -54,9 +54,7 @@
 			        {x2;endtree}
 	        	</tbody>
 	        </table>
-	        <div class="pagination pagination-right">
-	            <ul>{x2;$actors['pages']}</ul>
-	        </div>
+			<ul class="pagination pull-right">{x2;$actors['pages']}</ul>
 	        <script type="text/javascript">
 	    		jQuery(function($) {
 					markSelectedExams('ids[]','{x2;$target}');

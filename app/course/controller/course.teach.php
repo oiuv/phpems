@@ -47,7 +47,7 @@ class action extends app
                     'statusCode'   => 200,
                     'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?course-master-course-members&courseid='.$courseid,
+                    'forwardUrl'   => 'index.php?course-teach-course-members&courseid='.$courseid,
                 ];
             } else {
                 $message = [
@@ -84,7 +84,7 @@ class action extends app
                 $args[] = ['AND', 'userregtime <= :userregtime', 'userregtime', $etime];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $this->tpl->assign('course', $course);
         $this->tpl->assign('users', $users);
         $this->tpl->assign('search', $search);

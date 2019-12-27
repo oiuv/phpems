@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -77,12 +77,18 @@
 						        <div class="fineuploader" attr-type="thumb" attr-template="pe-template-cethumb"></div>
 							</div>
 				        </div>
-				    	<div class="form-group">
-				            <label for="contenttext" class="control-label col-sm-2">内容</label>
-				            <div class="col-sm-10">
-							    <textarea id="contenttext" rows="7" cols="4" class="ckeditor" name="args[cedescribe]"></textarea>
-					        </div>
-				        </div>
+						<div class="form-group">
+							<label for="contenttext" class="control-label col-sm-2">简介</label>
+							<div class="col-sm-10">
+								<textarea id="cedescribe" rows="7" cols="4" class="form-control" name="args[cedescribe]">{x2;$ce['cedescribe']}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="contenttext" class="control-label col-sm-2">申请须知</label>
+							<div class="col-sm-10">
+								<textarea id="cetext" rows="7" cols="4" class="ckeditor" name="args[cetext]">{x2;realhtml:$ce['cetext']}</textarea>
+							</div>
+						</div>
 				        <div class="form-group">
 				            <label class="control-label col-sm-2"></label>
 				            <div class="col-sm-9">

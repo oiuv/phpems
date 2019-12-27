@@ -24,27 +24,22 @@ class jssdk_user
     public function getSignPackage()
     {
         $jsapiTicket = $this->getJsApiTicket();
-
         // 注意 URL 一定要动态获取，不能 hardcode.
         $protocol = (!empty($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] || 443 == $_SERVER['SERVER_PORT']) ? 'https://' : 'http://';
         $url = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
         $timestamp = time();
         $nonceStr = $this->createNonceStr();
-
         // 这里参数的顺序要按照 key 值 ASCII 码升序排序
         $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
-
         $signature = sha1($string);
-
         $signPackage = [
-      'appId'     => $this->appId,
-      'nonceStr'  => $nonceStr,
-      'timestamp' => $timestamp,
-      'url'       => $url,
-      'signature' => $signature,
-      'rawString' => $string,
-    ];
+            'appId'     => $this->appId,
+            'nonceStr'  => $nonceStr,
+            'timestamp' => $timestamp,
+            'url'       => $url,
+            'signature' => $signature,
+            'rawString' => $string,
+        ];
 
         return $signPackage;
     }
@@ -117,7 +112,6 @@ class jssdk_user
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_URL, $url);
-
         $res = curl_exec($curl);
         curl_close($curl);
 

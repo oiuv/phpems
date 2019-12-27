@@ -1,40 +1,43 @@
 {x2;if:!$userhash}
 {x2;include:header}
 <body>
-<div id="content">
-	<div class="pages" id="page1">
-{x2;endif}
-		<div class="pagecontent">
-		<header class="container-fluid" style="background-color:#337AB7;">
-			<h5 class="text-center">
-				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-				我的考场
-				<a style="font-size:2rem;color:#FFFFFF;" class="pull-right glyphicon glyphicon-plus ajax" href="index.php?exam-phone-basics-open" data-target="page2" data-page="page2"></a>
-			</h5>
-		</header>
-		<div class="container-fluid">
-            {x2;if:is_array($basics)}
-			{x2;tree:$basics,basic,bid}
-			<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:0.8rem 0.2rem;">
-				<div class="col-xs-4">
-					<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic"><img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" style="width:10rem;margin-top:0.5rem"/></a>
-				</div>
-				<div class="col-xs-8" style="padding:0.2rem;">
-					<div class="text-left" style="padding:0.2rem;">
-						<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax" data-page="basic" data-target="basic">
-							<h5>{x2;v:basic['basic']}</h5>
-							<p style="font-size:1rem;">{x2;v:basic['basicdescribe']}</p>
-						</a>
-					</div>
-				</div>
+<div class="pages">
+    {x2;endif}
+	<div class="page-tabs">
+		<div class="page-header">
+			<div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+			<div class="col-8">我的考场</div>
+			<div class="col-1">
+				<a href="index.php?exam-phone-basics" class="ajax">
+					<span class="iconfont icon-plus-circle"></span>
+				</a>
 			</div>
-			{x2;endtree}
-            {x2;endif}
 		</div>
-		{x2;include:footer}
+		<div class="page-content header">
+			<div class="list-box bg">
+				<ol>
+                    {x2;tree:$basics,basic,bid}
+					<li class="unstyled">
+						<div class="col-4x">
+							<div class="rows illus">
+								<img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}files/public/img/paper.jpg{x2;endif}">
+							</div>
+						</div>
+						<div class="col-4l">
+							<a href="index.php?{x2;$_app}-phone-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax">
+								<div class="rows info">
+									<h5 class="title">{x2;v:basic['basic']}</h5>
+									<p class="intro">{x2;substring:v:basic['basicdescribe'],72}</p>
+								</div>
+							</a>
+						</div>
+					</li>
+					{x2;endtree}
+				</ol>
+			</div>
 		</div>
-	{x2;if:!$userhash}
-    </div>
+	</div>
+    {x2;if:!$userhash}
 </div>
 </body>
 </html>

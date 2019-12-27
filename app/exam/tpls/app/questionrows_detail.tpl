@@ -1,15 +1,15 @@
 				<table class="table table-hover">
 					{x2;if:$question['qrknowsid']}
-					<tr>
-			          <td width="100">所属科目：</td>
+					<tr class="noborder">
+			          <td width="100">科目：</td>
 			          <td>{x2;$subject['subject']}&nbsp;</td>
 			        </tr>
 			        <tr>
-			          <td>所属章节：</td>
+			          <td>章节：</td>
 			          <td>{x2;tree:$sections,section,sid}{x2;v:section['section']}{x2;endtree}&nbsp;&nbsp;</td>
 			        </tr>
 			        <tr>
-			          <td>所属知识点：</td>
+			          <td>知识点：</td>
 			          <td>{x2;tree:$question['qrknowsid'],know,kid}{x2;v:know['knows']}{x2;endtree}&nbsp;&nbsp;</td>
 			        </tr>
 			        {x2;endif}

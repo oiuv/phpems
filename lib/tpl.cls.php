@@ -131,6 +131,7 @@ if (intval(PHP_VERSION) >= 7) {
         public function compileTpl($source)
         {
             $content = $this->readTpl($source);
+            $this->compileSeminar($content);
             $this->compileBlock($content);
             $this->compileTree($content);
             $this->compileLoop($content);
@@ -151,6 +152,7 @@ if (intval(PHP_VERSION) >= 7) {
 
         public function compileContentTpl($content)
         {
+            $this->compileSeminar($content);
             $this->compileBlock($content);
             $this->compileTree($content);
             $this->compileLoop($content);
@@ -350,6 +352,14 @@ if (intval(PHP_VERSION) >= 7) {
             }, $content);
         }
 
+        public function compileSeminar(&$content)
+        {
+            $limit = '/{x2;seminar:(\d+)}/';
+            $content = preg_replace_callback($limit, function ($matches) {
+                return "<?php \$data = \$this->G->make('api','seminar')->parseSeminar('{$matches[1]}'); ?>'\n";
+            }, $content);
+        }
+
         public function compileEnter(&$content)
         {
             $limit = '/{x2;enter}/';
@@ -407,11 +417,21 @@ if (intval(PHP_VERSION) >= 7) {
         public function fetchExeCnt($file)
         {
             $source = 'app/'.$this->dir.$file.'.tpl';
-            $content = $this->compileTpl($source);
+            $source = $this->compileTpl($source);
             ob_start();
             eval(' ?>'.$source.'<?php ');
             $cachecontent = ob_get_contents();
-            ob_flush();
+            ob_clean();
+
+            return $cachecontent;
+        }
+
+        public function fetchExeSource($source)
+        {
+            $source = $this->compileContentTpl($source);
+            ob_start();
+            eval(' ?>'.$source.'<?php ');
+            $cachecontent = ob_get_contents();
             ob_clean();
 
             return $cachecontent;
@@ -544,6 +564,7 @@ if (intval(PHP_VERSION) >= 7) {
         public function compileTpl($source)
         {
             $content = $this->readTpl($source);
+            $this->compileSeminar($content);
             $this->compileBlock($content);
             $this->compileTree($content);
             $this->compileLoop($content);
@@ -564,6 +585,7 @@ if (intval(PHP_VERSION) >= 7) {
 
         public function compileContentTpl($content)
         {
+            $this->compileSeminar($content);
             $this->compileBlock($content);
             $this->compileTree($content);
             $this->compileLoop($content);
@@ -743,6 +765,13 @@ if (intval(PHP_VERSION) >= 7) {
             $content = preg_replace($limit, $replace, $content);
         }
 
+        public function compileSeminar(&$content)
+        {
+            $limit = '/{x2;seminar:(\d+)}/e';
+            $replace = "'<?php \$data = \$this->G->make(\'api\',\'seminar\')->parseSeminar(\'$1\'); ?>'\n";
+            $content = preg_replace($limit, $replace, $content);
+        }
+
         public function compileEnter(&$content)
         {
             $limit = '/{x2;enter}/e';
@@ -803,7 +832,17 @@ if (intval(PHP_VERSION) >= 7) {
             ob_start();
             eval(' ?>'.$source.'<?php ');
             $cachecontent = ob_get_contents();
-            ob_flush();
+            ob_clean();
+
+            return $cachecontent;
+        }
+
+        public function fetchExeSource($source)
+        {
+            $source = $this->compileContentTpl($source);
+            ob_start();
+            eval(' ?>'.$source.'<?php ');
+            $cachecontent = ob_get_contents();
             ob_clean();
 
             return $cachecontent;

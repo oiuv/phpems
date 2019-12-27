@@ -24,6 +24,11 @@ class action extends app
         exit;
     }
 
+    private function pdfview()
+    {
+        $this->tpl->display('viewer');
+    }
+
     private function coursejs()
     {
         $contentid = $this->ev->get('contentid');
@@ -55,7 +60,7 @@ class action extends app
             $this->G->R($message);
         }
         $this->session->setSessionValue(['sessioncurrent' => $basicid]);
-        header('location:index.php?exam-phone-basics-detail&basicid='.$basicid);
+        header('location:index.php?exam-app-basics-detail&basicid='.$basicid);
         exit;
     }
 
@@ -102,14 +107,14 @@ class action extends app
                     $this->G->R($message);
                 } else {
                     $args = ['usercoin' => $user['usercoin'] - $score];
-                    $this->user->modifyUserInfo($args, $this->_user['sessionuserid']);
+                    $this->user->modifyUserInfo($this->_user['sessionuserid'], $args);
                 }
             }
             $args = ['ocuserid' => $userid, 'occourseid' => $csid, 'ocendtime' => TIME + $time];
             $this->course->openCourse($args);
             $message = [
                 'statusCode'   => 200,
-                'message'      => 'success!',
+                'message'      => '开通成功!',
                 'callbackType' => 'forward',
                 'forwardUrl'   => 'index.php?course-app-course&csid='.$csid,
             ];
@@ -177,19 +182,32 @@ class action extends app
         exit('1');
     }
 
+    private function setcourse()
+    {
+        $cnoteid = $this->ev->get('cnoteid');
+        $note = $this->ev->get('note');
+        $this->content->setCourseNote(['clsnote' => $note], $cnoteid);
+        $message = [
+            'statusCode' => 200,
+            'message'    => '保存成功',
+        ];
+        $this->G->R($message);
+    }
+
     private function index()
     {
         $page = $this->ev->get('page');
         $csid = $this->ev->get('csid');
         $contentid = $this->ev->get('contentid');
         $course = $this->course->getCourseById($csid);
-        if ($course['csprice']) {
-            $userid = $this->_user['sessionuserid'];
-            if (!$this->course->getOpenCourseByUseridAndCsid($userid, $csid)) {
-                header('location:index.php?course-app-course-opencourse&csid='.$csid);
-                exit;
-            }
+        $oc = $this->course->getOpenCourseByUseridAndCsid($this->_user['sessionuserid'], $csid);
+        if (!$oc) {
+            header('location:index.php?course-app-course-opencourse&csid='.$csid);
+            exit;
         }
+
+        $this->tpl->assign('oc', $oc);
+
         if ($course['cstype']) {
             $cdata = $this->course->getCourseContentStatus($course['csid'], $this->_user['sessionuserid']);
             if ($cdata['lock'][$contentid]) {
@@ -202,7 +220,7 @@ class action extends app
         }
         $catbread = $this->category->getCategoryPos($course['cscatid']);
         $cat = $this->category->getCategoryById($course['cscatid']);
-        $contents = $this->content->getCourseList([['AND', 'coursecsid = :coursecsid', 'coursecsid', $csid]], $page, 5);
+        $contents = $this->content->getCoursesByCsid($csid);
         if ($contentid) {
             $content = $this->content->getCourseById($contentid);
         } else {
@@ -231,7 +249,7 @@ class action extends app
         $this->tpl->assign('catbread', $catbread);
         $this->tpl->assign('course', $course);
         $this->tpl->assign('contents', $contents);
-        $this->tpl->assign('cdata', $cdata);
+        //$this->tpl->assign('cdata',$cdata);
         $this->tpl->assign('content', $content);
         $this->tpl->display($template);
     }

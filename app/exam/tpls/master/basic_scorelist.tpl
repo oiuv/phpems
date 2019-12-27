@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -47,11 +47,9 @@
 								<td>
 									<select name="search[examid]" class="form-control">
 								  		<option value="0">不限</option>
-                                        {x2;if:is_array($exampaper)}
 								  		{x2;tree:$exampaper,ep,eid}
 								  		<option value="{x2;v:ep['examid']}"{x2;if:$search['examid'] == v:ep['examid']} selected{x2;endif}>{x2;v:ep['exam']}</option>
 								  		{x2;endtree}
-                                        {x2;endif}
 							  		</select>
 								</td>
 								<td>

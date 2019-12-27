@@ -24,17 +24,34 @@ class ginkgo
     public $L = [];
     public $I = ['app' => [], 'core' => []];
     public $app;
-    public $defaultApp = 'content';
+    public $defaultApp = 'core';
 
     //对象工厂
+
+    public function __construct()
+    {
+        include PEPATH.'/lib/config.inc.php';
+        header('P3P: CP=CAO PSA OUR');
+        header('Content-Type: text/html; charset='.HE);
+        ini_set('date.timezone', 'Asia/Shanghai');
+        date_default_timezone_set('Etc/GMT-8');
+    }
+
+    /**
+     * @param $G
+     * @param null $app
+     *
+     * @return static
+     */
     public function make($G, $app = null)
     {
         if ($app) {
             return $this->load($G, $app);
         }
+
         if (!isset($this->G[$G])) {
-            if (file_exists('lib/'.$G.'.cls.php')) {
-                include 'lib/'.$G.'.cls.php';
+            if (file_exists(PEPATH.'/lib/'.$G.'.cls.php')) {
+                include_once PEPATH.'/lib/'.$G.'.cls.php';
             } else {
                 return false;
             }
@@ -48,6 +65,13 @@ class ginkgo
     }
 
     //加载对象类文件并生成对象
+
+    /**
+     * @param $G
+     * @param null $app
+     *
+     * @return static
+     */
     public function load($G, $app)
     {
         if (!$app) {
@@ -55,7 +79,7 @@ class ginkgo
         }
         $o = $G.'_'.$app;
         if (!isset($this->L[$app][$o])) {
-            $fl = 'app/'.$app.'/cls/'.$G.'.cls.php';
+            $fl = PEPATH.'/app/'.$app.'/cls/'.$G.'.cls.php';
             if (file_exists($fl)) {
                 include $fl;
             } else {
@@ -73,11 +97,6 @@ class ginkgo
     //执行页面
     public function run()
     {
-        include __DIR__.'/config.inc.php';
-        header('P3P: CP=CAO PSA OUR');
-        header('Content-Type: text/html; charset='.HE);
-        ini_set('date.timezone', 'Asia/Shanghai');
-        date_default_timezone_set('Etc/GMT-8');
         $ev = $this->make('ev');
         $app = $ev->url(0);
         $this->app = $app;
@@ -88,17 +107,20 @@ class ginkgo
                 $wxpay = $this->make('wxpay');
                 $openid = $wxpay->getwxopenid();
             }
-            // 以下代码为微信自动登录
-            $this->user = $this->make('user', 'user');
+            /*
+            $this->user = $this->make('user','user');
             $this->session = $this->make('session');
             $_user = $this->session->getSessionUser();
-            if (!$_user['sessionuserid']) {
+            if(!$_user['sessionuserid'])
+            {
                 $r = $this->user->autoLoginWxUser($_SESSION['openid']);
-                if ($r) {
-                    header('location:index.php?'.$this->defaultApp.'-'.$this->module.'&userhash='.$ev->get('userhash'));
+                if($r)
+                {
+                    header("location:index.php?".$this->defaultApp.'-'.$this->module.'&userhash='.$ev->get('userhash'));
                     exit;
                 }
             }
+            **/
         }
         if (!$app) {
             $this->app = $app = $this->defaultApp;
@@ -109,8 +131,9 @@ class ginkgo
         if (!$method) {
             $this->method = $method = 'index';
         }
-        include 'app/'.$app.'/'.$module.'.php';
-        $modulefile = 'app/'.$app.'/controller/'.$method.'.'.$module.'.php';
+        include PEPATH.'/app/'.$app.'/'.$module.'.php';
+
+        $modulefile = PEPATH.'/app/'.$app.'/controller/'.$method.'.'.$module.'.php';
         if (file_exists($modulefile)) {
             include $modulefile;
             $tpl = $this->make('tpl');
@@ -127,7 +150,7 @@ class ginkgo
     public function loadLang()
     {
         if (!$this->lang[$this->app]) {
-            include 'app/'.$this->app.'/lang/lang.php';
+            include PEPATH.'/app/'.$this->app.'/lang/lang.php';
             if (isset($lang)) {
                 $this->lang[$this->app] = $lang;
             }
@@ -140,12 +163,15 @@ class ginkgo
         if ($ev->get('userhash')) {
             exit(json_encode($message));
         }
+
         if ('forward' == $message['callbackType']) {
             if ($message['forwardUrl']) {
-                exit("<script>alert('{$message['message']}');window.location = '{$message['forwardUrl']}';</script>");
+                exit("<script>window.location = '{$message['forwardUrl']}';</script>");
             }
-            exit("<script>alert('{$message['message']}');window.location = document.referrer+'&'+Math.random();</script>");
+
+            exit("<script>window.location = document.referrer+'&'+Math.random();</script>");
         }
-        exit("<script>alert('{$message['message']}');window.location = document.referrer+'&'+Math.random();</script>");
+
+        exit("<script>window.location = document.referrer+'&'+Math.random();</script>");
     }
 }

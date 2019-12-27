@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -26,7 +26,7 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						课件管理
-						<a class="btn btn-primary pull-right" href="index.php?course-master-contents-add&courseid={x2;$course['csid']}&page={x2;$page}">添加课件</a>
+						<a class="btn btn-primary pull-right" href="index.php?course-master-contents-addpage&courseid={x2;$course['csid']}&page={x2;$page}">添加课件</a>
 					</h4>
 					<h4>{x2;if:$course}{x2;$course['cstitle']}{x2;else}所有课件{x2;endif}</h4>
 					<form action="index.php?course-master-contents" method="post" class="form-inline">
@@ -129,11 +129,9 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" />删除
 						            </label>
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>

@@ -118,7 +118,13 @@ class ev
         if (!$r[0] || !file_exists('app/'.$r[0].'/')) {
             $r[0] = $this->G->defaultApp;
         }
-        if (!in_array($r[1], ['master', 'api']) && $this->isMobile()) {
+        if (!file_exists('app/'.$r[0].'/'.$r[1].'.php')) {
+            $r[1] = 'app';
+        }
+        if (!file_exists('app/'.$r[0].'/controller/'.$r[2].'.'.$r[1].'.php')) {
+            $r[2] = 'index';
+        }
+        if ('app' == $r[1] && $this->isMobile()) {
             $r[1] = 'phone';
         }
 

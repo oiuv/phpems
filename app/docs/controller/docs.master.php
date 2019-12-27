@@ -85,6 +85,7 @@ class action extends app
     private function history()
     {
         $docid = $this->ev->get('docid');
+        $page = $this->ev->get('page');
         $doc = $this->doc->getDocById($docid, false);
         $args = [];
         $args[] = ['AND', 'dhdocid = :dhdocid', 'dhdocid', $docid];

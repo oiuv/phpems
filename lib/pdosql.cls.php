@@ -15,10 +15,186 @@ class pdosql
     public $G;
     public $tablepre = DTH;
     private $_mostlimits = 512;
+    private $db;
 
     public function __construct(&$G)
     {
         $this->G = $G;
+    }
+
+    public function _init()
+    {
+        $pdo = $this->G->make('pepdo');
+        $this->setDb($pdo);
+    }
+
+    public function setDb(&$db)
+    {
+        $this->db = $db;
+    }
+
+    //建表
+    public function createTable($table, $fields, $indexs = false)
+    {
+        $sql = 'CREATE TABLE IF NOT EXISTS `'.$this->tablepre."{$table}` (";
+        foreach ($fields as $field) {
+            $sql .= "\n`{$field['name']}` ";
+            if ($field['type']) {
+                $sql .= "{$field['type']} ";
+            }
+            if ($field['length']) {
+                $sql .= "( {$field['length']} ) ";
+            }
+            $sql .= "CHARACTERSET {$field['charset']} COLLATE utf8_general_ci ";
+            $sql .= 'NOT NULL ';
+            if ($field['auto']) {
+                $sql .= 'AUTO_INCREMENT ';
+            }
+            if ($field['comment']) {
+                $sql .= "COMMENT '{$field['comment']}' ";
+            }
+            $sql .= ',';
+        }
+        if ($indexs) {
+            foreach ($indexs as $index) {
+                $sql .= "\n";
+                $sql .= $index['type']."( `{$index['field']}` ) ";
+                $sql .= ',';
+            }
+        }
+        $sql = trim($sql, ', ');
+        $sql .= "\n)";
+
+        return $sql;
+    }
+
+    //清空表内数据
+    public function clearTableData($table)
+    {
+        if (is_array($table)) {
+            $tsql = 'TRUNCATE TABLE ';
+            foreach ($table as $t) {
+                $tsql .= "`$this->tablepre`.`$t`,";
+            }
+
+            return trim($tsql, ',');
+        }
+
+        return "TRUNCATE TABLE `{$table}`";
+    }
+
+    //删除表
+    public function delTable($table)
+    {
+        if (is_array($table)) {
+            $tsql = 'TRUNCATE TABLE ';
+            foreach ($table as $t) {
+                $tsql .= "`$this->tablepre`.`$t`,";
+            }
+
+            return trim($tsql, ',');
+        }
+
+        return "DROP TABLE `{$table}`";
+    }
+
+    //修改字段
+    public function modifyField($field, $table)
+    {
+        if ($table) {
+            if (is_array($field)) {
+                $sql = 'ALTER TABLE `'.$this->tablepre."{$table}` ";
+                if ($field['field']) {
+                    $sql .= "CHANGE `{$field['field']}` `{$field['field']}`";
+                    if ($field['fieldtype']) {
+                        $sql .= "{$field['fieldtype']} ";
+                    }
+                    if ($field['fieldlength']) {
+                        $sql .= "( {$field['fieldlength']} )";
+                    } else {
+                        if ('VARCHAR' == $field['fieldtype']) {
+                            $sql .= '( 120 )';
+                        } elseif ('DECIMAL' == $field['fieldtype']) {
+                            $sql .= '( 10,2 )';
+                        }
+                    }
+                    if ('VARCHAR' == strtoupper($field['fieldtype']) || 'TEXT' == strtoupper($field['fieldtype'])) {
+                        if ('gbk' == $field['fieldcharset']) {
+                            $sql .= "CHARACTER SET {$field['fieldcharset']} COLLATE gbk_chinese_ci ";
+                        } else {
+                            $sql .= "CHARACTER SET {$field['fieldcharset']} COLLATE utf8_general_ci ";
+                        }
+                    }
+                    $sql .= 'NOT NULL ';
+
+                    if ($field['fieldindextype']) {
+                        $sql .= ", ADD {$field['fieldindextype']} ( `{$field['field']}` ) ";
+                    }
+
+                    return $sql;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    //添加字段
+    public function addField($field, $table)
+    {
+        if ($table) {
+            if (is_array($field)) {
+                $sql = 'ALTER TABLE `'.$this->tablepre."{$table}` ";
+                if ($field['field']) {
+                    $sql .= "ADD `{$field['field']}` ";
+                    $field['fieldtype'] = strtoupper($field['fieldtype']);
+                    if ($field['fieldtype']) {
+                        $sql .= "{$field['fieldtype']} ";
+                    }
+                    if ($field['fieldlength']) {
+                        $sql .= "( {$field['fieldlength']} )";
+                    } else {
+                        if ('VARCHAR' == $field['fieldtype']) {
+                            $sql .= '( 120 )';
+                        } elseif ('DECIMAL' == $field['fieldtype']) {
+                            $sql .= '( 10,2 )';
+                        }
+                    }
+                    if ('VARCHAR' == $field['fieldtype'] || 'TEXT' == $field['fieldtype']) {
+                        if ('gbk' == $field['fieldcharset']) {
+                            $sql .= "CHARACTER SET {$field['fieldcharset']} COLLATE gbk_chinese_ci ";
+                        } else {
+                            $sql .= "CHARACTER SET {$field['fieldcharset']} COLLATE utf8_general_ci ";
+                        }
+                    }
+                    $sql .= 'NOT NULL ';
+
+                    if ($field['fieldindextype']) {
+                        $sql .= ", ADD {$field['fieldindextype']} ( `{$field['field']}` )";
+                    }
+
+                    return $sql;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    //删除字段
+    public function delField($field, $table)
+    {
+        $sql = 'ALTER TABLE `'.$this->tablepre."{$table}` DROP `{$field}`";
+
+        return ['sql' => $sql];
     }
 
     private function _makeDefaultInsertArgs($tables, $args)
@@ -29,7 +205,7 @@ class pdosql
         }
         foreach ($tables as $table) {
             $sql = 'SHOW FULL COLUMNS FROM  `'.$this->tablepre.$table.'`';
-            $r = $this->G->make('pepdo')->fetchAll(['sql' => $sql]);
+            $r = $this->db->fetchAll(['sql' => $sql]);
             foreach ($r as $p) {
                 if ('auto_increment' != $p['Extra']) {
                     if ($args[$p['Field']]) {
@@ -56,7 +232,7 @@ class pdosql
         }
         foreach ($tables as $table) {
             $sql = 'SHOW FULL COLUMNS FROM  `'.$this->tablepre.$table.'`';
-            $r = $this->G->make('pepdo')->fetchAll(['sql' => $sql]);
+            $r = $this->db->fetchAll(['sql' => $sql]);
             foreach ($r as $p) {
                 if ('auto_increment' != $p['Extra']) {
                     if (array_key_exists($p['Field'], $args)) {
@@ -84,28 +260,28 @@ class pdosql
             case 'longtext':
             case 'mediumtext':
             case 'text':
-                if ($def) {
-                    return (string) $def;
-                }
+            if ($def) {
+                return (string) $def;
+            }
 
-                    return '';
-                break;
+            return '';
+            break;
 
             case 'int':
-                if ($def) {
-                    return intval($def);
-                }
+            if ($def) {
+                return intval($def);
+            }
 
-                    return 0;
-                break;
+            return 0;
+            break;
 
             default:
-                if ($def) {
-                    return floatval($def);
-                }
+            if ($def) {
+                return floatval($def);
+            }
 
-                    return 0;
-                break;
+            return 0;
+            break;
         }
     }
 
@@ -141,16 +317,24 @@ class pdosql
             $q = [];
             $v = [];
             foreach ($query as $key => $p) {
+                if (isset($p[2])) {
+                    if (is_array($p[3])) {
+                        $i = 0;
+                        $tkey = [];
+                        foreach ($p[3] as $tp) {
+                            $tkey[] = ':'.$p[2].'_'.$i;
+                            $v[$p[2].'_'.$i] = $tp;
+                            $i++;
+                        }
+                        $p[1] = str_replace(':'.$p[2], implode(',', $tkey), $p[1]);
+                    } else {
+                        $v[$p[2]] = $p[3];
+                    }
+                }
                 if ($key) {
                     $q[] = $p[0].' '.$p[1].' ';
-                    if (isset($p[2])) {
-                        $v[$p[2]] = $p[3];
-                    }
                 } else {
                     $q[] = $p[1].' ';
-                    if (isset($p[2])) {
-                        $v[$p[2]] = $p[3];
-                    }
                 }
             }
             $db_query = ' '.implode(' ', $q);
@@ -275,7 +459,7 @@ class pdosql
         if (is_array($tables)) {
             $db_tables = [];
             foreach ($tables as $p) {
-                $db_tables[] = "{$tb_pre}{$p} AS $p";
+                $db_tables[] = "{$tb_pre}{$p}";
             }
             $db_tables = implode(',', $db_tables);
         } else {
@@ -310,12 +494,17 @@ class pdosql
         } else {
             $db_limits = '';
         }
-        if (false == $db_limits && false !== $db_limits) {
-            $db_limits = $this->_mostlimits;
+        if ($db_limits) {
+            $db_limits = ' LIMIT '.$db_limits;
         }
+        //if($db_limits == false && $db_limits !== false)$db_limits = $this->_mostlimits;
         $db_groups = $db_groups ? ' GROUP BY '.$db_groups : '';
         $db_orders = $db_orders ? ' ORDER BY '.$db_orders : '';
-        $sql = 'DELETE FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.' LIMIT '.$db_limits;
+        if (is_array($tables)) {
+            $sql = 'DELETE '.$db_tables.' FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.$db_limits;
+        } else {
+            $sql = 'DELETE FROM '.$db_tables.' WHERE '.$db_query.$db_groups.$db_orders.$db_limits;
+        }
 
         return ['sql' => $sql, 'v' => $v];
     }

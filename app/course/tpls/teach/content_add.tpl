@@ -5,7 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-12" id="datacontent">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -26,17 +29,6 @@
 				            <label for="coursetitle" class="control-label col-sm-2">标题:</label>
 				            <div class="col-sm-9">
 							    <input class="form-control" type="text" id="coursetitle" name="args[coursetitle]" needle="needle" msg="You must enter title.">
-					        </div>
-				        </div>
-				        <div class="form-group">
-				            <label for="coursemoduleid" class="control-label col-sm-2">模型:</label>
-				            <div class="col-sm-3">
-							    <select id="coursemoduleid" refreshjs="on" needle="needle" class="combox form-control" name="args[coursemoduleid]" refUrl="index.php?course-teach-module-moduleforms&moduleid={value}" target="courseforms">
-					            	<option value="">选择信息模型</option>
-					            	{x2;tree:$modules,module,mid}
-					            	<option value="{x2;v:module['moduleid']}">{x2;v:module['modulename']}</option>
-					            	{x2;endtree}
-					            </select>
 					        </div>
 				        </div>
 				        <div class="form-group">
@@ -67,7 +59,14 @@
 						        <div class="fineuploader" attr-type="thumb" attr-template="pe-template-coursethumb"></div>
 							</div>
 				        </div>
-				    	<div id="courseforms"></div>
+                        {x2;tree:$forms,form,fid}
+						<div class="form-group">
+							<label for="{x2;v:form['id']}" class="control-label col-sm-2">{x2;v:form['title']}</label>
+							<div class="col-sm-9">
+                                {x2;v:form['html']}
+							</div>
+						</div>
+                        {x2;endtree}
 				    	<div class="form-group">
 				            <label for="coursetext" class="control-label col-sm-2">内容</label>
 				            <div class="col-sm-10">

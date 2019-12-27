@@ -79,6 +79,32 @@ class position_content
         return $this->db->listElements($page, $number, $data);
     }
 
+    public function getPosNewsList($args, $page, $number = 20)
+    {
+        $args[] = ['AND', 'pccontentid = contentid'];
+        $data = [
+            'select'  => false,
+            'table'   => ['poscontent', 'content'],
+            'query'   => $args,
+            'orderby' => 'pcsequence DESC, pcid DESC',
+        ];
+
+        return $this->db->listElements($page, $number, $data);
+    }
+
+    public function getPosSeminarList($args, $page, $number = 20)
+    {
+        $args[] = ['AND', 'pccontentid = seminarid'];
+        $data = [
+            'select'  => false,
+            'table'   => ['poscontent', 'seminar'],
+            'query'   => $args,
+            'orderby' => 'pcsequence DESC, pcid DESC',
+        ];
+
+        return $this->db->listElements($page, $number, $data);
+    }
+
     public function getPosContentById($id)
     {
         $data = [false, 'poscontent', [['AND', 'pcid = :pcid', 'pcid', $id]]];
@@ -113,9 +139,12 @@ class position_content
         return $this->db->lastInsertId();
     }
 
-    public function modifyPosContentByContentId($id, $args)
+    public function modifyPosContentByContentId($id, $args, $app = null)
     {
-        $data = ['poscontent', $args, [['AND', 'pccontentid = :pccontentid', 'pccontentid', $id]]];
+        if (!$app) {
+            $app = $this->G->app;
+        }
+        $data = ['poscontent', $args, [['AND', 'pccontentid = :pccontentid', 'pccontentid', $id], ['AND', 'pcposapp = :pcposapp', 'pcposapp', $app]]];
         $sql = $this->pdosql->makeUpdate($data);
         $this->db->exec($sql);
 

@@ -4,10 +4,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
@@ -86,10 +86,10 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="moduledescribe" class="control-label col-sm-2">发布角色</label>
+								<label for="moduledescribe" class="control-label col-sm-2">发布用户组</label>
 								<div class="col-sm-6">
 									<input class="form-control" type="text" name="args[catmanager][pubgroups]" value="{x2;$category['catmanager']['pubgroups']}">
-									<span class="help-block">填写角色ID，用英文逗号隔开</span>
+									<span class="help-block">填写用户组ID，用英文逗号隔开</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -145,11 +145,9 @@
 						            <input type="hidden" name="page" value="{x2;$page}">
 						            <input type="hidden" name="catid" value="{x2;$catid}">
 						            <input type="hidden" name="parent" value="{x2;$parent}">
-                                    {x2;if:is_array($search)}
 									{x2;tree:$search,arg,aid}
 									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 									{x2;endtree}
-                                    {x2;endif}
 								</div>
 							</div>
 						</fieldset>

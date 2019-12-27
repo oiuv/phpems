@@ -58,8 +58,6 @@ class action extends app
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
-                'navTabId'     => '',
-                'rel'          => '',
                 'callbackType' => 'forward',
                 'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
             ];
@@ -73,12 +71,32 @@ class action extends app
         if ($this->ev->get('modifyusergroup')) {
             $groupid = $this->ev->get('groupid');
             $userid = $this->ev->get('userid');
-            $this->user->modifyUserGroup($groupid, $userid);
+            $this->user->modifyUserGroup($userid, $groupid);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
                 'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
+            ];
+            exit(json_encode($message));
+        } elseif ($this->ev->get('setteachsubject')) {
+            $subjects = $this->ev->get('subjects');
+            $userid = $this->ev->get('userid');
+            $user = $this->user->getUserById($userid);
+            $modules = $this->module->getModulesByApp('user');
+            if ('teacher' != $modules[$user['groupmoduleid']]['modulecode']) {
+                $message = [
+                    'statusCode' => 300,
+                    'message'    => '此用户不是教师',
+                ];
+                exit(json_encode($message));
+            }
+            $this->user->modifyUserInfo($userid, ['teacher_subjects' => $subjects]);
+            $message = [
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('modifyuserinfo')) {
@@ -87,7 +105,7 @@ class action extends app
             $user = $this->user->getUserById($userid);
             $group = $this->user->getGroupById($user['usergroupid']);
             $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $group]);
-            $id = $this->user->modifyUserInfo($args, $userid);
+            $id = $this->user->modifyUserInfo($userid, $args);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
@@ -99,7 +117,7 @@ class action extends app
             $args = $this->ev->get('args');
             $userid = $this->ev->get('userid');
             if ($args['password'] == $args['password2'] && $userid) {
-                $id = $this->user->modifyUserPassword($args, $userid);
+                $id = $this->user->modifyUserPassword($userid, $args);
                 $message = [
                     'statusCode'   => 200,
                     'message'      => '操作成功',
@@ -123,6 +141,8 @@ class action extends app
         $group = $this->user->getGroupById($user['usergroupid']);
         $fields = $this->module->getMoudleFields($group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $this->user->getGroupById($this->_user['sessiongroupid'])]);
         $forms = $this->html->buildHtml($fields, $user);
+        $subjects = $this->G->make('basic', 'exam')->getSubjectList();
+        $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('moduleid', $group['groupmoduleid']);
         $this->tpl->assign('fields', $fields);
         $this->tpl->assign('forms', $forms);
@@ -147,6 +167,8 @@ class action extends app
             $handle = fopen($uploadfile, 'r');
             $defaultgroup = $this->user->getDefaultGroup();
             $strings = $this->G->make('strings');
+            $app = $this->G->make('apps', 'core')->getApp('user');
+            $tpfields = explode(',', $app['appsetting']['regfields']);
             while ($data = fgetcsv($handle, 200)) {
                 if ($data[0] && $data[1]) {
                     $args = [];
@@ -163,6 +185,11 @@ class action extends app
                                     }
                                     $args['userpassword'] = md5($data[2]);
                                     $args['usergroupid'] = $defaultgroup['groupid'];
+                                    $i = 3;
+                                    foreach ($tpfields as $p) {
+                                        $args[$p] = iconv('GBK', 'UTF-8', $data[$i]);
+                                        $i++;
+                                    }
                                     $this->user->insertUser($args);
                                 }
                             }
@@ -200,8 +227,6 @@ class action extends app
                     $message = [
                         'statusCode' => 300,
                         'message'    => "{$errmsg}",
-                        'navTabId'   => '',
-                        'rel'        => '',
                     ];
                     exit(json_encode($message));
                 }
@@ -219,7 +244,7 @@ class action extends app
                     'statusCode'   => 200,
                     'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
+                    'forwardUrl'   => "index.php?user-master-user{$this->u}",
                 ];
                 exit(json_encode($message));
             }
@@ -237,6 +262,8 @@ class action extends app
             foreach ($search as $key => $arg) {
                 $u .= "&search[{$key}]={$arg}";
             }
+            $this->tpl->assign('search', $search);
+            $this->tpl->assign('u', $u);
         }
         $args = [];
         if ($search['userid']) {
@@ -264,10 +291,8 @@ class action extends app
                 $args[] = ['AND', 'userregtime <= :userregtime', 'userregtime', $etime];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $this->tpl->assign('users', $users);
-        $this->tpl->assign('search', $search);
-        $this->tpl->assign('u', $u);
         $this->tpl->assign('page', $page);
         $this->tpl->display('user');
     }

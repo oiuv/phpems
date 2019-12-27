@@ -10,7 +10,7 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-set_include_path('../');
+define('PEPATH', dirname(dirname(__FILE__)));
 class app
 {
     public $G;
@@ -19,7 +19,6 @@ class app
     {
         $this->G = $G;
         $this->ev = $this->G->make('ev');
-        $this->tpl = $this->G->make('tpl');
         $this->sql = $this->G->make('pdosql');
         $this->db = $this->G->make('pepdo');
         $this->pg = $this->G->make('pg');
@@ -27,8 +26,6 @@ class app
         $this->session = $this->G->make('session');
         $this->user = $this->G->make('user', 'user');
         $groups = $this->user->getUserGroups();
-        $this->tpl->assign('groups', $groups);
-        $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->order = $this->G->make('orders', 'bank');
     }
 
@@ -40,6 +37,6 @@ class app
         exit;
     }
 }
-include '../lib/api.cls.php';
-$ginkgo = new ginkgo();
-$ginkgo->run();
+include PEPATH.'/lib/init.cls.php';
+$app = new app(new ginkgo());
+$app->run();

@@ -1,35 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>PHPEMS模拟考试系统</title>
+	<meta charset="UTF-8">
+	<title>PHPEMS模拟考试系统后台管理</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="stylesheet" type="text/css" href="app/core/styles/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="app/core/styles/css/datetimepicker.css" />
-	<link rel="stylesheet" type="text/css" href="app/core/styles/css/jquery-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="app/core/styles/css/peskin.css" />
-	<!--[if lt IE 9]>
-	<script src="app/core/styles/js/html5shiv.min.js"></script>
-	<script src="app/core/styles/js/respond.min.js"></script>
-	<![endif]-->
-	<script src="app/core/styles/js/jquery.min.js"></script>
-	<script src="app/core/styles/js/jquery.json.js"></script>
-	<script src="app/core/styles/js/jquery-ui.min.js"></script>
-	<script src="app/core/styles/js/bootstrap.min.js"></script>
-	<script src="app/core/styles/js/bootstrap-datetimepicker.js"></script>
-
-	<script src="app/core/styles/js/all.fine-uploader.min.js"></script>
-
-	<script src="app/core/styles/js/ckeditor/ckeditor.js"></script>
-	<script src="app/core/styles/js/plugin.js"></script>
-	<script src="app/exam/styles/js/plugin.js"></script>
+	<link rel="stylesheet" type="text/css" href="files/public/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="files/public/css/datetimepicker.css" />
+	<link rel="stylesheet" type="text/css" href="files/public/css/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="files/public/css/pe.master.css" />
+	<script src="files/public/js/jquery.min.js"></script>
+	<script src="files/public/js/jquery-ui.min.js"></script>
+	<script src="files/public/js/bootstrap.min.js"></script>
+	<script src="files/public/js/bootstrap-datetimepicker.js"></script>
+	<script src="files/public/js/all.fine-uploader.min.js"></script>
+	<script src="files/public/js/ckeditor/ckeditor.js"></script>
+	<script src="files/public/js/pe.master.js"></script>
 </head>
 <body data-spy="scroll" data-target="#myScrollspy">
-{x2;include:nav}
 <div class="container-fluid" id="questioncontent">
 	<div class="row-fluid">
-		<div class="main box">
+		<div class="main box" style="width:1200px;">
 			<div class="col-xs-3" id="questionbar">
 				<dl class="clear" style="width:270px;" data-spy="affix" data-offset-top="235">
 					<dt class="float_l"><h4>&nbsp;</h4></dt>
@@ -58,14 +49,12 @@
 			                {x2;eval: v:tid++}
 							<a id="sign_{x2;v:question['questionid']}" href="#question_{x2;v:question['questionid']}" class="btn btn-default">{x2;v:tid}</a>
 							{x2;endtree}
-                            {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 							{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 			                {x2;eval: v:tid++}
 			                {x2;tree:v:questionrow['data'],data,did}
 			                <a id="sign_{x2;v:data['questionid']}" href="#question_{x2;v:data['questionid']}" class="btn btn-default">{x2;v:tid}-{x2;v:did}</a>
                 			{x2;endtree}
                 			{x2;endtree}
-                            {x2;endif}
 						</div>
 						{x2;endif}
 						{x2;endif}
@@ -95,12 +84,12 @@
 						第{x2;v:tid}题
 						<span class="pull-right">
 							<a class="btn btn-primary qicon" onclick="javascript:favorquestion('{x2;v:question['questionid']}');"><i class="glyphicon glyphicon-heart-empty"></i></a>
-							<a name="question_{x2;v:question['questionid']}"></a>
+							<a name="question_{x2;v:question['questionid']}">
 							<input id="time_{x2;v:question['questionid']}" type="hidden" name="time[{x2;v:question['questionid']}]"/>
 						</span>
 					</h4>
 					<div class="choice">
-						{x2;realhtml:v:question['question']}
+						</a>{x2;realhtml:v:question['question']}
 					</div>
 					{x2;if:!$questype[v:quest]['questsort']}
 					{x2;if:v:question['questionselect'] && $questype[v:quest]['questchoice'] != 5}
@@ -123,7 +112,6 @@
 	                </div>
 				</div>
 				{x2;endtree}
-                {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
 				{x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
 	            {x2;eval: v:tid++}
 				<div class="box itembox paperexamcontent">
@@ -170,12 +158,10 @@
 				{x2;endtree}
 				{x2;endif}
 				{x2;endif}
-				{x2;endif}
 				{x2;endtree}
 			</div>
 		</div>
 	</div>
 </div>
-{x2;include:footer}
 </body>
 </html>

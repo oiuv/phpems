@@ -24,18 +24,17 @@ class action extends app
 
     private function lists()
     {
-        $this->pg->isPhone = 1;
-        $this->pg->target = 'class="ajax" data-target="courselists" data-page="courselists" ';
         $catids = [];
-        $catids['index'] = $this->category->getCategoriesByArgs([['AND', 'catindex > 0']]);
+        $catids = $this->category->getCategoriesByArgs([['AND', "catinmenu = '0'"], ['AND', "catapp = 'course'"], ['AND', 'catparent = 0']]);
         $contents = [];
-        if ($catids['index']) {
-            foreach ($catids['index'] as $p) {
+        if ($catids) {
+            foreach ($catids as $p) {
                 $catstring = $this->category->getChildCategoryString($p['catid']);
-                $contents[$p['catid']] = $this->course->getCourseList([['AND', 'find_in_set(cscatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 12);
+                $contents[$p['catid']] = $this->course->getCourseList([['AND', 'find_in_set(cscatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 6);
             }
         }
-        $this->tpl->assign('catids', $catids['index']);
+        $this->tpl->assign('catids', $catids);
+        $this->tpl->assign('categories', $this->category->categories);
         $this->tpl->assign('contents', $contents);
         $this->tpl->display('index_lists');
     }

@@ -95,7 +95,7 @@ class strings
 
     public function isCellphone($str)
     {
-        $j = "/^1[3,4,5,7,8]\d{9}/i";
+        $j = "/^1[3,4,5,6,7,8,9]\d{9}/i";
         if (preg_match($j, $str)) {
             return $str;
         }
@@ -140,7 +140,7 @@ class strings
             return $t;
         }
 
-        return $t.'...';
+        return $t.(strlen($str) <= $lenth ? '' : '...');
     }
 
     public function hexString($str, $hex = 16)

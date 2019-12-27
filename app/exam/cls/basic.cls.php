@@ -127,7 +127,7 @@ class basic_exam
     //返回值：科目列表数组
     public function getSubjectList($args = 1)
     {
-        $data = [false, 'subject', $args];
+        $data = [false, 'subject', $args, false, false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'subjectid', 'subjectsetting');
@@ -206,11 +206,11 @@ class basic_exam
     //通过获取地区、科目、代码对应关系列表
     //参数：页码，每页显示数量，查询信息数组
     //返回值：配置信息数组
-    public function getBasicList($page, $number = 20, $args = 1)
+    public function getBasicList($args, $page, $number = 20, $orderby = 'basicid desc')
     {
         $page = $page > 0 ? $page : 1;
         $r = [];
-        $data = [false, 'basic', $args, false, 'basicid DESC', [intval($page - 1) * $number, $number]];
+        $data = [false, 'basic', $args, false, $orderby, [intval($page - 1) * $number, $number]];
         $sql = $this->pdosql->makeSelect($data);
         $r['data'] = $this->db->fetchAll($sql, 'basicid', ['basicknows', 'basicsection', 'basicexam']);
         $data = ['count(*) AS number', 'basic', $args];
@@ -242,9 +242,9 @@ class basic_exam
         return $this->db->fetch($sql, ['basicknows', 'basicsection', 'basicexam']);
     }
 
-    public function getBasicsByArgs($args, $ordeby = false)
+    public function getBasicsByArgs($args, $number = false, $ordeby = 'basicid desc')
     {
-        $data = [false, 'basic', $args, false, $ordeby];
+        $data = [false, 'basic', $args, false, $ordeby, $number];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'basicid', ['basicknows', 'basicsection', 'basicexam']);
@@ -316,7 +316,7 @@ class basic_exam
     //返回值：题型列表数组
     public function getQuestypeList($args = 1)
     {
-        $data = [false, 'questype', $args];
+        $data = [false, 'questype', $args, false, false, false];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, 'questid');

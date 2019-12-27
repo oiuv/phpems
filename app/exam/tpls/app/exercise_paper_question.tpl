@@ -77,7 +77,7 @@
 						<div class="media well">
 							<ul class="nav nav-tabs">
 								<li class="active">
-									<span class="badge badge-info questionindex">{x2;v:tid}</span>
+									<span class="badge badge-info questionindex">{x2;v:tid}</span></a>
 								</li>
 								<li class="btn-group pull-right">
 									<button class="btn" type="button" onclick="javascript:signQuestion('{x2;v:question['questionid']}',this);"><em class="{x2;if:$sessionvars['examsessionsign'][v:question['questionid']]}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
@@ -143,7 +143,7 @@
 							<div>
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<span class="badge questionindex">{x2;v:did}</span>
+										<span class="badge questionindex">{x2;v:did}</span></a>
 									</li>
 									<li class="btn-group pull-right">
 										<button class="btn" type="button" onclick="javascript:signQuestion('{x2;v:data['questionid']}',this);"><em class="{x2;if:$sessionvars['examsessionsign'][v:data['questionid']]}icon-star{x2;else}icon-star-empty{x2;endif}" title="标注"></em></button>
@@ -277,7 +277,7 @@ $(document).ready(function(){
 			hbox:$("#timer_h"),
 			mbox:$("#timer_m"),
 			sbox:$("#timer_s"),
-			finish:function(){submitPaper()}
+			finish:function(){submitPaper();}
 		}
 		setting.lefttime = parseInt(data);
 		countdown(setting);

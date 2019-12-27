@@ -14,6 +14,7 @@ class action extends app
 {
     public function display()
     {
+        $this->position = $this->G->make('position', 'content');
         $action = $this->ev->url(3);
         if (!method_exists($this, $action)) {
             $action = 'index';
@@ -42,6 +43,8 @@ class action extends app
             if (!$template) {
                 $template = 'content_default';
             }
+            $topnews = $this->position->getPosNewsList([['AND', 'pcposid = 2']], 1, 10);
+            $this->tpl->assign('topnews', $topnews);
             $this->tpl->assign('cat', $cat);
             $this->tpl->assign('nearContent', $nearContent);
             $this->tpl->assign('page', $page);

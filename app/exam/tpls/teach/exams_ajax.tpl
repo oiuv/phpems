@@ -66,9 +66,7 @@
 			        {x2;endtree}
 	        	</tbody>
 	        </table>
-	        <div class="pagination pagination-right">
-	            <ul>{x2;$exams['pages']}</ul>
-	        </div>
+			<ul class="pagination pull-right">{x2;$exams['pages']}</ul>
 	        <script type="text/javascript">
 	    		jQuery(function($) {
 					markSelectedExams('ids[]','{x2;$target}');

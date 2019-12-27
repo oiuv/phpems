@@ -5,7 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-12" id="datacontent">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -19,7 +22,6 @@
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
 						{x2;$course['cstitle']} 成员列表
-						<a class="btn btn-primary pull-right" href="index.php?{x2;$_app}-teach-course-selectmember&courseid={x2;$courseid}">增加人员</a>
 					</h4>
 			        <form action="index.php?course-teach-course-members&courseid={x2;$courseid}" method="post" class="form-inline">
 						<table class="table">
@@ -51,7 +53,6 @@
 								<th>姓名</th>
 								<th>开通时间</th>
 								<th>到期时间</th>
-								<th>操作</th>
 			                </tr>
 			            </thead>
 			            <tbody>
@@ -62,11 +63,6 @@
 			                    <td>{x2;v:user['usertruename']}</td>
 								<td>{x2;date:v:user['octime'],'Y-m-d'}</td>
 								<td>{x2;date:v:user['ocendtime'],'Y-m-d'}</td>
-								<td>
-								  	<div class="btn-group">
-			                    		<a class="btn confirm" href="index.php?course-teach-course-delopen&ocid={x2;v:user['ocid']}{x2;$u}" title="Close"><em class="glyphicon glyphicon-remove"></em></a>
-									</div>
-								</td>
 			                </tr>
 			                {x2;endtree}
 			        	</tbody>

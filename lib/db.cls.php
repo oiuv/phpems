@@ -91,9 +91,9 @@ class db2
             return mysql_fetch_assoc($this->queryid);
         } elseif (2 == $type) {
             return mysql_fetch_object($this->queryid);
+        } else {
+            return mysql_fetch_array($this->queryid);
         }
-
-        return mysql_fetch_array($this->queryid);
     }
 
     //获取单条记录

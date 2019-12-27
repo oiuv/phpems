@@ -116,7 +116,6 @@ class http
         stream_set_timeout($fp, $timeout);
         fwrite($fp, $out);
         $this->data = '';
-        echo '++';
         $status = stream_get_meta_data($fp);
         if (!$status['timed_out']) {
             $maxsize = min($limit, 1024000);

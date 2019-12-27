@@ -19,24 +19,31 @@ class exercise_exam
         $this->G = $G;
         $this->pdosql = $this->G->make('pdosql');
         $this->db = $this->G->make('pepdo');
-        $this->pg = $this->G->make('pg');
         $this->ev = $this->G->make('ev');
     }
 
     //根据参数查询
-    public function getExerciseProcessByUser($userid, $basicid)
+    public function getExerciseProcessByUser($userid, $basicid, $knowsid = null)
     {
-        $data = [false, 'exercise', [['AND', 'exeruserid = :exeruserid', 'exeruserid', $userid], ['AND', 'exerbasicid = :exerbasicid', 'exerbasicid', $basicid]]];
+        if ($knowsid) {
+            $data = [false, 'exercise', [['AND', 'exeruserid = :exeruserid', 'exeruserid', $userid], ['AND', 'exerbasicid = :exerbasicid', 'exerbasicid', $basicid], ['AND', 'exerknowsid = :exerknowsid', 'exerknowsid', $knowsid]]];
+            $sql = $this->pdosql->makeSelect($data);
+
+            return $this->db->fetch($sql);
+        }
+
+        $data = [false, 'exercise', [['AND', 'exeruserid = :exeruserid', 'exeruserid', $userid], ['AND', 'exerbasicid = :exerbasicid', 'exerbasicid', $basicid]], false, false, false];
         $sql = $this->pdosql->makeSelect($data);
 
-        return $this->db->fetch($sql);
+        return $this->db->fetchAll($sql, 'exerknowsid');
     }
 
     public function setExercise($args)
     {
         $userid = $args['exeruserid'];
         $basicid = $args['exerbasicid'];
-        $r = $this->getExerciseProcessByUser($userid, $basicid);
+        $knowsid = $args['exerknowsid'];
+        $r = $this->getExerciseProcessByUser($userid, $basicid, $knowsid);
         if ($r) {
             $data = ['exercise', $args, [['AND', 'exerid = :exerid', 'exerid', $r['exerid']]]];
             $sql = $this->pdosql->makeUpdate($data);

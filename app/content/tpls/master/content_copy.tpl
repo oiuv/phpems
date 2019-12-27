@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -33,8 +33,8 @@
 				        </div>
 				        <div class="form-group">
 		        			<label class="control-label col-sm-2">目标分类</label>
-		        			<div class="col-sm-4">
-			        			<select class="form-control" msg="您必须选择一个目标分类" needle="needle" class="autocombox input-medium" name="targetcatid" refUrl="index.php?content-master-category-ajax-getchildcategory&catid={value}">
+		        			<div class="col-sm-8 form-inline">
+			        			<select class="form-control autocombox" msg="您必须选择一个目标分类" needle="needle" name="targetcatid" refUrl="index.php?content-master-category-ajax-getchildcategory&catid={value}">
 					            	<option value="">选择一级分类</option>
 					            	{x2;tree:$parentcat,cat,cid}
 					            	<option value="{x2;v:cat['catid']}">{x2;v:cat['catname']}</option>

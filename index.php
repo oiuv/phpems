@@ -11,8 +11,10 @@
  */
 
 session_start();
-set_time_limit(0);
-define('PE_VERSION', '5.0');
+
+define('PE_VERSION', '6.0');
+define('PEPATH', dirname(__FILE__));
+
 require __DIR__.'/vendor/autoload.php';
 require __DIR__.'/lib/init.cls.php';
 

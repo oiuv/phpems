@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -80,7 +80,7 @@
 						        <th>组卷类型</th>
 						        <th>组卷时间</th>
 						        <th>考试科目</th>
-						        <th>操作</th>
+						        <th width="180">操作</th>
 			                </tr>
 			            </thead>
 			            <tbody>

@@ -25,8 +25,12 @@ class action extends app
     private function index()
     {
         if ($this->_user['sessionuserid']) {
-            header('location:index.php?exam-phone');
-            exit;
+            $message = [
+                'statusCode'   => 200,
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'index.php?core-phone',
+            ];
+            $this->G->R($message);
         }
         $appid = 'user';
         $app = $this->G->make('apps', 'core')->getApp($appid);
@@ -55,7 +59,7 @@ class action extends app
                         'statusCode'   => 201,
                         'message'      => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl'   => 'index.php?content-phone',
+                        'forwardUrl'   => 'index.php?core-phone',
                     ];
                     if ($this->ev->get('userhash')) {
                         exit(json_encode($message));

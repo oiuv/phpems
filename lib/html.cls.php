@@ -66,6 +66,68 @@ class html
         return $forms;
     }
 
+    public function buildInfo($fields, $values)
+    {
+        if (!is_array($fields)) {
+            return false;
+        }
+        $infos = [];
+        foreach ($fields as $field) {
+            $tmp = [];
+            switch ($field['fieldhtmltype']) {
+                case 'htmltime':
+                $tmp['value'] = date('Y-m-d H:i:s', $values[$field['field']]);
+                break;
+
+                case 'radio':
+                case 'select':
+                $field['fieldvalues'] = $this->_buildValues($field['fieldvalues']);
+                foreach ($field['fieldvalues'] as $p) {
+                    if ($p['value'] == $values[$field['field']]) {
+                        $tmp['value'] = $p['key'];
+                        break;
+                    }
+                }
+                break;
+
+                case 'checkbox':
+                    $field['fieldvalues'] = $this->_buildValues($field['fieldvalues']);
+                    foreach ($field['fieldvalues'] as $p) {
+                        if (in_array($p['value'], $values[$field['field']])) {
+                            $tmp['value'][] = $p['key'];
+                        }
+                    }
+                    $tmp['value'] = implode(',', $tmp['value']);
+                break;
+
+                case 'thumb':
+                    $tmp['value'] = '<img class="col-xs-4" src="'.$values[$field['field']].'"/>';
+                break;
+
+                case 'picture':
+                    foreach ($values[$field['field']] as $p) {
+                        $tmp['value'] .= '<img class="col-xs-4" src="'.$p.'"/>';
+                    }
+                break;
+
+                case 'videotext':
+                    $tmp['value'] = '<a target="_blank" href="'.$values[$field['field']].'">查看</a>';
+                break;
+
+                default:
+                $tmp['value'] = $values[$field['field']];
+                break;
+            }
+            $tmp['title'] = $field['fieldtitle'];
+            $tmp['id'] = $field['field'];
+            $tmp['type'] = $field['fieldhtmltype'];
+            $tmp['describe'] = $field['fielddescribe'];
+            $infos[] = $tmp;
+        }
+
+        return $infos;
+    }
+
     private function _buildValues($values = false)
     {
         if (!$values) {
@@ -173,8 +235,7 @@ class html
 
     public function _radio($pars, $value, $default, $index)
     {
-        $str = '<label class="radio-inline"><input type="radio" ';
-        //$str = "<input type=\"radio\" ";
+        $str = '<label class="radio-inline inline"><input type="radio" ';
         if (is_array($pars)) {
             foreach ($pars as $key => $p) {
                 if ('value' != $p['key']) {
@@ -187,13 +248,11 @@ class html
             }
         }
         if ($value['value'] == $default) {
-            $str .= "value=\"{$value['value']}\" checked/> {$value['key']}</label>&nbsp;&nbsp;";
+            $str .= "value=\"{$value['value']}\" checked/> <span class=\"selector\">{$value['key']}</span></label>&nbsp;&nbsp;";
+        } else {
+            $str .= "value=\"{$value['value']}\" /> <span class=\"selector\">{$value['key']}</span></label>&nbsp;&nbsp;";
         }
-        //$str .= "value=\"{$value['value']}\" checked/> {$value['key']}&nbsp;&nbsp;";
-        else {
-            $str .= "value=\"{$value['value']}\" /> {$value['key']}</label>&nbsp;&nbsp;";
-        }
-        //$str .= "value=\"{$value['value']}\" /> {$value['key']}&nbsp;&nbsp;";
+
         return $str;
     }
 
@@ -231,7 +290,7 @@ class html
         }
         $str = <<<EOF
     	<script type="text/template" id="pe-template-$id">
-    		<div class="qq-uploader-selector" style="width:30%" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
+    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width:270px;">
             	<div class="qq-upload-button-selector" style="clear:both;">
                 	<ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
 		                <li class="text-center">
@@ -254,9 +313,7 @@ class html
         </script>
         <div class="fineuploader" attr-type="thumb" attr-template="pe-template-$id"></div>
 EOF;
-        /*
-    	$str = "<div class=\"thumbuper pull-left\"><div class=\"thumbnail\"><a href=\"javascript:;\" class=\"second label\"><em class=\"uploadbutton\" id=\"{$id}\" exectype=\"thumb\"></em></a><a href=\"javascript:;\" onclick=\"javascript:$('#{$id}_view').attr('src','app/core/styles/images/noimage.gif');$('#{$id}_value').val('');\" class=\"second2 label\" title=\"重置\"><em style=\"color:#000000;\" class=\"glyphicon glyphicon-remove icon-remove\"></em></a><div class=\"first\" id=\"{$id}_percent\"></div><div class=\"boot\"><img src=\"{$value}\" id=\"{$id}_view\"/><input type=\"hidden\" name=\"{$name}\" value=\"{$value}\" id=\"{$id}_value\"/></div></div></div>";
-    	**/
+
         return $str;
     }
 
@@ -339,7 +396,7 @@ EOF;
         }
         $str = <<<EOF
     	<script type="text/template" id="pe-template-$id">
-    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
+    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width: 100%;">
             	<ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
 	                <li class="text-center">
 						<input size="45" class="form-control qq-edit-filename-selector" type="text" name="$name" tabindex="0" value="">
@@ -357,39 +414,7 @@ EOF;
         </script>
         <div class="fineuploader" attr-type="files" attr-template="pe-template-$id" attr-ftype="$ftype"></div>
 EOF;
-        /*
-                $str = "<span class=\"input-append\">";
-                $istr = '';
-                $id = NULL;
-                $classinfo = false;
-                if(is_array($args['pars']))
-                {
-                    foreach($args['pars'] as $p)
-                    {
-                        if($p['key'] == 'id')
-                        $id = $p['value'];
-                        if($p['key'] == 'value')
-                        $v = $p['value'];
-                        if($p['key'] == "class")
-                        {
-                            $istr .= "{$p['key']}=\"inline uploadbutton\" ";
-                            $classinfo = true;
-                        }
-                        else
-                        $istr .= "{$p['key']}=\"{$p['value']}\" ";
-                    }
-                    if(!$classinfo)
-                    {
-                        $istr .= 'class="inline uploadbutton" ';
-                    }
-                    if(!$id)
-                    {
-                        $id = 'up'.md5($str);
-                    }
-                }
-                $str .= "<input type=\"text\" name=\"args[{$id}]\" id=\"{$id}_value\" value=\"{$v}\" class=\"inline uploadvideo\"/>";
-                $str .= "<span id=\"{$id}_percent\" class=\"add-on\">0.00%</span></span>&nbsp;";
-                $str .= "<span class=\"btn\"><a {$istr} exectype=\"upfile\">选择文件</a></span>";**/
+
         return $str;
     }
 
@@ -462,7 +487,7 @@ EOF;
         if (null != $args['default'] && in_array($v, $args['default'])) {
             $str .= 'checked';
         }
-        $str .= '/>'.$args['values']['key'].'</label>';
+        $str .= '/><span class="selector">'.$args['values']['key'].'</span></label>';
 
         return $str;
     }

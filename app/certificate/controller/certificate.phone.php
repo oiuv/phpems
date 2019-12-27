@@ -35,8 +35,8 @@ class action extends app
                 ];
                 exit(json_encode($message));
             }
-            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
-            if (!$eh) {
+            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
+            if (!$eh['ehid']) {
                 $message = [
                     'statusCode' => 300,
                     'message'    => '您需要通过考试后才能申请',

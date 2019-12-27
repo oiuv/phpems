@@ -10,12 +10,12 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-require_once 'lib/include/WxPay.Config.php';
-require_once 'lib/include/WxPay.Exception.php';
-require_once 'lib/include/WxPay.Data.php';
-require_once 'lib/include/WxPay.Api.php';
-require_once 'lib/include/WxPay.Notify.php';
-require_once 'lib/include/WxPay.JsApiPay.php';
+require_once PEPATH.'/lib/include/WxPay.Config.php';
+require_once PEPATH.'/lib/include/WxPay.Exception.php';
+require_once PEPATH.'/lib/include/WxPay.Data.php';
+require_once PEPATH.'/lib/include/WxPay.Api.php';
+require_once PEPATH.'/lib/include/WxPay.Notify.php';
+require_once PEPATH.'/lib/include/WxPay.JsApiPay.php';
 
 class PayNotifyCallBack extends WxPayNotify
 {
@@ -68,7 +68,7 @@ class PayNotifyCallBack extends WxPayNotify
         $orders->modifyOrderById($ordersn, ['orderstatus' => 2, 'orderpayfortime' => TIME]);
         $user = $this->user->getUserById($order['orderuserid']);
         $args['usercoin'] = $user['usercoin'] + $order['orderprice'] * 10;
-        $this->user->modifyUserInfo($args, $order['orderuserid']);
+        $this->user->modifyUserInfo($order['orderuserid'], $args);
         $this->G->make('consume', 'bank')->addConsumeLog(['conluserid' => $order['orderuserid'], 'conlcost' => $order['orderprice'] * 10, 'conltype' => 2, 'conltime' => TIME, 'conlinfo' => '微信充值']);
 
         return true;
@@ -84,16 +84,25 @@ class wxpay
     public function __construct($G)
     {
         $this->G = $G;
+        $this->tools = new JsApiPay();
     }
 
-    public function getwxopenid()
+    public function getwxopenid($reget = false)
     {
-        if (!$_SESSION['openid']) {
-            $tools = new JsApiPay();
-            $_SESSION['openid'] = $tools->GetOpenid();
+        if (!$_SESSION['openid'] || $reget) {
+            $_SESSION['openid'] = $this->tools->GetOpenid();
         }
 
         return $_SESSION['openid'];
+    }
+
+    public function getUserInfo()
+    {
+        if ($_SESSION['openid']) {
+            return $this->tools->GetUserInfoByToken();
+        }
+
+        return false;
     }
 
     public function outJsPay($order)
@@ -156,7 +165,7 @@ class wxpay
      */
     public function GetPayUrl($input)
     {
-        if ('NATIVE' == $input->GetTrade_type()) {
+        if ('NATIVE' == $input->GetTrade_type() || 'MWEB' == $input->GetTrade_type()) {
             $result = WxPayApi::unifiedOrder($input);
 
             return $result;
@@ -183,6 +192,28 @@ class wxpay
         $input->SetGoods_tag($order['ordertitle']);
         $input->SetNotify_url(WP.'api/wxnotify.php');
         $input->SetTrade_type('NATIVE');
+        $input->SetProduct_id($order['ordersn']);
+        $result = $this->GetPayUrl($input);
+
+        return $result;
+        //$result["code_url"];
+    }
+
+    public function outUrl3($order)
+    {
+        $input = new WxPayUnifiedOrder();
+        $input->SetBody($order['ordertitle']);
+        $input->SetAttach($order['ordertitle']);
+        //$input->SetOut_trade_no(WxPayConfig::MCHID.date("YmdHis"));
+        $input->SetOut_trade_no($order['ordersn']);
+        $price = intval($order['orderprice'] * 100);
+        $input->SetTotal_fee($price);
+        //$input->SetTotal_fee("1");
+        $input->SetTime_start(date('YmdHis'));
+        $input->SetTime_expire(date('YmdHis', time() + 600));
+        $input->SetGoods_tag($order['ordertitle']);
+        $input->SetNotify_url(WP.'api/wxnotify.php');
+        $input->SetTrade_type('MWEB');
         $input->SetProduct_id($order['ordersn']);
         $result = $this->GetPayUrl($input);
 

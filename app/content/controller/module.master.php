@@ -38,13 +38,13 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "?content-master-module-fields&moduleid={$moduleid}",
+                'forwardUrl'   => "index.php?content-master-module-fields&moduleid={$moduleid}",
             ];
             exit(json_encode($message));
         }
 
         $module = $this->module->getModuleById($moduleid);
-        $fields = $this->module->getMoudleFields($moduleid, true);
+        $fields = $this->module->getMoudleFields($moduleid, 1, true);
         $this->tpl->assign('moduleid', $moduleid);
         $this->tpl->assign('module', $module);
         $this->tpl->assign('fields', $fields);
@@ -70,7 +70,7 @@ class action extends app
                     'statusCode'   => 200,
                     'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "?content-master-module-fields&moduleid={$moduleid}&page={$page}",
+                    'forwardUrl'   => "index.php?content-master-module-fields&moduleid={$moduleid}&page={$page}",
                 ];
             } else {
                 $message = [
@@ -92,7 +92,7 @@ class action extends app
     {
         $moduleid = $this->ev->get('moduleid');
         $module = $this->module->getModuleById($moduleid);
-        $fields = $this->module->getMoudleFields($moduleid);
+        $fields = $this->module->getMoudleFields($moduleid, 1);
         $forms = $this->html->buildHtml($fields);
         $this->tpl->assign('moduleid', $moduleid);
         $this->tpl->assign('module', $module);
@@ -108,35 +108,35 @@ class action extends app
             $args['fieldforbidactors'] = ','.implode(',', $args['fieldforbidactors']).',';
             $fieldid = $this->ev->post('fieldid');
             $field = $this->module->getFieldById($fieldid);
-            $this->module->modifyFieldHtmlType($args, $fieldid);
+            $this->module->modifyFieldHtmlType($fieldid, $args);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
-                'navTabId'     => '',
-                'rel'          => '',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "?content-master-module-fields&moduleid={$field['fieldmoduleid']}",
+                'forwardUrl'   => "index.php?content-master-module-fields&moduleid={$field['fieldmoduleid']}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('modifyfielddata')) {
             $args = $this->ev->post('args');
             $fieldid = $this->ev->post('fieldid');
             $field = $this->module->getFieldById($fieldid);
-            $this->module->modifyFieldDataType($args, $fieldid);
+            $this->module->modifyFieldDataType($fieldid, $args);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'navTabId'     => '',
                 'rel'          => '',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "?content-master-module-fields&moduleid={$field['fieldmoduleid']}",
+                'forwardUrl'   => "index.php?content-master-module-fields&moduleid={$field['fieldmoduleid']}",
             ];
             exit(json_encode($message));
         }
 
         $fieldid = $this->ev->get('fieldid');
         $field = $this->module->getFieldById($fieldid);
+        $module = $this->module->getModuleById($field['fieldmoduleid']);
         $this->tpl->assign('fieldid', $fieldid);
+        $this->tpl->assign('module', $module);
         $this->tpl->assign('field', $field);
         $this->tpl->display('modifyfield');
     }
@@ -161,12 +161,12 @@ class action extends app
         if ($this->ev->get('modifymodule')) {
             $args = $this->ev->get('args');
             $moduleid = $this->ev->get('moduleid');
-            $this->module->modifyModule($args, $moduleid);
+            $this->module->modifyModule($moduleid, $args);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => '?content-master-module',
+                'forwardUrl'   => 'index.php?content-master-module',
             ];
             exit(json_encode($message));
         }
@@ -185,31 +185,20 @@ class action extends app
         if (!$moduleid) {
             $moduleid = $field['fieldmoduleid'];
         }
-        $args = [];
-        if ($field['fieldlock']) {
-            $args['fieldlock'] = 0;
+        $module = $this->module->getModuleById($moduleid);
+        if ($module['modulelockfields'][$field['field']]) {
+            unset($module['modulelockfields'][$field['field']]);
         } else {
-            $args['fieldlock'] = 1;
+            $module['modulelockfields'][$field['field']] = 1;
         }
-        $this->module->modifyFieldHtmlType($args, $fieldid);
+        $this->module->modifyModule($moduleid, ['modulelockfields' => $module['modulelockfields']]);
         $message = [
             'statusCode'   => 200,
             'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?content-master-module-fields&moduleid={$moduleid}",
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
-    }
-
-    private function moduleforms()
-    {
-        $moduleid = $this->ev->get('moduleid');
-        $userinfo = $this->user->getModuleUserInfo();
-        $fields = $this->module->getMoudleFields($moduleid, $userinfo);
-        $forms = $this->html->buildHtml($fields);
-        $this->tpl->assign('fields', $fields);
-        $this->tpl->assign('forms', $forms);
-        $this->tpl->display('preview_ajax');
     }
 
     private function add()
@@ -254,19 +243,18 @@ class action extends app
     {
         $moduleid = $this->ev->get('moduleid');
         $fileds = $this->module->getPrivateMoudleFields($moduleid);
-        $groups = $this->user->getGroupsByModuleid($moduleid);
-        if ($fileds || $groups) {
+        if ($fileds) {
             $message = [
-            'statusCode' => 300,
-            'message'    => '操作失败，请先删除该模型下所有模型字段和角色',
-        ];
+                'statusCode' => 300,
+                'message'    => '操作失败，请先删除该模型下所有模型字段',
+            ];
         } else {
             $this->module->delModule($moduleid);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?content-master-module&page={$page}",
+                'forwardUrl'   => 'reload',
             ];
         }
         exit(json_encode($message));

@@ -24,6 +24,20 @@ class action extends app
         exit;
     }
 
+    private function pdfview()
+    {
+        $this->tpl->display('viewer');
+    }
+
+    private function coursejs()
+    {
+        $contentid = $this->ev->get('contentid');
+        $r = $this->log->getLogByArgs([['AND', 'loguserid = :loguserid', 'loguserid', $this->_user['sessionuserid']], ['AND', 'logcourseid = :logcourseid', 'logcourseid', $contentid]]);
+        if ((TIME - $r['logtime']) > 10) {
+            echo "document.write('[已学习]');";
+        }
+    }
+
     private function jumppaper()
     {
         $csid = $this->ev->get('csid');
@@ -48,15 +62,6 @@ class action extends app
         $this->session->setSessionValue(['sessioncurrent' => $basicid]);
         header('location:index.php?exam-phone-basics-detail&userhash=1&basicid='.$basicid);
         exit;
-    }
-
-    private function coursejs()
-    {
-        $contentid = $this->ev->get('contentid');
-        $r = $this->log->getLogByArgs([['AND', 'loguserid = :loguserid', 'loguserid', $this->_user['sessionuserid']], ['AND', 'logcourseid = :logcourseid', 'logcourseid', $contentid]]);
-        if ((TIME - $r['logtime']) > 10) {
-            echo "document.write('[已学习]');";
-        }
     }
 
     private function opencourse()
@@ -150,7 +155,7 @@ class action extends app
         $courseid = $this->ev->get('courseid');
         $r = $this->log->getLogByArgs([['AND', 'loguserid = :loguserid', 'loguserid', $this->_user['sessionuserid']], ['AND', 'logcourseid = :logcourseid', 'logcourseid', $courseid]]);
         if ($r) {
-            $this->log->modifyLog($r['logid'], ['logstatus' => 1, 'logendtime' => TIME]);
+            $this->log->modifyLog($r['logid'], ['logstatus' => 1, 'logendtime' => TIME, 'logprogress' => 0]);
             $content = $this->content->getCourseById($courseid);
             if ($content) {
                 $csid = $content['coursecsid'];
@@ -195,30 +200,27 @@ class action extends app
         $csid = $this->ev->get('csid');
         $contentid = $this->ev->get('contentid');
         $course = $this->course->getCourseById($csid);
-        if ($course['csprice']) {
-            $userid = $this->_user['sessionuserid'];
-            if (!$this->course->getOpenCourseByUseridAndCsid($userid, $csid)) {
-                header('location:index.php?course-phone-course-opencourse&csid='.$csid);
-                exit;
-            }
+        $oc = $this->course->getOpenCourseByUseridAndCsid($this->_user['sessionuserid'], $csid);
+        if (!$oc) {
+            header('location:index.php?course-app-course-opencourse&csid='.$csid);
+            exit;
         }
 
+        $this->tpl->assign('oc', $oc);
+
         if ($course['cstype']) {
-            $cdata = $this->course->getCourseContentStatus($course['csid'], $userid);
+            $cdata = $this->course->getCourseContentStatus($course['csid'], $this->_user['sessionuserid']);
             if ($cdata['lock'][$contentid]) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '该课程尚未解锁，请先通过前一课程',
+                    'message'    => '请先学完上节课程',
                 ];
                 $this->G->R($message);
             }
         }
-
         $catbread = $this->category->getCategoryPos($course['cscatid']);
         $cat = $this->category->getCategoryById($course['cscatid']);
-        $catbrother = $this->category->getCategoriesByArgs([['AND', 'catparent = :catparent', 'catparent', $cat['catparent']], ['AND', "catinmenu = '0'"]]);
-        $nearCourse = $this->course->getNearCourseById($csid, $course['cscatid']);
-        $contents = $this->content->getCourseList([['AND', 'coursecsid = :coursecsid', 'coursecsid', $csid]], $page, 5);
+        $contents = $this->content->getCoursesByCsid($csid);
         if ($contentid) {
             $content = $this->content->getCourseById($contentid);
         } else {
@@ -252,13 +254,11 @@ class action extends app
         $this->tpl->assign('cat', $cat);
         //$this->tpl->assign('cdata',$cdata);
         $this->tpl->assign('logs', $logs);
-        $this->tpl->assign('nearCourse', $nearCourse);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('catbread', $catbread);
         $this->tpl->assign('course', $course);
         $this->tpl->assign('contents', $contents);
         $this->tpl->assign('content', $content);
-        $this->tpl->assign('catbrother', $catbrother);
         $this->tpl->display($template);
     }
 }

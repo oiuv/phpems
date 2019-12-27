@@ -1,39 +1,55 @@
-	<div class="pagecontent">
-		<header class="container-fluid" style="background-color:#337AB7;">
-			<h5 class="text-center">
-				<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-				成绩单
-				<em style="font-size:2rem;" class="pull-right glyphicon glyphicon-home" onclick="javascript:$.goPage('#page1');"></em>
-			</h5>
-		</header>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;margin-bottom:0.5rem;">
-					<blockquote class="questype" style="margin:0px;">
-						<p>您的最高分：<span class="text-warning">{x2;$s['score']}</span> 您的最好名次：<span class="text-warning">{x2;$s['index']}</span></p>
-					</blockquote>
-				</div>
-				<div style="clear:both;overflow:hidden;background:#FFFFFF;margin-top:0.5rem;padding:1rem;margin-bottom:0.5rem;">
-					<table class="table table-bordered table-hover">
-						<tr class="info">
-							<td>名次</td>
-							<td>姓名</td>
-	                        <td>得分</td>
-							<td>考试时间</td>
-							<td>用时</td>
-						</tr>
-						{x2;tree:$scores['data'],score,sid}
-						<tr>
-							<td>{x2;eval: echo ($page - 1)*20 + v:sid}</td>
-							<td>{x2;v:score['usertruename']}</td>
-							<td>{x2;v:score['ehscore']}</td>
-							<td>{x2;date:v:score['ehstarttime'],'Y-m-d H:i:s'}</td>
-							<td>{x2;if:v:score['ehtime'] >= 60}{x2;if:v:score['ehtime']%60}{x2;eval: echo intval(v:score['ehtime']/60)+1}{x2;else}{x2;eval: echo intval(v:score['ehtime']/60)}{x2;endif}分钟{x2;else}{x2;v:score['ehtime']}秒{x2;endif}</td>
-						</tr>
-					{x2;endtree}
-					</table>
-				</div>
-				<ul class="pagination pull-right">{x2;$scores['pages']}</ul>
+{x2;if:!$userhash}
+{x2;include:header}
+<body>
+<div class="pages">
+    {x2;endif}
+	<div class="page-tabs">
+		<div class="page-header">
+			<div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+			<div class="col-8">成绩单</div>
+			<div class="col-1"><span class="iconfont icon-menu"></span></div>
+		</div>
+		<div class="page-content header{x2;if:$scores['pages']} footer{x2;endif}">
+			<div class="list-box bg">
+				<ol>
+					<li class="unstyled">
+						<div class="col-5">您的最高分：<span class="text-warning">{x2;$s['score']}</span></div>
+						<div class="col-5">您的最好名次：<span class="text-warning">{x2;$s['index']}</span></div>
+					</li>
+				</ol>
+			</div>
+			<div class="list-box bg top">
+				<ol>
+                    {x2;tree:$scores['data'],score,sid}
+					<li class="unstyled">
+						<div class="col-8x">
+							<h2 class="text-center">{x2;eval: echo ($page - 1)*20 + v:sid}</h2>
+							<div class="rows">
+								<div class="more text-center">名</div>
+							</div>
+						</div>
+						<div class="col-8l">
+							<div class="rows info">
+								<h5 class="title">{x2;v:score['username']}</h5>
+								<div class="intro">
+									<div class="col-6"> {x2;date:v:score['ehstarttime'],'Y-m-d H:i:s'}</div>
+									<div class="col-4"> {x2;v:score['ehscore']}分</div>
+								</div>
+							</div>
+						</div>
+					</li>
+                    {x2;endtree}
+				</ol>
 			</div>
 		</div>
+		{x2;if:$scores['pages']}
+		<div class="page-footer">
+			<ul class="pagination">{x2;$scores['pages']}</ul>
+		</div>
+        {x2;endif}
 	</div>
+    {x2;if:!$userhash}
+</div>
+</body>
+</html>
+{x2;endif}

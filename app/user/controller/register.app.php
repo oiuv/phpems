@@ -28,11 +28,8 @@ class action extends app
         $app = $this->G->make('apps', 'core')->getApp($appid);
         $this->tpl->assign('app', $app);
         if (!$app['appsetting']['emailverify']) {
-            $message = [
-                'statusCode' => 300,
-                'message'    => '验证码错误',
-            ];
-            $this->G->R($message);
+            header('location:index.php?user-app-login');
+            exit;
         }
         if ($this->ev->get('findpassword')) {
             $randcode = $this->ev->get('randcode');

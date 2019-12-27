@@ -4,10 +4,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
@@ -33,7 +33,6 @@
 									<span class="help-block">请输入分类名称</span>
 								</div>
 							</div>
-							{x2;if:!$cat['catparent']}
 							<div class="form-group">
 								<label for="modulename" class="control-label col-sm-2">前台显示</label>
 								<div class="col-sm-9">
@@ -46,7 +45,7 @@
 						          	<span class="help-block">勾选此项后，分类将显示在内容模块前台的分类列表区域。</span>
 								</div>
 							</div>
-							{x2;endif}
+                            {x2;if:!$cat['catparent']}
 							<div class="form-group">
 								<label for="modulename" class="control-label col-sm-2">在首页展示内容</label>
 								<div class="col-sm-10 form-inline">
@@ -54,6 +53,7 @@
 									<span class="help-block">填写展示内容条数，如果不需要在首页展示，请填写0。</span>
 								</div>
 							</div>
+                            {x2;endif}
 							<div class="form-group">
 								<label for="modulecode" class="control-label col-sm-2">分类排序</label>
 								<div class="col-sm-4">
@@ -76,20 +76,6 @@
 					            		<input type="radio"  name="args[catuseurl]" value="0"{x2;if:!$category['catuseurl']} checked{x2;endif}>不使用
 					            	</label>
 									<span class="help-block">填写外链地址后，该分类会直接转到外链地址</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="moduledescribe" class="control-label col-sm-2">发布用户</label>
-								<div class="col-sm-6">
-									<input class="form-control" type="text" name="args[catmanager][pubusers]" value="{x2;$category['catmanager']['pubusers']}">
-									<span class="help-block">填写用户ID，用英文逗号隔开</span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label for="moduledescribe" class="control-label col-sm-2">发布角色</label>
-								<div class="col-sm-6">
-									<input class="form-control" type="text" name="args[catmanager][pubgroups]" value="{x2;$category['catmanager']['pubgroups']}">
-									<span class="help-block">填写角色ID，用英文逗号隔开</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -145,11 +131,9 @@
 						            <input type="hidden" name="page" value="{x2;$page}">
 						            <input type="hidden" name="catid" value="{x2;$catid}">
 						            <input type="hidden" name="parent" value="{x2;$parent}">
-                                    {x2;if:is_array($search)}
 									{x2;tree:$search,arg,aid}
 									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 									{x2;endtree}
-                                    {x2;endif}
 								</div>
 							</div>
 						</fieldset>

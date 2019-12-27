@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -29,17 +29,6 @@
 				            <label for="coursetitle" class="control-label col-sm-2">标题：</label>
 				            <div class="col-sm-9">
 							    <input class="form-control" type="text" id="coursetitle" name="args[coursetitle]" needle="needle" msg="您必须输入标题">
-					        </div>
-				        </div>
-				        <div class="form-group">
-				            <label for="coursemoduleid" class="control-label col-sm-2">模型：</label>
-				            <div class="col-sm-3">
-							    <select id="coursemoduleid" msg="您必须选择信息模型" refreshjs="on" needle="needle" class="combox form-control" name="args[coursemoduleid]" refUrl="index.php?course-master-module-moduleforms&moduleid={value}" target="courseforms">
-					            	<option value="">选择信息模型</option>
-					            	{x2;tree:$modules,module,mid}
-					            	<option value="{x2;v:module['moduleid']}">{x2;v:module['modulename']}</option>
-					            	{x2;endtree}
-					            </select>
 					        </div>
 				        </div>
 				        <div class="form-group">
@@ -70,7 +59,14 @@
 						        <div class="fineuploader" attr-type="thumb" attr-template="pe-template-coursethumb"></div>
 							</div>
 				        </div>
-				    	<div id="courseforms"></div>
+                        {x2;tree:$forms,form,fid}
+						<div class="form-group">
+							<label for="{x2;v:form['id']}" class="control-label col-sm-2">{x2;v:form['title']}</label>
+							<div class="col-sm-9">
+                                {x2;v:form['html']}
+							</div>
+						</div>
+                        {x2;endtree}
 				    	<div class="form-group">
 				            <label for="coursetext" class="control-label col-sm-2">内容</label>
 				            <div class="col-sm-10">
@@ -82,6 +78,7 @@
 				            <div class="col-sm-9">
 					            <button class="btn btn-primary" type="submit">提交</button>
 					            <input type="hidden" name="submit" value="1">
+								<input type="hidden" name="args[coursemoduleid]" value="{x2;$moduleid}">
 					            <input type="hidden" name="args[coursecsid]" value="{x2;$courseid}">
 					        </div>
 				        </div>

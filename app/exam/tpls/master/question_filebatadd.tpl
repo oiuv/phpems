@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -33,14 +33,14 @@
 						</div>
 						<div class="form-group">
 							<label for="knowsid" class="control-label col-sm-2">知识点ID</label>
-							<div class="col-sm-3">
+							<div class="col-sm-9 form-inline">
 								<input class="form-control" type="text" name="knowsid" id="knowsid" value="0"/>
 								<span class="help-block">如果您的知识点ID和CSV文件中的知识点ID不同，请在此填写您希望加入的知识点ID，否则请填写0</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="lesson_video" class="control-label col-sm-2">待导入文件</label>
-							<div class="col-sm-9">
+							<div class="col-sm-9 form-inline">
 								<script type="text/template" id="pe-template-uploadfile">
 						    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
 						            	<ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
@@ -59,7 +59,6 @@
 						            </div>
 						        </script>
 						        <div class="fineuploader" attr-type="files" attr-template="pe-template-uploadfile" attr-ftype="csv"></div>
-								<span class="help-block">注意：导入文件必须为csv文件，可用excel另存为csv，为保证程序正常导入，每个CSV文件请不要超过2M，否则可能导入失败</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -69,11 +68,9 @@
 								<input type="hidden" name="page" value="{x2;$page}"/>
 								<input type="hidden" name="type" value="1"/>
 								<input type="hidden" name="insertquestion" value="1"/>
-                                {x2;if:is_array($search)}
 								{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 								{x2;endtree}
-                                {x2;endif}
 							</div>
 						</div>
 					</form>

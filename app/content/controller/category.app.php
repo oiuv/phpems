@@ -35,14 +35,15 @@ class action extends app
         }
         $catbread = $this->category->getCategoryPos($catid);
         $catstring = $this->category->getChildCategoryString($catid);
-        $catchildren = $this->category->getCategoriesByArgs([['AND', 'catparent = :catparent', 'catparent', $catid], ['AND', "catinmenu = '0'"]]);
+        $catchildren = $this->category->getCategoriesByArgs([['AND', 'catparent = :catparent', 'catparent', $catid], ['AND', "catinmenu = '0'"], ['AND', "catapp = 'content'"]]);
         $contents = $this->content->getContentList([['AND', 'find_in_set(contentcatid,:contentcatid)', 'contentcatid', $catstring]], $page);
-        $catbrother = $this->category->getCategoriesByArgs([['AND', 'catparent = :catparent', 'catparent', $cat['catparent']], ['AND', "catinmenu = '0'"]]);
+        $catbrother = $this->category->getCategoriesByArgs([['AND', 'catparent = :catparent', 'catparent', $cat['catparent']], ['AND', "catinmenu = '0'"], ['AND', "catapp = 'content'"]]);
         if ($cat['cattpl']) {
             $template = $cat['cattpl'];
         } else {
             $template = 'category_default';
         }
+        $this->tpl->assign('categories', $this->category->categories);
         $this->tpl->assign('cat', $cat);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('catbrother', $catbrother);

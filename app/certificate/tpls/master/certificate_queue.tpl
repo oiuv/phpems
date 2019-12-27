@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -27,22 +27,22 @@
 					<form action="index.php?certificate-master-certificate-queue&ceid={x2;$ce['ceid']}" method="post" class="form-inline">
 						<table class="table">
 					        <tr>
-								<td>
+								<td style="border-top: 0px;">
 									身份证号：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input name="search[username]" class="form-control" size="15" type="text" class="idcard" value="{x2;$search['username']}"/>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									申请时间：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
 								</td>
-					        	<td>
+					        	<td style="border-top: 0px;">
 									状态：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<select name="search[ceqstatus]" class="form-control">
 								  		<option value="">不限</option>
 								  		<option value="0"{x2;if:$search['ceqstatus'] === '0'} selected{x2;endif}>申请中</option>
@@ -51,7 +51,7 @@
 								  		<option value="3"{x2;if:$search['ceqstatus'] == 3} selected{x2;endif}>已驳回</option>
 								  	</select>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<button class="btn btn-primary" type="submit">提交</button>
 									<a class="btn btn-primary ajax" href="index.php?certificate-master-certificate-outdata&ceid={x2;$ce['ceid']}{x2;$u}">导出</a>
 								</td>
