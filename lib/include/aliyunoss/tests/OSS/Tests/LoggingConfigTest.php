@@ -16,7 +16,7 @@ use OSS\Model\LoggingConfig;
 
 class LoggingConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <BucketLoggingStatus>
 <LoggingEnabled>
@@ -26,7 +26,7 @@ class LoggingConfigTest extends \PHPUnit_Framework_TestCase
 </BucketLoggingStatus>
 BBBB;
 
-    private $nullXml = <<<BBBB
+    private $nullXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <BucketLoggingStatus/>
 BBBB;

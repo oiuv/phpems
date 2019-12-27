@@ -81,7 +81,7 @@ class CnameConfig implements XmlConfig
 
     public function serializeToXml()
     {
-        $strXml = <<<EOF
+        $strXml = <<<'EOF'
 <?xml version="1.0" encoding="utf-8"?>
 <BucketCnameConfiguration>
 </BucketCnameConfiguration>

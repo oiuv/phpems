@@ -282,8 +282,8 @@ class wechat
     {
         if (isset($this->_receive['Url'])) {
             return [
-                'url' => $this->_receive['Url'],
-                'title' => $this->_receive['Title'],
+                'url'         => $this->_receive['Url'],
+                'title'       => $this->_receive['Title'],
                 'description' => $this->_receive['Description'],
             ];
         }
@@ -298,8 +298,8 @@ class wechat
     {
         if (isset($this->_receive['Location_X'])) {
             return [
-                'x' => $this->_receive['Location_X'],
-                'y' => $this->_receive['Location_Y'],
+                'x'     => $this->_receive['Location_X'],
+                'y'     => $this->_receive['Location_Y'],
                 'scale' => $this->_receive['Scale'],
                 'label' => $this->_receive['Label'],
             ];
@@ -316,7 +316,7 @@ class wechat
         if (isset($this->_receive['Event'])) {
             return [
                 'event' => $this->_receive['Event'],
-                'key' => $this->_receive['EventKey'],
+                'key'   => $this->_receive['EventKey'],
             ];
         }
 
@@ -331,7 +331,7 @@ class wechat
         if (isset($this->_receive['MediaId'])) {
             return [
                 'mediaid' => $this->_receive['MediaId'],
-                'format' => $this->_receive['Format'],
+                'format'  => $this->_receive['Format'],
             ];
         }
 
@@ -345,7 +345,7 @@ class wechat
     {
         if (isset($this->_receive['MediaId'])) {
             return [
-                    'mediaid' => $this->_receive['MediaId'],
+                    'mediaid'      => $this->_receive['MediaId'],
                     'thumbmediaid' => $this->_receive['ThumbMediaId'],
             ];
         }
@@ -419,12 +419,12 @@ class wechat
     {
         $FuncFlag = $this->_funcflag ? 1 : 0;
         $msg = [
-            'ToUserName' => $this->getRevFrom(),
+            'ToUserName'   => $this->getRevFrom(),
             'FromUserName' => $this->getRevTo(),
-            'MsgType' => self::MSGTYPE_TEXT,
-            'Content' => $text,
-            'CreateTime' => time(),
-            'FuncFlag' => $FuncFlag,
+            'MsgType'      => self::MSGTYPE_TEXT,
+            'Content'      => $text,
+            'CreateTime'   => time(),
+            'FuncFlag'     => $FuncFlag,
         ];
         $this->Message($msg);
 
@@ -443,15 +443,15 @@ class wechat
     {
         $FuncFlag = $this->_funcflag ? 1 : 0;
         $msg = [
-            'ToUserName' => $this->getRevFrom(),
+            'ToUserName'   => $this->getRevFrom(),
             'FromUserName' => $this->getRevTo(),
-            'CreateTime' => time(),
-            'MsgType' => self::MSGTYPE_MUSIC,
-            'Music' => [
-                'Title' => $title,
+            'CreateTime'   => time(),
+            'MsgType'      => self::MSGTYPE_MUSIC,
+            'Music'        => [
+                'Title'       => $title,
                 'Description' => $desc,
-                'MusicUrl' => $musicurl,
-                'HQMusicUrl' => $hgmusicurl,
+                'MusicUrl'    => $musicurl,
+                'HQMusicUrl'  => $hgmusicurl,
             ],
             'FuncFlag' => $FuncFlag,
         ];
@@ -481,13 +481,13 @@ class wechat
         $count = count($newsData);
 
         $msg = [
-            'ToUserName' => $this->getRevFrom(),
+            'ToUserName'   => $this->getRevFrom(),
             'FromUserName' => $this->getRevTo(),
-            'MsgType' => self::MSGTYPE_NEWS,
-            'CreateTime' => time(),
+            'MsgType'      => self::MSGTYPE_NEWS,
+            'CreateTime'   => time(),
             'ArticleCount' => $count,
-            'Articles' => $newsData,
-            'FuncFlag' => $FuncFlag,
+            'Articles'     => $newsData,
+            'FuncFlag'     => $FuncFlag,
         ];
         $this->Message($msg);
 
@@ -562,7 +562,7 @@ class wechat
             foreach ($param as $key => $val) {
                 $aPOST[] = $key.'='.urlencode($val);
             }
-            $strPOST = join('&', $aPOST);
+            $strPOST = implode('&', $aPOST);
         }
         curl_setopt($oCurl, CURLOPT_URL, $url);
         curl_setopt($oCurl, CURLOPT_RETURNTRANSFER, 1);
@@ -649,7 +649,7 @@ class wechat
         $max_length = count($arr) - 1;
         if ((0 === $keys[0]) && ($keys[$max_length] === $max_length)) { //See if the first key is 0 and last key is length - 1
             $is_list = true;
-            for ($i = 0; $i < count($keys); ++$i ) { //See if each key correspondes to its position
+            for ($i = 0; $i < count($keys); $i++) { //See if each key correspondes to its position
                 if ($i != $keys[$i]) { //A key fails at position check.
                     $is_list = false; //It is an associative array.
                     break;
@@ -697,33 +697,33 @@ class wechat
      *
      * @param array $data 菜单数组数据
      *                    example:
-     {
-     "button":[
-     {
-     "type":"click",
-     "name":"今日歌曲",
-     "key":"MENU_KEY_MUSIC"
-     },
-     {
-     "type":"view",
-     "name":"歌手简介",
-     "url":"http://www.qq.com/"
-     },
-     {
-     "name":"菜单",
-     "sub_button":[
-     {
-     "type":"click",
-     "name":"hello word",
-     "key":"MENU_KEY_MENU"
-     },
-     {
-     "type":"click",
-     "name":"赞一下我们",
-     "key":"MENU_KEY_GOOD"
-     }]
-     }]
-     }
+     * {
+     * "button":[
+     * {
+     * "type":"click",
+     * "name":"今日歌曲",
+     * "key":"MENU_KEY_MUSIC"
+     * },
+     * {
+     * "type":"view",
+     * "name":"歌手简介",
+     * "url":"http://www.qq.com/"
+     * },
+     * {
+     * "name":"菜单",
+     * "sub_button":[
+     * {
+     * "type":"click",
+     * "name":"hello word",
+     * "key":"MENU_KEY_MENU"
+     * },
+     * {
+     * "type":"click",
+     * "name":"赞一下我们",
+     * "key":"MENU_KEY_GOOD"
+     * }]
+     * }]
+     * }
      */
     public function createMenu($data)
     {
@@ -841,9 +841,9 @@ class wechat
             return false;
         }
         $data = [
-            'action_name' => $type ? 'QR_LIMIT_SCENE' : 'QR_SCENE',
+            'action_name'    => $type ? 'QR_LIMIT_SCENE' : 'QR_SCENE',
             'expire_seconds' => $expire,
-            'action_info' => ['scene' => ['scene_id' => $scene_id]],
+            'action_info'    => ['scene' => ['scene_id' => $scene_id]],
         ];
         $result = $this->http_post(self::API_URL_PREFIX.self::QRCODE_CREATE_URL.'access_token='.$this->access_token, self::json_encode($data));
         if ($result) {
@@ -1030,7 +1030,7 @@ class wechat
             return false;
         }
         $data = [
-                'openid' => $openid,
+                'openid'     => $openid,
                 'to_groupid' => $groupid,
         ];
         $result = $this->http_post(self::API_URL_PREFIX.self::GROUP_MEMBER_UPDATE_URL.'access_token='.$this->access_token, self::json_encode($data));

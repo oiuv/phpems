@@ -30,7 +30,7 @@ class action extends app
         if (!$basic) {
             $message = [
                 'statusCode' => 300,
-                'message' => '操作失败，此考场不存在',
+                'message'    => '操作失败，此考场不存在',
             ];
             $this->G->R($message);
         }
@@ -40,7 +40,7 @@ class action extends app
         if (!$allowopen) {
             $message = [
                 'statusCode' => 300,
-                'message' => '您做所在的用户组不能开通本考场',
+                'message'    => '您做所在的用户组不能开通本考场',
             ];
             $this->G->R($message);
         }
@@ -48,7 +48,7 @@ class action extends app
         if ($this->basic->getOpenBasicByUseridAndBasicid($userid, $basicid)) {
             $message = [
                 'statusCode' => 300,
-                'message' => '您已经开通了本考场',
+                'message'    => '您已经开通了本考场',
             ];
         }
         if ($basic['basicdemo']) {
@@ -77,7 +77,7 @@ class action extends app
             if ($user['usercoin'] < $score) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败，您的积分不够',
+                    'message'    => '操作失败，您的积分不够',
                 ];
                 $this->G->R($message);
             } else {
@@ -89,10 +89,10 @@ class action extends app
         $args = ['obuserid' => $userid, 'obbasicid' => $basicid, 'obendtime' => TIME + $time];
         $this->basic->openBasic($args);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'index.php?exam-app',
+            'forwardUrl'   => 'index.php?exam-app',
         ];
         $this->G->R($message);
     }
@@ -105,30 +105,30 @@ class action extends app
             if (!$r) {
                 $message = [
                 'statusCode' => 300,
-                'message' => '错误的代金券',
+                'message'    => '错误的代金券',
             ];
             } elseif ('301' == $r) {
                 $message = [
                 'statusCode' => 300,
-                'message' => '使用过的代金券',
+                'message'    => '使用过的代金券',
             ];
             } elseif ('302' == $r) {
                 $message = [
                 'statusCode' => 300,
-                'message' => '过期的代金券',
+                'message'    => '过期的代金券',
             ];
             } else {
                 $message = [
-                'statusCode' => 200,
-                'message' => '充值成功',
+                'statusCode'   => 200,
+                'message'      => '充值成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             }
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '操作失败',
+            'message'    => '操作失败',
         ];
         }
         $this->G->R($message);

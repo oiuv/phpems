@@ -23,9 +23,9 @@ class GetLocationResult extends Result
     /**
      * Parse data from response.
      *
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     protected function parseDataFromResponse()
     {

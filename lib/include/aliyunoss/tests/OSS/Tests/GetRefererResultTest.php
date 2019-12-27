@@ -18,7 +18,7 @@ use OSS\Result\GetRefererResult;
 
 class GetRefererResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <RefererConfiguration>
 <AllowEmptyReferer>true</AllowEmptyReferer>
@@ -50,6 +50,7 @@ BBBB;
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], $this->validXml, 300);
+
         try {
             new GetRefererResult($response);
             $this->assertTrue(false);

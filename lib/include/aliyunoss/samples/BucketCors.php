@@ -91,6 +91,7 @@ function putBucketCors($ossClient, $bucket)
 function getBucketCors($ossClient, $bucket)
 {
     $corsConfig = null;
+
     try {
         $corsConfig = $ossClient->getBucketCors($bucket);
     } catch (OssException $e) {

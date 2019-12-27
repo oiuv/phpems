@@ -33,10 +33,10 @@ class app
         if (1 != $group['groupid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode' => 300,
-                'message' => '请您重新登录',
+                'statusCode'   => 300,
+                'message'      => '请您重新登录',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?core-master-login',
+                'forwardUrl'   => 'index.php?core-master-login',
             ]));
             }
 

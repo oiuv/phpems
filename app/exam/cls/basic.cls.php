@@ -87,9 +87,9 @@ class basic_exam
     {
         $args[] = ['AND', 'openbasics.obuserid = user.userid'];
         $data = [
-            'select' => false,
-            'table' => ['openbasics', 'user'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['openbasics', 'user'],
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -206,7 +206,7 @@ class basic_exam
     //通过获取地区、科目、代码对应关系列表
     //参数：页码，每页显示数量，查询信息数组
     //返回值：配置信息数组
-    public function getBasicList($args = [], $page, $number = 20, $orderby = 'basicid desc')
+    public function getBasicList($args, $page, $number = 20, $orderby = 'basicid desc')
     {
         $page = $page > 0 ? $page : 1;
         $r = [];

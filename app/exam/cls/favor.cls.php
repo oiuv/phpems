@@ -53,13 +53,13 @@ class favor_exam
     //通过用户ID获取收藏试题列表
     //参数：当前页码，单页显示数量，查询参数（数组或字符串）
     //返回值：试题列表数组
-    public function getFavorListByUserid($args = [], $page, $number = 20, $orderby = 'favorid desc')
+    public function getFavorListByUserid($args, $page, $number = 20, $orderby = 'favorid desc')
     {
         $args[] = ['AND', 'favor.favorquestionid = questions.questionid'];
         $data = [
-            'select' => false,
-            'table' => ['favor', 'questions'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['favor', 'questions'],
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 
@@ -163,7 +163,7 @@ class favor_exam
     }
 
     //根据用户和科目获取考试记录列表
-    public function getExamHistoryListByArgs($args = [], $page, $number = 20, $fields = false, $orderby = 'ehscore DESC,ehid DESC')
+    public function getExamHistoryListByArgs($args, $page, $number = 20, $fields = false, $orderby = 'ehscore DESC,ehid DESC')
     {
         $page = $page > 0 ? $page : 1;
         $r = [];
@@ -288,23 +288,23 @@ class favor_exam
         }
         $user = $this->G->make('user', 'user')->getUserById($exam['examsessionuserid']);
         $args = [
-            'ehtype' => $exam['examsessiontype'],
-            'ehtimelist' => $exam['examsessiontimelist'],
-            'ehexam' => $exam['examsession'],
-            'ehexamid' => $exam['examsessionkey'],
-            'ehbasicid' => $exam['examsessionbasic'],
-            'ehquestion' => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
-            'ehsetting' => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
+            'ehtype'       => $exam['examsessiontype'],
+            'ehtimelist'   => $exam['examsessiontimelist'],
+            'ehexam'       => $exam['examsession'],
+            'ehexamid'     => $exam['examsessionkey'],
+            'ehbasicid'    => $exam['examsessionbasic'],
+            'ehquestion'   => base64_encode(gzcompress(serialize($exam['examsessionquestion']), 9)),
+            'ehsetting'    => base64_encode(gzcompress(serialize($exam['examsessionsetting']), 9)),
             'ehuseranswer' => $exam['examsessionuseranswer'],
-            'ehstarttime' => $exam['examsessionstarttime'],
-            'ehtime' => $t,
-            'ehscore' => $exam['examsessionscore'],
-            'ehscorelist' => $exam['examsessionscorelist'],
-            'ehuserid' => $exam['examsessionuserid'],
-            'ehusername' => $user['username'],
-            'ehdecide' => intval($exam['examsessionsetting']['examdecide']),
-            'ehstatus' => $status,
-            'ehispass' => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
+            'ehstarttime'  => $exam['examsessionstarttime'],
+            'ehtime'       => $t,
+            'ehscore'      => $exam['examsessionscore'],
+            'ehscorelist'  => $exam['examsessionscorelist'],
+            'ehuserid'     => $exam['examsessionuserid'],
+            'ehusername'   => $user['username'],
+            'ehdecide'     => intval($exam['examsessionsetting']['examdecide']),
+            'ehstatus'     => $status,
+            'ehispass'     => $exam['examsessionscore'] >= $exam['examsessionsetting']['examsetting']['passscore'] ? 1 : 0,
         ];
         $data = ['examhistory', $args];
         $sql = $this->pdosql->makeInsert($data);
@@ -339,9 +339,9 @@ class favor_exam
     public function getExamScoreListByBasicId($basicid, $page, $number = 10)
     {
         $data = [
-            'select' => false,
-            'table' => ['examhistory', 'user'],
-            'query' => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
+            'select'  => false,
+            'table'   => ['examhistory', 'user'],
+            'query'   => [['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid], ['AND', 'ehtype = 2'], ['AND', 'ehuserid = userid'], ['AND', 'ehstatus = 1']],
             'orderby' => 'ehscore DESC,ehid DESC',
         ];
 

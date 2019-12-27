@@ -248,21 +248,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'statusCode'   => 200,
+                    'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                     'callbackType' => 'forward',
-                    'forwardUrl' => "{$fname}",
+                    'forwardUrl'   => "{$fname}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '导出失败',
+                    'message'    => '导出失败',
                 ];
             }
         } else {
             $message = [
                 'statusCode' => 300,
-                'message' => '请选择好考场',
+                'message'    => '请选择好考场',
             ];
         }
         exit(json_encode($message));
@@ -322,21 +322,21 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode' => 200,
-                'message' => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'statusCode'   => 200,
+                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
                 'callbackType' => 'forward',
-                'forwardUrl' => "{$fname}",
+                'forwardUrl'   => "{$fname}",
             ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '成绩导出失败',
+                'message'    => '成绩导出失败',
             ];
             }
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '请选择好考场',
+            'message'    => '请选择好考场',
         ];
         }
         exit(json_encode($message));
@@ -364,7 +364,7 @@ class action extends app
             if ($eh['ehteacher'] != $this->_user['username']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => "本试卷已被{$eh['ehteacher']}锁定批改中",
+                    'message'    => "本试卷已被{$eh['ehteacher']}锁定批改中",
                 ];
                 exit(json_encode($message));
             }
@@ -388,7 +388,7 @@ class action extends app
             $this->favor->modifyExamHistory($ehid, $args);
             $message = [
                 'statusCode' => 200,
-                'message' => '评分完成',
+                'message'    => '评分完成',
                 'forwardUrl' => "index.php?exam-teach-users-exams&basicid={$eh['ehbasicid']}",
             ];
             exit(json_encode($message));
@@ -473,7 +473,7 @@ class action extends app
         $this->favor->modifyExamHistory($ehid, ['ehneedresit' => 1]);
         $message = [
             'statusCode' => 200,
-            'message' => '设置成功',
+            'message'    => '设置成功',
             'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));

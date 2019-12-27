@@ -22,7 +22,7 @@ use OSS\Model\LiveChannelListInfo;
 
 class LiveChannelXmlTest extends \PHPUnit_Framework_TestCase
 {
-    private $config = <<<BBBB
+    private $config = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LiveChannelConfiguration>
   <Description>xxx</Description>
@@ -36,7 +36,7 @@ class LiveChannelXmlTest extends \PHPUnit_Framework_TestCase
 </LiveChannelConfiguration>
 BBBB;
 
-    private $info = <<<BBBB
+    private $info = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <CreateLiveChannelResult>
   <Name>live-1</Name>
@@ -52,7 +52,7 @@ BBBB;
 </CreateLiveChannelResult>
 BBBB;
 
-    private $list = <<<BBBB
+    private $list = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <ListLiveChannelResult>
 <Prefix>xxx</Prefix>
@@ -87,7 +87,7 @@ BBBB;
 </ListLiveChannelResult>
 BBBB;
 
-    private $status = <<<BBBB
+    private $status = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LiveChannelStat>
     <Status>Live</Status>
@@ -108,7 +108,7 @@ BBBB;
 </LiveChannelStat>
 BBBB;
 
-    private $history = <<<BBBB
+    private $history = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LiveChannelHistory>
     <LiveRecord>

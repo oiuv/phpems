@@ -36,7 +36,7 @@ class action extends app
             if ((!$randcode) || ($randcode != $_SESSION['phonerandcode']['findpassword'])) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '验证码错误',
+                    'message'    => '验证码错误',
                 ];
                 exit(json_encode($message));
             }
@@ -49,23 +49,23 @@ class action extends app
             if (!$user) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '此用户未注册',
+                    'message'    => '此用户未注册',
                 ];
                 exit(json_encode($message));
             }
             if ($user['useremail'] != $args['useremail']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '邮箱与用户不对应',
+                    'message'    => '邮箱与用户不对应',
                 ];
                 exit(json_encode($message));
             }
             $this->user->modifyUserPassword(['password' => $args['userpassword']], $user['userid']);
             $message = [
-                'statusCode' => 200,
-                'message' => '密码修改成功',
+                'statusCode'   => 200,
+                'message'      => '密码修改成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-app-login',
+                'forwardUrl'   => 'index.php?user-app-login',
             ];
             exit(json_encode($message));
         }
@@ -90,7 +90,7 @@ class action extends app
             if ($app['appsetting']['closeregist']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '管理员禁止了用户注册',
+                    'message'    => '管理员禁止了用户注册',
                 ];
                 $this->G->R($message);
             }
@@ -99,7 +99,7 @@ class action extends app
                 if ((!$randcode) || ($randcode != $_SESSION['phonerandcode']['reg'])) {
                     $message = [
                         'statusCode' => 300,
-                        'message' => '验证码错误',
+                        'message'    => '验证码错误',
                     ];
                     exit(json_encode($message));
                 }
@@ -112,7 +112,7 @@ class action extends app
             if (!$defaultgroup['groupid'] || !trim($args['username'])) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '用户不能注册',
+                    'message'    => '用户不能注册',
                 ];
                 exit(json_encode($message));
             }
@@ -122,7 +122,7 @@ class action extends app
                     $message = [
                         'statusCode' => 300,
                         'errorinput' => 'args[username]',
-                        'message' => '用户已经存在',
+                        'message'    => '用户已经存在',
                     ];
                     exit(json_encode($message));
                 }
@@ -132,7 +132,7 @@ class action extends app
                 $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message' => '用户已经存在',
+                    'message'    => '用户已经存在',
                 ];
                 exit(json_encode($message));
             }
@@ -142,7 +142,7 @@ class action extends app
                 $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message' => '邮箱已经被注册',
+                    'message'    => '邮箱已经被注册',
                 ];
                 exit(json_encode($message));
             }
@@ -153,10 +153,10 @@ class action extends app
             $id = $this->user->insertUser($fargs);
             $this->session->setSessionUser(['sessionuserid' => $id, 'sessionpassword' => md5($args['userpassword']), 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $defaultgroup['groupid'], 'sessionlogintime' => TIME, 'sessionusername' => $username]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?'.$this->G->defaultApp,
+                'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
             ];
             exit(json_encode($message));
         }

@@ -18,7 +18,7 @@ use OSS\Model\CorsRule;
 
 class CorsConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <CORSConfiguration>
 <CORSRule>
@@ -47,7 +47,7 @@ class CorsConfigTest extends \PHPUnit_Framework_TestCase
 </CORSConfiguration>
 BBBB;
 
-    private $validXml2 = <<<BBBB
+    private $validXml2 = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <CORSConfiguration>
 <CORSRule>
@@ -94,9 +94,10 @@ BBBB;
     {
         $corsConfig = new CorsConfig();
         $rule = new CorsRule();
-        for ($i = 0; $i < CorsConfig::OSS_MAX_RULES; ++$i) {
+        for ($i = 0; $i < CorsConfig::OSS_MAX_RULES; $i++) {
             $corsConfig->addRule($rule);
         }
+
         try {
             $corsConfig->addRule($rule);
             $this->assertFalse(true);

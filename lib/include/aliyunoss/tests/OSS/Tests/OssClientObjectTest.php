@@ -64,6 +64,7 @@ class OssClientObjectTest extends TestOssClientBase
     public function testGetObjectWithHeader()
     {
         $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
         try {
             $res = $this->ossClient->getObject($this->bucket, $object, [OssClient::OSS_LAST_MODIFIED => 'xx']);
             $this->assertSame(file_get_contents(__FILE__), $res);
@@ -75,6 +76,7 @@ class OssClientObjectTest extends TestOssClientBase
     public function testGetObjectWithIleggalEtag()
     {
         $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
         try {
             $res = $this->ossClient->getObject($this->bucket, $object, [OssClient::OSS_ETAG => 'xx']);
             $this->assertSame(file_get_contents(__FILE__), $res);
@@ -91,13 +93,13 @@ class OssClientObjectTest extends TestOssClientBase
         $object = 'oss-php-sdk-test/upload-test-object-name.txt';
         $content = file_get_contents(__FILE__);
         $options = [
-            OssClient::OSS_LENGTH => strlen($content),
+            OssClient::OSS_LENGTH  => strlen($content),
             OssClient::OSS_HEADERS => [
-                'Expires' => 'Fri, 28 Feb 2020 05:38:42 GMT',
-                'Cache-Control' => 'no-cache',
-                'Content-Disposition' => 'attachment;filename=oss_download.log',
-                'Content-Encoding' => 'utf-8',
-                'Content-Language' => 'zh-CN',
+                'Expires'                      => 'Fri, 28 Feb 2020 05:38:42 GMT',
+                'Cache-Control'                => 'no-cache',
+                'Content-Disposition'          => 'attachment;filename=oss_download.log',
+                'Content-Encoding'             => 'utf-8',
+                'Content-Language'             => 'zh-CN',
                 'x-oss-server-side-encryption' => 'AES256',
                 'x-oss-meta-self-define-title' => 'user define meta info',
             ],
@@ -232,6 +234,7 @@ class OssClientObjectTest extends TestOssClientBase
         $to_bucket = $this->bucket;
         $to_object = $object.'.copy';
         $options = [];
+
         try {
             $result = $this->ossClient->copyObject($this->bucket, $object, $to_bucket, $to_object, $options);
             $this->assertFalse(empty($result));
@@ -261,9 +264,9 @@ class OssClientObjectTest extends TestOssClientBase
         $maxkeys = 1000;
         $options = [
             'delimiter' => $delimiter,
-            'prefix' => $prefix,
-            'max-keys' => $maxkeys,
-            'marker' => $next_marker,
+            'prefix'    => $prefix,
+            'max-keys'  => $maxkeys,
+            'marker'    => $next_marker,
         ];
 
         try {
@@ -287,10 +290,11 @@ class OssClientObjectTest extends TestOssClientBase
         $to_object = $from_object;
         $copy_options = [
             OssClient::OSS_HEADERS => [
-                'Expires' => '2012-10-01 08:00:00',
+                'Expires'             => '2012-10-01 08:00:00',
                 'Content-Disposition' => 'attachment; filename="xxxxxx"',
             ],
         ];
+
         try {
             $this->ossClient->copyObject($from_bucket, $from_object, $to_bucket, $to_object, $copy_options);
         } catch (OssException $e) {
@@ -301,6 +305,7 @@ class OssClientObjectTest extends TestOssClientBase
          * Get the meta information for the file.
          */
         $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
         try {
             $objectMeta = $this->ossClient->getObjectMeta($this->bucket, $object);
             $this->assertSame('attachment; filename="xxxxxx"', $objectMeta[strtolower('Content-Disposition')]);
@@ -327,6 +332,7 @@ class OssClientObjectTest extends TestOssClientBase
         $object1 = 'oss-php-sdk-test/upload-test-object-name.txt';
         $object2 = 'oss-php-sdk-test/upload-test-object-name.txt.copy';
         $list = [$object1, $object2];
+
         try {
             $this->assertTrue($this->ossClient->doesObjectExist($this->bucket, $object2));
 
@@ -413,7 +419,7 @@ class OssClientObjectTest extends TestOssClientBase
 
         $options = [
             OssClient::OSS_HEADERS => [
-                'Expires' => '2012-10-01 08:00:00',
+                'Expires'             => '2012-10-01 08:00:00',
                 'Content-Disposition' => 'attachment; filename="xxxxxx"',
             ],
         ];
@@ -451,6 +457,7 @@ class OssClientObjectTest extends TestOssClientBase
     public function testPutIllelObject()
     {
         $object = '/ilegal.txt';
+
         try {
             $this->ossClient->putObject($this->bucket, $object, 'hi', null);
             $this->assertFalse(true);

@@ -35,10 +35,10 @@ class action extends app
                 $this->apps->addApp($appid, $args);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功，正在转入目标页面',
+                'statusCode'   => 200,
+                'message'      => '操作成功，正在转入目标页面',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }

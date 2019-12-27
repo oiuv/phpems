@@ -20,9 +20,9 @@ use OSS\Core\OssException;
 class AclResult extends Result
 {
     /**
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     protected function parseDataFromResponse()
     {
@@ -34,6 +34,7 @@ class AclResult extends Result
         if (isset($xml->AccessControlList->Grant)) {
             return strval($xml->AccessControlList->Grant);
         }
+
         throw new OssException('xml format exception');
     }
 }

@@ -17,7 +17,7 @@ use OSS\Model\CnameConfig;
 
 class CnameConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $xml1 = <<<BBBB
+    private $xml1 = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <BucketCnameConfiguration>
   <Cname>
@@ -71,9 +71,10 @@ BBBB;
     public function testCnameNumberLimit()
     {
         $cnameConfig = new CnameConfig();
-        for ($i = 0; $i < CnameConfig::OSS_MAX_RULES; ++$i) {
+        for ($i = 0; $i < CnameConfig::OSS_MAX_RULES; $i++) {
             $cnameConfig->addCname(strval($i).'.foo.com');
         }
+
         try {
             $cnameConfig->addCname('www.foo.com');
             $this->assertFalse(true);

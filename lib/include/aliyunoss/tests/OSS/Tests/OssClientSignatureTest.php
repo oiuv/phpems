@@ -26,6 +26,7 @@ class OssClientSignatureTest extends TestOssClientBase
         $object = 'a.file';
         $this->ossClient->putObject($this->bucket, $object, file_get_contents(__FILE__));
         $timeout = 3600;
+
         try {
             $signedUrl = $this->ossClient->signUrl($this->bucket, $object, $timeout);
         } catch (OssException $e) {
@@ -44,6 +45,7 @@ class OssClientSignatureTest extends TestOssClientBase
     {
         $object = 'a.file';
         $timeout = 3600;
+
         try {
             $signedUrl = $this->ossClient->signUrl($this->bucket, $object, $timeout, 'PUT');
             $content = file_get_contents(__FILE__);
@@ -67,6 +69,7 @@ class OssClientSignatureTest extends TestOssClientBase
         $object = 'a.file';
         $timeout = 3600;
         $options = ['Content-Type' => 'txt'];
+
         try {
             $signedUrl = $this->ossClient->signUrl($this->bucket, $object, $timeout, 'PUT', $options);
             $request = new RequestCore($signedUrl);
@@ -98,13 +101,13 @@ class OssClientSignatureTest extends TestOssClientBase
         $object = 'a.file';
         $content = file_get_contents(__FILE__);
         $options = [
-            OssClient::OSS_LENGTH => strlen($content),
+            OssClient::OSS_LENGTH  => strlen($content),
             OssClient::OSS_HEADERS => [
-                'Expires' => 'Fri, 28 Feb 2020 05:38:42 GMT',
-                'Cache-Control' => 'no-cache',
-                'Content-Disposition' => 'attachment;filename=oss_download.log',
-                'Content-Encoding' => 'utf-8',
-                'Content-Language' => 'zh-CN',
+                'Expires'                      => 'Fri, 28 Feb 2020 05:38:42 GMT',
+                'Cache-Control'                => 'no-cache',
+                'Content-Disposition'          => 'attachment;filename=oss_download.log',
+                'Content-Encoding'             => 'utf-8',
+                'Content-Language'             => 'zh-CN',
                 'x-oss-server-side-encryption' => 'AES256',
                 'x-oss-meta-self-define-title' => 'user define meta info',
             ],

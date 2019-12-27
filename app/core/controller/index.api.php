@@ -111,7 +111,7 @@ class action extends app
         if (!$this->G->make('strings')->isEmail($email)) {
             $message = [
                 'statusCode' => 300,
-                'message' => '错误的邮箱',
+                'message'    => '错误的邮箱',
             ];
             exit(json_encode($message));
         }
@@ -120,14 +120,14 @@ class action extends app
         if (!$user && 'reg' != $action) {
             $message = [
                 'statusCode' => 300,
-                'message' => '该邮箱未注册',
+                'message'    => '该邮箱未注册',
             ];
             exit(json_encode($message));
         }
         if ($user && 'reg' == $action) {
             $message = [
                 'statusCode' => 300,
-                'message' => '该邮箱已注册',
+                'message'    => '该邮箱已注册',
             ];
             exit(json_encode($message));
         }
@@ -142,7 +142,7 @@ class action extends app
         if (!$app['appsetting']['emailverify']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '管理员未开启邮箱验证',
+                'message'    => '管理员未开启邮箱验证',
             ];
             exit(json_encode($message));
         }
@@ -155,7 +155,7 @@ class action extends app
         } else {
             $message = [
                 'statusCode' => 300,
-                'message' => '管理邮箱设置错误，请联系管理员',
+                'message'    => '管理邮箱设置错误，请联系管理员',
             ];
             exit(json_encode($message));
         }
@@ -204,47 +204,47 @@ class action extends app
         $garr = [4 => 4, 5 => 1, 8 => 7, 9 => 5, 10 => 6, 11 => 13, 12 => 17, 13 => 16, 14 => 18, 15 => 15, 16 => 12, 17 => 11, 18 => 10, 19 => 9, 20 => 8, 22 => 14];
         $subjects = [
             1 => [
-                'id' => 1,
+                'id'   => 1,
                 'name' => '初级会计实务',
             ],
             4 => [
-                'id' => 2,
+                'id'   => 2,
                 'name' => '初级经济法',
             ],
             5 => [
-                'id' => 3,
+                'id'   => 3,
                 'name' => '中级会计实务',
             ],
             6 => [
-                'id' => 4,
+                'id'   => 4,
                 'name' => '中级经济法',
             ],
             7 => [
-                'id' => 5,
+                'id'   => 5,
                 'name' => '中级财务管理',
             ],
             13 => [
-                'id' => 11,
+                'id'   => 11,
                 'name' => '会计',
             ],
             14 => [
-                'id' => 12,
+                'id'   => 12,
                 'name' => '经济法',
             ],
             15 => [
-                'id' => 13,
+                'id'   => 13,
                 'name' => '税法',
             ],
             16 => [
-                'id' => 14,
+                'id'   => 14,
                 'name' => '财务成本管理',
             ],
             17 => [
-                'id' => 15,
+                'id'   => 15,
                 'name' => '审计',
             ],
             18 => [
-                'id' => 16,
+                'id'   => 16,
                 'name' => '公司战略与风险管理',
             ],
         ];
@@ -277,7 +277,7 @@ class action extends app
                 $this->db->exec($sql);
             }
         }
-        ++$page;
+        $page++;
         echo 'ok';
         if (count($rs) > 0) {
             echo '<script>window.location = "index.php?core-api-index-basic&page='.$page.'"</script>';

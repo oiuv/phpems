@@ -28,9 +28,9 @@ class layout_seminar
     public function getSeminarTplsList($args, $page, $number = 10, $orderby = 'stplid desc')
     {
         $data = [
-            'select' => false,
-            'table' => 'seminar_tpls',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'seminar_tpls',
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 

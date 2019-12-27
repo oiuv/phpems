@@ -52,13 +52,13 @@ class payjs
     public function outQrcodePay($order)
     {
         $data = [
-            'mchid' => PAYJSMCHID,
-            'total_fee' => $order['orderprice'] * 100,
+            'mchid'        => PAYJSMCHID,
+            'total_fee'    => $order['orderprice'] * 100,
             'out_trade_no' => $order['ordersn'],
-            'type' => '',
-            'body' => $order['ordertitle'],
-            'attach' => 'phpems',
-            'notify_url' => WP.'api/payjsnotify.php',
+            'type'         => '',
+            'body'         => $order['ordertitle'],
+            'attach'       => 'phpems',
+            'notify_url'   => WP.'api/payjsnotify.php',
         ];
         $data['sign'] = $this->sign($data, PAYJSKEY);
         $r = $this->post('https://payjz.cn/api/native', $data);
@@ -69,14 +69,14 @@ class payjs
     public function outJsApiPay($order, $openid)
     {
         $data = [
-            'mchid' => PAYJSMCHID,
-            'total_fee' => $order['orderprice'] * 100,
+            'mchid'        => PAYJSMCHID,
+            'total_fee'    => $order['orderprice'] * 100,
             'out_trade_no' => $order['ordersn'],
-            'type' => '',
-            'body' => $order['ordertitle'],
-            'attach' => 'phpems',
-            'notify_url' => WP.'api/payjsnotify.php',
-            'openid' => $openid,
+            'type'         => '',
+            'body'         => $order['ordertitle'],
+            'attach'       => 'phpems',
+            'notify_url'   => WP.'api/payjsnotify.php',
+            'openid'       => $openid,
         ];
         $data['sign'] = $this->sign($data, PAYJSKEY);
         $r = $this->post('https://payjz.cn/api/jsapi', $data);
@@ -88,16 +88,16 @@ class payjs
     {
         $post = $this->ev->post;
         $data = [
-            'return_code' => $post['return_code'],
-            'total_fee' => $post['total_fee'],
-            'out_trade_no' => $post['out_trade_no'],
+            'return_code'    => $post['return_code'],
+            'total_fee'      => $post['total_fee'],
+            'out_trade_no'   => $post['out_trade_no'],
             'payjs_order_id' => $post['payjs_order_id'],
             'transaction_id' => $post['transaction_id'],
-            'time_end' => $post['time_end'],
-            'openid' => $post['openid'],
-            'attach' => $post['attach'],
-            'mchid' => $post['mchid'],
-            'type' => $post['type'],
+            'time_end'       => $post['time_end'],
+            'openid'         => $post['openid'],
+            'attach'         => $post['attach'],
+            'mchid'          => $post['mchid'],
+            'type'           => $post['type'],
         ];
         $sign = $this->sign($data, PAYJSKEY);
         if (1 == $data['return_code'] && $sign == $post['sign']) {

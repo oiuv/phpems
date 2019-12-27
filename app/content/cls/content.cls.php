@@ -54,9 +54,9 @@ class content_content
     public function getContentList($args, $page, $number = 20, $order = 'contentsequence DESC,contentinputtime DESC,contentid DESC')
     {
         $data = [
-            'select' => false,
-            'table' => 'content',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'content',
+            'query'   => $args,
             'orderby' => $order,
         ];
         $r = $this->db->listElements($page, $number, $data);

@@ -18,7 +18,7 @@ use OSS\Result\GetLoggingResult;
 
 class GetLoggingResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <BucketLoggingStatus>
 <LoggingEnabled>
@@ -49,6 +49,7 @@ BBBB;
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], $this->validXml, 300);
+
         try {
             new GetLoggingResult($response);
             $this->assertTrue(false);

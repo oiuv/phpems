@@ -18,7 +18,7 @@ use OSS\Result\GetWebsiteResult;
 
 class GetWebsiteResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <WebsiteConfiguration>
 <IndexDocument>
@@ -49,6 +49,7 @@ BBBB;
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], $this->validXml, 300);
+
         try {
             new GetWebsiteResult($response);
             $this->assertTrue(false);

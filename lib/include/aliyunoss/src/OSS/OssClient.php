@@ -193,9 +193,9 @@ class OssClient
      *
      * @param string $bucket
      *
-     * @return bool
-     *
      * @throws OssException
+     *
+     * @return bool
      */
     public function doesBucketExist($bucket)
     {
@@ -765,9 +765,9 @@ class OssClient
     /**
      * Gets the LiveChannel pushing streaming record.
      *
-     * @param string $bucket bucket name
+     * @param string             $bucket      bucket name
      * @param string channelName $channelName
-     * @param array $options
+     * @param array              $options
      *
      * @throws OssException
      *
@@ -806,8 +806,8 @@ class OssClient
         $options[self::OSS_OBJECT] = '/';
         $options[self::OSS_SUB_RESOURCE] = 'live';
         $options[self::OSS_QUERY_STRING] = [
-            'prefix' => isset($options['prefix']) ? $options['prefix'] : '',
-            'marker' => isset($options['marker']) ? $options['marker'] : '',
+            'prefix'   => isset($options['prefix']) ? $options['prefix'] : '',
+            'marker'   => isset($options['marker']) ? $options['marker'] : '',
             'max-keys' => isset($options['max-keys']) ? $options['max-keys'] : '',
         ];
         $response = $this->auth($options);
@@ -922,9 +922,9 @@ class OssClient
      * @param string $request_headers The actual HTTP headers which will be used in CORS request
      * @param array  $options
      *
-     * @return array
-     *
      * @throws OssException
+     *
+     * @return array
      *
      * @see http://help.aliyun.com/document_detail/oss/api-reference/cors/OptionObject.html
      */
@@ -935,9 +935,9 @@ class OssClient
         $options[self::OSS_METHOD] = self::OSS_HTTP_OPTIONS;
         $options[self::OSS_OBJECT] = $object;
         $options[self::OSS_HEADERS] = [
-            self::OSS_OPTIONS_ORIGIN => $origin,
+            self::OSS_OPTIONS_ORIGIN          => $origin,
             self::OSS_OPTIONS_REQUEST_HEADERS => $request_headers,
-            self::OSS_OPTIONS_REQUEST_METHOD => $request_method,
+            self::OSS_OPTIONS_REQUEST_METHOD  => $request_method,
         ];
         $response = $this->auth($options);
         $result = new HeaderResult($response);
@@ -1025,9 +1025,9 @@ class OssClient
      * @param RefererConfig $refererConfig
      * @param array         $options
      *
-     * @return ResponseCore
-     *
      * @throws null
+     *
+     * @return ResponseCore
      */
     public function putBucketReferer($bucket, $refererConfig, $options = null)
     {
@@ -1076,9 +1076,9 @@ class OssClient
      * @param int    $storageCapacity
      * @param array  $options
      *
-     * @return ResponseCore
-     *
      * @throws null
+     *
+     * @return ResponseCore
      */
     public function putBucketStorageCapacity($bucket, $storageCapacity, $options = null)
     {
@@ -1144,9 +1144,9 @@ class OssClient
         $options[self::OSS_OBJECT] = '/';
         $options[self::OSS_HEADERS] = [
             self::OSS_DELIMITER => isset($options[self::OSS_DELIMITER]) ? $options[self::OSS_DELIMITER] : '/',
-            self::OSS_PREFIX => isset($options[self::OSS_PREFIX]) ? $options[self::OSS_PREFIX] : '',
-            self::OSS_MAX_KEYS => isset($options[self::OSS_MAX_KEYS]) ? $options[self::OSS_MAX_KEYS] : self::OSS_MAX_KEYS_VALUE,
-            self::OSS_MARKER => isset($options[self::OSS_MARKER]) ? $options[self::OSS_MARKER] : '',
+            self::OSS_PREFIX    => isset($options[self::OSS_PREFIX]) ? $options[self::OSS_PREFIX] : '',
+            self::OSS_MAX_KEYS  => isset($options[self::OSS_MAX_KEYS]) ? $options[self::OSS_MAX_KEYS] : self::OSS_MAX_KEYS_VALUE,
+            self::OSS_MARKER    => isset($options[self::OSS_MARKER]) ? $options[self::OSS_MARKER] : '',
         ];
         $query = isset($options[self::OSS_QUERY_STRING]) ? $options[self::OSS_QUERY_STRING] : [];
         $options[self::OSS_QUERY_STRING] = array_merge(
@@ -1286,9 +1286,9 @@ class OssClient
      * @param string $file    local file path
      * @param array  $options
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function uploadFile($bucket, $object, $file, $options = null)
     {
@@ -1327,9 +1327,9 @@ class OssClient
      * @param string $content content to append
      * @param array  $options
      *
-     * @return int next append position
-     *
      * @throws OssException
+     *
+     * @return int next append position
      */
     public function appendObject($bucket, $object, $content, $position, $options = null)
     {
@@ -1371,9 +1371,9 @@ class OssClient
      * @param string $file    The local file path to append with
      * @param array  $options
      *
-     * @return int next append position
-     *
      * @throws OssException
+     *
+     * @return int next append position
      */
     public function appendFile($bucket, $object, $file, $position, $options = null)
     {
@@ -1417,9 +1417,9 @@ class OssClient
      * @param string $toObject   Target object name
      * @param array  $options
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function copyObject($fromBucket, $fromObject, $toBucket, $toObject, $options = null)
     {
@@ -1488,9 +1488,9 @@ class OssClient
      * @param array  $objects object list
      * @param array  $options
      *
-     * @return ResponseCore
-     *
      * @throws null
+     *
+     * @return ResponseCore
      */
     public function deleteObjects($bucket, $objects, $options = null)
     {
@@ -1582,9 +1582,9 @@ class OssClient
      * @param string $bucket bucket name
      * @param string $object object name
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function restoreObject($bucket, $object, $options = null)
     {
@@ -1639,9 +1639,9 @@ class OssClient
             $size_count -= $partSize;
             $values[] = [
                 self::OSS_SEEK_TO => ($partSize * $i),
-                self::OSS_LENGTH => (($size_count > 0) ? $partSize : ($size_count + $partSize)),
+                self::OSS_LENGTH  => (($size_count > 0) ? $partSize : ($size_count + $partSize)),
             ];
-            ++$i;
+            $i++;
         }
 
         return $values;
@@ -1687,9 +1687,9 @@ class OssClient
      * @param string $uploadId
      * @param array  $options  Key-Value array
      *
-     * @return string eTag
-     *
      * @throws OssException
+     *
+     * @return string eTag
      */
     public function uploadPart($bucket, $object, $uploadId, $options = null)
     {
@@ -1719,9 +1719,9 @@ class OssClient
      * @param string $uploadId uploadId
      * @param array  $options  Key-Value array
      *
-     * @return ListPartsInfo
-     *
      * @throws OssException
+     *
+     * @return ListPartsInfo
      */
     public function listParts($bucket, $object, $uploadId, $options = null)
     {
@@ -1751,9 +1751,9 @@ class OssClient
      * @param string $uploadId uploadId
      * @param array  $options  Key-Value name
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function abortMultipartUpload($bucket, $object, $uploadId, $options = null)
     {
@@ -1850,9 +1850,9 @@ class OssClient
      * @param string $uploadId   Upload Id
      * @param array  $options    Key-Value array---it should have 'start' or 'end' key to specify the range of the source object to copy. If it's not specifed, the whole object is copied.
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function uploadPartCopy($fromBucket, $fromObject, $toBucket, $toObject, $partNumber, $uploadId, $options = null)
     {
@@ -1894,9 +1894,9 @@ class OssClient
      * @param string $file    The local file to upload
      * @param array  $options Key-Value array
      *
-     * @return null
-     *
      * @throws OssException
+     *
+     * @return null
      */
     public function multiuploadFile($bucket, $object, $file, $options = null)
     {
@@ -1956,10 +1956,10 @@ class OssClient
             $to_pos = (int) $piece[self::OSS_LENGTH] + $from_pos - 1;
             $up_options = [
                 self::OSS_FILE_UPLOAD => $uploadFile,
-                self::OSS_PART_NUM => ($i + 1),
-                self::OSS_SEEK_TO => $from_pos,
-                self::OSS_LENGTH => $to_pos - $from_pos + 1,
-                self::OSS_CHECK_MD5 => $is_check_md5,
+                self::OSS_PART_NUM    => ($i + 1),
+                self::OSS_SEEK_TO     => $from_pos,
+                self::OSS_LENGTH      => $to_pos - $from_pos + 1,
+                self::OSS_CHECK_MD5   => $is_check_md5,
             ];
             if ($is_check_md5) {
                 $content_md5 = OssUtil::getMd5SumForFile($uploadFile, $from_pos, $to_pos);
@@ -1972,7 +1972,7 @@ class OssClient
         foreach ($response_upload_part as $i => $etag) {
             $uploadParts[] = [
                 'PartNumber' => ($i + 1),
-                'ETag' => $etag,
+                'ETag'       => $etag,
             ];
         }
 
@@ -1989,9 +1989,9 @@ class OssClient
      * @param bool   $recursive      Recursive flag. True: Recursively upload all datas under the local directory; False: only upload first layer's files.
      * @param bool   $checkMd5
      *
-     * @return array Returns two list: array("succeededList" => array("object"), "failedList" => array("object"=>"errorMessage"))
-     *
      * @throws OssException
+     *
+     * @return array Returns two list: array("succeededList" => array("object"), "failedList" => array("object"=>"errorMessage"))
      */
     public function uploadDir($bucket, $prefix, $localDirectory, $exclude = '.|..|.svn|.git', $recursive = false, $checkMd5 = true)
     {
@@ -2047,9 +2047,9 @@ class OssClient
      * @param string $method
      * @param array  $options Key-Value array
      *
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     public function signUrl($bucket, $object, $timeout = 60, $method = self::OSS_HTTP_GET, $options = null)
     {
@@ -2133,6 +2133,7 @@ class OssClient
                     break;
             }
         }
+
         throw new OssException('storage name is invalid');
     }
 
@@ -2243,10 +2244,10 @@ class OssClient
      *
      * @param array $options
      *
-     * @return ResponseCore
-     *
      * @throws OssException
      * @throws RequestCore_Exception
+     *
+     * @return ResponseCore
      */
     private function auth($options)
     {
@@ -2412,7 +2413,7 @@ class OssClient
                 //Sets the sleep time betwen each retry.
                 $delay = (int) (pow(4, $this->redirects) * 100000);
                 usleep($delay);
-                ++$this->redirects;
+                $this->redirects++;
                 $data = $this->auth($options);
             }
         }
@@ -2510,6 +2511,7 @@ class OssClient
     private function authPrecheckObjectEncoding(&$options)
     {
         $tmp_object = $options[self::OSS_OBJECT];
+
         try {
             if (OssUtil::isGb2312($options[self::OSS_OBJECT])) {
                 $options[self::OSS_OBJECT] = iconv('GB2312', 'UTF-8//IGNORE', $options[self::OSS_OBJECT]);
@@ -2718,10 +2720,10 @@ class OssClient
     private function generateHeaders($options, $hostname)
     {
         $headers = [
-            self::OSS_CONTENT_MD5 => '',
+            self::OSS_CONTENT_MD5  => '',
             self::OSS_CONTENT_TYPE => isset($options[self::OSS_CONTENT_TYPE]) ? $options[self::OSS_CONTENT_TYPE] : self::DEFAULT_CONTENT_TYPE,
-            self::OSS_DATE => isset($options[self::OSS_DATE]) ? $options[self::OSS_DATE] : gmdate('D, d M Y H:i:s \G\M\T'),
-            self::OSS_HOST => $hostname,
+            self::OSS_DATE         => isset($options[self::OSS_DATE]) ? $options[self::OSS_DATE] : gmdate('D, d M Y H:i:s \G\M\T'),
+            self::OSS_HOST         => $hostname,
         ];
         if (isset($options[self::OSS_CONTENT_MD5])) {
             $headers[self::OSS_CONTENT_MD5] = $options[self::OSS_CONTENT_MD5];

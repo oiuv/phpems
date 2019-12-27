@@ -57,6 +57,7 @@ function getSignedUrlForGettingObject($ossClient, $bucket)
 {
     $object = 'test/test-signature-test-upload-and-download.txt';
     $timeout = 3600;
+
     try {
         $signedUrl = $ossClient->signUrl($bucket, $object, $timeout);
     } catch (OssException $e) {
@@ -87,15 +88,16 @@ function getSignedUrlForGettingObject($ossClient, $bucket)
  * @param OssClient $ossClient OssClient instance
  * @param string    $bucket    bucket name
  *
- * @return null
- *
  * @throws OssException
+ *
+ * @return null
  */
 function getSignedUrlForPuttingObject($ossClient, $bucket)
 {
     $object = 'test/test-signature-test-upload-and-download.txt';
     $timeout = 3600;
     $options = null;
+
     try {
         $signedUrl = $ossClient->signUrl($bucket, $object, $timeout, 'PUT');
     } catch (OssException $e) {
@@ -136,6 +138,7 @@ function getSignedUrlForPuttingObjectFromFile($ossClient, $bucket)
     $object = 'test/test-signature-test-upload-and-download.txt';
     $timeout = 3600;
     $options = ['Content-Type' => 'txt'];
+
     try {
         $signedUrl = $ossClient->signUrl($bucket, $object, $timeout, 'PUT', $options);
     } catch (OssException $e) {

@@ -130,6 +130,7 @@ function deleteBucket($ossClient, $bucket)
 function putBucketAcl($ossClient, $bucket)
 {
     $acl = OssClient::OSS_ACL_TYPE_PRIVATE;
+
     try {
         $ossClient->putBucketAcl($bucket, $acl);
     } catch (OssException $e) {
@@ -173,6 +174,7 @@ function getBucketAcl($ossClient, $bucket)
 function listBuckets($ossClient)
 {
     $bucketList = null;
+
     try {
         $bucketListInfo = $ossClient->listBuckets();
     } catch (OssException $e) {

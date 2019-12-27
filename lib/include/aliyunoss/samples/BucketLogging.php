@@ -80,6 +80,7 @@ function getBucketLogging($ossClient, $bucket)
 {
     $loggingConfig = null;
     $options = [];
+
     try {
         $loggingConfig = $ossClient->getBucketLogging($bucket, $options);
     } catch (OssException $e) {

@@ -18,9 +18,9 @@ use OSS\OssClient;
 class SymlinkResult extends Result
 {
     /**
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     protected function parseDataFromResponse()
     {

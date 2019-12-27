@@ -107,15 +107,15 @@ class action extends app
 
             if ($id) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?exam-app-exam-makescore&ehid={$id}",
+                    'forwardUrl'   => "index.php?exam-app-exam-makescore&ehid={$id}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败，请重新提交',
+                    'message'    => '操作失败，请重新提交',
                 ];
             }
             $this->G->R($message);
@@ -123,16 +123,16 @@ class action extends app
             $ehid = $this->ev->get('ehid');
             $eh = $this->favor->getExamHistoryById($ehid);
             $sessionvars = [
-                'examsession' => $eh['ehexam'],
-                'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
-                'examsessionsetting' => $eh['ehsetting'],
-                'examsessionbasic' => $eh['ehbasicid'],
-                'examsessionquestion' => $eh['ehquestion'],
+                'examsession'           => $eh['ehexam'],
+                'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
+                'examsessionsetting'    => $eh['ehsetting'],
+                'examsessionbasic'      => $eh['ehbasicid'],
+                'examsessionquestion'   => $eh['ehquestion'],
                 'examsessionuseranswer' => $eh['ehanswer'],
-                'examsessiontime' => $eh['ehtime'],
-                'examsessionscorelist' => $eh['ehscorelist'],
-                'examsessionscore' => $eh['ehscore'],
-                'examsessionstarttime' => $eh['ehstarttime'],
+                'examsessiontime'       => $eh['ehtime'],
+                'examsessionscorelist'  => $eh['ehscorelist'],
+                'examsessionscore'      => $eh['ehscore'],
+                'examsessionstarttime'  => $eh['ehstarttime'],
             ];
             $number = [];
             $right = [];
@@ -145,11 +145,11 @@ class action extends app
                 $score[$key] = 0;
                 if ($sessionvars['examsessionquestion']['questions'][$key]) {
                     foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }
@@ -157,11 +157,11 @@ class action extends app
                 if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
                     foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                         foreach ($v['data'] as $p) {
-                            ++$number[$key];
-                            ++$allnumber;
+                            $number[$key]++;
+                            $allnumber++;
                             if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                                ++$right[$key];
-                                ++$allright;
+                                $right[$key]++;
+                                $allright++;
                             }
                             $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                         }
@@ -241,7 +241,7 @@ class action extends app
             if ($overflow) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '您的考试次数已经用完了！',
+                    'message'    => '您的考试次数已经用完了！',
                 ];
                 $this->G->R($message);
             }
@@ -272,7 +272,7 @@ class action extends app
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                                 } else {
@@ -315,7 +315,7 @@ class action extends app
                                                 break;
                                             }
 
-                                            ++$rlen;
+                                            $rlen++;
                                         }
                                         $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                     } else {
@@ -349,10 +349,10 @@ class action extends app
                 $args['examsessionscore'] = array_sum($scorelist);
                 $this->exam->modifyExamSession($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exam-makescore&makescore=1&direct=1',
+                    'forwardUrl'   => 'index.php?exam-app-exam-makescore&makescore=1&direct=1',
                 ];
             } else {
                 if ($sessionvars['examsessionsetting']['examdecide']) {
@@ -361,15 +361,15 @@ class action extends app
                     $id = $this->favor->addExamHistory(0, 0);
                     if ($id) {
                         $message = [
-                        'statusCode' => 200,
-                        'message' => '操作成功，本试卷需要教师评分，请等待评分结果',
+                        'statusCode'   => 200,
+                        'message'      => '操作成功，本试卷需要教师评分，请等待评分结果',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'index.php?exam-app-history&ehtype=2',
+                        'forwardUrl'   => 'index.php?exam-app-history&ehtype=2',
                     ];
                     } else {
                         $message = [
                         'statusCode' => 300,
-                        'message' => '操作失败，请重新提交',
+                        'message'    => '操作失败，请重新提交',
                     ];
                     }
                 } else {
@@ -377,10 +377,10 @@ class action extends app
                     $this->exam->modifyExamSession($args);
                     //$this->favor->addExamHistory(1);
                     $message = [
-                        'statusCode' => 200,
-                        'message' => '操作成功',
+                        'statusCode'   => 200,
+                        'message'      => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'index.php?exam-app-exam-score',
+                        'forwardUrl'   => 'index.php?exam-app-exam-score',
                     ];
                 }
             }
@@ -452,7 +452,7 @@ class action extends app
             if ($overflow) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '您的考试次数已经用完了！',
+                    'message'    => '您的考试次数已经用完了！',
                 ];
                 $this->G->R($message);
             }
@@ -468,7 +468,7 @@ class action extends app
         if (!$r['examid']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '参数错误，尝试退出后重新进入',
+                'message'    => '参数错误，尝试退出后重新进入',
             ];
             $this->G->R($message);
         } else {
@@ -521,10 +521,10 @@ class action extends app
                     $this->exam->insertExamSession($sargs);
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exam-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exam-paper',
                 ];
                 $this->G->R($message);
             } elseif (2 == $r['examtype']) {
@@ -574,10 +574,10 @@ class action extends app
                     $this->exam->insertExamSession($args);
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exam-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exam-paper',
                 ];
                 $this->G->R($message);
             } else {
@@ -603,10 +603,10 @@ class action extends app
                     $this->exam->insertExamSession($args);
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exam-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exam-paper',
                 ];
                 $this->G->R($message);
             }

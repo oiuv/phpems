@@ -40,7 +40,7 @@ $var =
         "x:var1":"value1",
         "x:var2":"值2"
     }';
-$options = [OssClient::OSS_CALLBACK => $url,
+$options = [OssClient::OSS_CALLBACK          => $url,
                  OssClient::OSS_CALLBACK_VAR => $var,
                 ];
 $result = $ossClient->putObject($bucket, 'b.file', 'random content', $options);
@@ -69,7 +69,7 @@ $copyId = 1;
 $eTag = $ossClient->uploadPartCopy($bucket, $copiedObject, $bucket, $object, $copyId, $upload_id);
 $upload_parts[] = [
     'PartNumber' => $copyId,
-    'ETag' => $eTag,
+    'ETag'       => $eTag,
     ];
 $listPartsInfo = $ossClient->listParts($bucket, $object, $upload_id);
 
@@ -88,7 +88,7 @@ $var =
         "x:var1":"value1",
         "x:var2":"值2"
     }';
-$options = [OssClient::OSS_CALLBACK => $json,
+$options = [OssClient::OSS_CALLBACK          => $json,
                  OssClient::OSS_CALLBACK_VAR => $var, ];
 
 $result = $ossClient->completeMultipartUpload($bucket, $object, $upload_id, $upload_parts, $options);

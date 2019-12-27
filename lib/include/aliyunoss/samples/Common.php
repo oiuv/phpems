@@ -46,7 +46,7 @@ class Common
             printf(__FUNCTION__."creating OssClient instance: FAILED\n");
             printf($e->getMessage()."\n");
 
-            return null;
+            return;
         }
 
         return $ossClient;
@@ -68,6 +68,7 @@ class Common
         }
         $bucket = self::getBucketName();
         $acl = OssClient::OSS_ACL_TYPE_PUBLIC_READ;
+
         try {
             $ossClient->createBucket($bucket, $acl);
         } catch (OssException $e) {

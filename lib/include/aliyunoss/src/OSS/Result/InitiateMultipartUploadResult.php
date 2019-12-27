@@ -33,6 +33,7 @@ class InitiateMultipartUploadResult extends Result
         if (isset($xml->UploadId)) {
             return strval($xml->UploadId);
         }
+
         throw new OssException('cannot get UploadId');
     }
 }

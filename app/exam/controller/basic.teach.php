@@ -56,10 +56,10 @@ class action extends app
             $args['basicexam'] = $args['basicexam'];
             $this->basic->setBasicConfig($basicid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-basic&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-basic&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -116,7 +116,7 @@ class action extends app
                                         break;
                                     }
 
-                                    ++$rlen;
+                                    $rlen++;
                                 }
                                 $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                             } else {
@@ -159,7 +159,7 @@ class action extends app
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                 } else {
@@ -191,10 +191,10 @@ class action extends app
         $this->exam->modifyExamSession($args, $sessionid);
         $this->favor->addExamHistory($sessionid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }

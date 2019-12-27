@@ -47,9 +47,9 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
         $maxkeys = 1000;
         $options = [
             'delimiter' => $delimiter,
-            'prefix' => $prefix,
-            'max-keys' => $maxkeys,
-            'marker' => $nextMarker,
+            'prefix'    => $prefix,
+            'max-keys'  => $maxkeys,
+            'marker'    => $nextMarker,
         ];
 
         try {
@@ -73,10 +73,10 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     public function testPutLiveChannel()
     {
         $config = new LiveChannelConfig([
-            'description' => 'live channel 1',
-            'type' => 'HLS',
+            'description'  => 'live channel 1',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $info = $this->client->putBucketLiveChannel($this->bucketName, 'live-1', $config);
@@ -92,7 +92,7 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     {
         $config = new LiveChannelConfig([
             'description' => 'live channel 1',
-            'type' => 'HLS',
+            'type'        => 'HLS',
         ]);
         $info = $this->client->putBucketLiveChannel($this->bucketName, 'live-1', $config);
         $this->client->deleteBucketLiveChannel($this->bucketName, 'live-1');
@@ -106,19 +106,19 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     public function testListLiveChannels()
     {
         $config = new LiveChannelConfig([
-            'description' => 'live channel 1',
-            'type' => 'HLS',
+            'description'  => 'live channel 1',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, 'live-1', $config);
 
         $config = new LiveChannelConfig([
-            'description' => 'live channel 2',
-            'type' => 'HLS',
+            'description'  => 'live channel 2',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, 'live-2', $config);
@@ -143,8 +143,8 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, count($chan2->getPlayUrls()));
 
         $list = $this->client->listBucketLiveChannels($this->bucketName, [
-            'prefix' => 'live-',
-            'marker' => 'live-1',
+            'prefix'   => 'live-',
+            'marker'   => 'live-1',
             'max-keys' => 10,
         ]);
         $channels = $list->getChannelList();
@@ -167,10 +167,10 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     {
         $channelName = 'live-to-delete';
         $config = new LiveChannelConfig([
-            'description' => 'live channel to delete',
-            'type' => 'HLS',
+            'description'  => 'live channel to delete',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, $channelName, $config);
@@ -208,10 +208,10 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     {
         $channelName = 'live-to-put-status';
         $config = new LiveChannelConfig([
-            'description' => 'test live channel info',
-            'type' => 'HLS',
+            'description'  => 'test live channel info',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, $channelName, $config);
@@ -235,10 +235,10 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     {
         $channelName = 'live-to-put-status';
         $config = new LiveChannelConfig([
-            'description' => 'test live channel info',
-            'type' => 'HLS',
+            'description'  => 'test live channel info',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, $channelName, $config);
@@ -277,10 +277,10 @@ class BucketLiveChannelTest extends \PHPUnit_Framework_TestCase
     {
         $channelName = 'live-test-history';
         $config = new LiveChannelConfig([
-            'description' => 'test live channel info',
-            'type' => 'HLS',
+            'description'  => 'test live channel info',
+            'type'         => 'HLS',
             'fragDuration' => 10,
-            'fragCount' => 5,
+            'fragCount'    => 5,
             'playListName' => 'hello.m3u8',
         ]);
         $this->client->putBucketLiveChannel($this->bucketName, $channelName, $config);

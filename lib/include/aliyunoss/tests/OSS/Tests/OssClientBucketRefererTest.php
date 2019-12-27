@@ -30,6 +30,7 @@ class OssClientBucketRefererTest extends TestOssClientBase
             var_dump($e->getMessage());
             $this->assertTrue(false);
         }
+
         try {
             Common::waitMetaSync();
             $refererConfig2 = $this->ossClient->getBucketReferer($this->bucket);
@@ -37,6 +38,7 @@ class OssClientBucketRefererTest extends TestOssClientBase
         } catch (OssException $e) {
             $this->assertTrue(false);
         }
+
         try {
             Common::waitMetaSync();
             $nullRefererConfig = new RefererConfig();
@@ -45,6 +47,7 @@ class OssClientBucketRefererTest extends TestOssClientBase
         } catch (OssException $e) {
             $this->assertTrue(false);
         }
+
         try {
             Common::waitMetaSync();
             $refererConfig3 = $this->ossClient->getBucketLogging($this->bucket);

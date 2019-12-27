@@ -70,10 +70,10 @@ class action extends app
             $args = $this->ev->get('args');
             $id = $this->seminar->modifySeminarElem($selid, ['seldata' => $args]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
             ];
             exit(json_encode($message));
         }
@@ -88,10 +88,10 @@ class action extends app
         $sctid = $this->ev->get('sctid');
         $this->seminar->delSeminarContent($sctid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -112,11 +112,11 @@ class action extends app
                 $args['sctusername'] = $this->_user['sessoinusername'];
                 $args['scttime'] = TIME;
                 $this->seminar->addSeminarContent($args);
-                ++$number;
+                $number++;
             }
             $message = [
                 'statusCode' => 200,
-                'message' => "操作成功,添加{$number}条数据",
+                'message'    => "操作成功,添加{$number}条数据",
             ];
             exit(json_encode($message));
         }
@@ -186,10 +186,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -216,10 +216,10 @@ class action extends app
         $selid = $this->ev->get('selid');
         $tpl = $this->seminar->delSeminarElem($selid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -235,10 +235,10 @@ class action extends app
             $args['selseminar'] = $layout['slayoutseminar'];
             $id = $this->seminar->addSeminarElem($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
             ];
             exit(json_encode($message));
         }
@@ -261,10 +261,10 @@ class action extends app
             $args = $this->ev->get('args');
             $id = $this->seminar->modifySeminarElem($selid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar-elem&slayoutid={$layout['slayoutid']}",
             ];
             exit(json_encode($message));
         }
@@ -286,10 +286,10 @@ class action extends app
                 $this->seminar->modifySeminarElem($key, ['selorder' => $id]);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -317,10 +317,10 @@ class action extends app
         $slayoutid = $this->ev->get('slayoutid');
         $this->seminar->delSeminarLayout($slayoutid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -334,10 +334,10 @@ class action extends app
             $args['slayoutseminar'] = $seminarid;
             $id = $this->seminar->addSeminarLayout($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar-layout&seminarid={$seminar['seminarid']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar-layout&seminarid={$seminar['seminarid']}",
             ];
             exit(json_encode($message));
         }
@@ -358,10 +358,10 @@ class action extends app
             $args = $this->ev->get('args');
             $id = $this->seminar->modifySeminarLayout($slayoutid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar-layout&seminarid={$layout['slayoutseminar']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar-layout&seminarid={$layout['slayoutseminar']}",
             ];
             exit(json_encode($message));
         }
@@ -382,10 +382,10 @@ class action extends app
                 $this->seminar->modifySeminarLayout($key, ['slayoutorder' => $id]);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         }
@@ -417,10 +417,10 @@ class action extends app
             }
             $id = $this->seminar->addSeminar($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar&catid={$args['seminarcatid']}",
+                'forwardUrl'   => "index.php?seminar-master-seminar&catid={$args['seminarcatid']}",
             ];
             exit(json_encode($message));
         }
@@ -455,10 +455,10 @@ class action extends app
             $this->seminar->modifySeminar($seminarid, $args);
             $this->position->modifyPosContentByContentId($seminarid, ['pctitle' => $args['seminartitle'], 'pcthumb' => $args['seminarthumb'], 'pcdescribe' => $args['seminardescribe']], 'content');
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-seminar&catid={$seminar['seminarcatid']}&page={$page}{$this->u}",
+                'forwardUrl'   => "index.php?seminar-master-seminar&catid={$seminar['seminarcatid']}&page={$page}{$this->u}",
             ];
             exit(json_encode($message));
         }
@@ -479,10 +479,10 @@ class action extends app
         $seminarid = intval($this->ev->get('seminarid'));
         $this->seminar->delSeminar($seminarid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -535,10 +535,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('movecposition')) {
@@ -553,15 +553,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'reload',
+                    'forwardUrl'   => 'reload',
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -575,15 +575,15 @@ class action extends app
                     }
                 }
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'reload',
+                    'forwardUrl'   => 'reload',
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '操作失败',
+                'message'    => '操作失败',
             ];
             }
             exit(json_encode($message));
@@ -591,7 +591,7 @@ class action extends app
 
         $message = [
                 'statusCode' => 300,
-                'message' => '无效访问',
+                'message'    => '无效访问',
             ];
         exit(json_encode($message));
     }

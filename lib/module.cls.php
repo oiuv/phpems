@@ -50,11 +50,11 @@ class module
     public function getModulesList($args, $page, $number = PN, $order = 'moduleid desc')
     {
         $data = [
-            'select' => false,
-            'table' => 'module',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'module',
+            'query'   => $args,
             'orderby' => $order,
-            'serial' => 'modulelockfields',
+            'serial'  => 'modulelockfields',
         ];
         $r = $this->db->listElements($page, $number, $data);
 

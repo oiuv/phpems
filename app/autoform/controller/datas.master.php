@@ -30,9 +30,9 @@ class action extends app
         $page = $page > 1 ? $page : 1;
         $args = [];
         $data = [
-            'select' => false,
-            'table' => $module['moduletable'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => $module['moduletable'],
+            'query'   => $args,
             'orderby' => $module['moduletable'].'id desc',
         ];
         $rs = $this->db->listElements($page, PN, $data);

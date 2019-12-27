@@ -28,10 +28,10 @@ class action extends app
             $this->exam->clearDeletedQuestions();
         }
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }
@@ -42,10 +42,10 @@ class action extends app
             $this->exam->clearDeletedQuestionrows();
         }
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }
@@ -59,16 +59,16 @@ class action extends app
         if ($know) {
             $message = [
                 'statusCode' => 300,
-                'message' => '操作失败，所在章节下存在同名且未删除的知识点',
+                'message'    => '操作失败，所在章节下存在同名且未删除的知识点',
             ];
             $this->G->R($message);
         }
         $this->section->backKnows($knowsid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-recyle-knows&page={$page}",
+            'forwardUrl'   => "index.php?exam-master-recyle-knows&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -79,10 +79,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->section->delKnows($knowsid, true);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-recyle-knows&page={$page}",
+            'forwardUrl'   => "index.php?exam-master-recyle-knows&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -117,10 +117,10 @@ class action extends app
         $questionid = $this->ev->get('questionid');
         $this->exam->fanalDelQuestions($questionid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-recyle&page={$page}",
+            'forwardUrl'   => "index.php?exam-master-recyle&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -132,10 +132,10 @@ class action extends app
         $this->exam->finalDelQuestionRows($questionid);
         $this->exam->fanalDelQuestionsByArgs([['AND', 'questionparent = :questionparent', 'questionparent', $questionid]]);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-recyle-rows&page={$page}",
+            'forwardUrl'   => "index.php?exam-master-recyle-rows&page={$page}",
         ];
         $this->G->R($message);
     }

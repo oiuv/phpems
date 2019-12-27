@@ -40,7 +40,7 @@ class CallbackTest extends TestOssClientBase
         $eTag = $this->ossClient->uploadPartCopy($this->bucket, $copiedObject, $this->bucket, $object, $copyId, $upload_id);
         $upload_parts[] = [
             'PartNumber' => $copyId,
-            'ETag' => $eTag,
+            'ETag'       => $eTag,
         ];
 
         try {
@@ -66,7 +66,7 @@ class CallbackTest extends TestOssClientBase
            "x:var1":"value1",
            "x:var2":"值2"
        }';
-        $options = [OssClient::OSS_CALLBACK => $json,
+        $options = [OssClient::OSS_CALLBACK         => $json,
                         OssClient::OSS_CALLBACK_VAR => $var,
                        ];
 
@@ -100,7 +100,7 @@ class CallbackTest extends TestOssClientBase
         $eTag = $this->ossClient->uploadPartCopy($this->bucket, $copiedObject, $this->bucket, $object, $copyId, $upload_id);
         $upload_parts[] = [
             'PartNumber' => $copyId,
-            'ETag' => $eTag,
+            'ETag'       => $eTag,
         ];
 
         try {
@@ -126,7 +126,7 @@ class CallbackTest extends TestOssClientBase
        "x:var1":"value1",
        "x:var2":"值2"
        }';
-        $options = [OssClient::OSS_CALLBACK => $json,
+        $options = [OssClient::OSS_CALLBACK         => $json,
                         OssClient::OSS_CALLBACK_VAR => $var,
                        ];
 
@@ -215,7 +215,7 @@ class CallbackTest extends TestOssClientBase
                 "x:var1":"value1",
                 "x:var2":"aliyun.com"
             }';
-        $options = [OssClient::OSS_CALLBACK => $json,
+        $options = [OssClient::OSS_CALLBACK              => $json,
                              OssClient::OSS_CALLBACK_VAR => $var,
                              ];
         $this->putObjectCallbackOk($options, '200');
@@ -234,7 +234,7 @@ class CallbackTest extends TestOssClientBase
                 "x:var1":"value1凌波不过横塘路，但目送，芳",
                 "x:var2":"值2"
             }';
-        $options = [OssClient::OSS_CALLBACK => $url,
+        $options = [OssClient::OSS_CALLBACK              => $url,
                              OssClient::OSS_CALLBACK_VAR => $var,
                             ];
         $this->putObjectCallbackOk($options, '200');
@@ -267,6 +267,7 @@ class CallbackTest extends TestOssClientBase
     {
         $object = 'oss-php-sdk-callback-test.txt';
         $content = file_get_contents(__FILE__);
+
         try {
             $result = $this->ossClient->putObject($this->bucket, $object, $content, $options);
             $this->assertSame($status, $result['info']['http_code']);
@@ -280,6 +281,7 @@ class CallbackTest extends TestOssClientBase
     {
         $object = 'oss-php-sdk-callback-test.txt';
         $content = file_get_contents(__FILE__);
+
         try {
             $result = $this->ossClient->putObject($this->bucket, $object, $content, $options);
             $this->assertTrue(false);

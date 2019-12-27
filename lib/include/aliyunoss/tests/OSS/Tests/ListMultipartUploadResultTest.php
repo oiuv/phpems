@@ -20,7 +20,7 @@ use OSS\Result\ListMultipartUploadResult;
  */
 class ListMultipartUploadResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListMultipartUploadsResult xmlns="http://doc.oss-cn-hangzhou.aliyuncs.com">
     <Bucket>oss-example</Bucket>
@@ -50,7 +50,7 @@ class ListMultipartUploadResultTest extends \PHPUnit_Framework_TestCase
 </ListMultipartUploadsResult>
 BBBB;
 
-    private $validXmlWithEncodedKey = <<<BBBB
+    private $validXmlWithEncodedKey = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListMultipartUploadsResult xmlns="http://doc.oss-cn-hangzhou.aliyuncs.com">
     <Bucket>oss-example</Bucket>

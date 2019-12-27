@@ -16,9 +16,9 @@ use OSS\Core\OssException;
 use OSS\Http\ResponseCore;
 use OSS\Result\CopyObjectResult;
 
-class CopyObjectResultTest extends \PHPUnit_Framework_TestCase
+class CopyObjectResult extends \PHPUnit_Framework_TestCase
 {
-    private $body = <<<BBBB
+    private $body = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <CopyObjectResult>
   <LastModified>Fri, 24 Feb 2012 07:18:48 GMT</LastModified>
@@ -29,6 +29,7 @@ BBBB;
     public function testNullResponse()
     {
         $response = null;
+
         try {
             new CopyObjectResult($response);
             $this->assertFalse(true);
@@ -51,6 +52,7 @@ BBBB;
     public function testFailResponse()
     {
         $response = new ResponseCore([], '', 404);
+
         try {
             new CopyObjectResult($response);
             $this->assertFalse(true);

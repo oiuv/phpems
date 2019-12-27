@@ -22,9 +22,9 @@ class UploadPartResult extends Result
     /**
      * 结果中part的ETag.
      *
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     protected function parseDataFromResponse()
     {
@@ -32,6 +32,7 @@ class UploadPartResult extends Result
         if (isset($header['etag'])) {
             return $header['etag'];
         }
+
         throw new OssException('cannot get ETag');
     }
 }

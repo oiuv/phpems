@@ -22,9 +22,9 @@ class AppendResult extends Result
     /**
      * Get the value of next-append-position from append's response headers.
      *
-     * @return int
-     *
      * @throws OssException
+     *
+     * @return int
      */
     protected function parseDataFromResponse()
     {
@@ -32,6 +32,7 @@ class AppendResult extends Result
         if (isset($header['x-oss-next-append-position'])) {
             return intval($header['x-oss-next-append-position']);
         }
+
         throw new OssException('cannot get next-append-position');
     }
 }

@@ -45,10 +45,10 @@ class action extends app
             $sessionvars = $this->exam->getExamSessionBySessionid();
             if (!$sessionvars['examsessionid']) {
                 $message = [
-                    'statusCode' => 300,
-                    'message' => '非法参数',
+                    'statusCode'   => 300,
+                    'message'      => '非法参数',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exampaper',
+                    'forwardUrl'   => 'index.php?exam-app-exampaper',
                 ];
                 $this->G->R($message);
             }
@@ -57,24 +57,24 @@ class action extends app
             $result = $this->exam->markscore($sessionvars, $questype);
             if ($result['needhand']) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '交卷成功',
+                    'statusCode'   => 200,
+                    'message'      => '交卷成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?exam-app-history-makescore&ehid={$result['ehid']}",
+                    'forwardUrl'   => "index.php?exam-app-history-makescore&ehid={$result['ehid']}",
                 ];
             } else {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '交卷成功',
+                    'statusCode'   => 200,
+                    'message'      => '交卷成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?exam-app-history-stats&ehid={$result['ehid']}",
+                    'forwardUrl'   => "index.php?exam-app-history-stats&ehid={$result['ehid']}",
                 ];
             }
             $this->G->R($message);
         } else {
             $message = [
                 'statusCode' => 300,
-                'message' => '非法参数',
+                'message'    => '非法参数',
             ];
             $this->G->R($message);
         }
@@ -108,7 +108,7 @@ class action extends app
         if (!$r['examid']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '参数错误，尝试退出后重新进入',
+                'message'    => '参数错误，尝试退出后重新进入',
             ];
             $this->G->R($message);
         } else {
@@ -159,10 +159,10 @@ class action extends app
                 $sargs['examsessionuserid'] = $this->_user['sessionuserid'];
                 $this->exam->insertExamSession($sargs);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exampaper-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exampaper-paper',
                 ];
                 $this->G->R($message);
             } elseif (2 == $r['examtype']) {
@@ -207,10 +207,10 @@ class action extends app
                 $args['examsessionuserid'] = $this->_user['sessionuserid'];
                 $this->exam->insertExamSession($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exampaper-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exampaper-paper',
                 ];
                 $this->G->R($message);
             } else {
@@ -231,10 +231,10 @@ class action extends app
                 $args['examsessionuserid'] = $this->_user['sessionuserid'];
                 $this->exam->insertExamSession($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '抽题完毕，转入试卷页面',
+                    'statusCode'   => 200,
+                    'message'      => '抽题完毕，转入试卷页面',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exampaper-paper',
+                    'forwardUrl'   => 'index.php?exam-app-exampaper-paper',
                 ];
                 $this->G->R($message);
             }

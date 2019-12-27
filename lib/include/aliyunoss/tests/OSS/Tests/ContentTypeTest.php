@@ -134,7 +134,7 @@ class ContentTypeTest extends \PHPUnit_Framework_TestCase
         $this->runCmd('dd if=/dev/urandom of='.$file.' bs=1024 count=100');
 
         $client->multiuploadFile($bucket, $object, $file, [
-            'partSize' => 100,
+            'partSize'     => 100,
             'Content-Type' => 'audio/mpeg',
         ]);
         $type = $this->getContentType($bucket, $object);

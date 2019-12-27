@@ -70,9 +70,9 @@ class position_content
     public function getPosContentList($args, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'poscontent',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'poscontent',
+            'query'   => $args,
             'orderby' => 'pcsequence DESC, pcid DESC',
         ];
 
@@ -83,9 +83,9 @@ class position_content
     {
         $args[] = ['AND', 'pccontentid = contentid'];
         $data = [
-            'select' => false,
-            'table' => ['poscontent', 'content'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['poscontent', 'content'],
+            'query'   => $args,
             'orderby' => 'pcsequence DESC, pcid DESC',
         ];
 
@@ -96,9 +96,9 @@ class position_content
     {
         $args[] = ['AND', 'pccontentid = seminarid'];
         $data = [
-            'select' => false,
-            'table' => ['poscontent', 'seminar'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['poscontent', 'seminar'],
+            'query'   => $args,
             'orderby' => 'pcsequence DESC, pcid DESC',
         ];
 

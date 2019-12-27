@@ -17,7 +17,7 @@ use OSS\Result\ListObjectsResult;
 
 class ListObjectsResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml1 = <<<BBBB
+    private $validXml1 = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListBucketResult>
   <Name>testbucket-hf</Name>
@@ -35,7 +35,7 @@ class ListObjectsResultTest extends \PHPUnit_Framework_TestCase
 </ListBucketResult>
 BBBB;
 
-    private $validXml2 = <<<BBBB
+    private $validXml2 = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListBucketResult>
   <Name>testbucket-hf</Name>
@@ -59,7 +59,7 @@ BBBB;
 </ListBucketResult>
 BBBB;
 
-    private $validXmlWithEncodedKey = <<<BBBB
+    private $validXmlWithEncodedKey = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListBucketResult>
   <Name>testbucket-hf</Name>

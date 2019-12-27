@@ -517,7 +517,7 @@ class RequestCore
     /**
      * A callback function that is invoked by cURL for streaming up.
      *
-     * @param resource $curl_handle (Required) The cURL handle for the request
+     * @param resource $curl_handle    (Required) The cURL handle for the request
      * @param resource $header_content (Required) The header callback result
      *
      * @return headers from a stream
@@ -797,7 +797,7 @@ class RequestCore
         }
 
         // Merge in the CURLOPTs
-        if (isset($this->curlopts) && sizeof($this->curlopts) > 0) {
+        if (isset($this->curlopts) && count($this->curlopts) > 0) {
             foreach ($this->curlopts as $k => $v) {
                 curl_setopt($curl_handle, $k, $v);
             }

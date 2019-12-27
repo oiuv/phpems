@@ -463,7 +463,7 @@ class WxPayApi
     {
         $chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
         $str = '';
-        for ($i = 0; $i < $length; ++$i) {
+        for ($i = 0; $i < $length; $i++) {
             $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
         }
 
@@ -598,6 +598,7 @@ class WxPayApi
         }
         $error = curl_errno($ch);
         curl_close($ch);
+
         throw new WxPayException("curl出错，错误码:$error");
     }
 

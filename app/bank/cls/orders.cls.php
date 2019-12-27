@@ -31,11 +31,11 @@ class orders_bank
     public function getOrderList($args, $page, $number = 20, $order = 'ordercreatetime DESC')
     {
         $data = [
-            'select' => false,
-            'table' => 'orders',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'orders',
+            'query'   => $args,
             'orderby' => $order,
-            'serial' => ['orderitems', 'orderuserinfo'],
+            'serial'  => ['orderitems', 'orderuserinfo'],
         ];
         $r = $this->db->listElements($page, $number, $data);
 

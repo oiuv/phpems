@@ -37,6 +37,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $httpCore = new RequestCore('http://www.baidu.com');
         $httpCore->set_proxy('1.0.2.1:8888');
         $httpCore->connect_timeout = 1;
+
         try {
             $httpResponse = $httpCore->send_request();
             $this->assertTrue(false);
@@ -67,6 +68,7 @@ class HttpTest extends \PHPUnit_Framework_TestCase
     {
         $httpCore = null;
         $exception = false;
+
         try {
             $httpCore = new RequestCore('http://www.notexistsitexx.com');
             $httpCore->set_body('');

@@ -18,7 +18,7 @@ use OSS\Result\GetLifecycleResult;
 
 class GetLifecycleResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LifecycleConfiguration>
 <Rule>
@@ -56,6 +56,7 @@ BBBB;
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], $this->validXml, 300);
+
         try {
             new GetLifecycleResult($response);
             $this->assertTrue(false);

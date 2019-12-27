@@ -28,9 +28,9 @@ class seminar_seminar
     public function getSeminarList($args, $page, $number = 10, $orderby = 'seminarorder desc,seminarid desc')
     {
         $data = [
-            'select' => false,
-            'table' => 'seminar',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'seminar',
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 
@@ -84,9 +84,9 @@ class seminar_seminar
     public function getSeminarLayoutList($args, $page, $number = 10, $orderby = 'slayoutorder desc,slayoutid desc')
     {
         $data = [
-            'select' => false,
-            'table' => 'seminar_layout',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'seminar_layout',
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 
@@ -140,9 +140,9 @@ class seminar_seminar
     public function getSeminarElemList($args, $page, $number = 10, $orderby = 'selorder desc,selid desc')
     {
         $data = [
-            'select' => false,
-            'table' => 'seminar_elem',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'seminar_elem',
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 
@@ -240,9 +240,9 @@ class seminar_seminar
     {
         $args[] = ['AND', 'contentid = sctcontentid'];
         $data = [
-            'select' => false,
-            'table' => ['seminar_content', 'content'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['seminar_content', 'content'],
+            'query'   => $args,
             'orderby' => $orderby,
         ];
 

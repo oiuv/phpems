@@ -67,7 +67,7 @@ class db2
         if (!$this->linkid) {
             $this->connect();
         }
-        ++$this->q;
+        $this->q++;
         $this->queryid = mysql_query($sql);
         if (mysql_errno($this->linkid) && $this->debug) {
             exit('ERRO:'.$sql.':'.mysql_error());
@@ -162,7 +162,7 @@ class db2
     }
 
     //列出数据
-    public function listElements($page, $number = 20, $args, $type = 1)
+    public function listElements($page, $number, $args, $type = 1)
     {
         if (!is_array($args)) {
             return false;

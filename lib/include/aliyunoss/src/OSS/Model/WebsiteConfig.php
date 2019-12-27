@@ -52,9 +52,9 @@ class WebsiteConfig implements XmlConfig
     /**
      * Serialize the WebsiteConfig object into xml string.
      *
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     public function serializeToXml()
     {

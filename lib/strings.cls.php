@@ -150,7 +150,7 @@ class strings
         if (!$e) {
             return false;
         }
-        for ($i = 0; $i < $e; ++$i) {
+        for ($i = 0; $i < $e; $i++) {
             $t = base_convert(ord($str[$i]), 10, 16);
             $tmp .= "\x{$t}";
         }
@@ -164,7 +164,7 @@ class strings
         $key = CS;
         $kl = strlen($key);
         $il = strlen($info);
-        for ($i = 0; $i < $il; ++$i) {
+        for ($i = 0; $i < $il; $i++) {
             $p = $i % $kl;
             $info[$i] = chr(ord($info[$i]) + ord($key[$p]));
         }
@@ -178,7 +178,7 @@ class strings
         $info = urldecode($info);
         $kl = strlen($key);
         $il = strlen($info);
-        for ($i = 0; $i < $il; ++$i) {
+        for ($i = 0; $i < $il; $i++) {
             $p = $i % $kl;
             $info[$i] = chr(ord($info[$i]) - ord($key[$p]));
         }

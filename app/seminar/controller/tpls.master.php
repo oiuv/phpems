@@ -17,11 +17,11 @@ class action extends app
         $this->layout = $this->G->make('layout', 'seminar');
         $action = $this->ev->url(3);
         $this->types = [
-            'style' => '风格',
+            'style'  => '风格',
             'layout' => '通栏',
             'slider' => '轮播',
-            'lists' => '列表',
-            'block' => '图文',
+            'lists'  => '列表',
+            'block'  => '图文',
             'plugin' => '插件',
         ];
         $search = $this->ev->get('search');
@@ -45,10 +45,10 @@ class action extends app
         $stplid = $this->ev->get('stplid');
         $tpl = $this->layout->delSeminarTpl($stplid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -61,10 +61,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->layout->modifySeminarTpl($stplid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-tpls-{$tpl['stpltype']}",
+                'forwardUrl'   => "index.php?seminar-master-tpls-{$tpl['stpltype']}",
             ];
             exit(json_encode($message));
         }
@@ -80,10 +80,10 @@ class action extends app
             $args = $this->ev->get('args');
             $this->layout->addSeminarTpl($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?seminar-master-tpls-{$args['stpltype']}",
+                'forwardUrl'   => "index.php?seminar-master-tpls-{$args['stpltype']}",
             ];
             exit(json_encode($message));
         }

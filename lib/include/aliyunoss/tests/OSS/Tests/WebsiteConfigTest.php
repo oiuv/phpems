@@ -16,7 +16,7 @@ use OSS\Model\WebsiteConfig;
 
 class WebsiteConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <WebsiteConfiguration>
 <IndexDocument>
@@ -28,10 +28,10 @@ class WebsiteConfigTest extends \PHPUnit_Framework_TestCase
 </WebsiteConfiguration>
 BBBB;
 
-    private $nullXml = <<<BBBB
+    private $nullXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?><WebsiteConfiguration><IndexDocument><Suffix/></IndexDocument><ErrorDocument><Key/></ErrorDocument></WebsiteConfiguration>
 BBBB;
-    private $nullXml2 = <<<BBBB
+    private $nullXml2 = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?><WebsiteConfiguration><IndexDocument><Suffix></Suffix></IndexDocument><ErrorDocument><Key></Key></ErrorDocument></WebsiteConfiguration>
 BBBB;
 

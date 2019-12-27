@@ -69,6 +69,7 @@ function putBucketLifecycle($ossClient, $bucket)
     $actions[] = new LifecycleAction(OssClient::OSS_LIFECYCLE_EXPIRATION, OssClient::OSS_LIFECYCLE_TIMING_DATE, '2022-10-12T00:00:00.000Z');
     $lifecycleRule = new LifecycleRule('delete temporary files', 'temporary/', 'Enabled', $actions);
     $lifecycleConfig->addRule($lifecycleRule);
+
     try {
         $ossClient->putBucketLifecycle($bucket, $lifecycleConfig);
     } catch (OssException $e) {
@@ -91,6 +92,7 @@ function putBucketLifecycle($ossClient, $bucket)
 function getBucketLifecycle($ossClient, $bucket)
 {
     $lifecycleConfig = null;
+
     try {
         $lifecycleConfig = $ossClient->getBucketLifecycle($bucket);
     } catch (OssException $e) {

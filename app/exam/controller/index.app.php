@@ -30,25 +30,25 @@ class action extends app
             $basic = $this->basic->getBasicById($basicid);
             if (2 == $basic['basicexam']['modal']) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-exam',
+                    'forwardUrl'   => 'index.php?exam-app-exam',
                 ];
             } else {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-lesson',
+                    'forwardUrl'   => 'index.php?exam-app-lesson',
                 ];
             }
         } else {
             $message = [
-                'statusCode' => 200,
-                'message' => '您尚未开通本考场，系统将引导您开通',
+                'statusCode'   => 200,
+                'message'      => '您尚未开通本考场，系统将引导您开通',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-app-basics-detail&basicid='.$basicid,
+                'forwardUrl'   => 'index.php?exam-app-basics-detail&basicid='.$basicid,
             ];
         }
         $this->G->R($message);
@@ -88,7 +88,7 @@ class action extends app
             if (!$sessionvars['examsessionid']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '系统检测到试卷错误，请停止作答，联系监考老师！',
+                    'message'    => '系统检测到试卷错误，请停止作答，联系监考老师！',
                 ];
                 $this->G->R($message);
             }
@@ -97,7 +97,7 @@ class action extends app
             if (!$token || $token != $sessionvars['examsessiontoken']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '系统检测到试卷错误，请停止作答，联系监考老师！',
+                    'message'    => '系统检测到试卷错误，请停止作答，联系监考老师！',
                 ];
                 $this->G->R($message);
             }

@@ -32,24 +32,24 @@ class action extends app
             if (md5($oldpassword) != $user['userpassword']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败，原密码验证失败',
+                    'message'    => '操作失败，原密码验证失败',
                 ];
                 exit(json_encode($message));
             }
             if ($args['password'] == $args['password2'] && $userid) {
                 $id = $this->user->modifyUserPassword($userid, $args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?user-app-logout',
+                    'forwardUrl'   => 'index.php?user-app-logout',
                 ];
                 exit(json_encode($message));
             }
 
             $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败',
+                    'message'    => '操作失败',
                 ];
             exit(json_encode($message));
         }
@@ -67,10 +67,10 @@ class action extends app
             unset($args['usercoin'],$args['userpassword'],$args['username'],$args['useremail']);
             $id = $this->user->modifyUserInfo($userid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-center-privatement',
+                'forwardUrl'   => 'index.php?user-center-privatement',
             ];
             exit(json_encode($message));
         }

@@ -38,8 +38,8 @@ define('DTH', 'x2_'); //系统表前缀，不用改
 
 define('REDIS', true);
 define('SERVER', [
-    'host' => '127.0.0.1', //Redis服务器IP
-    'port' => 6379, //Redis服务器端口
+    'host'     => '127.0.0.1', //Redis服务器IP
+    'port'     => 6379, //Redis服务器端口
     'database' => 9, //Redis数据库（0-15）
 ]);
 

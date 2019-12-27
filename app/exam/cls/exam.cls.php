@@ -133,11 +133,11 @@ class exam_exam
     {
         $args[] = ['AND', 'examsession.examsessionuserid = user.userid'];
         $data = [
-            'select' => false,
-            'table' => ['examsession', 'user'],
-            'query' => $args,
+            'select'  => false,
+            'table'   => ['examsession', 'user'],
+            'query'   => $args,
             'orderby' => 'examsessionstarttime DESC',
-            'serial' => ['examsessionsetting'],
+            'serial'  => ['examsessionsetting'],
         ];
         $r = $this->db->listElements($page, $number, $data);
 
@@ -147,14 +147,14 @@ class exam_exam
     //获取考试设置信息列表
     //参数：当前页码，每页显示数，查询条件数组
     //返回值：考试设置信息列表数组
-    public function getExamSettingList($args = [], $page, $number = 20)
+    public function getExamSettingList($args, $page, $number = 20)
     {
         $data = [
-            'select' => false,
-            'table' => 'exams',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'exams',
+            'query'   => $args,
             'orderby' => 'examid DESC',
-            'serial' => 'examsetting',
+            'serial'  => 'examsetting',
         ];
 
         return $this->db->listElements($page, $number, $data);
@@ -940,7 +940,7 @@ class exam_exam
         if (!$token || $token != $sessionvars['examsessiontoken']) {
             $message = [
                     'statusCode' => 300,
-                    'message' => '系统检测到试卷错误，请联系监考老师！',
+                    'message'    => '系统检测到试卷错误，请联系监考老师！',
                 ];
             $this->G->R($message);
         }
@@ -971,7 +971,7 @@ class exam_exam
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                                 } else {
@@ -1013,7 +1013,7 @@ class exam_exam
                                                 $rlen = 0;
                                                 break;
                                             }
-                                            ++$rlen;
+                                            $rlen++;
                                         }
                                         $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                     } else {

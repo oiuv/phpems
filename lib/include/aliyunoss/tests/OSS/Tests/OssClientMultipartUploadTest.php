@@ -36,6 +36,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         $localFilename = __DIR__.DIRECTORY_SEPARATOR.'/localfile.tmp';
         OssUtil::generateFile($bigFileName, 6 * 1024 * 1024);
         $object = 'mpu/multipart-bigfile-test.tmp';
+
         try {
             $this->ossClient->multiuploadFile($this->bucket, $object, $bigFileName, [OssClient::OSS_PART_SIZE => 1]);
             $options = [OssClient::OSS_FILE_DOWNLOAD => $localFilename];
@@ -59,6 +60,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
                 OssClient::OSS_CHECK_MD5 => true,
                 OssClient::OSS_PART_SIZE => 1,
         ];
+
         try {
             $this->ossClient->multiuploadFile($this->bucket, $object, $bigFileName, $options);
             $options = [OssClient::OSS_FILE_DOWNLOAD => $localFilename];
@@ -92,7 +94,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         $eTag = $this->ossClient->uploadPartCopy($this->bucket, $copiedObject, $this->bucket, $object, $copyId, $upload_id);
         $upload_parts[] = [
             'PartNumber' => $copyId,
-            'ETag' => $eTag,
+            'ETag'       => $eTag,
         ];
 
         try {
@@ -142,10 +144,10 @@ class OssClientMultipartUploadTest extends TestOssClientBase
             $to_pos = (int) $piece[OssClient::OSS_LENGTH] + $from_pos - 1;
             $up_options = [
                 OssClient::OSS_FILE_UPLOAD => $upload_file,
-                OssClient::OSS_PART_NUM => ($i + 1),
-                OssClient::OSS_SEEK_TO => $from_pos,
-                OssClient::OSS_LENGTH => $to_pos - $from_pos + 1,
-                OssClient::OSS_CHECK_MD5 => $is_check_md5,
+                OssClient::OSS_PART_NUM    => ($i + 1),
+                OssClient::OSS_SEEK_TO     => $from_pos,
+                OssClient::OSS_LENGTH      => $to_pos - $from_pos + 1,
+                OssClient::OSS_CHECK_MD5   => $is_check_md5,
             ];
             if ($is_check_md5) {
                 $content_md5 = OssUtil::getMd5SumForFile($upload_file, $from_pos, $to_pos);
@@ -162,7 +164,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         foreach ($response_upload_part as $i => $eTag) {
             $upload_parts[] = [
                 'PartNumber' => ($i + 1),
-                'ETag' => $eTag,
+                'ETag'       => $eTag,
             ];
         }
 
@@ -176,6 +178,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
 
         $numOfMultipartUpload1 = 0;
         $options = null;
+
         try {
             $listMultipartUploadInfo = $listMultipartUploadInfo = $this->ossClient->listMultipartUploads($this->bucket, $options);
             $this->assertNotNull($listMultipartUploadInfo);
@@ -191,6 +194,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         }
 
         $numOfMultipartUpload2 = 0;
+
         try {
             $listMultipartUploadInfo = $listMultipartUploadInfo = $this->ossClient->listMultipartUploads($this->bucket, $options);
             $this->assertNotNull($listMultipartUploadInfo);
@@ -227,10 +231,10 @@ class OssClientMultipartUploadTest extends TestOssClientBase
             $to_pos = (int) $piece[OssClient::OSS_LENGTH] + $from_pos - 1;
             $up_options = [
                 OssClient::OSS_FILE_UPLOAD => $upload_file,
-                OssClient::OSS_PART_NUM => ($i + 1),
-                OssClient::OSS_SEEK_TO => $from_pos,
-                OssClient::OSS_LENGTH => $to_pos - $from_pos + 1,
-                OssClient::OSS_CHECK_MD5 => $is_check_md5,
+                OssClient::OSS_PART_NUM    => ($i + 1),
+                OssClient::OSS_SEEK_TO     => $from_pos,
+                OssClient::OSS_LENGTH      => $to_pos - $from_pos + 1,
+                OssClient::OSS_CHECK_MD5   => $is_check_md5,
             ];
             if ($is_check_md5) {
                 $content_md5 = OssUtil::getMd5SumForFile($upload_file, $from_pos, $to_pos);
@@ -247,7 +251,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         foreach ($response_upload_part as $i => $eTag) {
             $upload_parts[] = [
                 'PartNumber' => ($i + 1),
-                'ETag' => $eTag,
+                'ETag'       => $eTag,
             ];
         }
 
@@ -272,6 +276,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
     {
         $localDirectory = dirname(__FILE__);
         $prefix = 'samples/codes';
+
         try {
             $this->ossClient->uploadDir($this->bucket, $prefix, $localDirectory);
         } catch (OssException $e) {
@@ -310,6 +315,7 @@ class OssClientMultipartUploadTest extends TestOssClientBase
     public function testListMultipartUploads()
     {
         $options = null;
+
         try {
             $listMultipartUploadInfo = $this->ossClient->listMultipartUploads($this->bucket, $options);
             $this->assertNotNull($listMultipartUploadInfo);

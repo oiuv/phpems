@@ -26,9 +26,9 @@ class action extends app
     {
         if ($this->_user['sessionuserid']) {
             $message = [
-                'statusCode' => 200,
+                'statusCode'   => 200,
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?core-phone',
+                'forwardUrl'   => 'index.php?core-phone',
             ];
             $this->G->R($message);
         }
@@ -40,7 +40,7 @@ class action extends app
             if (TIME - $tmp['sessionlasttime'] < 1) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败',
+                    'message'    => '操作失败',
                 ];
                 exit(json_encode($message));
             }
@@ -56,10 +56,10 @@ class action extends app
                     }
                     $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                     $message = [
-                        'statusCode' => 201,
-                        'message' => '操作成功',
+                        'statusCode'   => 201,
+                        'message'      => '操作成功',
                         'callbackType' => 'forward',
-                        'forwardUrl' => 'index.php?core-phone',
+                        'forwardUrl'   => 'index.php?core-phone',
                     ];
                     if ($this->ev->get('userhash')) {
                         exit(json_encode($message));
@@ -71,7 +71,7 @@ class action extends app
                 $message = [
                         'statusCode' => 300,
                         'errorinput' => 'args[username]',
-                        'message' => '操作失败',
+                        'message'    => '操作失败',
                     ];
                 exit(json_encode($message));
             }
@@ -79,7 +79,7 @@ class action extends app
             $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
-                    'message' => '操作失败',
+                    'message'    => '操作失败',
                 ];
             exit(json_encode($message));
         }

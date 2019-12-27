@@ -30,9 +30,9 @@ class attach_document
     {
         $data = [
             'select' => false,
-            'table' => 'attach',
-            'query' => $args,
-            'index' => 'attid',
+            'table'  => 'attach',
+            'query'  => $args,
+            'index'  => 'attid',
         ];
         $r = $this->db->listElements($page, $number, $data);
 

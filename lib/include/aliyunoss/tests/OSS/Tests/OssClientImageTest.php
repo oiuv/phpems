@@ -16,7 +16,7 @@ require_once __DIR__.'/Common.php';
 
 use OSS\OssClient;
 
-class OssClinetImageTest extends \PHPUnit_Framework_TestCase
+class OssClientImageTest extends \PHPUnit_Framework_TestCase
 {
     private $bucketName;
     private $client;
@@ -47,7 +47,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/resize,m_fixed,h_100,w_100', ];
+            OssClient::OSS_PROCESS       => 'image/resize,m_fixed,h_100,w_100', ];
         $this->check($options, 100, 100, 3267, 'jpg');
     }
 
@@ -55,7 +55,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/crop,w_100,h_100,x_100,y_100,r_1', ];
+            OssClient::OSS_PROCESS       => 'image/crop,w_100,h_100,x_100,y_100,r_1', ];
         $this->check($options, 100, 100, 1969, 'jpg');
     }
 
@@ -63,7 +63,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/rotate,90', ];
+            OssClient::OSS_PROCESS       => 'image/rotate,90', ];
         $this->check($options, 267, 400, 20998, 'jpg');
     }
 
@@ -71,7 +71,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/sharpen,100', ];
+            OssClient::OSS_PROCESS       => 'image/sharpen,100', ];
         $this->check($options, 400, 267, 23015, 'jpg');
     }
 
@@ -79,7 +79,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/watermark,text_SGVsbG8g5Zu-54mH5pyN5YqhIQ', ];
+            OssClient::OSS_PROCESS       => 'image/watermark,text_SGVsbG8g5Zu-54mH5pyN5YqhIQ', ];
         $this->check($options, 400, 267, 26369, 'jpg');
     }
 
@@ -87,7 +87,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/format,png', ];
+            OssClient::OSS_PROCESS       => 'image/format,png', ];
         $this->check($options, 400, 267, 160733, 'png');
     }
 
@@ -95,7 +95,7 @@ class OssClinetImageTest extends \PHPUnit_Framework_TestCase
     {
         $options = [
             OssClient::OSS_FILE_DOWNLOAD => $this->download_file,
-            OssClient::OSS_PROCESS => 'image/resize,m_fixed,w_100,h_100', ];
+            OssClient::OSS_PROCESS       => 'image/resize,m_fixed,w_100,h_100', ];
         $this->check($options, 100, 100, 3267, 'jpg');
     }
 

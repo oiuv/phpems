@@ -26,10 +26,10 @@ class app
         if (!$this->_user['sessionuserid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode' => 301,
-                'message' => '请您重新登录',
+                'statusCode'   => 301,
+                'message'      => '请您重新登录',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-phone-login',
+                'forwardUrl'   => 'index.php?user-phone-login',
             ]));
             }
 
@@ -61,9 +61,9 @@ class app
         if (2 == $this->data['currentbasic']['basicexam']['model']) {
             if ($this->ev->url('2') && !in_array($this->ev->url('2'), ['index', 'basics', 'exam', 'recover', 'history'])) {
                 $message = [
-                    'statusCode' => 200,
+                    'statusCode'   => 200,
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-phone-exam',
+                    'forwardUrl'   => 'index.php?exam-phone-exam',
                 ];
                 $this->G->R($message);
             }

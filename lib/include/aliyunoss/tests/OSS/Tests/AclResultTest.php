@@ -18,7 +18,7 @@ use OSS\Result\AclResult;
 
 class AclResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" ?>
 <AccessControlPolicy>
     <Owner>
@@ -31,7 +31,7 @@ class AclResultTest extends \PHPUnit_Framework_TestCase
 </AccessControlPolicy>
 BBBB;
 
-    private $invalidXml = <<<BBBB
+    private $invalidXml = <<<'BBBB'
 <?xml version="1.0" ?>
 <AccessControlPolicy>
 </AccessControlPolicy>
@@ -47,6 +47,7 @@ BBBB;
     public function testParseNullXml()
     {
         $response = new ResponseCore([], '', 200);
+
         try {
             new AclResult($response);
             $this->assertTrue(false);
@@ -58,6 +59,7 @@ BBBB;
     public function testParseInvalidXml()
     {
         $response = new ResponseCore([], $this->invalidXml, 200);
+
         try {
             new AclResult($response);
             $this->assertFalse(true);

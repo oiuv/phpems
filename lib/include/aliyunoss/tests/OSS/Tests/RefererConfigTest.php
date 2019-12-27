@@ -16,7 +16,7 @@ use OSS\Model\RefererConfig;
 
 class RefererConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <RefererConfiguration>
 <AllowEmptyReferer>true</AllowEmptyReferer>
@@ -29,7 +29,7 @@ class RefererConfigTest extends \PHPUnit_Framework_TestCase
 </RefererConfiguration>
 BBBB;
 
-    private $validXml2 = <<<BBBB
+    private $validXml2 = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <RefererConfiguration>
 <AllowEmptyReferer>true</AllowEmptyReferer>

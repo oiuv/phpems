@@ -13,7 +13,7 @@
 session_start();
 
 define('PE_VERSION', '6.0');
-define("PEPATH",dirname(__FILE__));
+define('PEPATH', dirname(__FILE__));
 
 require __DIR__.'/vendor/autoload.php';
 require __DIR__.'/lib/init.cls.php';

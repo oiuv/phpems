@@ -324,7 +324,7 @@ class pdosql
                         foreach ($p[3] as $tp) {
                             $tkey[] = ':'.$p[2].'_'.$i;
                             $v[$p[2].'_'.$i] = $tp;
-                            ++$i;
+                            $i++;
                         }
                         $p[1] = str_replace(':'.$p[2], implode(',', $tkey), $p[1]);
                     } else {

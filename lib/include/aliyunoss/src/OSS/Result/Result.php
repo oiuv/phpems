@@ -97,12 +97,13 @@ abstract class Result
             $body = $this->rawResponse->body;
 
             $details = [
-                'status' => $httpStatus,
+                'status'     => $httpStatus,
                 'request-id' => $requestId,
-                'code' => $code,
-                'message' => $message,
-                'body' => $body,
+                'code'       => $code,
+                'message'    => $message,
+                'body'       => $body,
             ];
+
             throw new OssException($details);
         }
     }

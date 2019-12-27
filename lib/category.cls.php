@@ -58,12 +58,12 @@ class category
             $args[] = ['AND', 'catapp = :catapp', 'catapp', $this->app];
         }
         $data = [
-            'select' => false,
-            'table' => 'category',
-            'index' => 'catid',
-            'query' => $args,
+            'select'  => false,
+            'table'   => 'category',
+            'index'   => 'catid',
+            'query'   => $args,
             'orderby' => 'catlite DESC,catid DESC',
-            'serial' => 'catmanager',
+            'serial'  => 'catmanager',
         ];
 
         return $this->db->listElements($page, $number, $data);
@@ -89,9 +89,9 @@ class category
     {
         unset($args['catapp']);
         $data = [
-            'table' => 'category',
-            'value' => $args,
-            'query' => [['AND', 'catid = :catid', 'catid', $id]],
+            'table'   => 'category',
+            'value'   => $args,
+            'query'   => [['AND', 'catid = :catid', 'catid', $id]],
             'orderby' => 'catlite DESC,catid DESC',
         ];
 
@@ -151,7 +151,7 @@ class category
                     $parent[] = $n['catid'];
                 }
             }
-            ++$i;
+            $i++;
         }
 
         return $child;

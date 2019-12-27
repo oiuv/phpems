@@ -38,10 +38,10 @@ class action extends app
         }
         $questype = $this->basic->getQuestypeList();
         $sessionvars = [
-            'examsession' => $eh['ehexam'],
-            'examsessionscorelist' => $eh['ehscorelist'],
-            'examsessionsetting' => $eh['ehsetting'],
-            'examsessionquestion' => $eh['ehquestion'],
+            'examsession'           => $eh['ehexam'],
+            'examsessionscorelist'  => $eh['ehscorelist'],
+            'examsessionsetting'    => $eh['ehsetting'],
+            'examsessionquestion'   => $eh['ehquestion'],
             'examsessionuseranswer' => $eh['ehuseranswer'],
         ];
         $this->tpl->assign('sessionvars', $sessionvars);
@@ -73,10 +73,10 @@ class action extends app
             }
             $this->favor->modifyExamHistory($ehid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '判分成功',
+                'statusCode'   => 200,
+                'message'      => '判分成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-app-history-stats&ehid={$ehid}",
+                'forwardUrl'   => "index.php?exam-app-history-stats&ehid={$ehid}",
             ];
             $this->G->R($message);
         } else {
@@ -114,16 +114,16 @@ class action extends app
         $ehid = $this->ev->get('ehid');
         $eh = $this->favor->getExamHistoryById($ehid);
         $sessionvars = [
-            'examsession' => $eh['ehexam'],
-            'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
-            'examsessionsetting' => $eh['ehsetting'],
-            'examsessionbasic' => $eh['ehbasicid'],
-            'examsessionquestion' => $eh['ehquestion'],
+            'examsession'           => $eh['ehexam'],
+            'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
+            'examsessionsetting'    => $eh['ehsetting'],
+            'examsessionbasic'      => $eh['ehbasicid'],
+            'examsessionquestion'   => $eh['ehquestion'],
             'examsessionuseranswer' => $eh['ehanswer'],
-            'examsessiontime' => $eh['ehsetting']['time'],
-            'examsessionscorelist' => $eh['ehscorelist'],
-            'examsessionscore' => $eh['ehscore'],
-            'examsessionstarttime' => $eh['ehstarttime'],
+            'examsessiontime'       => $eh['ehsetting']['time'],
+            'examsessionscorelist'  => $eh['ehscorelist'],
+            'examsessionscore'      => $eh['ehscore'],
+            'examsessionstarttime'  => $eh['ehstarttime'],
         ];
         $number = [];
         $right = [];
@@ -137,11 +137,11 @@ class action extends app
             $score[$key] = 0;
             if ($sessionvars['examsessionquestion']['questions'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
-                    ++$number[$key];
-                    ++$allnumber;
+                    $number[$key]++;
+                    $allnumber++;
                     if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                        ++$right[$key];
-                        ++$allright;
+                        $right[$key]++;
+                        $allright++;
                     }
                     $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                 }
@@ -149,11 +149,11 @@ class action extends app
             if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                     foreach ($v['data'] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }
@@ -208,10 +208,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->favor->delExamHistory($ehid, $this->_user['sessionuserid']);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }
@@ -266,20 +266,20 @@ class action extends app
         $ehid = $this->ev->get('ehid');
         $eh = $this->favor->getExamHistoryById($ehid);
         $args = [
-            'examsession' => $eh['ehexam'].'重做',
-            'examsessiontype' => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
-            'examsessionuserid' => $this->_user['sessionuserid'],
-            'examsessionkey' => $eh['examid'],
-            'examsessionsetting' => $eh['ehsetting'],
-            'examsessionbasic' => $eh['ehbasicid'],
-            'examsessionquestion' => $eh['ehquestion'],
+            'examsession'           => $eh['ehexam'].'重做',
+            'examsessiontype'       => 2 == $eh['ehtype'] ? 1 : $eh['ehtype'],
+            'examsessionuserid'     => $this->_user['sessionuserid'],
+            'examsessionkey'        => $eh['examid'],
+            'examsessionsetting'    => $eh['ehsetting'],
+            'examsessionbasic'      => $eh['ehbasicid'],
+            'examsessionquestion'   => $eh['ehquestion'],
             'examsessionuseranswer' => '',
-            'examsessiontime' => $eh['ehsetting']['examsetting']['examtime'],
-            'examsessionscorelist' => '',
-            'examsessionscore' => 0,
-            'examsessionstarttime' => TIME,
-            'examsessionissave' => 0,
-            'examsessionstatus' => 0,
+            'examsessiontime'       => $eh['ehsetting']['examsetting']['examtime'],
+            'examsessionscorelist'  => '',
+            'examsessionscore'      => 0,
+            'examsessionstarttime'  => TIME,
+            'examsessionissave'     => 0,
+            'examsessionstatus'     => 0,
         ];
         $es = $this->exam->getExamSessionBySessionid();
         if ($es['examsessionid']) {
@@ -289,24 +289,24 @@ class action extends app
         }
         if (1 == $eh['ehtype']) {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
         ];
         } elseif (2 == $eh['ehtype']) {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
         ];
         } else {
             $message = [
-            'statusCode' => 200,
-            'message' => '试题加载成功，即将进入考试页面',
+            'statusCode'   => 200,
+            'message'      => '试题加载成功，即将进入考试页面',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
+            'forwardUrl'   => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
         ];
         }
         $this->G->R($message);

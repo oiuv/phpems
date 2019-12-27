@@ -32,6 +32,7 @@ class UploadPartResultTest extends \PHPUnit_Framework_TestCase
     public function testParseInvalidHeader()
     {
         $response = new ResponseCore($this->invalidHeader, '', 200);
+
         try {
             new UploadPartResult($response);
             $this->assertTrue(false);

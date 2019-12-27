@@ -55,6 +55,7 @@ getBucketWebsite($ossClient, $bucket);
 function putBucketWebsite($ossClient, $bucket)
 {
     $websiteConfig = new WebsiteConfig('index.html', 'error.html');
+
     try {
         $ossClient->putBucketWebsite($bucket, $websiteConfig);
     } catch (OssException $e) {
@@ -77,6 +78,7 @@ function putBucketWebsite($ossClient, $bucket)
 function getBucketWebsite($ossClient, $bucket)
 {
     $websiteConfig = null;
+
     try {
         $websiteConfig = $ossClient->getBucketWebsite($bucket);
     } catch (OssException $e) {

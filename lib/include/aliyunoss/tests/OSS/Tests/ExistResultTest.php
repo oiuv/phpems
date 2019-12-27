@@ -37,6 +37,7 @@ class ExistResultTest extends \PHPUnit_Framework_TestCase
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], '', 300);
+
         try {
             new ExistResult($response);
             $this->assertTrue(false);

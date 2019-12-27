@@ -37,12 +37,14 @@ class OssClientBucketWebsiteTest extends TestOssClientBase
         } catch (OssException $e) {
             $this->assertTrue(false);
         }
+
         try {
             Common::waitMetaSync();
             $this->ossClient->deleteBucketWebsite($this->bucket);
         } catch (OssException $e) {
             $this->assertTrue(false);
         }
+
         try {
             Common::waitMetaSync();
             $websiteConfig3 = $this->ossClient->getBucketLogging($this->bucket);

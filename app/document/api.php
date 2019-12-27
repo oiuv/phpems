@@ -27,10 +27,10 @@ class app
         $group = $this->user->getGroupById($_user['sessiongroupid']);
         if (!$_user['sessionuserid']) {
             $message = [
-                'statusCode' => 300,
-                'message' => '请您重新登录',
+                'statusCode'   => 300,
+                'message'      => '请您重新登录',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?user-app-login',
+                'forwardUrl'   => 'index.php?user-app-login',
             ];
             $this->G->R($message);
         }

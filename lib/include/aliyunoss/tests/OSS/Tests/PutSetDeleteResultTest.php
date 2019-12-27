@@ -16,11 +16,12 @@ use OSS\Core\OssException;
 use OSS\Http\ResponseCore;
 use OSS\Result\PutSetDeleteResult;
 
-class ResultTest extends \PHPUnit_Framework_TestCase
+class PutSetDeleteResultTest extends \PHPUnit_Framework_TestCase
 {
     public function testNullResponse()
     {
         $response = null;
+
         try {
             new PutSetDeleteResult($response);
             $this->assertFalse(true);
@@ -33,11 +34,11 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     {
         $header = [
             'x-oss-request-id' => '582AA51E004C4550BD27E0E4',
-            'etag' => '595FA1EA77945233921DF12427F9C7CE',
-            'content-md5' => 'WV+h6neUUjOSHfEkJ/nHzg==',
-            'info' => [
+            'etag'             => '595FA1EA77945233921DF12427F9C7CE',
+            'content-md5'      => 'WV+h6neUUjOSHfEkJ/nHzg==',
+            'info'             => [
                 'http_code' => '200',
-                'method' => 'PUT',
+                'method'    => 'PUT',
             ],
         ];
         $response = new ResponseCore($header, 'this is a mock body, just for test', 200);
@@ -55,6 +56,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     public function testFailResponse()
     {
         $response = new ResponseCore([], '', 301);
+
         try {
             new PutSetDeleteResult($response);
             $this->assertFalse(true);

@@ -45,7 +45,7 @@ class action extends app
         if (!$progress['prscoursestatus']) {
             $message = [
                 'statusCode' => 300,
-                'message' => '请先学完课程',
+                'message'    => '请先学完课程',
             ];
             $this->G->R($message);
         }
@@ -55,7 +55,7 @@ class action extends app
         if (!$basicid) {
             $message = [
                 'statusCode' => 300,
-                'message' => '请联系管理员设置考场',
+                'message'    => '请联系管理员设置考场',
             ];
             $this->G->R($message);
         }
@@ -73,7 +73,7 @@ class action extends app
             if ($this->course->getOpenCourseByUseridAndCsid($userid, $csid)) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '您已经开通了本课程',
+                    'message'    => '您已经开通了本课程',
                 ];
             }
             if ($course['csdemo']) {
@@ -102,7 +102,7 @@ class action extends app
                 if ($user['usercoin'] < $score) {
                     $message = [
                         'statusCode' => 300,
-                        'message' => '操作失败，您的积分不够',
+                        'message'    => '操作失败，您的积分不够',
                     ];
                     $this->G->R($message);
                 } else {
@@ -113,10 +113,10 @@ class action extends app
             $args = ['ocuserid' => $userid, 'occourseid' => $csid, 'ocendtime' => TIME + $time];
             $this->course->openCourse($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?course-phone-course&csid='.$csid,
+                'forwardUrl'   => 'index.php?course-phone-course&csid='.$csid,
             ];
             $this->G->R($message);
         } else {
@@ -163,10 +163,10 @@ class action extends app
                 $ishave = $this->progress->getProgressByArgs([['AND', 'prscourseid = :prscourseid', 'prscourseid', $csid], ['and', 'prsuserid = :prsuserid', 'prsuserid', $this->_user['sessionuserid']]]);
                 if (!$ishave) {
                     $args = [
-                        'prsuserid' => $this->_user['sessionuserid'],
+                        'prsuserid'   => $this->_user['sessionuserid'],
                         'prscourseid' => $csid,
-                        'prstime' => TIME,
-                        'prsexamid' => $course['csbasicid'],
+                        'prstime'     => TIME,
+                        'prsexamid'   => $course['csbasicid'],
                     ];
                     $id = $this->progress->addProgress($args);
                 } else {
@@ -189,7 +189,7 @@ class action extends app
         $this->content->setCourseNote(['clsnote' => $note], $cnoteid);
         $message = [
             'statusCode' => 200,
-            'message' => '保存成功',
+            'message'    => '保存成功',
         ];
         $this->G->R($message);
     }
@@ -213,7 +213,7 @@ class action extends app
             if ($cdata['lock'][$contentid]) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '请先学完上节课程',
+                    'message'    => '请先学完上节课程',
                 ];
                 $this->G->R($message);
             }

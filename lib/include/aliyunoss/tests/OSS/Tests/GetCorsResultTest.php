@@ -18,7 +18,7 @@ use OSS\Result\GetCorsResult;
 
 class GetCorsResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <CORSConfiguration>
 <CORSRule>
@@ -66,6 +66,7 @@ BBBB;
     public function testInvalidResponse()
     {
         $response = new ResponseCore([], $this->validXml, 300);
+
         try {
             new GetCorsResult($response);
             $this->assertTrue(false);

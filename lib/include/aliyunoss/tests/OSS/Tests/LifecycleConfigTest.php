@@ -19,7 +19,7 @@ use OSS\Model\LifecycleRule;
 
 class LifecycleConfigTest extends \PHPUnit_Framework_TestCase
 {
-    private $validLifecycle = <<<BBBB
+    private $validLifecycle = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LifecycleConfiguration>
 <Rule>
@@ -38,7 +38,7 @@ class LifecycleConfigTest extends \PHPUnit_Framework_TestCase
 </LifecycleConfiguration>
 BBBB;
 
-    private $validLifecycle2 = <<<BBBB
+    private $validLifecycle2 = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LifecycleConfiguration>
 <Rule><ID>delete temporary files</ID>
@@ -50,7 +50,7 @@ BBBB;
 </LifecycleConfiguration>
 BBBB;
 
-    private $nullLifecycle = <<<BBBB
+    private $nullLifecycle = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?>
 <LifecycleConfiguration/>
 BBBB;
@@ -67,6 +67,7 @@ BBBB;
         $actions[] = new LifecycleAction('Expiration2', 'Date', '2022-10-12T00:00:00.000Z');
         $lifecycleRule = new LifecycleRule('delete temporary files', 'temporary/', 'Enabled', $actions);
         $lifecycleConfig->addRule($lifecycleRule);
+
         try {
             $lifecycleConfig->addRule(null);
             $this->assertFalse(true);

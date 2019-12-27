@@ -98,7 +98,7 @@ class OssUtilTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateDeleteObjectsXmlBody()
     {
-        $xml = <<<BBBB
+        $xml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?><Delete><Quiet>true</Quiet><Object><Key>obj1</Key></Object></Delete>
 BBBB;
         $a = ['obj1'];
@@ -107,7 +107,7 @@ BBBB;
 
     public function testCreateCompleteMultipartUploadXmlBody()
     {
-        $xml = <<<BBBB
+        $xml = <<<'BBBB'
 <?xml version="1.0" encoding="utf-8"?><CompleteMultipartUpload><Part><PartNumber>2</PartNumber><ETag>xx</ETag></Part></CompleteMultipartUpload>
 BBBB;
         $a = [['PartNumber' => 2, 'ETag' => 'xx']];
@@ -116,7 +116,7 @@ BBBB;
 
     public function testCreateBucketXmlBody()
     {
-        $xml = <<<BBBB
+        $xml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?><CreateBucketConfiguration><StorageClass>Standard</StorageClass></CreateBucketConfiguration>
 BBBB;
         $storageClass = 'Standard';
@@ -175,6 +175,7 @@ BBBB;
     public function testThrowOssExceptionWithMessageIfEmpty()
     {
         $null = null;
+
         try {
             OssUtil::throwOssExceptionWithMessageIfEmpty($null, 'xx');
             $this->assertTrue(false);
@@ -186,6 +187,7 @@ BBBB;
     public function testThrowOssExceptionWithMessageIfEmpty2()
     {
         $null = '';
+
         try {
             OssUtil::throwOssExceptionWithMessageIfEmpty($null, 'xx');
             $this->assertTrue(false);
@@ -197,6 +199,7 @@ BBBB;
     public function testValidContent()
     {
         $null = '';
+
         try {
             OssUtil::validateContent($null);
             $this->assertTrue(false);
@@ -205,6 +208,7 @@ BBBB;
         }
 
         $notnull = 'x';
+
         try {
             OssUtil::validateContent($notnull);
             $this->assertTrue(true);
@@ -216,6 +220,7 @@ BBBB;
     public function testThrowOssExceptionWithMessageIfEmpty3()
     {
         $null = 'xx';
+
         try {
             OssUtil::throwOssExceptionWithMessageIfEmpty($null, 'xx');
             $this->assertTrue(true);

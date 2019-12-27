@@ -35,10 +35,10 @@ class action extends app
                 }
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?autoform-master-module-fields&moduleid={$moduleid}",
+                'forwardUrl'   => "index.php?autoform-master-module-fields&moduleid={$moduleid}",
             ];
             exit(json_encode($message));
         }
@@ -67,15 +67,15 @@ class action extends app
             $id = $this->module->insertModuleField($args);
             if ($id) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?autoform-master-module-fields&moduleid={$moduleid}&page={$page}",
+                    'forwardUrl'   => "index.php?autoform-master-module-fields&moduleid={$moduleid}&page={$page}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败',
+                    'message'    => '操作失败',
                 ];
             }
             exit(json_encode($message));
@@ -110,10 +110,10 @@ class action extends app
             $field = $this->module->getFieldById($fieldid);
             $this->module->modifyFieldHtmlType($fieldid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?autoform-master-module-fields&moduleid={$field['fieldmoduleid']}",
+                'forwardUrl'   => "index.php?autoform-master-module-fields&moduleid={$field['fieldmoduleid']}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('modifyfielddata')) {
@@ -122,10 +122,10 @@ class action extends app
             $field = $this->module->getFieldById($fieldid);
             $this->module->modifyFieldDataType($fieldid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?autoform-master-module-fields&moduleid={$field['fieldmoduleid']}",
+                'forwardUrl'   => "index.php?autoform-master-module-fields&moduleid={$field['fieldmoduleid']}",
             ];
             exit(json_encode($message));
         }
@@ -143,10 +143,10 @@ class action extends app
         $moduleid = $this->ev->get('moduleid');
         $r = $this->module->delField($fieldid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?autoform-master-module-fields&moduleid={$moduleid}",
+            'forwardUrl'   => "index.php?autoform-master-module-fields&moduleid={$moduleid}",
         ];
         exit(json_encode($message));
     }
@@ -159,10 +159,10 @@ class action extends app
             $moduleid = $this->ev->get('moduleid');
             $this->module->modifyModule($moduleid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?autoform-master-module',
+                'forwardUrl'   => 'index.php?autoform-master-module',
             ];
             exit(json_encode($message));
         }
@@ -189,10 +189,10 @@ class action extends app
         }
         $this->module->modifyModule($moduleid, ['modulelockfields' => $module['modulelockfields']]);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => 'reload',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -216,7 +216,7 @@ class action extends app
             if ($this->module->searchModules([['AND', 'modulecode = :modulecode', 'modulecode', $args['modulecode']]])) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败，存在同名（代码）模型',
+                    'message'    => '操作失败，存在同名（代码）模型',
                 ];
                 exit(json_encode($message));
             }
@@ -226,17 +226,17 @@ class action extends app
             }
             if (!$errmsg) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?autoform-master-module&page={$page}",
+                    'forwardUrl'   => "index.php?autoform-master-module&page={$page}",
                 ];
                 exit(json_encode($message));
             }
 
             $message = [
                     'statusCode' => 300,
-                    'message' => "操作失败，{$errmsg}",
+                    'message'    => "操作失败，{$errmsg}",
                 ];
 
             exit(json_encode($message));
@@ -253,15 +253,15 @@ class action extends app
         if ($fileds || $groups) {
             $message = [
             'statusCode' => 300,
-            'message' => '操作失败，请先删除该模型下所有模型字段和用户组',
+            'message'    => '操作失败，请先删除该模型下所有模型字段和用户组',
         ];
         } else {
             $this->module->delModule($moduleid);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
         }
         exit(json_encode($message));

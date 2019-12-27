@@ -81,10 +81,10 @@ class user_user
     {
         $args[] = ['AND', 'groupid = usergroupid'];
         $data = [
-            'table' => ['user', 'user_group'],
-            'query' => $args,
-            'serial' => 'groupright',
-            'index' => 'userid',
+            'table'   => ['user', 'user_group'],
+            'query'   => $args,
+            'serial'  => 'groupright',
+            'index'   => 'userid',
             'orderby' => $orderby,
         ];
 
@@ -198,9 +198,9 @@ class user_user
     public function getUserGroupList($args, $page = 1, $number = 10)
     {
         $data = [
-            'table' => 'user_group',
-            'query' => $args,
-            'index' => 'groupid',
+            'table'  => 'user_group',
+            'query'  => $args,
+            'index'  => 'groupid',
             'serial' => 'groupright',
         ];
 

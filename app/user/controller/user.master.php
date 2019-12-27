@@ -37,12 +37,12 @@ class action extends app
         $userid = $this->ev->get('userid');
         $this->user->delUserById($userid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
-            'navTabId' => '',
-            'rel' => '',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
+            'navTabId'     => '',
+            'rel'          => '',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?user-master-user&page={$page}{$this->u}",
+            'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
         ];
         exit(json_encode($message));
     }
@@ -56,10 +56,10 @@ class action extends app
                 $this->user->delUserById($userid);
             }
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?user-master-user&page={$page}{$this->u}",
+                'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
             ];
             exit(json_encode($message));
         }
@@ -73,10 +73,10 @@ class action extends app
             $userid = $this->ev->get('userid');
             $this->user->modifyUserGroup($userid, $groupid);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?user-master-user&page={$page}{$this->u}",
+                'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('setteachsubject')) {
@@ -87,16 +87,16 @@ class action extends app
             if ('teacher' != $modules[$user['groupmoduleid']]['modulecode']) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '此用户不是教师',
+                    'message'    => '此用户不是教师',
                 ];
                 exit(json_encode($message));
             }
             $this->user->modifyUserInfo($userid, ['teacher_subjects' => $subjects]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'reload',
+                'forwardUrl'   => 'reload',
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('modifyuserinfo')) {
@@ -107,10 +107,10 @@ class action extends app
             $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $group]);
             $id = $this->user->modifyUserInfo($userid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?user-master-user&page={$page}{$this->u}",
+                'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
             ];
             exit(json_encode($message));
         } elseif ($this->ev->get('modifyuserpassword')) {
@@ -119,19 +119,19 @@ class action extends app
             if ($args['password'] == $args['password2'] && $userid) {
                 $id = $this->user->modifyUserPassword($userid, $args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?user-master-user&page={$page}{$this->u}",
+                    'forwardUrl'   => "index.php?user-master-user&page={$page}{$this->u}",
                 ];
                 exit(json_encode($message));
             }
 
             $message = [
                     'statusCode' => 300,
-                    'message' => '操作失败',
-                    'navTabId' => '',
-                    'rel' => '',
+                    'message'    => '操作失败',
+                    'navTabId'   => '',
+                    'rel'        => '',
                 ];
             exit(json_encode($message));
         }
@@ -158,7 +158,7 @@ class action extends app
             if (!file_exists($uploadfile)) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '上传文件不存在',
+                    'message'    => '上传文件不存在',
                 ];
                 exit(json_encode($message));
             }
@@ -188,7 +188,7 @@ class action extends app
                                     $i = 3;
                                     foreach ($tpfields as $p) {
                                         $args[$p] = iconv('GBK', 'UTF-8', $data[$i]);
-                                        ++$i;
+                                        $i++;
                                     }
                                     $this->user->insertUser($args);
                                 }
@@ -199,10 +199,10 @@ class action extends app
             }
             fclose($handle);
             $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?user-master-user',
+                    'forwardUrl'   => 'index.php?user-master-user',
                 ];
             exit(json_encode($message));
         }
@@ -226,7 +226,7 @@ class action extends app
                 if ($errmsg) {
                     $message = [
                         'statusCode' => 300,
-                        'message' => "{$errmsg}",
+                        'message'    => "{$errmsg}",
                     ];
                     exit(json_encode($message));
                 }
@@ -241,10 +241,10 @@ class action extends app
                 unset($args['userpassword2']);
                 $id = $this->user->insertUser($args);
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作成功',
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl' => "index.php?user-master-user{$this->u}",
+                    'forwardUrl'   => "index.php?user-master-user{$this->u}",
                 ];
                 exit(json_encode($message));
             }

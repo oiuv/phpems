@@ -74,10 +74,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->exam->delExamSetting($examid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-master-exams&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -214,10 +214,10 @@ class action extends app
             }
             $this->exam->modifyExamSetting($examid, ['examquestions' => $r['examquestions']]);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => 'index.php?exam-master-exams-preview&examid='.$examid,
+                'forwardUrl'   => 'index.php?exam-master-exams-preview&examid='.$examid,
             ];
             $this->G->R($message);
         } else {
@@ -289,15 +289,15 @@ class action extends app
         $fname = 'data/exams/'.TIME.'-'.$examid.'-score.csv';
         if ($this->files->outCsv($fname, $data)) {
             $message = [
-            'statusCode' => 200,
-            'message' => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+            'statusCode'   => 200,
+            'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
             'callbackType' => 'forward',
-            'forwardUrl' => "{$fname}",
+            'forwardUrl'   => "{$fname}",
         ];
         } else {
             $message = [
             'statusCode' => 300,
-            'message' => '成绩导出失败',
+            'message'    => '成绩导出失败',
         ];
         }
         $this->G->R($message);
@@ -340,10 +340,10 @@ class action extends app
         $examid = $this->ev->get('examid');
         $this->exam->delExamSetting($examid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-master-exams&page={$page}{$u}",
         ];
         $this->G->R($message);
     }
@@ -367,14 +367,14 @@ class action extends app
             if ($args['examsetting']['score'] != $totalscore) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '分数设置不正确，请检查',
+                    'message'    => '分数设置不正确，请检查',
                 ];
                 $this->G->R($message);
             }
             $this->exam->addExamSetting($args);
             $message = [
                 'statusCode' => 200,
-                'message' => '操作成功',
+                'message'    => '操作成功',
                 'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
             ];
             $this->G->R($message);
@@ -405,10 +405,10 @@ class action extends app
 
             $id = $this->exam->addExamSetting($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-master-exams-examself&examid={$id}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-exams-examself&examid={$id}&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -428,7 +428,7 @@ class action extends app
             if (!$uploadfile) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '请上传即时试卷试题',
+                    'message'    => '请上传即时试卷试题',
                 ];
                 $this->G->R($message);
             }
@@ -449,14 +449,14 @@ class action extends app
                     if ($isqr) {
                         $istitle = intval(trim($question[7], " \n\t"));
                         if ($istitle) {
-                            ++$rindex;
+                            $rindex++;
                             $targs['qrid'] = 'qr_'.$rindex;
                             $targs['qrtype'] = $question[0];
                             $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                             $targs['qrcreatetime'] = TIME;
                             $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                         } else {
-                            ++$index;
+                            $index++;
                             $targs['questionid'] = 'q_'.$index;
                             $targs['questiontype'] = $question[0];
                             $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -472,7 +472,7 @@ class action extends app
                             //$qustionnumber++;
                         }
                     } else {
-                        ++$index;
+                        $index++;
                         $targs['questionid'] = 'q_'.$index;
                         $targs['questiontype'] = $question[0];
                         $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -494,10 +494,10 @@ class action extends app
             //$args['examsetting']['questype'][1]['score'] = intval(100/$qustionnumber);
             $id = $this->exam->addExamSetting($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-master-exams-examself&examid={$id}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-exams-examself&examid={$id}&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -683,14 +683,14 @@ class action extends app
                             if ($isqr) {
                                 $istitle = intval(trim($question[7], " \n\t"));
                                 if ($istitle) {
-                                    ++$rindex;
+                                    $rindex++;
                                     $targs['qrid'] = 'qr_'.$rindex;
                                     $targs['qrtype'] = $question[0];
                                     $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                                     $targs['qrcreatetime'] = TIME;
                                     $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                                 } else {
-                                    ++$index;
+                                    $index++;
                                     $targs['questionid'] = 'q_'.$index;
                                     $targs['questiontype'] = $question[0];
                                     $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -706,7 +706,7 @@ class action extends app
                                     //$qustionnumber++;
                                 }
                             } else {
-                                ++$index;
+                                $index++;
                                 $targs['questionid'] = 'q_'.$index;
                                 $targs['questiontype'] = $question[0];
                                 $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -749,10 +749,10 @@ class action extends app
 
             $this->exam->modifyExamSetting($examid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-master-exams&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-exams&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {

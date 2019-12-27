@@ -72,6 +72,7 @@ class OssClientBucketTest extends TestOssClientBase
         $object = 'storage-object';
 
         $this->ossClient->putObject($this->archiveBucket, $object, 'testcontent');
+
         try {
             $this->ossClient->getObject($this->archiveBucket, $object);
             $this->assertTrue(false);

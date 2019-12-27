@@ -142,6 +142,7 @@ function putObject($ossClient, $bucket)
     $object = 'oss-php-sdk-test/upload-test-object-name.txt';
     $content = file_get_contents(__FILE__);
     $options = [];
+
     try {
         $ossClient->putObject($bucket, $object, $content, $options);
     } catch (OssException $e) {
@@ -196,10 +197,11 @@ function listObjects($ossClient, $bucket)
     $maxkeys = 1000;
     $options = [
         'delimiter' => $delimiter,
-        'prefix' => $prefix,
-        'max-keys' => $maxkeys,
-        'marker' => $nextMarker,
+        'prefix'    => $prefix,
+        'max-keys'  => $maxkeys,
+        'marker'    => $nextMarker,
     ];
+
     try {
         $listObjectInfo = $ossClient->listObjects($bucket, $options);
     } catch (OssException $e) {
@@ -236,7 +238,7 @@ function listObjects($ossClient, $bucket)
 function listAllObjects($ossClient, $bucket)
 {
     // Create dir/obj 'folder' and put some files into it.
-    for ($i = 0; $i < 100; ++$i) {
+    for ($i = 0; $i < 100; $i++) {
         $ossClient->putObject($bucket, 'dir/obj'.strval($i), 'hi');
         $ossClient->createObjectDir($bucket, 'dir/obj'.strval($i));
     }
@@ -249,11 +251,12 @@ function listAllObjects($ossClient, $bucket)
     while (true) {
         $options = [
             'delimiter' => $delimiter,
-            'prefix' => $prefix,
-            'max-keys' => $maxkeys,
-            'marker' => $nextMarker,
+            'prefix'    => $prefix,
+            'max-keys'  => $maxkeys,
+            'marker'    => $nextMarker,
         ];
         var_dump($options);
+
         try {
             $listObjectInfo = $ossClient->listObjects($bucket, $options);
         } catch (OssException $e) {
@@ -286,6 +289,7 @@ function getObject($ossClient, $bucket)
 {
     $object = 'oss-php-sdk-test/upload-test-object-name.txt';
     $options = [];
+
     try {
         $content = $ossClient->getObject($bucket, $object, $options);
     } catch (OssException $e) {
@@ -314,6 +318,7 @@ function putSymlink($ossClient, $bucket)
 {
     $symlink = 'test-samples-symlink';
     $object = 'test-samples-object';
+
     try {
         $ossClient->putObject($bucket, $object, 'test-content');
         $ossClient->putSymlink($bucket, $symlink, $object);
@@ -344,6 +349,7 @@ function getSymlink($ossClient, $bucket)
 {
     $symlink = 'test-samples-symlink';
     $object = 'test-samples-object';
+
     try {
         $ossClient->putObject($bucket, $object, 'test-content');
         $ossClient->putSymlink($bucket, $symlink, $object);
@@ -445,10 +451,11 @@ function modifyMetaForObject($ossClient, $bucket)
     $toObject = $fromObject;
     $copyOptions = [
         OssClient::OSS_HEADERS => [
-            'Cache-Control' => 'max-age=60',
+            'Cache-Control'       => 'max-age=60',
             'Content-Disposition' => 'attachment; filename="xxxxxx"',
         ],
     ];
+
     try {
         $ossClient->copyObject($fromBucket, $fromObject, $toBucket, $toObject, $copyOptions);
     } catch (OssException $e) {
@@ -471,6 +478,7 @@ function modifyMetaForObject($ossClient, $bucket)
 function getObjectMeta($ossClient, $bucket)
 {
     $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
     try {
         $objectMeta = $ossClient->getObjectMeta($bucket, $object);
     } catch (OssException $e) {
@@ -500,6 +508,7 @@ function getObjectMeta($ossClient, $bucket)
 function deleteObject($ossClient, $bucket)
 {
     $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
     try {
         $ossClient->deleteObject($bucket, $object);
     } catch (OssException $e) {
@@ -524,6 +533,7 @@ function deleteObjects($ossClient, $bucket)
     $objects = [];
     $objects[] = 'oss-php-sdk-test/upload-test-object-name.txt';
     $objects[] = 'oss-php-sdk-test/upload-test-object-name.txt.copy';
+
     try {
         $ossClient->deleteObjects($bucket, $objects);
     } catch (OssException $e) {
@@ -546,6 +556,7 @@ function deleteObjects($ossClient, $bucket)
 function doesObjectExist($ossClient, $bucket)
 {
     $object = 'oss-php-sdk-test/upload-test-object-name.txt';
+
     try {
         $exist = $ossClient->doesObjectExist($bucket, $object);
     } catch (OssException $e) {

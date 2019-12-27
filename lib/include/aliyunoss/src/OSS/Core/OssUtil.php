@@ -83,7 +83,7 @@ class OssUtil
      */
     public static function isGb2312($str)
     {
-        for ($i = 0; $i < strlen($str); ++$i) {
+        for ($i = 0; $i < strlen($str); $i++) {
             $v = ord($str[$i]);
             if ($v > 127) {
                 if (($v >= 228) && ($v <= 233)) {
@@ -114,7 +114,7 @@ class OssUtil
      */
     public static function checkChar($str, $gbk = true)
     {
-        for ($i = 0; $i < strlen($str); ++$i) {
+        for ($i = 0; $i < strlen($str); $i++) {
             $v = ord($str[$i]);
             if ($v > 127) {
                 if (($v >= 228) && ($v <= 233)) {
@@ -274,7 +274,7 @@ class OssUtil
         }
         $part_size = 1 * 1024 * 1024;
         $fp = fopen($filename, 'w');
-        $characters = <<<BBB
+        $characters = <<<'BBB'
 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 BBB;
 
@@ -413,7 +413,7 @@ BBB;
         $xml->addChild('Quiet', $quiet);
         foreach ($objects as $object) {
             $sub_object = $xml->addChild('Object');
-            $object = OssUtil::sReplace($object);
+            $object = self::sReplace($object);
             $sub_object->addChild('Key', $object);
         }
 
@@ -504,6 +504,7 @@ BBB;
         if ('url' == $encoding) {
             return rawurldecode($key);
         }
+
         throw new OssException('Unrecognized encoding type: '.$encoding);
     }
 }

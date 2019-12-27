@@ -30,49 +30,49 @@ $ossClient->uploadFile($bucketName, $object, 'example.jpg');
 // Image resize
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/resize,m_fixed,h_100,w_100', ];
+    OssClient::OSS_PROCESS       => 'image/resize,m_fixed,h_100,w_100', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageResize', $download_file);
 
 // Image crop
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/crop,w_100,h_100,x_100,y_100,r_1', ];
+    OssClient::OSS_PROCESS       => 'image/crop,w_100,h_100,x_100,y_100,r_1', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('iamgeCrop', $download_file);
 
 // Image rotate
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/rotate,90', ];
+    OssClient::OSS_PROCESS       => 'image/rotate,90', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageRotate', $download_file);
 
 // Image sharpen
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/sharpen,100', ];
+    OssClient::OSS_PROCESS       => 'image/sharpen,100', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageSharpen', $download_file);
 
 // Add watermark into a image
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/watermark,text_SGVsbG8g5Zu-54mH5pyN5YqhIQ', ];
+    OssClient::OSS_PROCESS       => 'image/watermark,text_SGVsbG8g5Zu-54mH5pyN5YqhIQ', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageWatermark', $download_file);
 
 // Image format convertion
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/format,png', ];
+    OssClient::OSS_PROCESS       => 'image/format,png', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageFormat', $download_file);
 
 // Get image information
 $options = [
     OssClient::OSS_FILE_DOWNLOAD => $download_file,
-    OssClient::OSS_PROCESS => 'image/info', ];
+    OssClient::OSS_PROCESS       => 'image/info', ];
 $ossClient->getObject($bucketName, $object, $options);
 printImage('imageInfo', $download_file);
 

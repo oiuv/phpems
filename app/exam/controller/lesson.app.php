@@ -33,12 +33,12 @@ class action extends app
                 $this->feedback->addFeedBack($args);
                 $message = [
                     'statusCode' => 200,
-                    'message' => '提交成功，请等待管理员处理',
+                    'message'    => '提交成功，请等待管理员处理',
                 ];
             } else {
                 $message = [
                 'statusCode' => 300,
-                'message' => '缺少参数',
+                'message'    => '缺少参数',
             ];
             }
             $this->G->R($message);
@@ -54,10 +54,10 @@ class action extends app
             $knowsid = $this->ev->get('knowsid');
             if (!$knowsid) {
                 $message = [
-                    'statusCode' => 200,
-                    'message' => '操作超时，请重新开始练习',
+                    'statusCode'   => 200,
+                    'message'      => '操作超时，请重新开始练习',
                     'callbackType' => 'forward',
-                    'forwardUrl' => 'index.php?exam-app-lesson',
+                    'forwardUrl'   => 'index.php?exam-app-lesson',
                 ];
                 $this->G->R($message);
             }

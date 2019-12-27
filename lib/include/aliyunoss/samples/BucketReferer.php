@@ -61,6 +61,7 @@ function putBucketReferer($ossClient, $bucket)
     $refererConfig->setAllowEmptyReferer(true);
     $refererConfig->addReferer('www.aliiyun.com');
     $refererConfig->addReferer('www.aliiyuncs.com');
+
     try {
         $ossClient->putBucketReferer($bucket, $refererConfig);
     } catch (OssException $e) {
@@ -83,6 +84,7 @@ function putBucketReferer($ossClient, $bucket)
 function getBucketReferer($ossClient, $bucket)
 {
     $refererConfig = null;
+
     try {
         $refererConfig = $ossClient->getBucketReferer($bucket);
     } catch (OssException $e) {
@@ -107,6 +109,7 @@ function getBucketReferer($ossClient, $bucket)
 function deleteBucketReferer($ossClient, $bucket)
 {
     $refererConfig = new RefererConfig();
+
     try {
         $ossClient->putBucketReferer($bucket, $refererConfig);
     } catch (OssException $e) {

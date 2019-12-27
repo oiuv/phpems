@@ -23,9 +23,9 @@ class GetStorageCapacityResult extends Result
     /**
      * Parse data from response.
      *
-     * @return string
-     *
      * @throws OssException
+     *
+     * @return string
      */
     protected function parseDataFromResponse()
     {
@@ -37,6 +37,7 @@ class GetStorageCapacityResult extends Result
         if (isset($xml->StorageCapacity)) {
             return intval($xml->StorageCapacity);
         }
+
         throw new OssException('xml format exception');
     }
 }

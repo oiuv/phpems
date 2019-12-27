@@ -18,7 +18,7 @@ use OSS\Result\InitiateMultipartUploadResult;
 
 class InitiateMultipartUploadResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <InitiateMultipartUploadResult xmlns="http://doc.oss-cn-hangzhou.aliyuncs.com">
     <Bucket> multipart_upload</Bucket>
@@ -27,7 +27,7 @@ class InitiateMultipartUploadResultTest extends \PHPUnit_Framework_TestCase
 </InitiateMultipartUploadResult>
 BBBB;
 
-    private $invalidXml = <<<BBBB
+    private $invalidXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <InitiateMultipartUploadResult xmlns="http://doc.oss-cn-hangzhou.aliyuncs.com">
     <Bucket> multipart_upload</Bucket>
@@ -45,6 +45,7 @@ BBBB;
     public function testParseInvalidXml()
     {
         $response = new ResponseCore([], $this->invalidXml, 200);
+
         try {
             $result = new InitiateMultipartUploadResult($response);
             $this->assertTrue(false);

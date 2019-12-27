@@ -231,7 +231,7 @@ class section_exam
             $knows['knowsnumber'] = $n;
             $args = [
                 'knowsquestions' => $t,
-                'knowsnumber' => $n,
+                'knowsnumber'    => $n,
             ];
             $this->modifyKnows($knowsid, $args);
         }

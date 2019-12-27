@@ -65,21 +65,21 @@ class pg
             }
         }
         /**
-        if($cpage > 1)
-        {
-            $pageString = $this->pre.'<a class="ajax" href="'.$url.$separate.'1">'.'第一页'.'</a>'.$this->end;
-            $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage - 1).'">'.'上一页'.'</a>'.$this->end;
-        }
-        else
-        $pageString = $this->pre.'<a class="current">'.'第一页'.'</a>'.$this->end;
-        $pageString .= $this->pre.'<a>共'.$this->number.'条数据</a>'.$this->end;
-        if($cpage < $pages)
-        {
-            $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage + 1).'">'.'下一页'.'</a>'.$this->end;
-            $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.$pages.'">'.'末页'.'</a>'.$this->end;
-        }
-        else
-        $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;
+         * if($cpage > 1)
+         * {
+         * $pageString = $this->pre.'<a class="ajax" href="'.$url.$separate.'1">'.'第一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage - 1).'">'.'上一页'.'</a>'.$this->end;
+         * }
+         * else
+         * $pageString = $this->pre.'<a class="current">'.'第一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a>共'.$this->number.'条数据</a>'.$this->end;
+         * if($cpage < $pages)
+         * {
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage + 1).'">'.'下一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.$pages.'">'.'末页'.'</a>'.$this->end;
+         * }
+         * else
+         * $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;
          * **/
         if ($cpage > 1) {
             $pageString = '<li class="col-2 text-center"><a class="ajax" data-target="pagination" data-direction="left" href="'.$url.$separate.intval($cpage - 1).'"><em class="iconfont icon-left-circle"></em></a></li>';
@@ -117,7 +117,7 @@ class pg
         if ($pages < 2) {
             return false;
         } elseif ($pages <= 10) {
-            for ($p = 1; $p <= $pages; ++$p) {
+            for ($p = 1; $p <= $pages; $p++) {
                 if ($p == $cpage) {
                     $t = $this->pre.'<a href="#" class="current">'.$p.'</a>'.$this->end;
                 } else {
@@ -151,7 +151,7 @@ class pg
         if (isset($startString)) {
             $pageString .= $startString;
         }
-        for ($start; $start <= $end; ++$start) {
+        for ($start; $start <= $end; $start++) {
             if ($start == $cpage) {
                 $t = $this->pre.'<a href="#" class="current">'.$start.'</a>'.$this->end;
             } else {

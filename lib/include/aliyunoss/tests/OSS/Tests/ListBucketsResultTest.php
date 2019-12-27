@@ -18,7 +18,7 @@ use OSS\Result\ListBucketsResult;
 
 class ListBucketsResultTest extends \PHPUnit_Framework_TestCase
 {
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListAllMyBucketsResult>
   <Owner>
@@ -40,7 +40,7 @@ class ListBucketsResultTest extends \PHPUnit_Framework_TestCase
 </ListAllMyBucketsResult>
 BBBB;
 
-    private $nullXml = <<<BBBB
+    private $nullXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <ListAllMyBucketsResult>
   <Owner>
@@ -80,7 +80,7 @@ BBBB;
             'x-oss-request-id' => '1a2b-3c4d',
         ];
 
-        $errorBody = <<< BBBB
+        $errorBody = <<< 'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <Error>
   <Code>NoSuchBucket</Code>
@@ -91,6 +91,7 @@ BBBB;
 </Error>
 BBBB;
         $response = new ResponseCore($errorHeader, $errorBody, 403);
+
         try {
             new ListBucketsResult($response);
         } catch (OssException $e) {

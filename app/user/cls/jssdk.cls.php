@@ -33,10 +33,10 @@ class jssdk_user
         $string = "jsapi_ticket=$jsapiTicket&noncestr=$nonceStr&timestamp=$timestamp&url=$url";
         $signature = sha1($string);
         $signPackage = [
-            'appId' => $this->appId,
-            'nonceStr' => $nonceStr,
+            'appId'     => $this->appId,
+            'nonceStr'  => $nonceStr,
             'timestamp' => $timestamp,
-            'url' => $url,
+            'url'       => $url,
             'signature' => $signature,
             'rawString' => $string,
         ];
@@ -48,7 +48,7 @@ class jssdk_user
     {
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         $str = '';
-        for ($i = 0; $i < $length; ++$i) {
+        for ($i = 0; $i < $length; $i++) {
             $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
         }
 

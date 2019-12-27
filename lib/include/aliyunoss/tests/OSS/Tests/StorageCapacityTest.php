@@ -19,14 +19,14 @@ use OSS\Result\GetStorageCapacityResult;
 
 class StorageCapacityTest extends \PHPUnit_Framework_TestCase
 {
-    private $inValidXml = <<<BBBB
+    private $inValidXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <BucketUserQos>
    <OssStorageCapacity>1</OssStorageCapacity>
 </BucketUserQos>
 BBBB;
 
-    private $validXml = <<<BBBB
+    private $validXml = <<<'BBBB'
 <?xml version="1.0" encoding="UTF-8"?>
 <BucketUserQos>
    <StorageCapacity>1</StorageCapacity>
@@ -36,6 +36,7 @@ BBBB;
     public function testParseInValidXml()
     {
         $response = new ResponseCore([], $this->inValidXml, 300);
+
         try {
             new GetStorageCapacityResult($response);
             $this->assertTrue(false);
@@ -46,6 +47,7 @@ BBBB;
     public function testParseEmptyXml()
     {
         $response = new ResponseCore([], '', 300);
+
         try {
             new GetStorageCapacityResult($response);
             $this->assertTrue(false);

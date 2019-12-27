@@ -53,10 +53,10 @@ class action extends app
         $page = $this->ev->get('page');
         $this->exam->delExamSetting($examid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-exams&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-exams&page={$page}{$u}",
         ];
         exit(json_encode($message));
     }
@@ -85,10 +85,10 @@ class action extends app
         $examid = $this->ev->get('examid');
         $this->exam->delExamSetting($examid);
         $message = [
-            'statusCode' => 200,
-            'message' => '操作成功',
+            'statusCode'   => 200,
+            'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl' => "index.php?exam-teach-exams&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-teach-exams&page={$page}{$u}",
         ];
         exit(json_encode($message));
     }
@@ -104,7 +104,7 @@ class action extends app
             $this->exam->addExamSetting($args);
             $message = [
                 'statusCode' => 200,
-                'message' => '操作成功',
+                'message'    => '操作成功',
                 'forwardUrl' => "index.php?exam-teach-exams&page={$page}{$u}",
             ];
             exit(json_encode($message));
@@ -128,10 +128,10 @@ class action extends app
             $args['examquestions'] = $args['examquestions'];
             $id = $this->exam->addExamSetting($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }
@@ -151,7 +151,7 @@ class action extends app
             if (!$uploadfile) {
                 $message = [
                     'statusCode' => 300,
-                    'message' => '请上传即时试卷试题',
+                    'message'    => '请上传即时试卷试题',
                 ];
                 $this->G->R($message);
             }
@@ -172,14 +172,14 @@ class action extends app
                     if ($isqr) {
                         $istitle = intval(trim($question[7], " \n\t"));
                         if ($istitle) {
-                            ++$rindex;
+                            $rindex++;
                             $targs['qrid'] = 'qr_'.$rindex;
                             $targs['qrtype'] = $question[0];
                             $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                             $targs['qrcreatetime'] = TIME;
                             $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                         } else {
-                            ++$index;
+                            $index++;
                             $targs['questionid'] = 'q_'.$index;
                             $targs['questiontype'] = $question[0];
                             $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -194,7 +194,7 @@ class action extends app
                             $questionrows[$targs['questiontype']][intval($rindex - 1)]['data'][] = $targs;
                         }
                     } else {
-                        ++$index;
+                        $index++;
                         $targs['questionid'] = 'q_'.$index;
                         $targs['questiontype'] = $question[0];
                         $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -213,10 +213,10 @@ class action extends app
             $args['examquestions'] = ['questions' => $questions, 'questionrows' => $questionrows];
             $id = $this->exam->addExamSetting($args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}{$u}",
             ];
             $this->G->R($message);
         } else {
@@ -441,10 +441,10 @@ class action extends app
             $args['examquestions'] = $args['examquestions'];
             $this->exam->modifyExamSetting($examid, $args);
             $message = [
-                'statusCode' => 200,
-                'message' => '操作成功',
+                'statusCode'   => 200,
+                'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl' => "index.php?exam-teach-exams&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-teach-exams&page={$page}{$u}",
             ];
             exit(json_encode($message));
         }

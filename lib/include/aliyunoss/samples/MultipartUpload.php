@@ -109,10 +109,10 @@ function putObjectByRawApis($ossClient, $bucket)
         $toPos = (int) $piece[$ossClient::OSS_LENGTH] + $fromPos - 1;
         $upOptions = [
             $ossClient::OSS_FILE_UPLOAD => $uploadFile,
-            $ossClient::OSS_PART_NUM => ($i + 1),
-            $ossClient::OSS_SEEK_TO => $fromPos,
-            $ossClient::OSS_LENGTH => $toPos - $fromPos + 1,
-            $ossClient::OSS_CHECK_MD5 => $isCheckMd5,
+            $ossClient::OSS_PART_NUM    => ($i + 1),
+            $ossClient::OSS_SEEK_TO     => $fromPos,
+            $ossClient::OSS_LENGTH      => $toPos - $fromPos + 1,
+            $ossClient::OSS_CHECK_MD5   => $isCheckMd5,
         ];
         if ($isCheckMd5) {
             $contentMd5 = OssUtil::getMd5SumForFile($uploadFile, $fromPos, $toPos);
@@ -133,7 +133,7 @@ function putObjectByRawApis($ossClient, $bucket)
     foreach ($responseUploadPart as $i => $eTag) {
         $uploadParts[] = [
             'PartNumber' => ($i + 1),
-            'ETag' => $eTag,
+            'ETag'       => $eTag,
         ];
     }
     /*
@@ -160,6 +160,7 @@ function uploadDir($ossClient, $bucket)
 {
     $localDirectory = '.';
     $prefix = 'samples/codes';
+
     try {
         $ossClient->uploadDir($bucket, $prefix, $localDirectory);
     } catch (OssException $e) {
@@ -180,11 +181,12 @@ function uploadDir($ossClient, $bucket)
 function listMultipartUploads($ossClient, $bucket)
 {
     $options = [
-        'max-uploads' => 100,
-        'key-marker' => '',
-        'prefix' => '',
+        'max-uploads'      => 100,
+        'key-marker'       => '',
+        'prefix'           => '',
         'upload-id-marker' => '',
     ];
+
     try {
         $listMultipartUploadInfo = $ossClient->listMultipartUploads($bucket, $options);
     } catch (OssException $e) {
