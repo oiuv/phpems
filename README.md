@@ -1,6 +1,6 @@
-# [phpems v5.0](https://phpems.is.js.cn)
+# [phpems v5.0](https://phpems5.is.js.cn)
 
-开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS（www.phpems.net）](http://www.phpems.net) 修改。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。
+开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS v5.0](http://www.phpems.net) 修改。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据个人需要优化新增一些功能。
 
 因使用部分第三方扩展包，系统要求`php>=7.0`，具体集成扩展包如下：
 
@@ -86,13 +86,14 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 通过 [composer](https://getcomposer.org/) 指令直接创建项目
 
-    composer create-project --prefer-dist phpems/phpems phpems
+    composer create-project --prefer-dist phpems/phpems phpems "5.*"
 
 #### 方式2：使用 git 创建项目
 
 使用 git 复制项目后使用 composer 安装依赖
 
     git clone https://github.com/oiuv/phpems.git
+    git checkout 5.0
     cd phpems && composer install
     cd lib && cp config.inc.example.php config.inc.php
 
@@ -108,7 +109,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 ## 使用
 
-演示：https://phpems.is.js.cn/
+演示：https://phpems5.is.js.cn/
 
 ### 考试设置
 
