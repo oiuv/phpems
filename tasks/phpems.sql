@@ -5,7 +5,7 @@
  Source Server Type    : MySQL
  Source Server Version : 100028
  Source Host           : localhost:3306
- Source Schema         : phpems
+ Source Schema         : phpems_v6
 
  Target Server Type    : MySQL
  Target Server Version : 100028
@@ -4157,7 +4157,7 @@ CREATE TABLE `x2_docs`  (
 DROP TABLE IF EXISTS `x2_examhistory`;
 CREATE TABLE `x2_examhistory`  (
   `ehid` int(11) NOT NULL AUTO_INCREMENT,
-  `ehexamid` int(11) NOT NULL DEFAULT 0,
+  `ehexamid` varchar(240) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
   `ehexam` varchar(240) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `ehtype` int(11) NOT NULL DEFAULT 0,
   `ehbasicid` int(11) NOT NULL DEFAULT 0,

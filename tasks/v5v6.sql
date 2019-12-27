@@ -42,9 +42,9 @@ CREATE TABLE `x2_docfloder`  (
   PRIMARY KEY (`dfid`) USING BTREE,
   INDEX `dfcatid`(`dfcatid`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
+/*
 ALTER TABLE `x2_examhistory` MODIFY COLUMN `ehexamid` int(11) NOT NULL DEFAULT 0 AFTER `ehid`;
-
+*/
 ALTER TABLE `x2_exams` MODIFY COLUMN `examsubject` int(11) NOT NULL DEFAULT 0 AFTER `examid`;
 
 ALTER TABLE `x2_exams` MODIFY COLUMN `examquestions` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `examsetting`;
