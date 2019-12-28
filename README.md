@@ -134,13 +134,33 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 > 第一次从服务号或小程序登录系统会自动绑定微信和考试账号，以后从服务号或小程序进入直接自动登录。
 
-## 关于系统的二次开发说明：
+## 关于系统二次开发的说明：
+
+### PHPEMS 文件夹结构
+
+ * `api` 支付相关API接口目录
+ * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里
+ * `data` 缓存和日志目录，需要可写权限
+ * `files` 上传的附件和公共静态文件目录
+ * `lib` 系统公共类和方法目录
+ * `model` 数据模型目录，使用 ORM 操作数据库更为便捷
+ * `tasks` 示例数据库和示例文件目录，项目上线后最好删除
 
 ### PHPEMS 路由说明
 
+项目路由入口文件为根目录下的 `index.php`，如：
+
     index.php?user-phone-login-index
 
-> 访问 `app` 目录下 user/controller/login.phone.php 文件的index方法
+> 以上路由访问的是 `app` 目录下 `user/controller/login.phone.php` 文件的 `index` 方法
+
+### PHPEMS 模板说明
+
+视图模板在 `app` 文件夹下模块中的 `tpl` 文件夹中，编译文件在 `/data/compile/`目录。
+
+    /data/compile/seminar/tpls/app/%%cpl%%index.php
+
+> 以上编译文件对应的是 `app` 目录下 `seminar/tpls/app/index.tpl` 文件。
 
 ### PHPEMS smarty模板标签
 
