@@ -4,7 +4,7 @@
 			<ul class="list-unstyled list-inline">
 				<li>
 					<a href="" class="menu">
-						新乡市落笔千言网络技术有限公司
+						免费开源的PHP模拟考试系统
 					</a>
 				</li>
 			</ul>
