@@ -89,9 +89,9 @@
 							  	<input type="hidden" name="page" value="{x2;$page}"/>
 							  	<input type="hidden" name="questionid" value="{x2;$question['qrid']}"/>
 							  	<input type="hidden" name="modifyquestion" value="1"/>
-							  	{x2;tree:$search,arg,aid}
+							  	{x2;if:is_array($search)}{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-								{x2;endtree}
+								{x2;endtree}{x2;endif}
 							</div>
 						</div>
 					</form>
