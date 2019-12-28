@@ -61,9 +61,9 @@
 									<a class="btn btn-primary ajax btn-block" msg="申请证书将扣除余额{x2;$ce['ceprice']}元，确定支付吗？" href="index.php?certificate-phone-certificate-apply&apply=1&ceid={x2;$ce['ceid']}">资料无误 申请证书</a>
 									<input type="hidden" name="modifyuserinfo" value="1"/>
 									<input type="hidden" name="page" value="{x2;$page}"/>
-									{x2;tree:$search,arg,aid}
+									{x2;if:is_array($search)}{x2;tree:$search,arg,aid}
 									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-									{x2;endtree}
+									{x2;endtree}{x2;endif}
 								</div>
 						</fieldset>
 					</div>
