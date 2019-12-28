@@ -56,7 +56,7 @@
                                     </div>
                                 </a>
                             </li>
-                            {x2;endif}
+                            {x2;endtree}
                         </ul>
                     </div>
                 </div>
