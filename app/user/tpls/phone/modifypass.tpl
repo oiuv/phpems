@@ -1,47 +1,50 @@
-<header class="container-fluid" style="background-color:#337AB7;">
-    <h5 class="text-center">
-        <em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left"
-            onclick="javascript:$.goPrePage();"></em>
-        <span class="ttlo">密码修改</span>
-        <a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone"
-           class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
-    </h5>
-</header>
-<div style="clear:both" class="col-xs-12">
-    <form action="index.php?user-phone-privatement-modifypass" method="post" class="form-horizontal"
-          style="padding:20px;">
-        <fieldset>
-            <div class="form-group">
-                <label class="control-label col-sm-2">旧密码：</label>
-                <div class="col-sm-10"><input id="oldpassowrd" type="password" class="form-control" value=""
-                                              name="oldpassword" needle="needle" datatype="password" msg="密码字数必须在6位以上"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">新密码：</label>
-                <div class="col-sm-10"><input id="modpassword1" type="password" class="form-control" value=""
-                                              name="args[password]" needle="needle" datatype="password"
-                                              msg="密码字数必须在6位以上"/></div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2">重复密码：</label>
-                <div class="col-sm-10"><input id="modpassword2" type="password" class="form-control" value=""
-                                              name="args[password2]" needle="needle" equ="modpassword1"
-                                              msg="前后两次密码必须一致且不能为空"/></div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2"></label>
-                <div class="col-sm-10">
-                    <button class="btn btn-primary btn-block" type="submit">提交</button>
-                    <input type="hidden" name="modifyuserpassword" value="1"/>
-                    <input type="hidden" name="page" value="{x2;$page}"/>
-                    {x2;if:is_array($search)}
-                    {x2;tree:$search,arg,aid}
-                    <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-                    {x2;endtree}
-                    {x2;endif}
-                </div>
-            </div>
-        </fieldset>
-    </form>
+{x2;if:!$userhash}
+{x2;include:header}
+<body>
+<div class="pages">
+    {x2;endif}
+	<div class="page-tabs">
+		<div class="page-header">
+			<div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+			<div class="col-8">修改密码</div>
+			<div class="col-1"><span class="iconfont icon-menu"></span></div>
+		</div>
+		<div class="page-content header">
+			<form class="top" action="index.php?user-phone-privatement-modifypass" method="post">
+				<div class="form-group underline">
+					<div class="col-3 tip">
+						旧密码
+					</div>
+					<div class="col-7">
+						<input type="password" needle="needle" msg="请输入旧密码" class="noborder" name="oldpassword" placeholder="请输入旧密码">
+					</div>
+				</div>
+				<div class="form-group underline">
+					<div class="col-3 tip">
+						密码
+					</div>
+					<div class="col-7">
+						<input type="password" needle="needle" msg="请输入新密码" class="noborder" name="args[password]" placeholder="请输入新密码">
+					</div>
+				</div>
+				<div class="form-group underline">
+					<div class="col-3 tip">
+						重复密码
+					</div>
+					<div class="col-7">
+						<input type="password" needle="needle" msg="请输入密码" class="noborder" name="args[password2]" placeholder="请重复输入密码">
+					</div>
+				</div>
+				<div class="form-group"></div>
+				<div class="form-group">
+					<input type="hidden" name="modifyuserpassword" value="1"/>
+					<button class="primary block">修改密码</button>
+				</div>
+			</form>
+		</div>
+	</div>
+    {x2;if:!$userhash}
 </div>
+</body>
+</html>
+{x2;endif}

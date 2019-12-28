@@ -29,7 +29,7 @@ class course_course
         $this->ev = $this->G->make('ev');
     }
 
-    public function getCourseList($args, $page, $number = 20, $order = 'cstime DESC,csid DESC')
+    public function getCourseList($args, $page, $number = 20, $order = 'cssequence desc,cstime DESC,csid DESC')
     {
         $data = [
             'select'  => false,

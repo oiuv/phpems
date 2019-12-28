@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -24,7 +24,7 @@
 						<a class="btn btn-primary pull-right" href="index.php?exam-master-basic-add">添加考场</a>
 					</h4>
 					<form action="index.php?exam-master-basic" method="post">
-						<table class="table" class="form-inline">
+						<table class="table form-inline">
 							<thead>
 				                <tr>
 							        <th colspan="2">搜索</th>
@@ -73,11 +73,9 @@
 								<td>
 					        		<select name="search[basicsubjectid]" class="form-control">
 						        		<option value="0">选择科目</option>
-                                        {x2;if:is_array($subjects)}
 								  		{x2;tree:$subjects,subject,sid}
 								  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['basicsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
 								  		{x2;endtree}
-                                        {x2;endif}
 							  		</select>
 					        	</td>
 					        	<td>
@@ -111,7 +109,7 @@
 							        <th>考试科目</th>
 							        <th>开通人数</th>
 							        <th>状态</th>
-							        <th>操作</th>
+							        <th width="260">操作</th>
 				                </tr>
 				            </thead>
 				            <tbody>

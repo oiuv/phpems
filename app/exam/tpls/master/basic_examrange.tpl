@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -88,13 +88,13 @@
 							<label for="basicexam_auto" class="control-label col-sm-3">考场模式：</label>
 							<div class="col-sm-9">
 								<label class="radio-inline">
-						          	<input type="radio" class="input-text" name="args[basicexam][model]" value="0"{x2;if:$basic['basicexam']['model'] == 0} checked{x2;endif}/> 全功能模式（练习和正式考试均开放）
+						          	<input type="radio" class="input-text" name="args[basicexam][model]" value="0"{x2;if:$basic['basicexam']['model'] == 0} checked{x2;endif}/> 全功能模式（显示练习，显示试题库）
 					          	</label>
 					          	<label class="radio-inline">
-					          		<input type="radio" class="input-text" name="args[basicexam][model]" value="1"{x2;if:$basic['basicexam']['model'] == 1} checked{x2;endif}/> 练习模式（仅练习功能开放）
+					          		<input type="radio" class="input-text" name="args[basicexam][model]" value="1"{x2;if:$basic['basicexam']['model'] == 1} checked{x2;endif}/> 练习模式（显示练习，不显示试题库）
 					          	</label>
 					          	<label class="radio-inline">
-					          		<input type="radio" class="input-text" name="args[basicexam][model]" value="2"{x2;if:$basic['basicexam']['model'] == 2} checked{x2;endif}/> 考试模式（仅正式考试开放）
+					          		<input type="radio" class="input-text" name="args[basicexam][model]" value="2"{x2;if:$basic['basicexam']['model'] == 2} checked{x2;endif}/> 考试模式（仅显示正式考试）
 					          	</label>
 							</div>
 						</div>
@@ -194,11 +194,9 @@
 								<input type="hidden" name="page" value="{x2;$page}"/>
 								<input type="hidden" name="setexamrange" value="1"/>
 								<input type="hidden" name="basicid" value="{x2;$basic['basicid']}"/>
-                                {x2;if:is_array($search)}
 								{x2;tree:$search,arg,aid}
 								<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 								{x2;endtree}
-                                {x2;endif}
 							</div>
 						</div>
 					</form>

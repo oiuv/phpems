@@ -64,18 +64,33 @@ class pg
                 }
             }
         }
+        /**
+         * if($cpage > 1)
+         * {
+         * $pageString = $this->pre.'<a class="ajax" href="'.$url.$separate.'1">'.'第一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage - 1).'">'.'上一页'.'</a>'.$this->end;
+         * }
+         * else
+         * $pageString = $this->pre.'<a class="current">'.'第一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a>共'.$this->number.'条数据</a>'.$this->end;
+         * if($cpage < $pages)
+         * {
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.intval($cpage + 1).'">'.'下一页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.$pages.'">'.'末页'.'</a>'.$this->end;
+         * }
+         * else
+         * $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;
+         * **/
         if ($cpage > 1) {
-            $pageString = $this->pre.'<a '.$this->target.' href="'.$url.$separate.'1">'.'第一页'.'</a>'.$this->end;
-            $pageString .= $this->pre.'<a '.$this->target.' href="'.$url.$separate.intval($cpage - 1).'">'.'上一页'.'</a>'.$this->end;
+            $pageString = '<li class="col-2 text-center"><a class="ajax" data-target="pagination" data-direction="left" href="'.$url.$separate.intval($cpage - 1).'"><em class="iconfont icon-left-circle"></em></a></li>';
         } else {
-            $pageString = $this->pre.'<a class="current">'.'第一页'.'</a>'.$this->end;
+            $pageString = '<li class="col-2 text-center"><em class="iconfont icon-left-circle"></em></li>';
         }
-        $pageString .= $this->pre.'<a>共'.$this->number.'条数据</a>'.$this->end;
+        $pageString .= '<li class="col-6 text-center">'.$cpage.'/'.$pages.'</a></li>';
         if ($cpage < $pages) {
-            $pageString .= $this->pre.'<a '.$this->target.' href="'.$url.$separate.intval($cpage + 1).'">'.'下一页'.'</a>'.$this->end;
-            $pageString .= $this->pre.'<a '.$this->target.' href="'.$url.$separate.$pages.'">'.'末页'.'</a>'.$this->end;
+            $pageString .= '<li class="col-2 text-center"><a class="ajax" data-target="pagination" href="'.$url.$separate.intval($cpage + 1).'"><em class="iconfont icon-right-circle"></em></a></li>';
         } else {
-            $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;
+            $pageString .= '<li class="col-2 text-center"><em class="iconfont icon-right-circle"></em></li>';
         }
 
         return $pageString;
@@ -84,7 +99,7 @@ class pg
     //生成分页HTML
     public function outPage($pages, $cpage, $url = false, $separate = '&page=')
     {
-        if ($this->isPhone) {
+        if ($this->ev->isMobile()) {
             return $this->outPhonePage($pages, $cpage, $url, $separate);
         }
         if (!$url) {

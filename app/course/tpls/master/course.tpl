@@ -5,10 +5,13 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div class="col-xs-2 leftmenu">
+				<div id="catsmenu" style="margin-top: 0px;"></div>
+			</div>
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -25,29 +28,28 @@
 				</div>
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">
-						分类管理
+                        {x2;if:$catid}{x2;$categories[$catid]['catname']}{x2;else}所有课程{x2;endif}
 						<a class="btn btn-primary pull-right" href="index.php?course-master-course-add&catid={x2;$catid}&page={x2;$page}">添加课程</a>
 					</h4>
-					<h4>{x2;if:$catid}{x2;$categories[$catid]['catname']}{x2;else}所有课程{x2;endif}</h4>
 					<form action="index.php?course-master-course" method="post" class="form-inline">
 						<table class="table">
 					        <tr>
-								<td>
+								<td style="border-top: 0px;">
 									课程ID：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input name="search[courseid]" class="form-control" size="15" type="text" class="number" value="{x2;$search['courseid']}"/>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									录入时间：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" type="text" name="search[stime]" size="10" id="stime" value="{x2;$search['stime']}"/> - <input class="form-control datetimepicker" data-date="{x2;date:TIME,'Y-m-d'}" data-date-format="yyyy-mm-dd" size="10" type="text" name="search[etime]" id="etime" value="{x2;$search['etime']}"/>
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									关键字：
 								</td>
-								<td>
+								<td style="border-top: 0px;">
 									<input class="form-control" name="search[keyword]" size="15" type="text" value="{x2;$search['keyword']}"/>
 								</td>
 							</tr>
@@ -88,9 +90,6 @@
 								        <th width="100">分类</th>
 								        <th width="100">发布时间</th>
 								        <th width="100">开通人数</th>
-								        <!--
-								        <th width="100">申请人数</th>
-								        -->
 								        <th width="180">操作</th>
 					                </tr>
 					            </thead>
@@ -113,11 +112,6 @@
 					                    <td>
 					                        <a href="index.php?course-master-course-members&courseid={x2;v:course['csid']}" class="autoloaditem" autoload="index.php?course-master-course-getcoursemembernumber&courseid={x2;v:course['csid']}">0</a>
 					                    </td>
-					                    <!--
-					                    <td>
-					                        {x2;v:course['cstitle']}
-					                    </td>
-					                    -->
 					                    <td class="actions">
 					                    	<div class="btn-group">
 					                    		<a class="btn" href="index.php?course-master-course-members&courseid={x2;v:course['csid']}" title="人员管理"><em class="glyphicon glyphicon-user"></em></a>
@@ -141,11 +135,9 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" />删除
 						            </label>
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>
@@ -165,6 +157,20 @@
 		</div>
 	</div>
 </div>
+<script src="index.php?course-master-course-catsmenu&catid={x2;$catid}"></script>
+<script>
+;$(function(){
+    $('#catsmenu').treeview({
+        levels: {x2;$catlevel},
+        expandIcon: 'glyphicon glyphicon-chevron-right',
+        collapseIcon: 'glyphicon glyphicon-chevron-down',
+        selectedColor: "#000000",
+        selectedBackColor: "#FFFFFF",
+        enableLinks: true,
+        data: treeData
+    });
+})
+</script>
 {x2;include:footer}
 </body>
 </html>

@@ -56,7 +56,7 @@ class action extends app
                 $args['contentinputtime'] = strtotime($args['contentinputtime']);
             }
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $args['contentmoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $args['contentmoduleid'], 1);
             $id = $this->content->addContent($args);
             $message = [
                 'statusCode'   => 200,
@@ -69,12 +69,9 @@ class action extends app
 
         $catid = intval($this->ev->get('catid'));
         $moduleid = intval($this->ev->get('moduleid'));
-        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'content'"]]);
         $modules = $this->module->getModulesByApp($this->G->app);
-        $userid = $this->_user['sessionuserid'];
-        $user = $this->user->getUserById($userid);
-        $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($moduleid, $this->user->getModuleUserInfo());
+        $fields = $this->module->getMoudleFields($moduleid, 1);
         $forms = $this->html->buildHtml($fields);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {
@@ -104,8 +101,9 @@ class action extends app
             $args['contentmodifytime'] = TIME;
             unset($args['contentcatid']);
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $content['contentmoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $content['contentmoduleid'], 1);
             $this->content->modifyContent($contentid, $args);
+            $this->position->modifyPosContentByContentId($contentid, ['pctitle' => $args['contenttitle'], 'pcthumb' => $args['contentthumb'], 'pcdescribe' => $args['contentdescribe']], 'content');
             $message = [
                 'statusCode'   => 200,
                 'message'      => '操作成功',
@@ -124,7 +122,7 @@ class action extends app
         $userid = $this->_user['sessionuserid'];
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($content['contentmoduleid'], $this->user->getModuleUserInfo());
+        $fields = $this->module->getMoudleFields($content['contentmoduleid'], 1);
         $forms = $this->html->buildHtml($fields, $content);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {
@@ -179,7 +177,7 @@ class action extends app
                     }
                 }
                 $contentids = implode(',', $contentids);
-                $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+                $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'content'"]]);
                 $this->tpl->assign('parentcat', $parentcat);
                 $this->tpl->assign('contentids', $contentids);
                 $this->tpl->display('content_move');
@@ -193,7 +191,7 @@ class action extends app
                     }
                 }
                 $contentids = implode(',', $contentids);
-                $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+                $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'content'"]]);
                 $this->tpl->assign('parentcat', $parentcat);
                 $this->tpl->assign('contentids', $contentids);
                 $this->tpl->display('content_copy');
@@ -232,7 +230,7 @@ class action extends app
                 foreach ($contentids as $key => $id) {
                     if ($id) {
                         $basic = $this->content->getBasicContentById($id);
-                        $args = ['pctitle' => $basic['contenttitle'], 'pctime' => $basic['contentinputtime'], 'pccontentid' => $id, 'pcthumb' => $basic['contentthumb'], 'pcposid' => $position];
+                        $args = ['pctitle' => $basic['contenttitle'], 'pctime' => $basic['contentinputtime'], 'pcposapp' => 'content', 'pccontentid' => $id, 'pcthumb' => $basic['contentthumb'], 'pcdescribe' => $basic['contentdescribe'], 'pcposid' => $position];
                         $this->position->addPosContent($args);
                     }
                 }

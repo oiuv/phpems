@@ -24,6 +24,19 @@ class action extends app
         exit;
     }
 
+    private function catsmenu()
+    {
+        $catid = $this->ev->get('catid');
+        $categories = $this->category->getAllCategory();
+        $r = [];
+        $this->category->selected = $catid;
+        $this->category->hrefpre = 'index.php?course-master-course&catid=';
+        $this->category->levelCategory($r, 0, $this->category->tidycategories);
+        $this->category->resetCategoryIndex($r);
+        echo 'var treeData = '.json_encode($r);
+        exit();
+    }
+
     public function delopen()
     {
         $ocid = $this->ev->get('ocid');
@@ -97,7 +110,7 @@ class action extends app
                 $args[] = ['AND', 'userregtime <= :userregtime', 'userregtime', $etime];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $this->tpl->assign('course', $course);
         $this->tpl->assign('users', $users);
         $this->tpl->assign('search', $search);
@@ -123,7 +136,7 @@ class action extends app
         }
 
         $catid = intval($this->ev->get('catid'));
-        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'course'"]]);
         $this->tpl->assign('parentcat', $parentcat);
         $this->tpl->assign('catid', $catid);
         $this->tpl->display('course_add');
@@ -375,6 +388,14 @@ class action extends app
             }
         }
         $courses = $this->course->getCourseList($args, $page, 10);
+        $catlevel = 1;
+        if ($catid) {
+            $pos = $this->category->getCategoryPos($catid);
+            if (count($pos)) {
+                $catlevel = count($pos) + 1;
+            }
+        }
+        $this->tpl->assign('catlevel', $catlevel);
         $this->tpl->assign('page', $page);
         $this->tpl->assign('catid', $catid);
         $this->tpl->assign('courses', $courses);

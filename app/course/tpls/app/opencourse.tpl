@@ -1,76 +1,80 @@
-{x2;if:!$userhash}
 {x2;include:header}
 <body>
-{x2;include:nav}
-{x2;endif}
-<div class="container-fluid" id="datacontent">
+<div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main box itembox">
-			<ul class="breadcrumb">
-				<li>
-					<span class="icon-home"></span> <a href="index.php?course">课程</a>
-				</li>
-				<li>
-					<a href="index.php?course-app-index-lists">开通课程</a>
-				</li>
-				<li class="active">
-					{x2;$course['cstitle']}
-				</li>
-			</ul>
-		</div>
-		<div class="main box itembox">
-			<h4 class="title">开通课程</h4>
-			<div class="col-xs-1"></div>
-			<div class="col-xs-3" style="padding-top:30px;">
-				<div class="thumbnail"><img alt="300x200" src="{x2;if:$course['csthumb']}{x2;$course['csthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" /></div>
-			</div>
-			<div class="col-xs-1"></div>
-			<div class="col-xs-7">
-				<div class="caption">
-					<h4 class="title">{x2;$course['cstitle']}</h4>
-					<p>&nbsp;</p>
-					<p>您现有积分：{x2;$_user['usercoin']} （<a href="index.php?user-center-payfor">支付宝充值</a> / <a href="#myModal" role="button" data-toggle="modal">代金券充值</a>）</p>
-					{x2;if:$isopen}<p>到期时间：{x2;date:$isopen['ocendtime'],'Y-m-d'}</p>{x2;endif}
+		<div class="pages">
+            {x2;include:nav}
+			<div class="content">
+				<div class="col-xs-9">
+					<div class="content-box padding">
+						<h2 class="title">开通课程</h2>
+						<ul class="list-img list-unstyled">
+							<li class="border morepadding">
+								<h4 class="shorttitle">{x2;$course['cstitle']}</h4>
+								<div class="intro">
+									<div class="col-xs-3 img">
+										<img src="{x2;if:$course['csthumb']}{x2;$course['csthumb']}{x2;else}app/exam/styles/image/paper.png{x2;endif}" />
+									</div>
+									<div class="desc">
+										<p>{x2;$course['csdescribe']}</p>
+										<p class="toolbar">
+											<a class="badge">当前积分：{x2;$_user['usercoin']}</a>
+											<a class="badge" href="index.php?user-center-payfor">在线充值</a>
+											<a class="badge" href="#myModal" role="button" data-toggle="modal">代金券充值</a>
+										</p>
+										<div class="toolbar">
+                                            {x2;if:$isopen}
+											<a class="btn btn-info pull-right more ajax" href="index.php?course-app-course&csid={x2;$course['csid']}">进入考场</a>
+                                            {x2;else}
+                                            {x2;if:!$allowopen}
+                                            {x2;if:$course['csdemo']}
+											<a class="btn btn-info pull-right more confirm" msg="确定要开通吗？" href="index.php?course-app-course-opencourse&opencs=1&csid={x2;$course['csid']}">免费开通</a>
+                                            {x2;else}
+                                            {x2;if:$price}
+											选择要开通的时长
+											<div class="more">
+                                                {x2;tree:$price,p,pid}
+												<a class="btn btn-primary confirm" msg="确定要开通吗？" href="index.php?course-app-course-opencourse&csid={x2;$course['csid']}&opencs=1&opentype={x2;v:key}">{x2;v:p['price']}积分兑换{x2;v:p['time']}天</a>
+                                                {x2;endtree}
+											</div>
+                                            {x2;else}
+											<a class="btn btn-default pull-right more" href="javascript:;">请管理员设置考场价格</a>
+                                            {x2;endif}
+                                            {x2;endif}
+                                            {x2;else}
+											<a class="btn btn-default pull-right more" href="javascript:;">您所在的用户组不能开通本考场</a>
+                                            {x2;endif}
+                                            {x2;endif}
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
 				</div>
-				{x2;if:!$isopen}
-				<form action="index.php?course-app-course-opencourse" method="post">
-					{x2;if:!$course['csdemo']}
-						{x2;if:$price}
-						<p>
-							<select name="opentype" class="form-control" style="width:180px;">
-								{x2;tree:$price,p,pid}
-								<option value="{x2;v:key}">{x2;v:p['price']}积分兑换{x2;v:p['time']}天</option>
-								{x2;endtree}
-							</select>
-						</p>
-						<p>&nbsp;</p>
-						<p>
-							<input value="{x2;$course['csid']}" name="csid" type="hidden"/>
-							<input value="1" name="opencs" type="hidden"/>
-							<input class="btn btn-primary" value="开通" type="submit"/>
-						</p>
-						{x2;else}
-						<p>&nbsp;</p>
-						<p>
-							<input class="btn" value="请管理员先在后台设置价格" type="button"/>
-						</p>
-						{x2;endif}
-					{x2;else}
-					<p>&nbsp;</p>
-					<p>
-						<input value="{x2;$course['csid']}" name="csid" type="hidden"/>
-						<input value="1" name="opencs" type="hidden"/>
-						<input class="btn btn-primary" value="开通" type="submit"/>
-					</p>
-					{x2;endif}
-				</form>
-				{x2;else}
-				<p>&nbsp;</p>
-				<p>
-					<a class="btn btn-primary" href="index.php?course-app-course&csid={x2;$course['csid']}">开始学习</a>
-				</p>
-				{x2;endif}
+				<div class="col-xs-3 nopadding">
+					<div class="content-box padding">
+						<h2 class="title">最新考场<a href="index.php?exam-app-basics-open" class="badge pull-right">更多 <em class="glyphicon glyphicon-plus"></em> </a> </h2>
+						<ul class="list-unstyled list-img">
+                            {x2;tree:$news,basic,bid}
+							<li class="border padding">
+								<a href="index.php?{x2;$_app}-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax">
+									<div class="intro">
+										<div class="col-xs-5 img noleftpadding">
+											<img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+										</div>
+										<div class="desc">
+											<p>{x2;v:basic['basic']}</p>
+										</div>
+									</div>
+								</a>
+							</li>
+                            {x2;endtree}
+						</ul>
+					</div>
+				</div>
 			</div>
+            {x2;include:footer}
 		</div>
 	</div>
 </div>
@@ -83,19 +87,17 @@
 			</div>
 			<div class="modal-body" id="modal-body">
 				<div class="control-group">
-					<label class="control-label" for="content">代金券号码：</label>
-			  		<div class="controls">
-			  			<input type="text" class="form-control" name="couponsn" style="width:80%" value="" needle="needle" msg="请输入16位代金券号码"/>
+					<div class="controls">
+						<input placeholder="请输入16位代金券号码" type="text" class="form-control" name="couponsn" value="" needle="needle" msg="请输入16位代金券号码"/>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				 <input name="coupon" type="hidden" value="1">
-				 <button class="btn btn-primary" type="submit">充值</button>
+				<input name="coupon" type="hidden" value="1">
+				<button class="btn btn-primary" type="submit">充值</button>
 			</div>
 		</div>
 	</div>
 </form>
-{x2;include:footer}
 </body>
 </html>

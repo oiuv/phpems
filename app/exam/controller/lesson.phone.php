@@ -14,6 +14,7 @@ class action extends app
 {
     public function display()
     {
+        $this->exer = $this->G->make('exercise', 'exam');
         $action = $this->ev->url(3);
         if (!method_exists($this, $action)) {
             $action = 'index';
@@ -38,9 +39,9 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '缺少参数',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '缺少参数',
+                ];
             }
             $this->G->R($message);
         } else {
@@ -54,151 +55,89 @@ class action extends app
     {
         switch ($this->ev->url(4)) {
             case 'questions':
-            $number = $this->ev->get('number');
-            if (!$number) {
-                $number = $this->ev->getCookie('number');
-            }
-            if (!$number) {
-                $number = 1;
-            }
-            $cnumber = $number;
-            $this->ev->setCookie('number', $number);
-            $questid = $this->ev->getCookie('questype');
-            $knowsid = $this->ev->getCookie('knowsid');
-            if (!$questid || !$knowsid) {
-                $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作超时，请重新开始练习',
-                    'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?exam-phone-lesson',
-                ];
-                $this->G->R($message);
-            }
-            $args = ['exeruserid' => $this->_user['sessionuserid'], 'exerbasicid' => $this->data['currentbasic']['basicid'], 'exerknowsid' => $knowsid, 'exernumber' => $number, 'exerqutype' => $questid];
-            $this->G->make('exercise', 'exam')->setExercise($args);
-            $questions = $this->question->getRandQuestionListByKnowid($knowsid, $questid);
-            $allnumber = $this->exam->getQuestionNumberByQuestypeAndKnowsid($questid, $knowsid);
-            $qunumber = count($questions);
-            if ($number > $qunumber) {
-                $qrs = $this->question->getRandQuestionRowsListByKnowid($knowsid, $questid);
-                if ($number <= $allnumber) {
-                    $i = 1;
-                    $prenumber = 1;
-                    while ($number > $qunumber) {
-                        $question = $this->exam->getQuestionRowsByArgs([['AND', 'qrnumber > 0'], ['AND', 'qrid = :qrid', 'qrid', $qrs[intval($i - 1)]]]);
-                        if ($question['qrnumber'] >= 1) {
-                            $qunumber = $qunumber + $question['qrnumber'];
-                            if ($number > $qunumber) {
-                                $i++;
-                            }
-                        } else {
-                            break;
-                        }
-                    }
-                    if ($i > 0) {
-                        $prequestion = $this->exam->getQuestionRowsByArgs([['AND', 'qrid = :qrid', 'qrid', $qrs[intval($i - 1)]]]);
-                        $prenumer = $prequestion['qrnumber'];
-                        $tmpn = $number - $qunumber - 1;
-                        if ($tmpn < 0) {
-                            $tmpn = $prenumer + $tmpn;
-                        }
-                        $pi = 0;
-                        if ($tmpn < 0) {
-                            $tmpn = 0;
-                        }
-                        foreach ($prequestion['data'] as $p) {
-                            if ($tmpn == $pi) {
-                                $vq = $p;
-                            }
-                            $pi++;
-                        }
-                        $this->tpl->assign('vquestion', $vq);
-                        $this->tpl->assign('tmpn', $tmpn + 1);
-                    }
-                } else {
+                $number = $this->ev->get('number');
+                $questid = $this->ev->get('questid');
+                $knowsid = $this->ev->get('knowsid');
+                if (!$knowsid) {
                     $message = [
-                        'statusCode' => 300,
-                        'message'    => '您已经做完所有的题了',
+                        'statusCode'   => 200,
+                        'message'      => '操作超时，请重新开始练习',
+                        'callbackType' => 'forward',
+                        'forwardUrl'   => 'index.php?exam-phone-lesson',
                     ];
                     $this->G->R($message);
                 }
-            } else {
+                if (!$number) {
+                    $exer = $this->exer->getExerciseProcessByUser($this->_user['sessionuserid'], $this->data['currentbasic']['basicid'], $knowsid);
+                    if ($exer['exernumber']) {
+                        $number = $exer['exernumber'];
+                    } else {
+                        $number = 1;
+                    }
+                } else {
+                    $args = ['exeruserid' => $this->_user['sessionuserid'], 'exerbasicid' => $this->data['currentbasic']['basicid'], 'exerknowsid' => $knowsid, 'exernumber' => $number, 'exerqutype' => $questid];
+                }
+                $this->exer->setExercise($args);
+                $knows = $this->section->getQuestionsByKnows($knowsid);
+                if ($questid) {
+                    $allnumber = $knows['knowsnumber'][$questid];
+                    $questions = $knows['knowsquestions'][$questid];
+                } else {
+                    $allnumber = array_sum($knows['knowsnumber']);
+                    $questions = [];
+                    foreach ($knows['knowsquestions'] as $p) {
+                        $questions = array_merge($questions, $p);
+                    }
+                }
+                unset($knows['knowsquestions'],$knows['knowsnumber']);
+                if (($number > $allnumber) && $allnumber) {
+                    $number = $allnumber;
+                }
+                $qunumber = count($questions);
                 $question = $this->exam->getQuestionByArgs([['AND', 'questionid = :questionid', 'questionid', $questions[intval($number - 1)]]]);
-            }
-            $questype = $this->basic->getQuestypeById($questid);
-            $this->tpl->assign('question', $question);
-            $this->tpl->assign('questype', $questype);
-            $this->tpl->assign('allnumber', $allnumber);
-            $this->tpl->assign('prenumber', $prenumber);
-            $this->tpl->assign('number', $number);
-            $this->tpl->assign('knowsid', $knowsid);
-            $this->tpl->display('lesson_ajaxquestion');
-            break;
-
-            case 'setlesson':
-            $questype = intval($this->ev->get('questype'));
-            $knowsid = intval($this->ev->get('knowsid'));
-            $number = intval($this->ev->get('number'));
-            if ($questype && $knowsid) {
-                $this->ev->setCookie('questype', $questype, 3600 * 24);
-                $this->ev->setCookie('knowsid', $knowsid, 3600 * 24);
-                $this->ev->setCookie('number', $number);
-                $message = [
-                    'statusCode'   => 200,
-                    'callbackType' => 'forward',
-                    'message'      => '系统正在抽题，请稍等',
-                    'forwardUrl'   => 'index.php?exam-phone-lesson-paper',
-                ];
-            } else {
-                $message = [
-                    'statusCode' => 300,
-                    'message'    => '非法参数',
-                ];
-            }
-            $this->G->R($message);
-            break;
+                if ($question['questionparent']) {
+                    $parent = $this->exam->getQuestionRowsById($question['questionparent'], false, false);
+                    $this->tpl->assign('parent', $parent);
+                }
+                $questypes = $this->basic->getQuestypeList();
+                $this->tpl->assign('question', $question);
+                $this->tpl->assign('questype', $questypes[$question['questiontype']]);
+                $this->tpl->assign('knows', $knows);
+                $this->tpl->assign('allnumber', $allnumber);
+                $this->tpl->assign('number', $number);
+                $this->tpl->display('lesson_ajaxquestion');
+                break;
         }
     }
 
     private function paper()
     {
-        $questid = $this->ev->getCookie('questype');
-        $knowsid = $this->ev->getCookie('knowsid');
-        $questype = $this->basic->getQuestypeById($questid);
-        $knows = $this->section->getKnowsByArgs([['AND', 'knowsid = :knowsid', 'knowsid', $knowsid]]);
-        $allnumber = $this->exam->getQuestionNumberByQuestypeAndKnowsid($questid, $knowsid);
+        $questid = $this->ev->get('questype');
+        $knowsid = $this->ev->get('knowsid');
+        if ($questid) {
+            $questype = $this->basic->getQuestypeById($questid);
+        }
+        $knows = $this->section->getKnowsById($knowsid);
         $this->tpl->assign('knows', $knows);
-        $this->tpl->assign('allnumber', $allnumber);
         $this->tpl->assign('questype', $questype);
         $this->tpl->display('lesson_paper');
     }
 
-    private function lessonnumber()
-    {
-        $questype = $this->basic->getQuestypeList();
-        $knowsid = intval($this->ev->get('knowsid'));
-        $numbers = [];
-        foreach ($questype as $p) {
-            $numbers[$p['questid']] = intval(ceil($this->exam->getQuestionNumberByQuestypeAndKnowsid($p['questid'], $knowsid)));
-        }
-        $this->tpl->assign('knows', $this->section->getKnowsByArgs([['AND', 'knowsid = :knowsid', 'knowsid', $knowsid]]));
-        $this->tpl->assign('numbers', $numbers);
-        $this->tpl->assign('questype', $questype);
-        $this->tpl->display('lesson_number');
-    }
-
     private function index()
     {
-        $questype = $this->basic->getQuestypeList();
         $basic = $this->data['currentbasic'];
-        $knows = $this->section->getAllKnowsBySubject($basic['basicsubjectid']);
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $basic['basicsubjectid']]]);
-        $record = $this->G->make('exercise', 'exam')->getExerciseProcessByUser($this->_user['sessionuserid'], $basic['basicid']);
+        $knows = [];
+        foreach ($basic['basicknows'] as $knowsids) {
+            foreach ($knowsids as $knowsid) {
+                $knows[$knowsid] = $this->section->getQuestionsByKnows($knowsid);
+            }
+        }
+        $record = $this->exer->getExerciseProcessByUser($this->_user['sessionuserid'], $basic['basicid']);
         $this->tpl->assign('record', $record);
         $this->tpl->assign('basic', $basic);
         $this->tpl->assign('sections', $sections);
         $this->tpl->assign('knows', $knows);
-        $this->tpl->assign('questype', $questype);
         $this->tpl->display('lesson');
     }
 }

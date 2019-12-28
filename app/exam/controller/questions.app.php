@@ -14,6 +14,10 @@ class action extends app
 {
     public function display()
     {
+        if ($this->data['currentbasic']['basicexam']['model']) {
+            header('location:index.php?exam-app-lesson');
+            exit;
+        }
         $action = $this->ev->url(3);
         if (!method_exists($this, $action)) {
             $action = 'index';
@@ -173,6 +177,8 @@ class action extends app
         }
         $questions = $this->exam->getQuestionsList($page, 10, $args);
         $knows = $this->section->getKnowsListByArgs([['AND', 'knowsstatus = 1'], ['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $search['questionsectionid']]]);
+        $questypes = $this->basic->getQuestypeList();
+        $this->tpl->assign('questypes', $questypes);
         $this->tpl->assign('knows', $knows);
         $this->tpl->assign('questions', $questions);
         $this->tpl->assign('sections', $sections);

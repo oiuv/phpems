@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -34,7 +34,6 @@
 							</tr>
 						</thead>
 						<tbody>
-                        {x2;if:is_array($poses)}
 							{x2;tree:$poses,pos,pid}
 							<tr>
 								<td>{x2;v:pos['posid']}</td>
@@ -48,7 +47,6 @@
 								</td>
 							</tr>
 							{x2;endtree}
-                        {x2;endif}
 						</tbody>
 					</table>
 				</div>

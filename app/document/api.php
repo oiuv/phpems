@@ -26,19 +26,13 @@ class app
         $_user = $this->_user = $this->session->getSessionUser();
         $group = $this->user->getGroupById($_user['sessiongroupid']);
         if (!$_user['sessionuserid']) {
-            if ($this->ev->get('userhash')) {
-                exit(json_encode([
+            $message = [
                 'statusCode'   => 300,
                 'message'      => '请您重新登录',
                 'callbackType' => 'forward',
                 'forwardUrl'   => 'index.php?user-app-login',
-            ]));
-            }
-
-            print_r($_user);
-            exit();
-            //header("location:index.php?user-app-login");
-            exit;
+            ];
+            $this->G->R($message);
         }
         $this->attach = $this->G->make('attach', 'document');
         $this->allowexts = $this->attach->getAllowAttachExts();

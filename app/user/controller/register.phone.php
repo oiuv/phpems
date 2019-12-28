@@ -22,6 +22,60 @@ class action extends app
         exit;
     }
 
+    private function findpassword()
+    {
+        $appid = 'user';
+        $app = $this->G->make('apps', 'core')->getApp($appid);
+        $this->tpl->assign('app', $app);
+        if (!$app['appsetting']['emailverify']) {
+            $message = [
+                'statusCode' => 300,
+                'message'    => '开通邮箱验证才能找回密码',
+            ];
+            exit(json_encode($message));
+        }
+        if ($this->ev->get('findpassword')) {
+            $randcode = $this->ev->get('randcode');
+            if ((!$randcode) || ($randcode != $_SESSION['phonerandcode']['findpassword'])) {
+                $message = [
+                    'statusCode' => 300,
+                    'message'    => '验证码错误',
+                ];
+                exit(json_encode($message));
+            }
+
+            $_SESSION['phonerandcode']['findpassword'] = 0;
+
+            $args = $this->ev->get('args');
+            $username = $args['username'];
+            $user = $this->user->getUserByUserName($username);
+            if (!$user) {
+                $message = [
+                    'statusCode' => 300,
+                    'message'    => '此用户未注册',
+                ];
+                exit(json_encode($message));
+            }
+            if ($user['useremail'] != $args['useremail']) {
+                $message = [
+                    'statusCode' => 300,
+                    'message'    => '邮箱与用户不对应',
+                ];
+                exit(json_encode($message));
+            }
+            $this->user->modifyUserPassword(['password' => $args['userpassword']], $user['userid']);
+            $message = [
+                'statusCode'   => 200,
+                'message'      => '密码修改成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'index.php?user-phone-login',
+            ];
+            exit(json_encode($message));
+        }
+
+        $this->tpl->display('findpassword');
+    }
+
     private function index()
     {
         $appid = 'user';
@@ -70,7 +124,6 @@ class action extends app
                 if (false !== strpos($username, $f)) {
                     $message = [
                         'statusCode' => 300,
-                        'errorinput' => 'args[username]',
                         'message'    => '用户已经存在',
                     ];
                     exit(json_encode($message));
@@ -80,7 +133,6 @@ class action extends app
             if ($user) {
                 $message = [
                     'statusCode' => 300,
-                    'errorinput' => 'args[username]',
                     'message'    => '用户已经存在',
                 ];
                 exit(json_encode($message));
@@ -105,7 +157,7 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?exam-phone',
+                'forwardUrl'   => 'index.php?core-phone',
             ];
             exit(json_encode($message));
         }

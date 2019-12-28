@@ -24,20 +24,24 @@ class action extends app
 
     private function index()
     {
-        $catids = [];
-        $this->category->app = 'content';
-        $catids['index'] = $this->category->getCategoriesByArgs([['AND', 'catindex > 0']]);
-        $contents = [];
-        if ($catids['index']) {
-            foreach ($catids['index'] as $p) {
-                $catstring = $this->category->getChildCategoryString($p['catid']);
-                $contents[$p['catid']] = $this->content->getContentList([['AND', 'find_in_set(contentcatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 10);
-            }
-        }
+        $this->course = $this->G->make('course', 'course');
+        $this->content = $this->G->make('content', 'content');
+        $this->position = $this->G->make('position', 'content');
+        $courses = $this->course->getCourseList([], 1, 6);
         $basic = $this->G->make('basic', 'exam');
-        $basics = $basic->getBasicList(1, 8);
-        $this->tpl->assign('basics', $basics['data']);
-        $this->tpl->assign('contents', $contents);
+        $basics = $basic->getBasicList([], 1, 6);
+        $topimgs = $this->position->getPosNewsList([['AND', 'pcposid = 1']], 1, 5);
+        $topnews = $this->position->getPosNewsList([['AND', 'pcposid = 2']], 1, 10);
+        $topseminars = $this->position->getPosSeminarList([['AND', 'pcposid = 3']], 1, 10);
+        $links = $this->content->getContentList([['AND', 'contentcatid = 11']], 1, 10);
+        $notices = $this->content->getContentList([['AND', 'contentcatid = 26']], 1, 10);
+        $this->tpl->assign('notices', $notices);
+        $this->tpl->assign('links', $links);
+        $this->tpl->assign('courses', $courses);
+        $this->tpl->assign('basics', $basics);
+        $this->tpl->assign('topimgs', $topimgs);
+        $this->tpl->assign('topnews', $topnews);
+        $this->tpl->assign('topseminars', $topseminars);
         $this->tpl->display('index');
     }
 }

@@ -47,13 +47,27 @@ class module
         return $this->db->fetchAll($sql, 'moduleid');
     }
 
+    public function getModulesList($args, $page, $number = PN, $order = 'moduleid desc')
+    {
+        $data = [
+            'select'  => false,
+            'table'   => 'module',
+            'query'   => $args,
+            'orderby' => $order,
+            'serial'  => 'modulelockfields',
+        ];
+        $r = $this->db->listElements($page, $number, $data);
+
+        return $r;
+    }
+
     //根据ID获取模型
     public function getModuleById($moduleid)
     {
         if (!$this->cache['module'][$moduleid]) {
             $data = [false, 'module', [['AND', 'moduleid = :moduleid', 'moduleid', $moduleid]]];
             $sql = $this->pdosql->makeSelect($data);
-            $this->cache['module'][$moduleid] = $this->db->fetch($sql, 'modulefields');
+            $this->cache['module'][$moduleid] = $this->db->fetch($sql, 'modulelockfields');
         }
 
         return $this->cache['module'][$moduleid];
@@ -65,6 +79,25 @@ class module
         if (!$args['moduleapp']) {
             $args['moduleapp'] = $this->G->app;
         }
+        if ('autoform' == $args['moduleapp']) {
+            $args['moduletable'] = 'autoform_'.$args['modulecode'];
+            $this->_insertDefaultTable($args['moduletable'], $args['modulecode'].'id');
+        }
+        $data = ['module', $args];
+        $sql = $this->pdosql->makeInsert($data);
+        $this->db->exec($sql);
+
+        return $this->db->lastInsertId();
+    }
+
+    //插入独立表模型
+    public function insertTableModule($args)
+    {
+        if (!$args['moduleapp']) {
+            $args['moduleapp'] = $this->G->app;
+        }
+        $args['moduletable'] = $args['moduleapp'].'_'.$args['modulecode'];
+        $this->_insertDefaultTable($args['moduletable'], $args['modulecode'].'id');
         $data = ['module', $args];
         $sql = $this->pdosql->makeInsert($data);
         $this->db->exec($sql);
@@ -75,34 +108,66 @@ class module
     //插入默认的表，$primary为主键字段名，必须为INT 11
     private function _insertDefaultTable($table, $primary)
     {
-        $fields = [['name' => $primary, 'type' => 'INT', 'length' => 11]];
+        $fields = [['name' => $primary, 'type' => 'INT', 'length' => 11, 'auto' => true]];
         $indexs = [['type' => 'PRIMARY KEY', 'field' => $primary]];
-        $sql = $this->sql->createTable($table, $fields, $indexs);
+        $sql = $this->pdosql->createTable($table, $fields, $indexs);
 
         return $this->db->query($sql);
     }
 
     //根据用户获取模型所有字段
-    //$userinfo = array('iscurrentuser' => bool,'group'=>array());
-    public function getMoudleFields($moduleid, $userinfo = 1)
+    public function getMoudleFields($moduleid, $userinfo = 1, $uselock = false, $app = null)
     {
-        if (1 == $userinfo) {
-            $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], ['OR', ' (fieldpublic = 1 AND fieldappid = :app)', 'app', $this->G->app]], false, 'fieldsequence DESC,fieldid DESC'];
-        } else {
-            $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], ['OR', ' (fieldpublic = 1 AND fieldappid = :app)', 'app', $this->G->app], ['AND', "fieldlock = '0'"]], false, 'fieldsequence DESC,fieldid DESC'];
+        if (!$app) {
+            $app = $this->G->app;
         }
+        $module = $this->getModuleById($moduleid);
+        $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], ['OR', ' (fieldpublic = 1 AND fieldappid = :app)', 'app', $app]], false, 'fieldsequence DESC,fieldid DESC'];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetchAll($sql);
-        if (1 == $userinfo) {
+        if ($uselock) {
             return $r;
         }
         foreach ($r as $key => $p) {
-            if (1 == $userinfo['group']['groupmoduleid']) {
-                if (false !== strpos($p['fieldforbidactors'], ','.$userinfo['group']['groupid'].',')) {
-                    unset($r[$key]);
-                }
+            if ($module['modulelockfields'][$p['field']]) {
+                unset($r[$key]);
             } else {
-                if ($userinfo['iscurrentuser']) {
+                if (1 == $userinfo) {
+                    if (false !== strpos($p['fieldforbidactors'], ',1,')) {
+                        unset($r[$key]);
+                    }
+                } else {
+                    if (false !== strpos($p['fieldforbidactors'], ',-1,')) {
+                        unset($r[$key]);
+                    }
+                }
+            }
+        }
+
+        return $r;
+    }
+
+    public function getTableMoudleFields($moduleid, $userinfo = 1, $uselock = false, $app = null)
+    {
+        if (!$app) {
+            $app = $this->G->app;
+        }
+        $module = $this->getModuleById($moduleid);
+        $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], ['AND', 'fieldappid = :app', 'app', $app]], false, 'fieldsequence DESC,fieldid DESC'];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        if ($uselock) {
+            return $r;
+        }
+        foreach ($r as $key => $p) {
+            if ($module['modulelockfields'][$p['field']]) {
+                unset($r[$key]);
+            } else {
+                if (1 == $userinfo) {
+                    if (false !== strpos($p['fieldforbidactors'], ',1,')) {
+                        unset($r[$key]);
+                    }
+                } else {
                     if (false !== strpos($p['fieldforbidactors'], ',-1,')) {
                         unset($r[$key]);
                     }
@@ -116,7 +181,7 @@ class module
     //获取模型直属字段
     public function getPrivateMoudleFields($moduleid)
     {
-        $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], 'fieldpublic = 0'], false, 'fieldsequence DESC,fieldid DESC'];
+        $data = [false, 'module_fields', [['AND', 'fieldmoduleid = :moduleid', 'moduleid', $moduleid], ['AND', 'fieldpublic = 0']], false, 'fieldsequence DESC,fieldid DESC'];
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql);
@@ -127,26 +192,24 @@ class module
     {
         $data = ['module', [['AND', 'moduleid = :moduleid', 'moduleid', $moduleid]]];
         $sql = $this->pdosql->makeDelete($data);
-        $this->db->exec($sql);
 
-        return $this->db->affectedRows();
+        return $this->db->exec($sql);
     }
 
     //删除模型字段
     public function delField($fieldid)
     {
         $field = $this->getFieldById($fieldid);
-        $sql = $this->sql->delField($field['field'], $this->G->app);
+        $sql = $this->pdosql->delField($field['field'], $this->G->app);
         $this->db->exec($sql);
         $data = ['module_fields', [['AND', 'fieldid = :fieldid', 'fieldid', $fieldid]]];
         $sql = $this->pdosql->makeDelete($data);
 
         return $this->db->exec($sql);
-        //return $this->db->affectedRows();
     }
 
     //整理模型所需的参数，除去多余参数
-    public function tidyNeedFieldsPars($args, $moduleid, $userinfo)
+    public function tidyNeedFieldsPars($args, $moduleid, $userinfo = -1)
     {
         $tmp = [];
         foreach ($this->G->make('config', $this->G->app)->fields as $p) {
@@ -204,7 +267,7 @@ class module
     }
 
     //编辑字段的HTML属性
-    public function modifyFieldHtmlType($args, $fieldid)
+    public function modifyFieldHtmlType($fieldid, $args)
     {
         $data = ['module_fields', $args, [['AND', 'fieldid = :fieldid', 'fieldid', $fieldid]]];
         $sql = $this->pdosql->makeUpdate($data);
@@ -213,7 +276,7 @@ class module
     }
 
     //编辑字段的数据库属性
-    public function modifyFieldDataType($args, $fieldid)
+    public function modifyFieldDataType($fieldid, $args)
     {
         $this->modifyModuleField($args, $fieldid);
         $data = ['module_fields', $args, [['AND', 'fieldid = :fieldid', 'fieldid', $fieldid]]];
@@ -225,37 +288,37 @@ class module
     //插入模型字段
     public function insertModuleFieldData($args)
     {
-        if (HE == 'gbk') {
-            $args['fieldcharset'] = 'gbk';
-        } else {
-            $args['fieldcharset'] = 'utf8';
-        }
+        $args['fieldcharset'] = 'utf8';
         $r = $this->getModuleById($args['fieldmoduleid']);
-        $table = $this->G->app;
+        if ($r['moduletable']) {
+            $table = $r['moduletable'];
+        } else {
+            $table = $this->G->app;
+        }
         $sql = $this->sql->addField($args, $table);
 
         return $this->db->query($sql);
     }
 
     //修改模型字段
-    public function modifyModuleField($args, $fieldid)
+    public function modifyModuleField($fieldid, $args)
     {
-        if (HE == 'gbk') {
-            $args['fieldcharset'] = 'gbk';
-        } else {
-            $args['fieldcharset'] = 'utf8';
-        }
+        $args['fieldcharset'] = 'utf8';
         $field = $this->getFieldById($fieldid);
         $args['field'] = $field['field'];
         $r = $this->getModuleById($field['fieldmoduleid']);
-        $table = $this->G->app;
+        if ($r['moduletable']) {
+            $table = $r['moduletable'];
+        } else {
+            $table = $this->G->app;
+        }
         $sql = $this->sql->modifyField($args, $table);
 
         return $this->db->query($sql);
     }
 
     //修改模型
-    public function modifyModule($args, $moduleid)
+    public function modifyModule($moduleid, $args)
     {
         $data = ['module', $args, [['AND', 'moduleid = :moduleid', 'moduleid', $moduleid]]];
         $sql = $this->pdosql->makeUpdate($data);

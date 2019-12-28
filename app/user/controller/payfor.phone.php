@@ -88,9 +88,9 @@ class action extends app
         }
         $order = $this->order->getOrderById($oid, $this->_user['sessionuserid']);
         if (1 == $order['orderstatus']) {
-            $this->wxpay = $this->G->make('wxpay');
-            $jsApiParameters = $this->wxpay->outJsPay($order);
-            $this->tpl->assign('jsApiParameters', $jsApiParameters);
+            //$this->wxpay = $this->G->make("wxpay");
+            //$jsApiParameters = $this->wxpay->outJsPay($order);
+            //$this->tpl->assign('jsApiParameters',$jsApiParameters);
         }
         $this->tpl->assign('order', $order);
         $this->tpl->display('payfor_detail');
@@ -100,6 +100,10 @@ class action extends app
     {
         if ($this->ev->get('payforit')) {
             $money = intval($this->ev->get('money'));
+            $paytype = $this->ev->get('paytype');
+            if ('alipay' != $paytype) {
+                $paytype = 'wxpay';
+            }
             if ($money < 1) {
                 $message = [
                     'statusCode' => 300,
@@ -116,18 +120,48 @@ class action extends app
             $args['ordercreatetime'] = TIME;
             $args['orderuserinfo'] = ['username' => $this->_user['sessionusername']];
             $this->order->addOrder($args);
-            $message = [
-                'statusCode'   => 200,
-                'message'      => '订单创建成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-phone-payfor-orderdetail&ordersn='.$args['ordersn'],
-            ];
+            if ($this->ev->isWeixin()) {
+                $message = [
+                    'statusCode'   => 200,
+                    'message'      => '订单创建成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?user-phone-payfor-orderdetail&ordersn='.$args['ordersn'],
+                ];
+            } else {
+                if ('alipay' == $paytype) {
+                    $alipay = $this->G->make('alipay');
+                    $payforurl = $alipay->outPhonePayForUrl($args, WP.'/api/alinotify.php', WP.'/api/alireturn.php');
+                    $message = [
+                        'statusCode'   => 201,
+                        'message'      => '订单创建成功',
+                        'callbackType' => 'forward',
+                        'forwardUrl'   => $payforurl,
+                    ];
+                } else {
+                    $wxpay = $this->G->make('wxpay');
+                    $result = $wxpay->outUrl3($args);
+                    if ('FAIL' == $result['return_code']) {
+                        $message = [
+                        'statusCode' => 300,
+                        'message'    => $result['return_msg'],
+                    ];
+                    } else {
+                        $message = [
+                        'statusCode'   => 201,
+                        'message'      => '订单创建成功',
+                        'callbackType' => 'forward',
+                        'forwardUrl'   => $result['mweb_url'],
+                    ];
+                    }
+                }
+            }
             exit(json_encode($message));
         }
 
         $page = $this->ev->get('page');
         $args = [['AND', 'orderuserid = :orderuserid', 'orderuserid', $this->_user['sessionuserid']]];
         $myorders = $this->order->getOrderList($args, $page);
+        $this->tpl->assign('iswx', $this->ev->isWeixin());
         $this->tpl->assign('orders', $myorders);
         $this->tpl->display('payfor');
     }

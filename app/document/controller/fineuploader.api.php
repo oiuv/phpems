@@ -35,6 +35,11 @@ class action extends app
             $fileurl = $this->files->uploadFile($upfile, $path, null, null, $this->allowexts);
         }
         if ($fileurl) {
+            $osspath = false;
+            if (defined('OPENOSS') && OPENOSS) {
+                $osspath = $this->G->make('oss')->upload($fileurl);
+                $osspath = str_ireplace(['http://', 'https://'], '//', $osspath);
+            }
             $args['attpath'] = $fileurl;
             $args['atttitle'] = $upfile['name'];
 
@@ -51,6 +56,10 @@ class action extends app
             } else {
                 $thumb = $fileurl;
             }
+            if ($osspath) {
+                exit(json_encode(['success' => true, 'thumb' => $osspath, 'title' => $upfile['name']]));
+            }
+
             exit(json_encode(['success' => true, 'thumb' => $thumb, 'title' => $upfile['name']]));
         }
 

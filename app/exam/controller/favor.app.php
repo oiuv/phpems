@@ -70,42 +70,22 @@ class action extends app
     private function index()
     {
         $page = $this->ev->get('page');
-        $type = $this->ev->get('type');
-        $search = $this->ev->get('search');
-        $tmp = $this->section->getKnowsListByArgs([['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $search['sectionid']], ['AND', 'knowsstatus = 1']]);
-        if ($search['sectionid'] && !$search['knowsid']) {
-            $search['knowsid'] = '';
-            if (is_array($tmp)) {
-                foreach ($tmp as $p) {
-                    $search['knowsid'] .= $p['knowsid'].',';
-                }
-            }
-        }
-        $search['knowsid'] = trim($search['knowsid'], ' ,');
         $page = $page > 0 ? $page : 1;
-        $args = [['AND', 'favorsubjectid = :favorsubjectid', 'favorsubjectid', $this->data['currentbasic']['basicsubjectid']], ['AND', 'favoruserid = :favoruserid', 'favoruserid', $this->_user['sessionuserid']]];
-        if ($search['knowsid']) {
-            $args[] = ['AND', 'quest2knows.qkknowsid IN (:qkknowsid)', 'qkknowsid', $search['knowsid']];
-        }
-        if ($type) {
-            if ($search['questype']) {
-                $args[] = ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $search['questype']];
+        $args = [
+            ['AND', 'favorsubjectid = :favorsubjectid', 'favorsubjectid', $this->data['currentbasic']['basicsubjectid']],
+            ['AND', 'favoruserid = :favoruserid', 'favoruserid', $this->_user['sessionuserid']],
+        ];
+        $favors = $this->favor->getFavorListByUserid($args, $page, 20);
+        $parents = [];
+        foreach ($favors['data'] as $p) {
+            if ($p['questionparent']) {
+                $parents[$p['questionparent']] = $this->exam->getQuestionRowsById($p['questionparent']);
             }
-            $favors = $this->favor->getFavorListByUserid($page, 20, $args, 1);
-        } else {
-            if ($search['questype']) {
-                $args[] = ['AND', 'questions.questiontype = :questiontype', 'questiontype', $search['questype']];
-            }
-            $favors = $this->favor->getFavorListByUserid($page, 20, $args);
         }
-        $sections = $this->section->getSectionListByArgs(['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->_user['sessioncurrent']]);
         $questype = $this->basic->getQuestypeList();
-        $this->tpl->assign('sections', $sections);
+        $this->tpl->assign('parents', $parents);
         $this->tpl->assign('questype', $questype);
-        $this->tpl->assign('search', $search);
-        $this->tpl->assign('knowsids', $tmp);
         $this->tpl->assign('page', $page);
-        $this->tpl->assign('type', $type);
         $this->tpl->assign('favors', $favors);
         $this->tpl->display('favor');
     }

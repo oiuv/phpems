@@ -60,7 +60,7 @@ class action extends app
                 $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
             }
         }
-        $basics = $this->basic->getBasicList($page, 10, $args);
+        $basics = $this->basic->getBasicList($args, $page, 10);
         $areas = $this->area->getAreaList();
         $openbasics = $this->basic->getOpenBasicsByUserid($userid);
         $this->tpl->assign('basics', $basics);
@@ -177,10 +177,10 @@ class action extends app
             foreach ($search as $key => $arg) {
                 $u .= "&search[{$key}]={$arg}";
             }
-            $args = [];
-        } else {
-            $args = 1;
+            $this->tpl->assign('search', $search);
+            $this->tpl->assign('u', $u);
         }
+        $args = [];
         if ($search['userid']) {
             $args[] = ['AND', 'userid = :userid', 'userid', $search['userid']];
         } elseif ($search['groupid'] || $search['username']) {
@@ -192,7 +192,7 @@ class action extends app
                 $args[] = ['AND', 'username LIKE :username', 'username', "%{$search['username']}%"];
             }
         }
-        $users = $this->user->getUserList($page, 10, $args);
+        $users = $this->user->getUserList($args, $page, 10);
         $groups = $this->user->getUserGroups();
         $this->tpl->assign('groups', $groups);
         $this->tpl->assign('users', $users);

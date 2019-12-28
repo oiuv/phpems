@@ -29,39 +29,19 @@ class action extends app
 
     private function index()
     {
-        $catids = [];
-        $catids['index'] = $this->category->getCategoriesByArgs([['AND', 'catindex > 0']]);
+        $catids = $this->category->getCategoriesByArgs([['AND', 'catinmenu = 0'], ['AND', "catapp = 'content'"], ['AND', 'catparent = 0']]);
         $contents = [];
-        if ($catids['index']) {
-            foreach ($catids['index'] as $p) {
-                $catstring = $this->category->getChildCategoryString($p['catid']);
-                $contents[$p['catid']] = $this->content->getContentList([['AND', 'find_in_set(contentcatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 10);
+        if ($catids) {
+            foreach ($catids as $p) {
+                if ($p['catindex']) {
+                    $catstring = $this->category->getChildCategoryString($p['catid']);
+                    $contents[$p['catid']] = $this->content->getContentList([['AND', 'find_in_set(contentcatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 10);
+                }
             }
         }
-        $this->category->app = 'course';
-        $coursecats = $this->category->getCategoriesByArgs([['AND', "catparent = '0'"]]);
-        $topcourse = [];
-        foreach ($coursecats as $cat) {
-            $catstring = $this->category->getChildCategoryString($cat['catid']);
-            $topcourse[$cat['catid']] = $this->course->getCourseList([['AND', 'find_in_set(cscatid,:cscatid)', 'cscatid', $catstring]], 1, 6);
-        }
-
-        // 获取最新30条考试记录
-        $eh = \Model\ExamHistory::orderBy('ehstarttime', 'desc')->take(30)->get();
-        $eh = json_decode($eh->toJson(), true);
-        // 获取考场列表
-        $basic = \Model\Basic::pluck('basic', 'basicid');
-        $this->tpl->assign('eh', $eh);
-        $this->tpl->assign('basic', $basic);
-
-        $this->tpl->assign('topcourse', $topcourse);
-        $courses = $this->course->getCourseList(1, 1, 8);
-        $basic = $this->G->make('basic', 'exam');
-        $basics = $basic->getBestBasics();
-        $this->tpl->assign('coursecats', $coursecats);
-        $this->tpl->assign('courses', $courses);
-        $this->tpl->assign('basics', $basics);
+        $this->tpl->assign('categories', $this->category->categories);
         $this->tpl->assign('contents', $contents);
+        $this->tpl->assign('catids', $catids);
         $this->tpl->display('index');
     }
 }

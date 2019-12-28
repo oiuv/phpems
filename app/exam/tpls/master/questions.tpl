@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -71,11 +71,9 @@
 								<td>
 					        		<select name="search[questionsubjectid]" class="combox form-control" target="sectionselect" refUrl="?exam-master-questions-ajax-getsectionsbysubjectid&subjectid={value}">
 						        		<option value="0">选择科目</option>
-                                        {x2;if:is_array($subjects)}
 								  		{x2;tree:$subjects,subject,sid}
 								  		<option value="{x2;v:subject['subjectid']}"{x2;if:v:subject['subjectid'] == $search['questionsubjectid']} selected{x2;endif}>{x2;v:subject['subject']}</option>
 								  		{x2;endtree}
-                                        {x2;endif}
 							  		</select>
 					        	</td>
 					        	<td>
@@ -119,7 +117,7 @@
 									<select name="search[questiontype]" class="form-control">
 								  		<option value="0">类型不限</option>
 								  		{x2;tree:$questypes,questype,qid}
-								  		<option value="{x2;v:questype['questid']}">{x2;v:questype['questype']}</option>
+								  		<option value="{x2;v:questype['questid']}"{x2;if:v:questype['questid'] == $search['questiontype']} selected{x2;endif}>{x2;v:questype['questype']}</option>
 								  		{x2;endtree}
 							  		</select>
 								</td>
@@ -129,9 +127,9 @@
 								<td>
 									<select name="search[questionlevel]" class="form-control">
 								  		<option value="0">难度不限</option>
-										<option value="1"{x2;if:$search['questionlevel'] == 1} checked{x2;endif}>易</option>
-										<option value="2"{x2;if:$search['questionlevel'] == 2} checked{x2;endif}>中</option>
-										<option value="3"{x2;if:$search['questionlevel'] == 3} checked{x2;endif}>难</option>
+										<option value="1"{x2;if:$search['questionlevel'] == 1} selected{x2;endif}>易</option>
+										<option value="2"{x2;if:$search['questionlevel'] == 2} selected{x2;endif}>中</option>
+										<option value="3"{x2;if:$search['questionlevel'] == 3} selected{x2;endif}>难</option>
 							  		</select>
 								</td>
 							</tr>
@@ -196,12 +194,10 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" checked/>删除
 						            </label>
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-						            {x2;endif}
-                                    <label class="radio-inline">
+						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>
 						            <input type="hidden" name="page" value="{x2;$page}"/>

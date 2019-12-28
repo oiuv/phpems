@@ -30,7 +30,13 @@ class orders_bank
 
     public function getOrderList($args, $page, $number = 20, $order = 'ordercreatetime DESC')
     {
-        $data = ['select' => false, 'table' => 'orders', 'query' => $args, 'orderby' => $order, 'serial' => ['orderitems', 'orderuserinfo']];
+        $data = [
+            'select'  => false,
+            'table'   => 'orders',
+            'query'   => $args,
+            'orderby' => $order,
+            'serial'  => ['orderitems', 'orderuserinfo'],
+        ];
         $r = $this->db->listElements($page, $number, $data);
 
         return $r;
@@ -43,7 +49,11 @@ class orders_bank
 
     public function modifyOrder($id, $args)
     {
-        $data = ['table' => 'orders', 'value' => $args, 'query' => [['AND', 'ordersn = :ordersn', 'ordersn', $id]]];
+        $data = [
+            'table' => 'orders',
+            'value' => $args,
+            'query' => [['AND', 'ordersn = :ordersn', 'ordersn', $id]],
+        ];
 
         return $this->db->updateElement($data);
     }

@@ -5,10 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -37,28 +37,20 @@
 							    <input class="form-control datetimepicker" data-minview="0" data-date="{x2;date:TIME,'Y-m-d H:i:s'}" data-date-format="yyyy-mm-dd hh:ii:ss" type="text" value="{x2;date:$content['contentinputtime'],'Y-m-d H:i:s'}" name="args[contentinputtime]" needle="needle" msg="您必须输入发布时间">
 					        </div>
 				        </div>
-				        <!--
-				        <div class="col-sm-9">
-				            <label for="block" class="control-label col-sm-2">标题颜色：</label>
-				            <input type="text" name="args[contenttitle]" needle="needle" msg="您必须输入标题">
-				        </div>
-				        <div class="col-sm-9">
-				            <label for="block" class="control-label col-sm-2">标题加粗：</label>
-				            <input type="text" name="args[contenttitle]" needle="needle" msg="您必须输入标题">
-				        </div>
-
-				        <div class="form-group">
-				            <label for="contentmoduleid" class="control-label col-sm-2">模型：</label>
-				            <div class="col-sm-9">
-							    <select id="contentmoduleid" msg="您必须选择信息模型" refreshjs="on" needle="needle" class="combox" name="args[contentmoduleid]" refUrl="index.php?content-master-module-moduleforms&moduleid={value}" target="contentforms">
-					            	<option value="">选择信息模型</option>
-					            	{x2;tree:$modules,module,mid}
-					            	<option value="{x2;v:module['moduleid']}">{x2;v:module['modulename']}</option>
-					            	{x2;endtree}
-					            </select>
-					        </div>
-				        </div>
-				        -->
+						<div class="form-group">
+							<label for="block" class="control-label col-sm-2">tags：</label>
+							<div class="col-sm-9">
+								<input class="form-control" type="text" name="args[contenttags]" needle="needle" msg="您必须输入tags" value="{x2;$content['contenttags']}">
+								<span class="help-block">英文逗号隔开，不超过40个字</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="block" class="control-label col-sm-2">关键字：</label>
+							<div class="col-sm-9">
+								<textarea class="form-control" rows="4" name="args[contentkeywords]" needle="needle" msg="您必须输入关键字">{x2;$content['contentkeywords']}</textarea>
+								<span class="help-block">空格逗号隔开，每个关键字最少2个汉字或字母</span>
+							</div>
+						</div>
 				        <div class="form-group">
 				            <label for="block" class="control-label col-sm-2">缩略图：</label>
 				            <div class="col-sm-9">

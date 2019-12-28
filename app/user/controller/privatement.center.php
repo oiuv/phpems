@@ -22,31 +22,9 @@ class action extends app
         exit;
     }
 
-    private function index()
+    private function password()
     {
-        $page = $this->ev->get('page');
-        $search = $this->ev->get('search');
-        $u = '';
-        if ($search) {
-            $this->tpl->assign('search', $search);
-            foreach ($search as $key => $arg) {
-                $u .= "&search[{$key}]={$arg}";
-            }
-        }
-        if ($this->ev->get('modifyuserinfo')) {
-            $args = $this->ev->get('args');
-            $userid = $this->_user['sessionuserid'];
-            $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => 1]);
-            $id = $this->user->modifyUserInfo($args, $userid);
-            $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-center-privatement',
-            ];
-            exit(json_encode($message));
-        } elseif ($this->ev->get('modifyuserpassword')) {
+        if ($this->ev->get('modifyuserpassword')) {
             $args = $this->ev->get('args');
             $oldpassword = $this->ev->get('oldpassword');
             $userid = $this->_user['sessionuserid'];
@@ -59,12 +37,12 @@ class action extends app
                 exit(json_encode($message));
             }
             if ($args['password'] == $args['password2'] && $userid) {
-                $id = $this->user->modifyUserPassword($args, $userid);
+                $id = $this->user->modifyUserPassword($userid, $args);
                 $message = [
                     'statusCode'   => 200,
                     'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?user-center-privatement&page={$page}{$u}",
+                    'forwardUrl'   => 'index.php?user-app-logout',
                 ];
                 exit(json_encode($message));
             }
@@ -73,6 +51,27 @@ class action extends app
                     'statusCode' => 300,
                     'message'    => '操作失败',
                 ];
+            exit(json_encode($message));
+        }
+
+        $this->tpl->display('modifypassword');
+    }
+
+    private function index()
+    {
+        if ($this->ev->get('modifyuserinfo')) {
+            $args = $this->ev->get('args');
+            $userid = $this->_user['sessionuserid'];
+            $group = $this->user->getGroupById($this->_user['sessiongroupid']);
+            $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => 1]);
+            unset($args['usercoin'],$args['userpassword'],$args['username'],$args['useremail']);
+            $id = $this->user->modifyUserInfo($userid, $args);
+            $message = [
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'index.php?user-center-privatement',
+            ];
             exit(json_encode($message));
         }
 

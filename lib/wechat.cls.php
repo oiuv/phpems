@@ -258,9 +258,9 @@ class wechat
             return $this->_receive['Content'];
         } elseif (isset($this->_receive['Recognition'])) { //获取语音识别文字内容，需申请开通
             return $this->_receive['Recognition'];
+        } else {
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -590,23 +590,37 @@ class wechat
             $appid = $this->appid;
             $appsecret = $this->appsecret;
         }
-        //TODO: get the cache access_token
-        $result = $this->http_get(self::API_URL_PREFIX.self::AUTH_URL.'appid='.$appid.'&secret='.$appsecret);
-        if ($result) {
-            $json = json_decode($result, true);
-            if (!$json || isset($json['errcode'])) {
-                $this->errCode = $json['errcode'];
-                $this->errMsg = $json['errmsg'];
+        $data = json_decode(file_get_contents(PEPATH.'/data/access_token.json'), true);
+        if ($data['expire_time'] < TIME) {
+            //TODO: get the cache access_token
+            $result = $this->http_get(self::API_URL_PREFIX.self::AUTH_URL.'appid='.$appid.'&secret='.$appsecret);
+            if ($result) {
+                $json = json_decode($result, true);
+                if (!$json || isset($json['errcode'])) {
+                    $this->errCode = $json['errcode'];
+                    $this->errMsg = $json['errmsg'];
 
-                return false;
+                    return false;
+                }
+                $this->access_token = $json['access_token'];
+                if ($this->access_token) {
+                    $data->expire_time = time() + 7000;
+                    $data->access_token = $this->access_token;
+                    $fp = fopen(PEPATH.'/data/access_token.json', 'w');
+                    fwrite($fp, json_encode($data));
+                    fclose($fp);
+                }
+                $expire = $json['expires_in'] ? intval($json['expires_in']) - 100 : 3600;
+                //TODO: cache access_token
+                return $this->access_token;
             }
-            $this->access_token = $json['access_token'];
-            $expire = $json['expires_in'] ? intval($json['expires_in']) - 100 : 3600;
-            //TODO: cache access_token
-            return $this->access_token;
+
+            return false;
         }
 
-        return false;
+        $this->access_token = $data['access_token'];
+
+        return $this->access_token;
     }
 
     /**

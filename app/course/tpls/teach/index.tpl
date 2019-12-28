@@ -4,10 +4,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
-				{x2;include:menu}
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
@@ -30,7 +30,7 @@
 							使用帮助
 						</h5>
 						<p>
-							帮助论坛：<a href="https://github.com/phpems/phpems">https://github.com/phpems/phpems</a>
+							帮助论坛：<a href="http://www.phpems.net/bbs/">http://www.phpems.net/bbs/</a>
 						</p>
 						<p>
 							微信公众号：PHPEMS

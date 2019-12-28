@@ -35,11 +35,19 @@ class action extends app
                 ];
                 exit(json_encode($message));
             }
-            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
-            if (!$eh) {
+            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
+            if (!$eh['ehid']) {
                 $message = [
                     'statusCode' => 300,
                     'message'    => '您需要通过考试后才能申请',
+                ];
+                exit(json_encode($message));
+            }
+            $info = $this->ev->get('info');
+            if (!$info['useraddress'] || !$info['userphone']) {
+                $message = [
+                    'statusCode' => 300,
+                    'message'    => '请填写地址和联系电话',
                 ];
                 exit(json_encode($message));
             }
@@ -48,7 +56,7 @@ class action extends app
             $args['ceqtime'] = TIME;
             $args['ceqstatus'] = 0;
             $args['ceqceid'] = $ceid;
-            $args['ceqinfo'] = ['username' => $user['username'], 'photo' => $user['photo'], 'usertruename' => $user['usertruename'], 'usersex' => $user['usersex'], 'userdegree' => $user['userdegree'], 'userphone' => $user['userphone'], 'useraddress' => $user['useraddress']];
+            $args['ceqinfo'] = ['username' => $user['username'], 'photo' => $user['userphoto'], 'usertruename' => $user['usertruename'], 'usersex' => $user['usergender'], 'userphone' => $info['userphone'], 'useraddress' => $info['useraddress']];
             $this->ce->addCeQueue($args);
             $coin = $user['usercoin'] - $ce['ceprice'];
             $this->user->modifyUserInfo(['usercoin' => $coin], $this->_user['sessionuserid']);

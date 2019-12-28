@@ -5,10 +5,13 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="margin-bottom:0px;padding:0px;padding-top:10px;">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div class="col-xs-2 leftmenu">
 				<div id="catsmenu" style="margin-top: 0px;"></div>
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
@@ -105,6 +108,9 @@
 								        <th>标题</th>
 								        <th width="80">分类</th>
 								        <th width="80">发布时间</th>
+										<th width="80">发布人</th>
+										<th width="80">修改时间</th>
+										<th width="80">修改人</th>
 								        <th width="100">操作</th>
 					                </tr>
 					            </thead>
@@ -119,11 +125,20 @@
 					                        {x2;v:content['contenttitle']}
 					                    </td>
 					                    <td>
-					                    	<a href="?content-master-contents&catid={x2;v:content['contentcatid']}" target="">{x2;$categories[v:content['contentcatid']]['catname']}</a>
+					                    	<a href="index.php?content-master-contents&catid={x2;v:content['contentcatid']}" target="">{x2;$categories[v:content['contentcatid']]['catname']}</a>
 					                    </td>
 					                    <td>
 					                    	{x2;date:v:content['contentinputtime'],'y-m-d'}
 					                    </td>
+										<td>
+                                            {x2;v:content['contentusername']}
+										</td>
+										<td>
+                                            {x2;date:v:content['contentmodifytime'],'y-m-d'}
+										</td>
+										<td>
+                                            {x2;v:content['contentmodifier']}
+										</td>
 					                    <td class="actions">
 					                    	<div class="btn-group">
 					                    		<a class="btn" href="index.php?content-master-contents-edit&catid={x2;v:content['contentcatid']}&contentid={x2;v:content['contentid']}&page={x2;$page}{x2;$u}" title="修改"><em class="glyphicon glyphicon-edit"></em></a>
@@ -151,11 +166,9 @@
 						            <label class="radio-inline">
 						                <input type="radio" name="action" value="delete" />删除
 						            </label>
-                                    {x2;if:is_array($search)}
 						            {x2;tree:$search,arg,sid}
 						            <input type="hidden"-name="search[{x2;v:key}]" value="{x2;v:arg}"/>
 						            {x2;endtree}
-                                    {x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">提交</button>
 						            </label>

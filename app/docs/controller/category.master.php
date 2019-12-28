@@ -149,7 +149,7 @@ class action extends app
         $page = $this->ev->get('page');
         $cat = $this->category->getCategoryById($catid);
         $catstring = $this->category->getChildCategoryString($catid, 0);
-        $contents = $this->content->getContentList([['AND', 'contentcatid = :contentcatid', 'contentcatid', $catid]]);
+        $contents = $this->doc->getDocList([['AND', 'doccatid = :doccatid', 'doccatid', $catid]]);
         if ($catstring || $contents['number']) {
             $message = [
                 'statusCode' => 300,
@@ -161,8 +161,6 @@ class action extends app
         $message = [
             'statusCode'   => 200,
             'message'      => '操作成功',
-            'target'       => '',
-            'rel'          => '',
             'callbackType' => 'forward',
             'forwardUrl'   => "index.php?docs-master-category&parent={$cat['catparent']}&page={$page}",
         ];

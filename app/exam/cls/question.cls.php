@@ -22,7 +22,6 @@ class question_exam
     public function _init()
     {
         if (!$this->init) {
-            $this->sql = $this->G->make('sql');
             $this->pdosql = $this->G->make('pdosql');
             $this->db = $this->G->make('pepdo');
             $this->ev = $this->G->make('ev');
@@ -90,6 +89,26 @@ class question_exam
         $r['answer'] = implode('', $r['answer']);
 
         return $r;
+    }
+
+    public function getQuestionsByKnows($knowid)
+    {
+        $data = ['DISTINCT questionid,questiontype', ['questions', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowid)', 'knowid', $knowid], ['AND', 'quest2knows.qktype = 0'], ['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', 'questions.questionstatus = 1']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetchAll($sql);
+        $t = [];
+        $n = [];
+        foreach ($r as $p) {
+            $t[$p['questiontype']][] = $p['questionid'];
+        }
+        foreach ($t as $key => $v) {
+            $n[$key] = count($v);
+        }
+
+        return [
+            'knowsquestions' => $t,
+            'knowsnumber'    => $n,
+        ];
     }
 
     //获取某些指定知识点的试题列表

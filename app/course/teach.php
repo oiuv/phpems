@@ -20,10 +20,8 @@ class app
         $this->G = $G;
         $this->ev = $this->G->make('ev');
         $this->session = $this->G->make('session');
-        $this->files = $this->G->make('files');
         $this->user = $this->G->make('user', 'user');
         $_user = $this->session->getSessionUser();
-
         $this->_user = $this->user->getUserById($_user['sessionuserid']);
         $this->_user['teacher_subjects'] = unserialize($this->_user['teacher_subjects']);
         $group = $this->user->getGroupById($_user['sessiongroupid']);
@@ -43,11 +41,8 @@ class app
         //生产一个对象
         $this->teachsubjects = implode(',', $this->_user['teacher_subjects']);
         $this->tpl = $this->G->make('tpl');
-        $this->db = $this->G->make('pepdo');
         $this->module = $this->G->make('module');
         $modules = $this->module->getModulesByApp('course');
-        $this->pg = $this->G->make('pg');
-        $this->html = $this->G->make('html');
         $this->apps = $this->G->make('apps', 'core');
         $this->basic = $this->G->make('basic', 'exam');
         $this->subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);

@@ -22,6 +22,34 @@ class action extends app
         exit;
     }
 
+    private function clearquestions()
+    {
+        if ($this->ev->get('clearall')) {
+            $this->exam->clearDeletedQuestions();
+        }
+        $message = [
+            'statusCode'   => 200,
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => 'reload',
+        ];
+        $this->G->R($message);
+    }
+
+    private function clearquestionrows()
+    {
+        if ($this->ev->get('clearall')) {
+            $this->exam->clearDeletedQuestionrows();
+        }
+        $message = [
+            'statusCode'   => 200,
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => 'reload',
+        ];
+        $this->G->R($message);
+    }
+
     private function backknows()
     {
         $knowsid = $this->ev->get('knowsid');

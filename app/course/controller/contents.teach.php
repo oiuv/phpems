@@ -15,11 +15,21 @@ class action extends app
     public function display()
     {
         $action = $this->ev->url(3);
+        $this->html = $this->G->make('html');
         if (!method_exists($this, $action)) {
             $action = 'index';
         }
         $this->$action();
         exit;
+    }
+
+    private function addpage()
+    {
+        $courseid = intval($this->ev->get('courseid'));
+        $modules = $this->module->getModulesByApp($this->G->app);
+        $this->tpl->assign('courseid', $courseid);
+        $this->tpl->assign('modules', $modules);
+        $this->tpl->display('addpage');
     }
 
     private function add()
@@ -42,16 +52,21 @@ class action extends app
         }
 
         $courseid = intval($this->ev->get('courseid'));
-        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0']]);
+        $moduleid = intval($this->ev->get('moduleid'));
+        $parentcat = $this->category->getCategoriesByArgs([['AND', 'catparent = 0'], ['AND', "catapp = 'course'"]]);
         $modules = $this->module->getModulesByApp($this->G->app);
+        $fields = $this->module->getMoudleFields($moduleid, 1);
+        $forms = $this->html->buildHtml($fields);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {
             $tpls[] = substr(basename($p), 0, -4);
         }
         $this->tpl->assign('tpls', $tpls);
+        $this->tpl->assign('moduleid', $moduleid);
         $this->tpl->assign('modules', $modules);
         $this->tpl->assign('parentcat', $parentcat);
         $this->tpl->assign('courseid', $courseid);
+        $this->tpl->assign('forms', $forms);
         $this->tpl->display('content_add');
     }
 
@@ -296,6 +311,7 @@ class action extends app
         $this->tpl->assign('modules', $modules);
         $this->tpl->assign('course', $course);
         $this->tpl->assign('contents', $contents);
+        $this->tpl->assign('search', $search);
         $this->tpl->assign('page', $page);
         $this->tpl->display('content');
     }

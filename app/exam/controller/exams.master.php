@@ -60,7 +60,7 @@ class action extends app
         if (!count($args)) {
             $args = 1;
         }
-        $exams = $this->exam->getExamSettingList($page, 10, $args);
+        $exams = $this->exam->getExamSettingList($args, $page, 10);
         $subjects = $this->basic->getSubjectList();
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('target', $target);
@@ -68,7 +68,6 @@ class action extends app
         $this->tpl->display('exams_ajax');
     }
 
-    // todo $u = ?
     private function delexam()
     {
         $examid = $this->ev->get('examid');
@@ -290,16 +289,16 @@ class action extends app
         $fname = 'data/exams/'.TIME.'-'.$examid.'-score.csv';
         if ($this->files->outCsv($fname, $data)) {
             $message = [
-                'statusCode'   => 200,
-                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                'callbackType' => 'forward',
-                'forwardUrl'   => "{$fname}",
-            ];
+            'statusCode'   => 200,
+            'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+            'callbackType' => 'forward',
+            'forwardUrl'   => "{$fname}",
+        ];
         } else {
             $message = [
-                'statusCode' => 300,
-                'message'    => '成绩导出失败',
-            ];
+            'statusCode' => 300,
+            'message'    => '成绩导出失败',
+        ];
         }
         $this->G->R($message);
     }
@@ -308,30 +307,30 @@ class action extends app
     {
         switch ($this->ev->url(4)) {
             case 'getsubjectknows':
-                $subjectid = $this->ev->get('subjectid');
-                $tmpknows = $this->section->getAllKnowsBySubject($subjectid);
-                $knows = [];
-                $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $subjectid]]);
-                foreach ($tmpknows as $p) {
-                    $knows[$p['knowssectionid']][] = $p;
-                }
-                $this->tpl->assign('sections', $sections);
-                $this->tpl->assign('knows', $knows);
-                $this->tpl->display('exam_ajax_getsubjectknows');
-                break;
+            $subjectid = $this->ev->get('subjectid');
+            $tmpknows = $this->section->getAllKnowsBySubject($subjectid);
+            $knows = [];
+            $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $subjectid]]);
+            foreach ($tmpknows as $p) {
+                $knows[$p['knowssectionid']][] = $p;
+            }
+            $this->tpl->assign('sections', $sections);
+            $this->tpl->assign('knows', $knows);
+            $this->tpl->display('exam_ajax_getsubjectknows');
+            break;
 
             default:
-                $subjectid = $this->ev->get('subjectid');
-                $type = $this->ev->get('type');
-                if ($subjectid) {
-                    $basic = $this->basic->getBasicBySubjectId($subjectid);
-                    $questypes = $this->basic->getQuestypeList();
-                    $this->tpl->assign('questypes', $questypes);
-                    $this->tpl->assign('type', $type);
-                    $this->tpl->assign('subjectid', $subjectid);
-                    $this->tpl->assign('basic', $basic);
-                    $this->tpl->display('exams_ajaxsetting');
-                }
+            $subjectid = $this->ev->get('subjectid');
+            $type = $this->ev->get('type');
+            if ($subjectid) {
+                $basic = $this->basic->getBasicBySubjectId($subjectid);
+                $questypes = $this->basic->getQuestypeList();
+                $this->tpl->assign('questypes', $questypes);
+                $this->tpl->assign('type', $type);
+                $this->tpl->assign('subjectid', $subjectid);
+                $this->tpl->assign('basic', $basic);
+                $this->tpl->display('exams_ajaxsetting');
+            }
         }
     }
 
@@ -361,7 +360,7 @@ class action extends app
             $totalscore = 0;
             foreach ($args['examsetting']['questype'] as $key => $p) {
                 if (!$args['examsetting']['questypelite'][$key]) {
-                    unset($args['examsetting']['questype'][$key], $args['examquestions'][$key]);
+                    unset($args['examsetting']['questype'][$key],$args['examquestions'][$key]);
                 }
                 $totalscore += $p['number'] * $p['score'];
             }
@@ -400,7 +399,7 @@ class action extends app
 
             foreach ($args['examsetting']['questype'] as $key => $p) {
                 if (!$args['examsetting']['questypelite'][$key]) {
-                    unset($args['examsetting']['questype'][$key], $args['examquestions'][$key]);
+                    unset($args['examsetting']['questype'][$key],$args['examquestions'][$key]);
                 }
             }
 
@@ -667,7 +666,7 @@ class action extends app
         $exam = $this->exam->getExamSettingById($examid);
         if ($this->ev->get('submitsetting')) {
             $args = $this->ev->get('args');
-            //$args['examsetting'] = $args['examsetting'];
+            $args['examsetting'] = $args['examsetting'];
             if (3 == $exam['examtype']) {
                 $uploadfile = $this->ev->get('uploadfile');
                 if ($uploadfile) {
@@ -712,18 +711,18 @@ class action extends app
                                 $targs['questiontype'] = $question[0];
                                 $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                                 /*
-                                 * $ei = md5($targs['question']);
-                                 * if($isexit[$ei])
-                                 * {
-                                 * $message = array(
-                                 * 'statusCode' => 300,
-                                 * "message" => "试题重复，该试题是:".$targs['question']
-                                 * );
-                                 * $this->G->R($message);
-                                 * }
-                                 * else
-                                 * $isexit[$ei] = 1;
-                                 **/
+                                $ei = md5($targs['question']);
+                                if($isexit[$ei])
+                                {
+                                    $message = array(
+                                        'statusCode' => 300,
+                                        "message" => "试题重复，该试题是:".$targs['question']
+                                    );
+                                    $this->G->R($message);
+                                }
+                                else
+                                $isexit[$ei] = 1;
+                                **/
                                 $targs['questionselect'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[2]), " \n\t"))));
                                 if (!$targs['questionselect'] && 3 == $targs['questiontype']) {
                                     $targs['questionselect'] = '<p>A、对<p><p>B、错<p>';
@@ -744,7 +743,7 @@ class action extends app
             }
             foreach ($args['examsetting']['questype'] as $key => $p) {
                 if (!$args['examsetting']['questypelite'][$key]) {
-                    unset($args['examsetting']['questype'][$key], $args['examquestions'][$key]);
+                    unset($args['examsetting']['questype'][$key],$args['examquestions'][$key]);
                 }
             }
 
@@ -759,10 +758,8 @@ class action extends app
         } else {
             $subjects = $this->basic->getSubjectList();
             $questypes = $this->basic->getQuestypeList();
-            if (is_array($exam['examquestions'])) {
-                foreach ($exam['examquestions'] as $key => $p) {
-                    $exam['examnumber'][$key] = $this->exam->getExamQuestionNumber($p);
-                }
+            foreach ($exam['examquestions'] as $key => $p) {
+                $exam['examnumber'][$key] = $this->exam->getExamQuestionNumber($p);
             }
             foreach ($exam['examsetting']['questypelite'] as $key => $p) {
                 if (!$subjects[$exam['examsubject']]['subjectsetting']['questypes'][$key]) {
@@ -802,10 +799,7 @@ class action extends app
                 $args[] = ['AND', 'examtype = :examtype', 'examtype', $search['examtype']];
             }
         }
-        if (!count($args)) {
-            $args = 1;
-        }
-        $exams = $this->exam->getExamSettingList($page, 10, $args);
+        $exams = $this->exam->getExamSettingList($args, $page, 10);
         $subjects = $this->basic->getSubjectList();
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('exams', $exams);

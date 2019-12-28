@@ -52,7 +52,7 @@ class app
         $user = $this->user->getUserById($_user['sessionuserid']);
         $user['manager_apps'] = unserialize($user['manager_apps']);
         $this->tpl->assign('_user', $user);
-        if (is_array($user['manager_apps']) && !in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
+        if (!in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
             header('location:index.php?core-master');
             exit();
         }

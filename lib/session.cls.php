@@ -23,13 +23,12 @@ class session
         $this->db = $this->G->make('pepdo');
         $this->ev = $this->G->make('ev');
         $this->pdosql = $this->G->make('pdosql');
-        $this->sql = $this->G->make('sql');
         $this->strings = $this->G->make('strings');
         $this->sessionid = $this->getSessionId();
     }
 
     //获取会话ID
-    public function getSessionId()
+    public function getSessionId2()
     {
         if (!$this->sessionid) {
             if ($_SESSION['currentuser']) {
@@ -57,6 +56,34 @@ class session
             $data = ['session', ['sessionid' => $this->sessionid, 'sessionuserid' => 0, 'sessionip' => $this->ev->getClientIp()]];
             $sql = $this->pdosql->makeInsert($data);
             $this->db->exec($sql);
+        }
+
+        return $this->sessionid;
+    }
+
+    private function _getOnlySessionid()
+    {
+        $code = uniqid($this->ev->getClientIp().print_r($_SERVER, true).microtime()).rand(100000, 999999);
+        $this->sessionid = md5($code);
+        if ($this->getSessionValue($this->sessionid)) {
+            $this->_getOnlySessionid();
+        }
+    }
+
+    public function getSessionId()
+    {
+        if (!$this->sessionid) {
+            $cookie = $this->strings->decode($this->ev->getCookie($this->sessionname));
+            if ($cookie) {
+                $this->sessionid = $cookie['sessionid'];
+            }
+        }
+        if (!$this->sessionid) {
+            $this->_getOnlySessionid();
+            $this->setSessionUser(['sessionid' => $this->sessionid, 'sessionip' => $this->ev->getClientIp()]);
+        }
+        if (!$this->getSessionValue()) {
+            $this->setSessionUser(['sessionid' => $this->sessionid, 'sessionip' => $this->ev->getClientIp()]);
         }
 
         return $this->sessionid;
@@ -138,8 +165,8 @@ class session
         $data = ['session', $args];
         $sql = $this->pdosql->makeInsert($data);
         $this->db->exec($sql);
+        $ck = ['sessionid' => $this->sessionid, 'sessionuserid' => $args['sessionuserid'], 'sessionpassword' => $args['sessionpassword'], 'sessionip' => $args['sessionip']];
         $this->ev->setCookie($this->sessionname, $this->strings->encode($args), 3600 * 24);
-        $_SESSION['currentuser'] = $args;
 
         return true;
     }
@@ -168,19 +195,9 @@ class session
             return $this->sessionuser;
         }
         $cookie = $this->strings->decode($this->ev->getCookie($this->sessionname));
-        if (!$cookie && $this->ev->get(CH.'currentuser') && $this->ev->get(CH.'psid')) {
-            $this->sessionid = $this->ev->get(CH.'psid');
-            $cookie = $this->strings->decode($this->ev->get(CH.'currentuser'));
-        }
-        if (!$cookie) {
-            $cookie = $_SESSION['currentuser'];
-            if ($cookie) {
-                $this->ev->setCookie($this->sessionname, $this->strings->encode($cookie), 3600 * 24);
-            }
-        }
         if ($cookie['sessionuserid']) {
             $user = $this->getSessionValue();
-            if ($cookie['sessionuserid'] == $user['sessionuserid'] && $cookie['sessionpassword'] == $user['sessionpassword']) {
+            if ($cookie['sessionuserid'] == $user['sessionuserid'] && $cookie['sessionpassword'] == $user['sessionpassword'] && $cookie['sessionip'] == $user['sessionip']) {
                 $this->sessionuser = $user;
 
                 return $user;

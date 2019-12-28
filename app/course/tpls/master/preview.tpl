@@ -4,10 +4,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-2" style="padding-top:10px;margin-bottom:0px;">
+			<div class="col-xs-2 leftmenu">
 				{x2;include:menu}
 			</div>
-			<div class="col-xs-10" id="datacontent">
+			<div id="datacontent">
 				<div class="box itembox" style="margin-bottom:0px;border-bottom:1px solid #CCCCCC;">
 					<div class="col-xs-12">
 						<ol class="breadcrumb">
@@ -35,7 +35,6 @@
 					</h4>
 					<form class="form-horizontal">
 						<fieldset>
-                            {x2;if:is_array($forms)}
 							{x2;tree:$forms,form,fid}
 							<div class="form-group">
 								<label for="{x2;v:form['id']}" class="control-label col-sm-2">{x2;v:form['title']}：</label>
@@ -44,7 +43,6 @@
 								</div>
 							</div>
 							{x2;endtree}
-                            {x2;endif}
 						</fieldset>
 					</form>
 				</div>

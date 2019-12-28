@@ -5,7 +5,10 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 		<div class="main">
-			<div class="col-xs-12" id="datacontent">
+			<div class="col-xs-2 leftmenu">
+                {x2;include:menu}
+			</div>
+			<div id="datacontent">
 {x2;endif}
 				<div class="box itembox" style="padding-top:10px;margin-bottom:0px;">
 					<h4 class="title" style="padding:10px;">

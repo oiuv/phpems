@@ -1,38 +1,62 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="main">
-			<div class="box itembox" style="margin-bottom:0px;">
-				<div class="col-xs-12">
-					<ol class="breadcrumb">
-						<li><a href="index.php">首页</a></li>
-						<li class="active"><a href="index.php?content-app-category&catid={x2;$cat['catid']}">{x2;$cat['catname']}</a></li>
-					</ol>
+		<div class="pages">
+            {x2;include:nav}
+			<div class="content">
+				<div class="col-xs-9">
+                    <div class="content-box padding">
+						<h2 class="title">
+                            {x2;$cat['catname']}
+							<a href="index.php?content-app-category&catid={x2;$cat['catid']}" class="badge pull-right"> 返回 </a>
+						</h2>
+						<ul class="list-unstyled list-img">
+                            <li class="border padding">
+								<h4 class="shorttitle text-center">{x2;$content['contenttitle']}</h4>
+								<div class="intro">
+									<div class="desc">
+										<div class="text-center">
+											<ul class="list-inline list-unstyled">
+												<li class="toolbar">发布人：{x2;$content['contentusername']}</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="border morepadding">
+								<div class="intro">
+									<div class="desc" id="content">
+										{x2;realhtml:$content['contenttext']}
+									</div>
+								</div>
+							</li>
+							<li class="border morepadding">
+								<div class="intro">
+									<div class="desc">
+										<div class="toolbar text-right">{x2;date:$content['contentinputtime'],'Y-m-d'}</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-xs-3 nopadding">
+					<div class="content-box padding">
+						<h2 class="title">新闻推荐</h2>
+						<ul class="list-unstyled list-txt">
+                            {x2;tree:$topnews['data'],content,cid}
+							<li class="striped">
+								<a href="index.php?content-app-content&contentid={x2;v:content['contentid']}"> {x2;v:content['contenttitle']}</a>
+							</li>
+							{x2;endtree}
+						</ul>
+					</div>
 				</div>
 			</div>
-			<div class="box itembox" style="padding-top:20px;">
-				<div class="col-xs-12">
-					<h2 class="text-center">{x2;$content['contenttitle']}</h2>
-					<hr/>
-                    {x2;if:$content['contentdescribe']}<blockquote>{x2;$content['contentdescribe']}</blockquote>{x2;endif}
-				</div>
-				<div class="col-xs-12" id="content">
-                    {x2;realhtml:$content['contenttext']}
-				</div>
-				<div class="col-xs-12">
-					<hr/>
-					<p>
-						<span class="pull-right">
-							<a href=""><span class="glyphicon glyphicon-time"></span> <span>{x2;date:$content['contentinputtime'],'Y-m-d H:i:s'}</span></a>&nbsp;&nbsp;
-						</span>
-					</p>
-				</div>
-			</div>
+            {x2;include:footer}
 		</div>
 	</div>
 </div>
-{x2;include:footer}
 </body>
 </html>

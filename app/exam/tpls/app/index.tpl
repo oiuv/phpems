@@ -1,58 +1,59 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main box itembox">
-			<h4 class="title" style="padding:10px;">我的考场<a href="index.php?exam-app-basics-open" class="btn btn-primary pull-right"><em class="glyphicon glyphicon-plus-sign"></em> 开通新考场</a></h4>
-			<div class="col-xs-12" style="padding-left:0px;">
-                {x2;if:is_array($basics)}
-				{x2;tree:$basics,basic,bid}
-				<div class="col-xs-3" style="width:20%">
-					<a href="index.php?{x2;$_app}-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="thumbnail ajax">
-						<img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" alt="" width="100%">
-					</a>
-					<h5 class="text-center">{x2;v:basic['basic']}</h5>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="pages">
+				{x2;include:nav}
+				<div class="content">
+					<div class="col-xs-9">
+						<div class="content-box padding">
+							<h2 class="title">我的考场</h2>
+							<ul class="list-box list-unstyled">
+                                {x2;tree:$basics,basic,bid}
+								<li class="col-xs-4 box">
+									<a href="index.php?{x2;$_app}-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax">
+										<div class="img">
+											<img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+										</div>
+										<h5 class="box-title">{x2;v:basic['basic']}</h5>
+										<div class="intro">
+											<p>{x2;substring:v:basic['basicdescribe'],78}</p>
+										</div>
+									</a>
+								</li>
+								{x2;if:v:bid < count($basics) && v:bid % 3 == 0}
+							</ul>
+							<ul class="list-box list-unstyled">
+								{x2;endif}
+                                {x2;endtree}
+							</ul>
+						</div>
+					</div>
+					<div class="col-xs-3 nopadding">
+						<div class="content-box padding">
+							<h2 class="title">最新考场<a href="index.php?exam-app-basics-open" class="badge pull-right">更多 <em class="glyphicon glyphicon-plus"></em> </a> </h2>
+							<ul class="list-unstyled list-img">
+                                {x2;tree:$news,basic,bid}
+								<li class="border padding">
+									<a href="index.php?{x2;$_app}-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax">
+										<div class="intro">
+											<div class="col-xs-5 img noleftpadding">
+												<img src="{x2;if:v:basic['basicthumb']}{x2;v:basic['basicthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+											</div>
+											<div class="desc">
+												<p>{x2;v:basic['basic']}</p>
+											</div>
+										</div>
+									</a>
+								</li>
+                                {x2;endtree}
+							</ul>
+						</div>
+					</div>
 				</div>
-				{x2;if:v:bid % 5 == 0}
-				<div class="col-xs-12"><hr /></div>
-				{x2;endif}
-				{x2;endtree}
-                {x2;endif}
+                {x2;include:footer}
 			</div>
 		</div>
 	</div>
-</div>
-<div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main">
-			<div class="col-xs-4 box itembox">
-				<h4 class="title">公告</h4>
-				<ul class="list-unstyled">
-					<li><a href="">……</a></li>
-					<li><a href="">……</a></li>
-					<li><a href="">……</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-4 box itembox split">
-				<h4 class="title">新闻</h4>
-				<ul class="list-unstyled">
-                    <li><a href="">……</a></li>
-                    <li><a href="">……</a></li>
-                    <li><a href="">……</a></li>
-				</ul>
-			</div>
-			<div class="col-xs-4 box itembox">
-				<h4 class="title">帮助</h4>
-				<ul class="list-unstyled">
-                    <li><a href="">……</a></li>
-                    <li><a href="">……</a></li>
-                    <li><a href="">……</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</div>
-{x2;include:footer}
 </body>
 </html>

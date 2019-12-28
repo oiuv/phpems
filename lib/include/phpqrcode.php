@@ -2129,7 +2129,7 @@
                 return -1;
             }
 
-            return $ret;
+            return $run;
         }
 
         //----------------------------------------------------------------------
@@ -2199,7 +2199,7 @@
                     case QR_MODE_NUM: $length = $this->eatNum(); break;
                     case QR_MODE_AN:  $length = $this->eatAn(); break;
                     case QR_MODE_KANJI:
-                        if (QR_MODE_KANJI == QR_MODE_8) {
+                        if (QR_MODE_KANJI == $hint) {
                             $length = $this->eatKanji();
                         } else {
                             $length = $this->eat8();
@@ -2990,7 +2990,7 @@
         //----------------------------------------------------------------------
         public function getCode()
         {
-            //$ret;
+            $ret;
 
             if ($this->count < $this->dataLength) {
                 $row = $this->count % $this->blocks;

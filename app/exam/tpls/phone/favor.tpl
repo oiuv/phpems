@@ -112,7 +112,7 @@
 								第{x2;eval: echo ($page-1)*20+v:qid}题【{x2;$questype[v:question['questiontype']]['questype']}】
 							</h4>
 							<div class="choice">
-								{x2;realhtml:v:question['question']}
+								</a>{x2;realhtml:v:question['question']}
 							</div>
 							{x2;if:!$questype[v:question['questiontype']]['questsort']}
 							{x2;if:v:question['questionselect'] && $questype[v:question['questiontype']]['questchoice'] != 5}

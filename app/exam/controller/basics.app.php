@@ -14,6 +14,7 @@ class action extends app
 {
     public function display()
     {
+        $this->area = $this->G->make('area', 'exam');
         $action = $this->ev->url(3);
         if (!method_exists($this, $action)) {
             $action = 'index';
@@ -81,7 +82,7 @@ class action extends app
                 $this->G->R($message);
             } else {
                 $args = ['usercoin' => $user['usercoin'] - $score];
-                $this->user->modifyUserInfo($args, $this->_user['sessionuserid']);
+                $this->user->modifyUserInfo($this->_user['sessionuserid'], $args);
                 $this->G->make('consume', 'bank')->addConsumeLog(['conluserid' => $this->_user['sessionuserid'], 'conlcost' => $score, 'conltype' => 1, 'conltime' => TIME, 'conlinfo' => '开通考场'.$basic['basic']."{$t['time']}天"]);
             }
         }
@@ -156,6 +157,12 @@ class action extends app
             $allowopen = 1;
         }
         $isopen = $this->basic->getOpenBasicByUseridAndBasicid($this->_user['sessionuserid'], $basicid);
+        $subject = $this->basic->getSubjectById($basic['basicsubjectid']);
+        $args = [];
+        $args[] = ['AND', 'basicclosed = 0'];
+        $basics = $this->basic->getBasicsByArgs($args, 5);
+        $this->tpl->assign('news', $basics);
+        $this->tpl->assign('subject', $subject);
         $this->tpl->assign('isopen', $isopen);
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('allowopen', $allowopen);
@@ -163,47 +170,38 @@ class action extends app
         $this->tpl->display('basics_detail');
     }
 
-    private function open()
+    private function index()
     {
-        $this->area = $this->G->make('area', 'exam');
         $search = $this->ev->get('search');
         $page = $this->ev->get('page');
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList();
-        if (!$search) {
-            $args = 1;
-        } else {
-            $args = [];
-            if ($search['basicdemo']) {
-                $args[] = ['AND', 'basicdemo = :basicdemo', 'basicdemo', $search['basicdemo']];
-            }
-            if ($search['keyword']) {
-                $args[] = ['AND', 'basic LIKE :basic', 'basic', "%{$search['keyword']}%"];
-            }
-            if ($search['basicareaid']) {
-                $args[] = ['AND', 'basicareaid = :basicareaid', 'basicareaid', $search['basicareaid']];
-            }
-            if ($search['basicsubjectid']) {
-                $args[] = ['AND', 'basicsubjectid = :basicsubjectid', 'basicsubjectid', $search['basicsubjectid']];
-            }
-            if ($search['basicapi']) {
-                $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
-            }
+        $args = [];
+        if ($search['basicdemo']) {
+            $args[] = ['AND', 'basicdemo = :basicdemo', 'basicdemo', $search['basicdemo']];
         }
-        $basics = $this->basic->getBasicList($page, 20, $args);
+        if ($search['keyword']) {
+            $args[] = ['AND', 'basic LIKE :basic', 'basic', "%{$search['keyword']}%"];
+        }
+        if ($search['basicareaid']) {
+            $args[] = ['AND', 'basicareaid = :basicareaid', 'basicareaid', $search['basicareaid']];
+        }
+        if ($search['basicsubjectid']) {
+            $args[] = ['AND', 'basicsubjectid = :basicsubjectid', 'basicsubjectid', $search['basicsubjectid']];
+        }
+        if ($search['basicapi']) {
+            $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
+        }
+        $basics = $this->basic->getBasicList($args, $page, 15);
         $areas = $this->area->getAreaList();
+        $args = [];
+        $args[] = ['AND', 'basictop = 1'];
+        $news = $this->basic->getBasicsByArgs($args, 5);
+        $this->tpl->assign('news', $news);
         $this->tpl->assign('search', $search);
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('basics', $basics);
-        $this->tpl->display('basics_open');
-    }
-
-    private function index()
-    {
-        if (!$this->data['openbasics']) {
-            exit(header('location:index.php?exam-app'));
-        }
         $this->tpl->display('basics');
     }
 }

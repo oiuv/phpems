@@ -1,18 +1,31 @@
-<div class="pagecontent">
-	<header class="container-fluid" style="background-color:#337AB7;">
-		<h5 class="text-center">
-			<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-			{x2;$cat['catname']}
-			<a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone" class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
-		</h5>
-	</header>
-	<div style="clear:both" class="col-xs-12" id="contenttext">
-		<h4 class="text-center" style="overflow:hidden;clear:both;padding-top:0.2rem;border:">
-			{x2;$content['contenttitle']}
-		</h4>
-		<hr />
-		<div style="clear:both">
-		{x2;realhtml:$content['contenttext']}
+{x2;if:!$userhash}
+{x2;include:header}
+<body>
+<div class="pages">
+    {x2;endif}
+	<div class="page-tabs">
+		<div class="page-header">
+			<div class="col-1" onclick="javascript:history.back();"><span class="iconfont icon-left"></span></div>
+			<div class="col-8">{x2;$cat['catname']}</div>
+			<div class="col-1"><span class="iconfont icon-menu"></span></div>
+		</div>
+		<div class="page-content header">
+			<div class="list-box bg">
+				<ol>
+					<li class="unstyled">
+						<h4 class="title text-center">{x2;$content['contenttitle']}</h4>
+					</li>
+                    <li class="unstyled">
+						<div class="rows">
+                            {x2;realhtml:$content['contenttext']}
+						</div>
+					</li>
+                </ol>
+			</div>
 		</div>
 	</div>
+    {x2;if:!$userhash}
 </div>
+</body>
+</html>
+{x2;endif}

@@ -21,10 +21,6 @@ class app
         $this->G = $G;
         $this->ev = $this->G->make('ev');
         $this->tpl = $this->G->make('tpl');
-        $this->sql = $this->G->make('sql');
-        $this->db = $this->G->make('pepdo');
-        $this->pg = $this->G->make('pg');
-        $this->html = $this->G->make('html');
         $this->session = $this->G->make('session');
         $this->_user = $this->session->getSessionUser();
         if (!$this->_user['sessionuserid']) {
@@ -46,15 +42,9 @@ class app
         $this->section = $this->G->make('section', 'exam');
         $this->question = $this->G->make('question', 'exam');
         $this->favor = $this->G->make('favor', 'exam');
-        $this->sessionvars = $this->exam->getExamSessionBySessionid();
-        $this->questypes = $this->basic->getQuestypeList();
-        $this->subjects = $this->basic->getSubjectList();
-        $openbasics = trim($this->sessionvars['examsessionopenbasics'], ' ,');
-        $this->data['openbasics'] = $this->basic->getBasicsByApi($openbasics);
         if (!$this->data['openbasics']) {
             $this->data['openbasics'] = $this->basic->getOpenBasicsByUserid($this->_user['sessionuserid']);
         }
-        //if(!$this->data['openbasics'])$this->data['openbasics'] = $this->basic->getBasicsByArgs(array(array("AND","basicdemo = 1")));
         if (!$this->_user['sessioncurrent'] || !$this->data['openbasics'][$this->_user['sessioncurrent']]) {
             $this->data['currentbasic'] = current($this->data['openbasics']);
             $this->_user['sessioncurrent'] = $this->data['currentbasic']['basicid'];
@@ -65,13 +55,18 @@ class app
         $this->selectorder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'];
         $this->tpl->assign('ols', [1 => '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二', '十三', '十四', '十五', '十六', '十七', '十八', '十九', '二十']);
         $this->tpl->assign('selectorder', $this->selectorder);
-        //$this->tpl->assign('data',&$this->data);
         $this->tpl->assign('data', $this->data);
-        $this->tpl->assign('questypes', $this->questypes);
-        $this->tpl->assign('subjects', $this->subjects);
-        $this->tpl->assign('globalsections', $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->data['currentbasic']['basicsubjectid']]]));
-        $this->tpl->assign('globalknows', $this->section->getAllKnowsBySubject($this->data['currentbasic']['basicsubjectid']));
         $this->tpl->assign('_user', $this->user->getUserById($this->_user['sessionuserid']));
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
+        if (2 == $this->data['currentbasic']['basicexam']['model']) {
+            if ($this->ev->url('2') && !in_array($this->ev->url('2'), ['index', 'basics', 'exam', 'recover', 'history'])) {
+                $message = [
+                    'statusCode'   => 200,
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?exam-phone-exam',
+                ];
+                $this->G->R($message);
+            }
+        }
     }
 }
