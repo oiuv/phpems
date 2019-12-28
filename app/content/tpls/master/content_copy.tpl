@@ -47,9 +47,9 @@
 				            <div class="col-sm-9">
 					            <button class="btn btn-primary" type="submit">提交</button>
 					            <a class="btn btn-primary" href="index.php?content-master-contents&page={x2;$page}{x2;$u}">取消</a>
-					            {x2;tree:$search,arg,sid}
+					            {x2;if:is_array($search)}{x2;tree:$search,arg,sid}
 					            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-					            {x2;endtree}
+					            {x2;endtree}{x2;endif}
 					            <input type="hidden" name="copycategory" value="1">
 					            <input type="hidden" name="catid" value="{x2;$catid}">
 							</div>

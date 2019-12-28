@@ -2,7 +2,7 @@
 
 开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net/) v6.0 优化。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据需要优化新增一些功能。如果要使用旧版本请参考 [PHPEMS v5.0](https://github.com/oiuv/phpems/tree/5.0)。
 
-因使用部分第三方扩展包，系统要求`php>=7.0`，具体集成扩展包如下：
+因使用部分第三方扩展包，系统要求`php>=7.0`，默认集成扩展包如下：
 
 | 扩展包 | 说明 |
 | --- | --- |
@@ -134,13 +134,33 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 > 第一次从服务号或小程序登录系统会自动绑定微信和考试账号，以后从服务号或小程序进入直接自动登录。
 
-## 关于系统的二次开发说明：
+## 关于系统二次开发的说明：
+
+### PHPEMS 文件夹结构
+
+ * `api` 支付相关API接口目录
+ * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里
+ * `data` 缓存和日志目录，需要可写权限
+ * `files` 上传的附件和公共静态文件目录
+ * `lib` 系统公共类和方法目录
+ * `model` 数据模型目录，使用 ORM 操作数据库更为便捷
+ * `tasks` 示例数据库和示例文件目录，项目上线后最好删除
 
 ### PHPEMS 路由说明
 
+项目路由入口文件为根目录下的 `index.php`，如：
+
     index.php?user-phone-login-index
 
-> 访问 `app` 目录下 user/controller/login.phone.php 文件的index方法
+> 以上路由访问的是 `app` 目录下 `user/controller/login.phone.php` 文件的 `index` 方法
+
+### PHPEMS 模板说明
+
+视图模板在 `app` 文件夹下模块中的 `tpl` 文件夹中，编译文件在 `/data/compile/`目录。
+
+    /data/compile/seminar/tpls/app/%%cpl%%index.php
+
+> 以上编译文件对应的是 `app` 目录下 `seminar/tpls/app/index.tpl` 文件。
 
 ### PHPEMS smarty模板标签
 
@@ -268,7 +288,7 @@ return $this->db->exec($sql);
 ```
 ## 版权说明
 
-PHPEMS属于开源免费程序，开发者为火眼(官方网站：http://www.phpems.net/)，您可以自由修改其中属于PHPEMS原创部分的代码，原则上您只要不通过出售PHPEMS相关源代码盈利，即可免费使用本软件。
+PHPEMS属于开源免费程序，开发者为[火眼](http://www.phpems.net/)，您可以自由修改其中属于PHPEMS原创部分的代码，原则上您只要不通过出售PHPEMS相关源代码盈利，即可免费使用本软件。
 
 > 本系统基于火眼的 PHPEMS6.0(20190924) 修改，如果在安装和使用中发现问题，欢迎反馈或联系我（QQ：7300637），但如果需要付费定制，请直接联系版权所有者火眼（QQ：278768688）。
 

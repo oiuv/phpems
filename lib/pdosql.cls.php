@@ -207,7 +207,7 @@ class pdosql
             $sql = 'SHOW FULL COLUMNS FROM  `'.$this->tablepre.$table.'`';
             $r = $this->db->fetchAll(['sql' => $sql]);
             foreach ($r as $p) {
-                if ('auto_increment' != $p['Extra']) {
+                if (is_array($args) && 'auto_increment' != $p['Extra']) {
                     if ($args[$p['Field']]) {
                         $newargs[$p['Field']] = $args[$p['Field']];
                     } else {

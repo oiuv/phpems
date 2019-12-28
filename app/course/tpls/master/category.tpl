@@ -62,9 +62,9 @@
 							</table>
 							<div class="control-group">
 					            <div class="controls">
-						            {x2;tree:$search,arg,sid}
+						            {x2;if:is_array($search)}{x2;tree:$search,arg,sid}
 						            <input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-						            {x2;endtree}
+						            {x2;endtree}{x2;endif}
 						            <label class="radio-inline">
 						            	<button class="btn btn-primary" type="submit">更改排序</button>
 						            </label>
