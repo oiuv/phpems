@@ -6,7 +6,7 @@
             {x2;include:nav}
             <div class="content">
                 <div class="col-xs-9">
-                    <div class="content-box">
+                    <div class="content-box hide">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
                                 {x2;tree:$topimgs['data'],content,cid}
@@ -132,9 +132,6 @@
                     </div>
                     <div class="content-box padding hide">
                         <h2 class="title">点击排行</h2>
-                        <p>
-                            <img src="../h1.jpg"/>
-                        </p>
                         <ul class="list-unstyled list-txt">
                             <li class="striped">
                                 <span class="badge">1</span> PHPEMS6.0开发界面预览
