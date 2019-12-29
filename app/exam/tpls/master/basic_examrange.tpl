@@ -61,6 +61,7 @@
                         <div class="form-group">
                             <label class="control-label col-sm-3">章节选择：<input type="checkbox" onclick="javascript:$('.section:checkbox').prop('checked',$(this).is(':checked'));"> </label>
                         </div>
+                        {x2;if:is_array($sections)}
                         {x2;tree:$sections,section,sid}
                         <div class="form-group">
                             <label class="control-label col-sm-3">
@@ -72,6 +73,7 @@
                                 {x2;endtree}
                             </div>
                         </div>
+                        {x2;endtree}
                         {x2;endif}
                         <div class="form-group">
                             <label for="basicexam_auto" class="control-label col-sm-3">考试范围设置：</label>
