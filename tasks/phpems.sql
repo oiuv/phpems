@@ -11,7 +11,7 @@
  Target Server Version : 100028
  File Encoding         : 65001
 
- Date: 29/12/2019 14:07:20
+ Date: 29/12/2019 17:02:58
 */
 
 SET NAMES utf8mb4;
@@ -230,18 +230,19 @@ CREATE TABLE `x2_category`  (
   INDEX `catuseurl`(`catuseurl`) USING BTREE,
   INDEX `catinmenu`(`catinmenu`, `catindex`) USING BTREE,
   INDEX `catsubject`(`catsubject`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_category
 -- ----------------------------
-INSERT INTO `x2_category` VALUES (1, 'content', 0, '考试信息', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 1, 1);
+INSERT INTO `x2_category` VALUES (1, 'content', 0, '考试信息', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 1, 1);
 INSERT INTO `x2_category` VALUES (2, 'content', 0, '首页头图', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 100, 1);
-INSERT INTO `x2_category` VALUES (3, 'content', 0, '考试资料', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 5, 1);
-INSERT INTO `x2_category` VALUES (4, 'content', 0, '帮助信息', '', '', 0, 0, '&lt;h1 class=&quot;wikititle&quot;&gt;区委区为企鹅&lt;/h1&gt;\r\n\r\n&lt;h2 class=&quot;wikititle&quot;&gt;这是一个什么段落&lt;/h2&gt;', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 5, 1);
+INSERT INTO `x2_category` VALUES (3, 'content', 0, '考试资料', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 5, 1);
+INSERT INTO `x2_category` VALUES (4, 'content', 0, '帮助信息', '', '', 0, 0, '&lt;h1 class=&quot;wikititle&quot;&gt;区委区为企鹅&lt;/h1&gt;\r\n\r\n&lt;h2 class=&quot;wikititle&quot;&gt;这是一个什么段落&lt;/h2&gt;', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 5, 1);
 INSERT INTO `x2_category` VALUES (5, 'course', 0, '魔兽世界', 'app/core/styles/images/noimage.gif', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 10, 0);
-INSERT INTO `x2_category` VALUES (11, 'content', 0, '二级分类', 'app/core/styles/images/noimage.gif', '', 0, 4, '', 'category_default', 'a:2:{s:8:\\\"pubusers\\\";s:0:\\\"\\\";s:9:\\\"pubgroups\\\";s:0:\\\"\\\";}', 0, 0, 0);
+INSERT INTO `x2_category` VALUES (11, 'content', 0, '友情链接', 'app/core/styles/images/noimage.gif', '', 0, 4, '', 'category_default', 'a:2:{s:8:\\\"pubusers\\\";s:0:\\\"\\\";s:9:\\\"pubgroups\\\";s:0:\\\"\\\";}', 0, 0, 0);
 INSERT INTO `x2_category` VALUES (12, 'docs', 0, '人物', 'app/core/styles/images/noimage.gif', '', 0, 0, '', 'category_default', 'a:2:{s:8:\\\"pubusers\\\";s:0:\\\"\\\";s:9:\\\"pubgroups\\\";s:0:\\\"\\\";}', 0, 0, 0);
+INSERT INTO `x2_category` VALUES (14, 'content', 0, '网站公告', 'app/core/styles/images/noimage.gif', '', 0, 4, '', 'category_default', '', 0, 0, 0);
 
 -- ----------------------------
 -- Table structure for x2_cequeue
@@ -4008,12 +4009,16 @@ CREATE TABLE `x2_content`  (
   INDEX `contentstatus`(`contentstatus`) USING BTREE,
   INDEX `contenttags`(`contenttags`) USING BTREE,
   FULLTEXT INDEX `contentkeywords`(`contentkeywords`)
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_content
 -- ----------------------------
 INSERT INTO `x2_content` VALUES (1, 2, 4, 1, 'peadmin', '', '首页头图', '', '', 'files/attach/images/content/20180727/15326772116755.jpg', '', 1530460518, 0, 0, '', '', 0, 'content_default', '', '');
+INSERT INTO `x2_content` VALUES (2, 11, 4, 1, 'peadmin', '', 'phpems 使用指南', 'phpems', 'phpems', 'app/core/styles/images/noimage.gif', 'https://github.com/oiuv/phpems', 1575186908, 1577608168, 0, '', '', 0, 'content_default', '', '');
+INSERT INTO `x2_content` VALUES (3, 3, 4, 1, 'peadmin', '', '教师资格证《综合素质》第一章考点', '综合素质', '教师资格证', 'app/core/styles/images/noimage.gif', '', 1575183639, 1577607553, 0, '《综合素质》是教师资格必考科目，核心内容包括教育观、教育法、职业道德、文化常识及基本能力。', '', 0, 'content_default', '&lt;p&gt;素质教育观的内涵&lt;/p&gt;\r\n\r\n&lt;p&gt;(1)素质教育以提高国民素质为根本宗旨&lt;/p&gt;\r\n\r\n&lt;p&gt;(2)素质教育是面向全体学生的教育&lt;/p&gt;\r\n\r\n&lt;p&gt;(3)素质教育是促进学生全面发展的教育&lt;/p&gt;\r\n\r\n&lt;p&gt;(4)素质教育是促进学生个性发展的教育&lt;/p&gt;\r\n\r\n&lt;p&gt;(5)素质教育是以培养学生的创新精神和实践能力为重点的教育&lt;/p&gt;\r\n\r\n&lt;p&gt;&amp;ldquo;以人为本&amp;rdquo;的的学生观&lt;/p&gt;\r\n\r\n&lt;p&gt;学生是发展的人;学生是独特的人;学生是具有独立意义的人。&lt;/p&gt;', '');
+INSERT INTO `x2_content` VALUES (4, 1, 4, 1, 'peadmin', '', '教育部公布2020年研考违规违法行为举报电话', '考研', '考研', 'app/core/styles/images/noimage.gif', '', 1575129621, 1577607905, 0, '2020年全国硕士研究生招生考试将于12月21日至23日举行，报考人数341万人。为严厉打击涉考违法活动，严肃考试纪律，维护考生合法权益，现公布2020年全国硕士研究生招生考试违规违法行为举报电话。', '', 0, 'content_default', '&lt;p&gt;2020年全国硕士研究生招生考试将于12月21日至23日举行，报考人数341万人。为严厉打击涉考违法活动，严肃考试纪律，维护考生合法权益，现公布2020年全国硕士研究生招生考试违规违法行为举报电话。&lt;/p&gt;\r\n\r\n&lt;p&gt;近期，各地教育、公安、网信、工信、市场监管等相关部门正联合开展考试环境综合治理。对涉考违法违规活动，有关部门将依法严厉打击，发现一起、查处一起，坚决维护研招考试公平公正。&lt;/p&gt;\r\n\r\n&lt;p&gt;根据2019年9月4日起施行的《最高人民法院、最高人民检察院关于办理组织考试作弊等刑事案件适用法律若干问题的解释》，在研究生招生考试中&amp;ldquo;组织考试作弊&amp;rdquo;&amp;ldquo;非法出售或者提供试题、答案&amp;rdquo;等情形，均应认定为刑法第二百八十四条规定之一的&amp;ldquo;情节严重&amp;rdquo;，将依法从重追究刑事责任。&lt;/p&gt;\r\n\r\n&lt;p&gt;教育部郑重提醒广大考生，要切实增强法制观念，提高法律意识，自觉学法知法、尊法守法，诚信考试，不参与涉考违法犯罪活动，同时，不要听信一些社会培训机构&amp;ldquo;包过&amp;rdquo;&amp;ldquo;保过&amp;rdquo;的虚假宣传，不购买所谓&amp;ldquo;试题&amp;rdquo;&amp;ldquo;答案&amp;rdquo;，谨防受骗。&lt;/p&gt;\r\n\r\n&lt;p&gt;欢迎社会各界和广大考生积极参与监督，共同维护公平公正的考试环境。&lt;/p&gt;', '');
+INSERT INTO `x2_content` VALUES (5, 14, 4, 1, 'peadmin', '', 'phpems 6.0发布', 'phpems', 'phpems', 'app/core/styles/images/noimage.gif', '', 1575129614, 1577609422, 0, '免费开源的考试系统', '', 0, 'content_default', '&lt;h2&gt;安装和配置&lt;/h2&gt;\r\n\r\n&lt;h3&gt;安装&lt;/h3&gt;\r\n\r\n&lt;h4&gt;方式1：使用 composer 创建项目&lt;/h4&gt;\r\n\r\n&lt;p&gt;通过&amp;nbsp;&lt;a href=&quot;https://getcomposer.org/&quot; rel=&quot;nofollow&quot;&gt;composer&lt;/a&gt;&amp;nbsp;指令直接创建项目&lt;/p&gt;\r\n\r\n&lt;pre&gt;\r\n&lt;code&gt;composer create-project --prefer-dist phpems/phpems phpems\r\n&lt;/code&gt;&lt;/pre&gt;\r\n\r\n&lt;p&gt;如果要安装 v5.0 版本，请使用以下指令：&lt;/p&gt;\r\n\r\n&lt;pre&gt;\r\n&lt;code&gt;composer create-project --prefer-dist phpems/phpems phpems &amp;quot;5.*&amp;quot;\r\n&lt;/code&gt;&lt;/pre&gt;\r\n\r\n&lt;h4&gt;方式2：使用 git 创建项目&lt;/h4&gt;\r\n\r\n&lt;p&gt;使用 git 复制项目后使用 composer 安装依赖&lt;/p&gt;\r\n\r\n&lt;pre&gt;\r\n&lt;code&gt;git clone https://github.com/oiuv/phpems.git\r\ncd phpems &amp;amp;&amp;amp; composer install\r\ncd lib &amp;amp;&amp;amp; cp config.inc.example.php config.inc.php\r\n&lt;/code&gt;&lt;/pre&gt;\r\n\r\n&lt;h3&gt;配置&lt;/h3&gt;\r\n\r\n&lt;p&gt;安装完成后，根据需要修改 lib 目录下的&amp;nbsp;&lt;code&gt;config.inc.php&lt;/code&gt;&amp;nbsp;文件，配置数据库，然后使用&amp;nbsp;&lt;code&gt;tasks&lt;/code&gt;&amp;nbsp;目录下的数据库文件&amp;nbsp;&lt;code&gt;phpems.sql&lt;/code&gt;&amp;nbsp;创建数据库，项目上线后务必删除&amp;nbsp;&lt;code&gt;tasks&lt;/code&gt;&amp;nbsp;目录。&lt;/p&gt;\r\n\r\n&lt;p&gt;如果是 phpems v5.0 版本升级，请使用&amp;nbsp;&lt;code&gt;tasks&lt;/code&gt;&amp;nbsp;目录下的&amp;nbsp;&lt;code&gt;v5v6.sql&lt;/code&gt;&amp;nbsp;升级数据库。&lt;/p&gt;\r\n\r\n&lt;p&gt;如果是 linux 系统，需要保证&amp;nbsp;&lt;code&gt;data&lt;/code&gt;&amp;nbsp;目录具有可写权限，否则网站无法正常访问。&lt;/p&gt;\r\n\r\n&lt;p&gt;默认管理员账号：peadmin，密码：peadmin&lt;/p&gt;\r\n\r\n&lt;blockquote&gt;\r\n&lt;p&gt;源码默认关闭错误提示，如需调试请修改&amp;nbsp;&lt;code&gt;config.inc.php&lt;/code&gt;&amp;nbsp;中&amp;nbsp;&lt;code&gt;DEBUG&lt;/code&gt;&amp;nbsp;为&amp;nbsp;&lt;code&gt;true&lt;/code&gt;。&lt;/p&gt;\r\n&lt;/blockquote&gt;\r\n\r\n&lt;h2&gt;演示&lt;/h2&gt;\r\n\r\n&lt;ul&gt;\r\n	&lt;li&gt;v6.0：&lt;a href=&quot;https://phpems.is.js.cn/&quot; rel=&quot;nofollow&quot;&gt;https://phpems.is.js.cn/&lt;/a&gt;&lt;/li&gt;\r\n	&lt;li&gt;v5.0：&lt;a href=&quot;https://phpems5.is.js.cn/&quot; rel=&quot;nofollow&quot;&gt;https://phpems5.is.js.cn/&lt;/a&gt;&lt;/li&gt;\r\n&lt;/ul&gt;', '');
 
 -- ----------------------------
 -- Table structure for x2_coupon
@@ -4058,7 +4063,7 @@ CREATE TABLE `x2_course`  (
   PRIMARY KEY (`courseid`) USING BTREE,
   INDEX `coursecsid`(`coursecsid`, `courseuserid`, `courseinputtime`, `coursemodifytime`, `coursesequence`) USING BTREE,
   INDEX `coursemoduleid`(`coursemoduleid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_course
@@ -4068,6 +4073,7 @@ INSERT INTO `x2_course` VALUES (2, '避风港', 14, 1, 'app/core/styles/images/n
 INSERT INTO `x2_course` VALUES (3, '黑海岸', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597679, 0, 0, '&lt;p&gt;唯一的巨魔生还者向纳萨诺斯&amp;middot;凋零者讲述了一个可怕的故事：他的物资运输队伍被难以言喻的自然之力袭击了。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/157c165f1938fda17911ab782d127613td.mp4', '', '', '', '', 0);
 INSERT INTO `x2_course` VALUES (4, '老兵', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597739, 0, 0, '&lt;p&gt;战争的怒火席卷了整个艾泽拉斯，但部落的传奇战士瓦罗克&amp;middot;萨鲁法尔却并不想加入战斗。在经历了一辈子的戎马生涯后，他所有亲近的人都已在战火中逝去，甚至包括他的爱子。在这场足以决定部落命运的战争的前夜，这名老兵必须做出选择：是否要永远放下他手中的战斧。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/WOW_SAURFANG_zhCN_0803CJ.mp4', '', '', '', '', 0);
 INSERT INTO `x2_course` VALUES (5, '失落的荣耀', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597797, 0, 0, '&lt;p&gt;在洛丹伦一役之后，萨鲁法尔大王被俘并被关进了暴风城监狱。安度因&amp;middot;乌瑞恩前去探视这位老将，希望摸清部落的阴谋。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/5f227269c9a23789cf1f0ad414554981lon.mp4', '', '', '', '', 0);
+INSERT INTO `x2_course` VALUES (6, '争霸艾泽拉斯', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577601158, 0, 0, '', 'https://flv2.bn.netease.com/videolib3/1711/04/uwieG3913/HD/uwieG3913-mobile.mp4', '', '', '', '', 0);
 
 -- ----------------------------
 -- Table structure for x2_coursesubject
@@ -4440,12 +4446,13 @@ CREATE TABLE `x2_log`  (
   PRIMARY KEY (`logid`) USING BTREE,
   INDEX `loguserid`(`loguserid`, `logcourseid`) USING BTREE,
   INDEX `logtime`(`logtime`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
 
 -- ----------------------------
 -- Records of x2_log
 -- ----------------------------
 INSERT INTO `x2_log` VALUES (1, 1, 1, 1577597509, 0, 0, 6);
+INSERT INTO `x2_log` VALUES (2, 1, 6, 1577601170, 0, 0, 17);
 
 -- ----------------------------
 -- Table structure for x2_module
@@ -6179,7 +6186,7 @@ CREATE TABLE `x2_session`  (
 -- ----------------------------
 -- Records of x2_session
 -- ----------------------------
-INSERT INTO `x2_session` VALUES ('ac5148fcb75dd390f4c5ffcadbb1ecaf', 1, 'peadmin', '244153a2599be7685c32d2281f57ae67', '192.168.1.4', 0, 1, '', '', 1577599581, 1577599581, 1577599581, 0);
+INSERT INTO `x2_session` VALUES ('ac5148fcb75dd390f4c5ffcadbb1ecaf', 1, 'peadmin', '244153a2599be7685c32d2281f57ae67', '192.168.1.4', 0, 1, '1', '', 1577599581, 1577599581, 1577610102, 0);
 
 -- ----------------------------
 -- Table structure for x2_subject
