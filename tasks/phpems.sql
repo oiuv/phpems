@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 100028
  Source Host           : localhost:3306
- Source Schema         : phpems_v6
+ Source Schema         : phpems
 
  Target Server Type    : MySQL
  Target Server Version : 100028
  File Encoding         : 65001
 
- Date: 27/12/2019 13:27:28
+ Date: 29/12/2019 14:07:20
 */
 
 SET NAMES utf8mb4;
@@ -34,19 +34,21 @@ CREATE TABLE `x2_app`  (
 -- ----------------------------
 -- Records of x2_app
 -- ----------------------------
-INSERT INTO `x2_app` VALUES ('bank', '财务模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('certificate', '证书模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('content', '内容模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('core', '模块管理', '', 1, 'a:1:{s:3:\"seo\";a:3:{s:5:\"title\";s:0:\"\";s:8:\"keywords\";s:0:\"\";s:11:\"description\";s:0:\"\";}}');
-INSERT INTO `x2_app` VALUES ('course', '课程模块', '', 1, '');
+INSERT INTO `x2_app` VALUES ('bank', '财务', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('certificate', '证书', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('content', '内容', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('core', '全局', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('course', '课程', 'app/core/styles/images/noimage.gif', 1, '');
 INSERT INTO `x2_app` VALUES ('demo', '试听中心', '', 1, 'a:1:{s:3:\"seo\";a:3:{s:5:\"title\";s:0:\"\";s:8:\"keywords\";s:0:\"\";s:11:\"description\";s:0:\"\";}}');
-INSERT INTO `x2_app` VALUES ('docs', '文档模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('document', '文件模块', '', 1, '');
+INSERT INTO `x2_app` VALUES ('docs', '文档', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('document', '文件', 'app/core/styles/images/noimage.gif', 1, '');
 INSERT INTO `x2_app` VALUES ('edu', '教务模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('exam', '考试模块', '', 1, 'a:1:{s:3:\"seo\";a:3:{s:5:\"title\";s:0:\"\";s:8:\"keywords\";s:0:\"\";s:11:\"description\";s:0:\"\";}}');
+INSERT INTO `x2_app` VALUES ('exam', '考试', 'app/core/styles/images/noimage.gif', 1, '');
 INSERT INTO `x2_app` VALUES ('item', '商品模块', '', 1, 'a:1:{s:3:\"seo\";a:3:{s:5:\"title\";s:0:\"\";s:8:\"keywords\";s:0:\"\";s:11:\"description\";s:0:\"\";}}');
 INSERT INTO `x2_app` VALUES ('passport', '证书模块', '', 1, '');
-INSERT INTO `x2_app` VALUES ('user', '用户模块', '', 1, 'a:9:{s:11:\"closeregist\";s:1:\"0\";s:9:\"registype\";s:1:\"0\";s:11:\"managemodel\";s:1:\"0\";s:10:\"loginmodel\";s:1:\"1\";s:11:\"emailverify\";s:1:\"0\";s:12:\"emailaccount\";s:16:\"278768688@qq.com\";s:13:\"emailpassword\";s:0:\"\";s:9:\"regfields\";s:12:\"usertruename\";s:9:\"outfields\";s:12:\"usertruename\";}');
+INSERT INTO `x2_app` VALUES ('user', '用户', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('seminar', '专题', 'app/core/styles/images/noimage.gif', 1, '');
+INSERT INTO `x2_app` VALUES ('autoform', '表单', 'app/core/styles/images/noimage.gif', 0, '');
 
 -- ----------------------------
 -- Table structure for x2_area
@@ -165,12 +167,13 @@ CREATE TABLE `x2_basic`  (
   INDEX `basicdemo`(`basicdemo`) USING BTREE,
   INDEX `basicclosed`(`basicclosed`) USING BTREE,
   INDEX `basictop`(`basictop`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_basic
 -- ----------------------------
-INSERT INTO `x2_basic` VALUES (1, '中国近现代史纲要', 1, 1, 'a:10:{i:0;i:1;i:1;i:2;i:2;i:3;i:3;i:4;i:4;i:5;i:5;i:6;i:6;i:7;i:7;i:8;i:8;i:9;i:9;i:10;}', 'a:10:{i:1;a:3:{i:1;s:1:\"1\";i:2;s:1:\"2\";i:3;s:1:\"3\";}i:2;a:3:{i:4;s:1:\"4\";i:5;s:1:\"5\";i:6;s:1:\"6\";}i:3;a:2:{i:7;s:1:\"7\";i:8;s:1:\"8\";}i:4;a:3:{i:9;s:1:\"9\";i:10;s:2:\"10\";i:11;s:2:\"11\";}i:5;a:3:{i:12;s:2:\"12\";i:13;s:2:\"13\";i:14;s:2:\"14\";}i:6;a:5:{i:15;s:2:\"15\";i:16;s:2:\"16\";i:17;s:2:\"17\";i:18;s:2:\"18\";i:19;s:2:\"19\";}i:7;a:3:{i:20;s:2:\"20\";i:21;s:2:\"21\";i:22;s:2:\"22\";}i:8;a:3:{i:23;s:2:\"23\";i:24;s:2:\"24\";i:25;s:2:\"25\";}i:9;a:3:{i:26;s:2:\"26\";i:27;s:2:\"27\";i:28;s:2:\"28\";}i:10;a:5:{i:29;s:2:\"29\";i:30;s:2:\"30\";i:31;s:2:\"31\";i:32;s:2:\"32\";i:33;s:2:\"33\";}}', 'a:12:{s:9:\"rulemodel\";s:1:\"0\";s:5:\"model\";s:1:\"0\";s:14:\"changesequence\";s:1:\"0\";s:4:\"auto\";s:1:\"1\";s:12:\"autotemplate\";s:15:\"exampaper_paper\";s:4:\"self\";s:1:\"1\";s:12:\"selftemplate\";s:10:\"exam_paper\";s:8:\"opentime\";a:2:{s:5:\"start\";b:0;s:3:\"end\";b:0;}s:10:\"selectrule\";s:1:\"1\";s:10:\"examnumber\";s:1:\"1\";s:12:\"notviewscore\";s:1:\"0\";s:10:\"allowgroup\";s:0:\"\";}', '', 1, 'app/core/styles/images/noimage.gif', '', 0, NULL, '');
+INSERT INTO `x2_basic` VALUES (1, '中国近现代史纲要', 1, 1, 'a:10:{i:0;i:1;i:1;i:2;i:2;i:3;i:3;i:4;i:4;i:5;i:5;i:6;i:6;i:7;i:7;i:8;i:8;i:9;i:9;i:10;}', 'a:10:{i:1;a:3:{i:1;s:1:\"1\";i:2;s:1:\"2\";i:3;s:1:\"3\";}i:2;a:3:{i:4;s:1:\"4\";i:5;s:1:\"5\";i:6;s:1:\"6\";}i:3;a:2:{i:7;s:1:\"7\";i:8;s:1:\"8\";}i:4;a:3:{i:9;s:1:\"9\";i:10;s:2:\"10\";i:11;s:2:\"11\";}i:5;a:3:{i:12;s:2:\"12\";i:13;s:2:\"13\";i:14;s:2:\"14\";}i:6;a:5:{i:15;s:2:\"15\";i:16;s:2:\"16\";i:17;s:2:\"17\";i:18;s:2:\"18\";i:19;s:2:\"19\";}i:7;a:3:{i:20;s:2:\"20\";i:21;s:2:\"21\";i:22;s:2:\"22\";}i:8;a:3:{i:23;s:2:\"23\";i:24;s:2:\"24\";i:25;s:2:\"25\";}i:9;a:3:{i:26;s:2:\"26\";i:27;s:2:\"27\";i:28;s:2:\"28\";}i:10;a:5:{i:29;s:2:\"29\";i:30;s:2:\"30\";i:31;s:2:\"31\";i:32;s:2:\"32\";i:33;s:2:\"33\";}}', 'a:12:{s:9:\"rulemodel\";s:1:\"0\";s:5:\"model\";s:1:\"0\";s:14:\"changesequence\";s:1:\"0\";s:4:\"auto\";s:1:\"1\";s:12:\"autotemplate\";s:15:\"exampaper_paper\";s:4:\"self\";s:1:\"1\";s:12:\"selftemplate\";s:10:\"exam_paper\";s:8:\"opentime\";a:2:{s:5:\"start\";b:0;s:3:\"end\";b:0;}s:10:\"selectrule\";s:1:\"1\";s:10:\"examnumber\";s:1:\"1\";s:12:\"notviewscore\";s:1:\"0\";s:10:\"allowgroup\";s:0:\"\";}', '', 1, 'app/core/styles/images/noimage.gif', '', 0, NULL, '用鸦片战争开始的中国历史');
+INSERT INTO `x2_basic` VALUES (2, '魔兽正史', 1, 2, '', '', '', '', 0, 'app/core/styles/images/noimage.gif', '1:10\r\n3:20\r\n5:30', 0, 0, '魔兽世界的历史');
 
 -- ----------------------------
 -- Table structure for x2_block
@@ -227,7 +230,7 @@ CREATE TABLE `x2_category`  (
   INDEX `catuseurl`(`catuseurl`) USING BTREE,
   INDEX `catinmenu`(`catinmenu`, `catindex`) USING BTREE,
   INDEX `catsubject`(`catsubject`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_category
@@ -236,7 +239,7 @@ INSERT INTO `x2_category` VALUES (1, 'content', 0, '考试信息', '', '', 0, 0,
 INSERT INTO `x2_category` VALUES (2, 'content', 0, '首页头图', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 100, 1);
 INSERT INTO `x2_category` VALUES (3, 'content', 0, '考试资料', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 1, 5, 1);
 INSERT INTO `x2_category` VALUES (4, 'content', 0, '帮助信息', '', '', 0, 0, '&lt;h1 class=&quot;wikititle&quot;&gt;区委区为企鹅&lt;/h1&gt;\r\n\r\n&lt;h2 class=&quot;wikititle&quot;&gt;这是一个什么段落&lt;/h2&gt;', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 5, 1);
-INSERT INTO `x2_category` VALUES (5, 'course', 0, '会计基础', '', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 10, 0);
+INSERT INTO `x2_category` VALUES (5, 'course', 0, '魔兽世界', 'app/core/styles/images/noimage.gif', '', 0, 0, '', 'category_default', 'a:2:{s:8:\"pubusers\";s:0:\"\";s:9:\"pubgroups\";s:0:\"\";}', 0, 10, 0);
 INSERT INTO `x2_category` VALUES (11, 'content', 0, '二级分类', 'app/core/styles/images/noimage.gif', '', 0, 4, '', 'category_default', 'a:2:{s:8:\\\"pubusers\\\";s:0:\\\"\\\";s:9:\\\"pubgroups\\\";s:0:\\\"\\\";}', 0, 0, 0);
 INSERT INTO `x2_category` VALUES (12, 'docs', 0, '人物', 'app/core/styles/images/noimage.gif', '', 0, 0, '', 'category_default', 'a:2:{s:8:\\\"pubusers\\\";s:0:\\\"\\\";s:9:\\\"pubgroups\\\";s:0:\\\"\\\";}', 0, 0, 0);
 
@@ -4055,7 +4058,16 @@ CREATE TABLE `x2_course`  (
   PRIMARY KEY (`courseid`) USING BTREE,
   INDEX `coursecsid`(`coursecsid`, `courseuserid`, `courseinputtime`, `coursemodifytime`, `coursesequence`) USING BTREE,
   INDEX `coursemoduleid`(`coursemoduleid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of x2_course
+-- ----------------------------
+INSERT INTO `x2_course` VALUES (1, '了断', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577596711, 0, 0, '&lt;p&gt;当联盟士兵与萨鲁法尔大王的反抗军一同对抗女妖之王时，战争在奥格瑞玛的大门前走向最后的高潮。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/Saurfangs_Decision_zhCN.mp4', '', '', '', '', 0);
+INSERT INTO `x2_course` VALUES (2, '避风港', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597630, 0, 0, '&lt;p&gt;瓦罗克&amp;middot;萨鲁法尔意识到，要想捍卫部落的未来，就必须去寻找部落曾经的领袖。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/wx8b.mp4', '', '', '', '', 0);
+INSERT INTO `x2_course` VALUES (3, '黑海岸', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597679, 0, 0, '&lt;p&gt;唯一的巨魔生还者向纳萨诺斯&amp;middot;凋零者讲述了一个可怕的故事：他的物资运输队伍被难以言喻的自然之力袭击了。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/157c165f1938fda17911ab782d127613td.mp4', '', '', '', '', 0);
+INSERT INTO `x2_course` VALUES (4, '老兵', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597739, 0, 0, '&lt;p&gt;战争的怒火席卷了整个艾泽拉斯，但部落的传奇战士瓦罗克&amp;middot;萨鲁法尔却并不想加入战斗。在经历了一辈子的戎马生涯后，他所有亲近的人都已在战火中逝去，甚至包括他的爱子。在这场足以决定部落命运的战争的前夜，这名老兵必须做出选择：是否要永远放下他手中的战斧。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/WOW_SAURFANG_zhCN_0803CJ.mp4', '', '', '', '', 0);
+INSERT INTO `x2_course` VALUES (5, '失落的荣耀', 14, 1, 'app/core/styles/images/noimage.gif', 1, 1577597797, 0, 0, '&lt;p&gt;在洛丹伦一役之后，萨鲁法尔大王被俘并被关进了暴风城监狱。安度因&amp;middot;乌瑞恩前去探视这位老将，希望摸清部落的阴谋。&lt;/p&gt;', 'https://blz-videos.nosdn.127.net/1/World%20of%20Warcraft/5f227269c9a23789cf1f0ad414554981lon.mp4', '', '', '', '', 0);
 
 -- ----------------------------
 -- Table structure for x2_coursesubject
@@ -4080,7 +4092,12 @@ CREATE TABLE `x2_coursesubject`  (
   INDEX `cscatid`(`cscatid`) USING BTREE,
   INDEX `cuserid`(`csuserid`) USING BTREE,
   INDEX `cssequence`(`cssequence`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of x2_coursesubject
+-- ----------------------------
+INSERT INTO `x2_coursesubject` VALUES (1, '剧情故事', 5, 1, 2, 2, 1577596561, 'app/core/styles/images/noimage.gif', 0, '魔兽世界剧情动画', 1, '', 0);
 
 -- ----------------------------
 -- Table structure for x2_docfloder
@@ -4268,7 +4285,32 @@ CREATE TABLE `x2_exercise`  (
   INDEX `exeruserid`(`exeruserid`) USING BTREE,
   INDEX `exerbasicid`(`exerbasicid`) USING BTREE,
   INDEX `exerknowsid`(`exerknowsid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 22 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of x2_exercise
+-- ----------------------------
+INSERT INTO `x2_exercise` VALUES (1, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (2, 1, 1, 1, 10, 0);
+INSERT INTO `x2_exercise` VALUES (3, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (4, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (5, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (6, 1, 1, 2, 6, 0);
+INSERT INTO `x2_exercise` VALUES (7, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (8, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (9, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (10, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (11, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (12, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (13, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (14, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (15, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (16, 1, 1, 5, 2, 0);
+INSERT INTO `x2_exercise` VALUES (17, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (18, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (19, 1, 1, 7, 2, 0);
+INSERT INTO `x2_exercise` VALUES (20, 0, 0, 0, 0, 0);
+INSERT INTO `x2_exercise` VALUES (21, 1, 1, 3, 7, 0);
 
 -- ----------------------------
 -- Table structure for x2_favor
@@ -4283,7 +4325,12 @@ CREATE TABLE `x2_favor`  (
   PRIMARY KEY (`favorid`) USING BTREE,
   INDEX `favoruserid`(`favoruserid`, `favorquestionid`, `favortime`) USING BTREE,
   INDEX `favorsubjectid`(`favorsubjectid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of x2_favor
+-- ----------------------------
+INSERT INTO `x2_favor` VALUES (1, 1, 1, 13, 1577442977);
 
 -- ----------------------------
 -- Table structure for x2_feedback
@@ -4393,7 +4440,12 @@ CREATE TABLE `x2_log`  (
   PRIMARY KEY (`logid`) USING BTREE,
   INDEX `loguserid`(`loguserid`, `logcourseid`) USING BTREE,
   INDEX `logtime`(`logtime`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of x2_log
+-- ----------------------------
+INSERT INTO `x2_log` VALUES (1, 1, 1, 1577597509, 0, 0, 6);
 
 -- ----------------------------
 -- Table structure for x2_module
@@ -4515,7 +4567,12 @@ CREATE TABLE `x2_opencourse`  (
   `ocendtime` int(11) NOT NULL,
   PRIMARY KEY (`ocid`) USING BTREE,
   INDEX `ocuserid`(`ocuserid`, `occourseid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Fixed;
+
+-- ----------------------------
+-- Records of x2_opencourse
+-- ----------------------------
+INSERT INTO `x2_opencourse` VALUES (1, 1, 1, 1577597508, 1609133508);
 
 -- ----------------------------
 -- Table structure for x2_orders
@@ -6122,7 +6179,7 @@ CREATE TABLE `x2_session`  (
 -- ----------------------------
 -- Records of x2_session
 -- ----------------------------
-INSERT INTO `x2_session` VALUES ('hequ0n963686e5jgvj72e6i9ev', 1, 'peadmin', '244153a2599be7685c32d2281f57ae67', '192.168.1.4', 0, 1, '1', '', 1577280705, 1577280705, 1577424088, 0);
+INSERT INTO `x2_session` VALUES ('ac5148fcb75dd390f4c5ffcadbb1ecaf', 1, 'peadmin', '244153a2599be7685c32d2281f57ae67', '192.168.1.4', 0, 1, '', '', 1577599581, 1577599581, 1577599581, 0);
 
 -- ----------------------------
 -- Table structure for x2_subject
@@ -6133,12 +6190,13 @@ CREATE TABLE `x2_subject`  (
   `subject` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `subjectsetting` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`subjectid`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of x2_subject
 -- ----------------------------
 INSERT INTO `x2_subject` VALUES (1, '中国近现代史纲要', 'a:1:{s:9:\"questypes\";a:1:{i:1;s:1:\"1\";}}');
+INSERT INTO `x2_subject` VALUES (2, '魔兽世界', 'a:1:{s:9:\"questypes\";a:6:{i:1;s:1:\"1\";i:2;s:1:\"1\";i:3;s:1:\"1\";i:4;s:1:\"1\";i:5;s:1:\"1\";i:6;s:1:\"1\";}}');
 
 -- ----------------------------
 -- Table structure for x2_user
@@ -6183,8 +6241,8 @@ CREATE TABLE `x2_user`  (
 -- ----------------------------
 -- Records of x2_user
 -- ----------------------------
-INSERT INTO `x2_user` VALUES (1, '', 'peadmin', '958074@163.com', '244153a2599be7685c32d2281f57ae67', 205, '127.0.0.1', 1471795200, 0, NULL, 1, 0, NULL, 'a:5:{i:0;s:4:\"user\";i:1;s:7:\"content\";i:2;s:4:\"exam\";i:3;s:6:\"course\";i:4;s:4:\"bank\";}', 'test', '', '', '', '', '男', '13456789234', '', '河南省郑州市管城区某地', 'app/core/styles/img/noimage.gif');
-INSERT INTO `x2_user` VALUES (2, '', '教师管理员', '958074@126.com', '96e79218965eb72c92a549dd5a330112', 98, '127.0.0.1', 1471795200, 0, NULL, 9, 0, NULL, '', '213123', '', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '77777', '', '', '', '', '', '');
+INSERT INTO `x2_user` VALUES (1, '', 'peadmin', '7300637@qq.com', '244153a2599be7685c32d2281f57ae67', 205, '127.0.0.1', 1471795200, 0, NULL, 1, 0, NULL, 'a:5:{i:0;s:4:\"user\";i:1;s:7:\"content\";i:2;s:4:\"exam\";i:3;s:6:\"course\";i:4;s:4:\"bank\";}', 'test', '', '', '', '110120199506131234', '男', '19987654321', '', '河南省郑州市管城区某地', 'app/core/styles/img/noimage.gif');
+INSERT INTO `x2_user` VALUES (2, '', '教师管理员', 'oiuv@qq.com', '96e79218965eb72c92a549dd5a330112', 98, '127.0.0.1', 1471795200, 0, NULL, 9, 0, NULL, '', 'iuv', '', 'a:2:{i:0;s:1:\"1\";i:1;s:1:\"2\";}', '77777', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for x2_user_group
