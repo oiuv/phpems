@@ -33,7 +33,7 @@ class action extends app
         $topimgs = $this->position->getPosNewsList([['AND', 'pcposid = 4']], 1, 5);
         $topnews = $this->position->getPosNewsList([['AND', 'pcposid = 2']], 1, 10);
         $links = $this->content->getContentList([['AND', 'contentcatid = 11']], 1, 10);
-        $notices = $this->content->getContentList([['AND', 'contentcatid = 26']], 1, 10);
+        $notices = $this->content->getContentList([['AND', 'contentcatid = 14']], 1, 10);
         $this->tpl->assign('notices', $notices);
         $this->tpl->assign('links', $links);
         $this->tpl->assign('courses', $courses);

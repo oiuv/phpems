@@ -162,7 +162,7 @@
                     <div class="content-box padding">
                         <h2 class="title">友情链接</h2>
                         <ul class="list-unstyled list-txt">
-                            {x2;tree:$links['data'],link,lid}
+                            {x2;tree:$links['data'],content,lid}
                             <li class="border">
                                 <a target="_blank" href="index.php?content-app-content&contentid={x2;v:content['contentid']}">
                                     {x2;substring:v:content['contenttitle'],45}

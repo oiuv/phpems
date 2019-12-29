@@ -122,11 +122,15 @@ class action extends app
         $basic = $this->data['currentbasic'];
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $basic['basicsubjectid']]]);
         $knows = [];
-        foreach ($basic['basicknows'] as $knowsids) {
-            foreach ($knowsids as $knowsid) {
-                $knows[$knowsid] = $this->section->getQuestionsByKnows($knowsid);
+        // dd($basic);
+        if ($basic['basicknows']) {
+            foreach ($basic['basicknows'] as $knowsids) {
+                foreach ($knowsids as $knowsid) {
+                    $knows[$knowsid] = $this->section->getQuestionsByKnows($knowsid);
+                }
             }
         }
+
         $record = $this->exer->getExerciseProcessByUser($this->_user['sessionuserid'], $basic['basicid']);
         $this->tpl->assign('record', $record);
         $this->tpl->assign('basic', $basic);
