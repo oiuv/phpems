@@ -6,7 +6,7 @@
             {x2;include:nav}
             <div class="content">
                 <div class="col-xs-9">
-                    <div class="content-box hide">
+                    <div class="content-box">
                         <div class="swiper-container">
                             <div class="swiper-wrapper">
                                 {x2;tree:$topimgs['data'],content,cid}
