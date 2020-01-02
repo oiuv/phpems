@@ -229,9 +229,9 @@ class action extends app
             }
 
             $message = [
-                    'statusCode' => 300,
-                    'message'    => "操作失败，{$errmsg}",
-                ];
+                'statusCode' => 300,
+                'message'    => "操作失败，{$errmsg}",
+            ];
 
             exit(json_encode($message));
         }

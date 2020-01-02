@@ -67,8 +67,8 @@ class CallbackTest extends TestOssClientBase
            "x:var2":"值2"
        }';
         $options = [OssClient::OSS_CALLBACK         => $json,
-                        OssClient::OSS_CALLBACK_VAR => $var,
-                       ];
+            OssClient::OSS_CALLBACK_VAR             => $var,
+        ];
 
         try {
             $result = $this->ossClient->completeMultipartUpload($this->bucket, $object, $upload_id, $upload_parts, $options);
@@ -127,8 +127,8 @@ class CallbackTest extends TestOssClientBase
        "x:var2":"值2"
        }';
         $options = [OssClient::OSS_CALLBACK         => $json,
-                        OssClient::OSS_CALLBACK_VAR => $var,
-                       ];
+            OssClient::OSS_CALLBACK_VAR             => $var,
+        ];
 
         try {
             $result = $this->ossClient->completeMultipartUpload($this->bucket, $object, $upload_id, $upload_parts, $options);
@@ -216,8 +216,8 @@ class CallbackTest extends TestOssClientBase
                 "x:var2":"aliyun.com"
             }';
         $options = [OssClient::OSS_CALLBACK              => $json,
-                             OssClient::OSS_CALLBACK_VAR => $var,
-                             ];
+            OssClient::OSS_CALLBACK_VAR                  => $var,
+        ];
         $this->putObjectCallbackOk($options, '200');
 
         //url and add callback_var
@@ -235,8 +235,8 @@ class CallbackTest extends TestOssClientBase
                 "x:var2":"值2"
             }';
         $options = [OssClient::OSS_CALLBACK              => $url,
-                             OssClient::OSS_CALLBACK_VAR => $var,
-                            ];
+            OssClient::OSS_CALLBACK_VAR                  => $var,
+        ];
         $this->putObjectCallbackOk($options, '200');
     }
 

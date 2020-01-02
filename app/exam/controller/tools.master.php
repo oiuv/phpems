@@ -38,9 +38,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '请先选择查询条件',
-        ];
+                'statusCode' => 300,
+                'message'    => '请先选择查询条件',
+            ];
         }
         $this->G->R($message);
     }
@@ -61,9 +61,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '请先选择查询条件',
-        ];
+                'statusCode' => 300,
+                'message'    => '请先选择查询条件',
+            ];
         }
         $this->G->R($message);
     }

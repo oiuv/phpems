@@ -235,9 +235,9 @@ class action extends app
             }
 
             $message = [
-                    'statusCode' => 300,
-                    'message'    => "操作失败，{$errmsg}",
-                ];
+                'statusCode' => 300,
+                'message'    => "操作失败，{$errmsg}",
+            ];
 
             exit(json_encode($message));
         }
@@ -252,9 +252,9 @@ class action extends app
         $groups = $this->user->getGroupsByModuleid($moduleid);
         if ($fileds || $groups) {
             $message = [
-            'statusCode' => 300,
-            'message'    => '操作失败，请先删除该模型下所有模型字段和用户组',
-        ];
+                'statusCode' => 300,
+                'message'    => '操作失败，请先删除该模型下所有模型字段和用户组',
+            ];
         } else {
             $this->module->delModule($moduleid);
             $message = [

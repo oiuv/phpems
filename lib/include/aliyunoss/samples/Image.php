@@ -82,7 +82,7 @@ printImage('imageInfo', $download_file);
  $timeout = 3600;
 $options = [
     OssClient::OSS_PROCESS => 'image/resize,m_lfit,h_100,w_100',
-    ];
+];
 $signedUrl = $ossClient->signUrl($bucketName, $object, $timeout, 'GET', $options);
 Common::println("rtmp url: \n".$signedUrl);
 

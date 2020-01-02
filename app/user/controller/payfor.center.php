@@ -57,9 +57,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '订单未支付成功，请刷新页面重新支付',
-        ];
+                'statusCode' => 300,
+                'message'    => '订单未支付成功，请刷新页面重新支付',
+            ];
         }
         $this->G->R($message);
     }
@@ -78,9 +78,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '订单操作失败',
-        ];
+                'statusCode' => 300,
+                'message'    => '订单操作失败',
+            ];
         }
         exit(json_encode($message));
     }

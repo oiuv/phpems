@@ -148,9 +148,9 @@ class user_user
         }
 
         $args = [
-                'table' => 'user_group',
-                'query' => [['AND', 'groupid = :groupid', 'groupid', $groupid]],
-            ];
+            'table' => 'user_group',
+            'query' => [['AND', 'groupid = :groupid', 'groupid', $groupid]],
+        ];
 
         return $this->db->delElement($args);
     }

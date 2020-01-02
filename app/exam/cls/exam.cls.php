@@ -939,9 +939,9 @@ class exam_exam
 
         if (!$token || $token != $sessionvars['examsessiontoken']) {
             $message = [
-                    'statusCode' => 300,
-                    'message'    => '系统检测到试卷错误，请联系监考老师！',
-                ];
+                'statusCode' => 300,
+                'message'    => '系统检测到试卷错误，请联系监考老师！',
+            ];
             $this->G->R($message);
         }
 

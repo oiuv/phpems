@@ -33,11 +33,11 @@ class app
         if ($_user['sessionuserid'] && 'logout' != $this->ev->url(2)) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 200,
-                'message'      => '您已经登录',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-center',
-            ]));
+                    'statusCode'   => 200,
+                    'message'      => '您已经登录',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?user-center',
+                ]));
             }
 
             header('location:index.php?user-center');
@@ -89,18 +89,18 @@ class app
              * );
              * exit(json_encode($message));
              * }
-             * $args = $this->ev->get('args');
+             * $args = $this->ev->get('args');.
              **/
             $user = $this->user->getUserByUserName($username);
             if ($user['userid']) {
                 $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                 $message = [
-                        'statusCode'   => 201,
-                        'message'      => '操作成功',
-                        'loadJs'       => $ucsynlogin,
-                        'callbackType' => 'forward',
-                        'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
-                    ];
+                    'statusCode'   => 201,
+                    'message'      => '操作成功',
+                    'loadJs'       => $ucsynlogin,
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+                ];
                 $this->G->R($message);
             } else {
                 $defaultgroup = $this->user->getDefaultGroup();

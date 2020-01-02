@@ -48,9 +48,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '恢复失败，考试已经结束',
-        ];
+                'statusCode' => 300,
+                'message'    => '恢复失败，考试已经结束',
+            ];
         }
         $this->G->R($message);
     }

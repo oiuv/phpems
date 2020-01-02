@@ -301,22 +301,22 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                'callbackType' => 'forward',
-                'forwardUrl'   => "{$fname}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "{$fname}",
+                ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '成绩导出失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '成绩导出失败',
+                ];
             }
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '请选择好考场',
-        ];
+                'statusCode' => 300,
+                'message'    => '请选择好考场',
+            ];
         }
         exit(json_encode($message));
     }
@@ -559,16 +559,16 @@ class action extends app
         }
         if ($this->files->outCsv($fname, $r)) {
             $message = [
-            'statusCode'   => 200,
-            'message'      => "试题导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-            'callbackType' => 'forward',
-            'forwardUrl'   => "{$fname}",
-        ];
+                'statusCode'   => 200,
+                'message'      => "试题导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'callbackType' => 'forward',
+                'forwardUrl'   => "{$fname}",
+            ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '试题导出失败',
-        ];
+                'statusCode' => 300,
+                'message'    => '试题导出失败',
+            ];
         }
         $this->G->R($message);
     }
@@ -818,8 +818,8 @@ class action extends app
             $data = $this->basic->getSubjectByName($args['subject']);
             if ($data) {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败，该科目已经存在',
+                    'statusCode' => 300,
+                    'message'    => '操作失败，该科目已经存在',
                 ];
                 $this->G->R($message);
             }
@@ -869,9 +869,9 @@ class action extends app
         $section = $this->section->getSectionByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $subjectid]]);
         if ($section) {
             $message = [
-            'statusCode' => 300,
-            'message'    => '操作失败，请删除该科目下所有章节后再删除本科目',
-        ];
+                'statusCode' => 300,
+                'message'    => '操作失败，请删除该科目下所有章节后再删除本科目',
+            ];
         } else {
             $this->basic->delSubject($subjectid);
             $message = [
@@ -988,16 +988,16 @@ class action extends app
             $id = $this->area->addArea($args);
             if (!$id) {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败，区号已存在',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '操作失败，区号已存在',
+                ];
             } else {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+                ];
             }
             $this->G->R($message);
         } else {

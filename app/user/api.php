@@ -26,11 +26,11 @@ class app
         if (!$_user['sessionuserid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 301,
-                'message'      => '请您重新登录',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?user-app-login',
-            ]));
+                    'statusCode'   => 301,
+                    'message'      => '请您重新登录',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?user-app-login',
+                ]));
             }
 
             header('location:index.php?user-app-login');

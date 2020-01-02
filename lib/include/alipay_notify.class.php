@@ -78,17 +78,17 @@ class AlipayNotify
      * 针对return_url验证消息是否是支付宝发出的合法消息.
      *
      * @return 验证结果
-     * function verifyReturn(){
-     * if(empty($_GET)) {//判断POST来的数组是否为空
-     * return false;
-     * }
-     * else {
-     * unset($_GET['item-api-alipayreturn']);
-     * //生成签名结果
-     * $isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
-     * //获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
-     * $responseTxt = 'true';
-     * if (! empty($_GET["notify_id"])) {$responseTxt = $this->getResponse($_GET["notify_id"]);}
+     *                      function verifyReturn(){
+     *                      if(empty($_GET)) {//判断POST来的数组是否为空
+     *                      return false;
+     *                      }
+     *                      else {
+     *                      unset($_GET['item-api-alipayreturn']);
+     *                      //生成签名结果
+     *                      $isSign = $this->getSignVeryfy($_GET, $_GET["sign"]);
+     *                      //获取支付宝远程服务器ATN结果（验证是否是支付宝发来的消息）
+     *                      $responseTxt = 'true';
+     *                      if (! empty($_GET["notify_id"])) {$responseTxt = $this->getResponse($_GET["notify_id"]);}
      *
      * //写日志记录
      * //if ($isSign) {

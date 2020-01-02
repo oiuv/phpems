@@ -322,22 +322,22 @@ class action extends app
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                'callbackType' => 'forward',
-                'forwardUrl'   => "{$fname}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "{$fname}",
+                ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '成绩导出失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '成绩导出失败',
+                ];
             }
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '请选择好考场',
-        ];
+                'statusCode' => 300,
+                'message'    => '请选择好考场',
+            ];
         }
         exit(json_encode($message));
     }

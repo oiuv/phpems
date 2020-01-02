@@ -69,18 +69,18 @@ class action extends app
                 }
 
                 $message = [
-                        'statusCode' => 300,
-                        'errorinput' => 'args[username]',
-                        'message'    => '操作失败',
-                    ];
-                exit(json_encode($message));
-            }
-
-            $message = [
                     'statusCode' => 300,
                     'errorinput' => 'args[username]',
                     'message'    => '操作失败',
                 ];
+                exit(json_encode($message));
+            }
+
+            $message = [
+                'statusCode' => 300,
+                'errorinput' => 'args[username]',
+                'message'    => '操作失败',
+            ];
             exit(json_encode($message));
         }
 

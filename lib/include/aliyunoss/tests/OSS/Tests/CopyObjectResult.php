@@ -31,7 +31,7 @@ BBBB;
         $response = null;
 
         try {
-            new CopyObjectResult($response);
+            new self($response);
             $this->assertFalse(true);
         } catch (OssException $e) {
             $this->assertSame('raw response is null', $e->getMessage());
@@ -42,7 +42,7 @@ BBBB;
     {
         $header = [];
         $response = new ResponseCore($header, $this->body, 200);
-        $result = new CopyObjectResult($response);
+        $result = new self($response);
         $data = $result->getData();
         $this->assertTrue($result->isOK());
         $this->assertSame('Fri, 24 Feb 2012 07:18:48 GMT', $data[0]);
@@ -54,7 +54,7 @@ BBBB;
         $response = new ResponseCore([], '', 404);
 
         try {
-            new CopyObjectResult($response);
+            new self($response);
             $this->assertFalse(true);
         } catch (OssException $e) {
         }

@@ -361,16 +361,16 @@ class action extends app
                     $id = $this->favor->addExamHistory(0, 0);
                     if ($id) {
                         $message = [
-                        'statusCode'   => 200,
-                        'message'      => '操作成功，本试卷需要教师评分，请等待评分结果',
-                        'callbackType' => 'forward',
-                        'forwardUrl'   => 'index.php?exam-app-history&ehtype=2',
-                    ];
+                            'statusCode'   => 200,
+                            'message'      => '操作成功，本试卷需要教师评分，请等待评分结果',
+                            'callbackType' => 'forward',
+                            'forwardUrl'   => 'index.php?exam-app-history&ehtype=2',
+                        ];
                     } else {
                         $message = [
-                        'statusCode' => 300,
-                        'message'    => '操作失败，请重新提交',
-                    ];
+                            'statusCode' => 300,
+                            'message'    => '操作失败，请重新提交',
+                        ];
                     }
                 } else {
                     $args['examsessionstatus'] = 1;

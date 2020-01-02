@@ -28,11 +28,11 @@ class app
         if (!$this->_user['teacher_subjects']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 300,
-                'message'      => '您不具备管理权限',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php',
-            ]));
+                    'statusCode'   => 300,
+                    'message'      => '您不具备管理权限',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php',
+                ]));
             }
 
             header('location:index.php');

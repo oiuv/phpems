@@ -242,9 +242,9 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '操作失败',
+                ];
             }
             exit(json_encode($message));
         } elseif ($this->ev->get('movecategory')) {
@@ -264,9 +264,9 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '操作失败',
+                ];
             }
             exit(json_encode($message));
         } elseif ($this->ev->get('copycategory')) {
@@ -291,17 +291,17 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '操作失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '操作失败',
+                ];
             }
             exit(json_encode($message));
         }
 
         $message = [
-                'statusCode' => 300,
-                'message'    => '无效访问',
-            ];
+            'statusCode' => 300,
+            'message'    => '无效访问',
+        ];
         exit(json_encode($message));
     }
 
