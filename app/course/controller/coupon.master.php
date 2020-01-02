@@ -33,22 +33,22 @@ class action extends app
                 $r = $this->coupon->getAllOKCoupon($stime, $etime);
                 if ($this->files->outCsv($fname, $r)) {
                     $message = [
-                    'statusCode'   => 200,
-                    'message'      => "优惠券导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                    'callbackType' => 'forward',
-                    'forwardUrl'   => "{$fname}",
-                ];
+                        'statusCode'   => 200,
+                        'message'      => "优惠券导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                        'callbackType' => 'forward',
+                        'forwardUrl'   => "{$fname}",
+                    ];
                 } else {
                     $message = [
-                    'statusCode' => 300,
-                    'message'    => '优惠券导出失败',
-                ];
+                        'statusCode' => 300,
+                        'message'    => '优惠券导出失败',
+                    ];
                 }
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '请选择正确的起止时间',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '请选择正确的起止时间',
+                ];
             }
             exit(json_encode($message));
         }
@@ -82,9 +82,9 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '代金券生成失败',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '代金券生成失败',
+                ];
             }
             exit(json_encode($message));
         }

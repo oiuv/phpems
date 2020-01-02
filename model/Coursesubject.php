@@ -14,7 +14,7 @@ namespace Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class coursesubject extends Model
+class Coursesubject extends Model
 {
     protected $table = 'coursesubject';
     protected $primaryKey = 'csid';

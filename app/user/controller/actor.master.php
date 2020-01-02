@@ -36,9 +36,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '操作失败，存在同名用户组！',
-        ];
+                'statusCode' => 300,
+                'message'    => '操作失败，存在同名用户组！',
+            ];
         }
         exit(json_encode($message));
     }

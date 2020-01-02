@@ -128,11 +128,11 @@ class action extends app
             }
 
             $message = [
-                    'statusCode' => 300,
-                    'message'    => '操作失败',
-                    'navTabId'   => '',
-                    'rel'        => '',
-                ];
+                'statusCode' => 300,
+                'message'    => '操作失败',
+                'navTabId'   => '',
+                'rel'        => '',
+            ];
             exit(json_encode($message));
         }
 
@@ -199,11 +199,11 @@ class action extends app
             }
             fclose($handle);
             $message = [
-                    'statusCode'   => 200,
-                    'message'      => '操作成功',
-                    'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?user-master-user',
-                ];
+                'statusCode'   => 200,
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'index.php?user-master-user',
+            ];
             exit(json_encode($message));
         }
 

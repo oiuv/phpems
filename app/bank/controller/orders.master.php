@@ -36,9 +36,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '订单操作失败',
-        ];
+                'statusCode' => 300,
+                'message'    => '订单操作失败',
+            ];
         }
         exit(json_encode($message));
     }

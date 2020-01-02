@@ -345,8 +345,8 @@ class wechat
     {
         if (isset($this->_receive['MediaId'])) {
             return [
-                    'mediaid'      => $this->_receive['MediaId'],
-                    'thumbmediaid' => $this->_receive['ThumbMediaId'],
+                'mediaid'      => $this->_receive['MediaId'],
+                'thumbmediaid' => $this->_receive['ThumbMediaId'],
             ];
         }
 
@@ -697,33 +697,33 @@ class wechat
      *
      * @param array $data 菜单数组数据
      *                    example:
-     * {
-     * "button":[
-     * {
-     * "type":"click",
-     * "name":"今日歌曲",
-     * "key":"MENU_KEY_MUSIC"
-     * },
-     * {
-     * "type":"view",
-     * "name":"歌手简介",
-     * "url":"http://www.qq.com/"
-     * },
-     * {
-     * "name":"菜单",
-     * "sub_button":[
-     * {
-     * "type":"click",
-     * "name":"hello word",
-     * "key":"MENU_KEY_MENU"
-     * },
-     * {
-     * "type":"click",
-     * "name":"赞一下我们",
-     * "key":"MENU_KEY_GOOD"
-     * }]
-     * }]
-     * }
+     *                    {
+     *                    "button":[
+     *                    {
+     *                    "type":"click",
+     *                    "name":"今日歌曲",
+     *                    "key":"MENU_KEY_MUSIC"
+     *                    },
+     *                    {
+     *                    "type":"view",
+     *                    "name":"歌手简介",
+     *                    "url":"http://www.qq.com/"
+     *                    },
+     *                    {
+     *                    "name":"菜单",
+     *                    "sub_button":[
+     *                    {
+     *                    "type":"click",
+     *                    "name":"hello word",
+     *                    "key":"MENU_KEY_MENU"
+     *                    },
+     *                    {
+     *                    "type":"click",
+     *                    "name":"赞一下我们",
+     *                    "key":"MENU_KEY_GOOD"
+     *                    }]
+     *                    }]
+     *                    }
      */
     public function createMenu($data)
     {
@@ -966,7 +966,7 @@ class wechat
             return false;
         }
         $data = [
-                'group' => ['name' => $name],
+            'group' => ['name' => $name],
         ];
         $result = $this->http_post(self::API_URL_PREFIX.self::GROUP_CREATE_URL.'access_token='.$this->access_token, self::json_encode($data));
         if ($result) {
@@ -998,7 +998,7 @@ class wechat
             return false;
         }
         $data = [
-                'group' => ['id' => $groupid, 'name' => $name],
+            'group' => ['id' => $groupid, 'name' => $name],
         ];
         $result = $this->http_post(self::API_URL_PREFIX.self::GROUP_UPDATE_URL.'access_token='.$this->access_token, self::json_encode($data));
         if ($result) {
@@ -1030,8 +1030,8 @@ class wechat
             return false;
         }
         $data = [
-                'openid'     => $openid,
-                'to_groupid' => $groupid,
+            'openid'     => $openid,
+            'to_groupid' => $groupid,
         ];
         $result = $this->http_post(self::API_URL_PREFIX.self::GROUP_MEMBER_UPDATE_URL.'access_token='.$this->access_token, self::json_encode($data));
         if ($result) {

@@ -26,11 +26,11 @@ class app
         if (1 != $group['groupmoduleid']) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 301,
-                'message'      => '请您重新登录',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?core-master-login',
-            ]));
+                    'statusCode'   => 301,
+                    'message'      => '请您重新登录',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?core-master-login',
+                ]));
             }
 
             header('location:?core-master-login');

@@ -48,9 +48,9 @@ class action extends app
             }
 
             $message = [
-                    'statusCode' => 300,
-                    'message'    => '操作失败',
-                ];
+                'statusCode' => 300,
+                'message'    => '操作失败',
+            ];
             exit(json_encode($message));
         }
 

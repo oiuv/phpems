@@ -57,8 +57,8 @@ class OssClientMultipartUploadTest extends TestOssClientBase
         OssUtil::generateFile($bigFileName, 6 * 1024 * 1024);
         $object = 'mpu/multipart-bigfile-test.tmp';
         $options = [
-                OssClient::OSS_CHECK_MD5 => true,
-                OssClient::OSS_PART_SIZE => 1,
+            OssClient::OSS_CHECK_MD5 => true,
+            OssClient::OSS_PART_SIZE => 1,
         ];
 
         try {

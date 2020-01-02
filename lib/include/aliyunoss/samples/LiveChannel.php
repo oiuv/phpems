@@ -29,12 +29,12 @@ if (is_null($ossClient)) {
  * The time period of each file is 5 seconds.(It is recommneded value only for demo purpose, the actual period depends on the key frame.).
  */
 $config = new LiveChannelConfig([
-            'description'  => 'live channel test',
-            'type'         => 'HLS',
-            'fragDuration' => 10,
-            'fragCount'    => 5,
-            'playListName' => 'hello.m3u8',
-        ]);
+    'description'  => 'live channel test',
+    'type'         => 'HLS',
+    'fragDuration' => 10,
+    'fragCount'    => 5,
+    'playListName' => 'hello.m3u8',
+]);
 $info = $ossClient->putBucketLiveChannel($bucket, 'test_rtmp_live', $config);
 Common::println("bucket $bucket liveChannel created:\n".
 'live channel name: '.$info->getName()."\n".
@@ -130,7 +130,7 @@ $current_time = time();
 $ossClient->postVodPlaylist($bucket,
     'test_rtmp_live', 'vod_playlist.m3u8',
     ['StartTime'    => $current_time - 60,
-          'EndTime' => $current_time, ]
+        'EndTime'   => $current_time, ]
 );
 
 /*

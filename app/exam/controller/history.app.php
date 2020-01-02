@@ -289,25 +289,25 @@ class action extends app
         }
         if (1 == $eh['ehtype']) {
             $message = [
-            'statusCode'   => 200,
-            'message'      => '试题加载成功，即将进入考试页面',
-            'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
-        ];
+                'statusCode'   => 200,
+                'message'      => '试题加载成功，即将进入考试页面',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            ];
         } elseif (2 == $eh['ehtype']) {
             $message = [
-            'statusCode'   => 200,
-            'message'      => '试题加载成功，即将进入考试页面',
-            'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
-        ];
+                'statusCode'   => 200,
+                'message'      => '试题加载成功，即将进入考试页面',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-app-exampaper-paper&act=history&examid={$eh['ehkey']}",
+            ];
         } else {
             $message = [
-            'statusCode'   => 200,
-            'message'      => '试题加载成功，即将进入考试页面',
-            'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
-        ];
+                'statusCode'   => 200,
+                'message'      => '试题加载成功，即将进入考试页面',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-app-exercise-paper&act=history&examid={$eh['ehkey']}",
+            ];
         }
         $this->G->R($message);
     }

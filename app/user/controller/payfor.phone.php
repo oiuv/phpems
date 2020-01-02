@@ -48,9 +48,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '订单未支付成功，请刷新页面重新支付',
-        ];
+                'statusCode' => 300,
+                'message'    => '订单未支付成功，请刷新页面重新支付',
+            ];
         }
         $this->G->R($message);
     }
@@ -69,9 +69,9 @@ class action extends app
             ];
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '订单操作失败',
-        ];
+                'statusCode' => 300,
+                'message'    => '订单操作失败',
+            ];
         }
         exit(json_encode($message));
     }
@@ -142,16 +142,16 @@ class action extends app
                     $result = $wxpay->outUrl3($args);
                     if ('FAIL' == $result['return_code']) {
                         $message = [
-                        'statusCode' => 300,
-                        'message'    => $result['return_msg'],
-                    ];
+                            'statusCode' => 300,
+                            'message'    => $result['return_msg'],
+                        ];
                     } else {
                         $message = [
-                        'statusCode'   => 201,
-                        'message'      => '订单创建成功',
-                        'callbackType' => 'forward',
-                        'forwardUrl'   => $result['mweb_url'],
-                    ];
+                            'statusCode'   => 201,
+                            'message'      => '订单创建成功',
+                            'callbackType' => 'forward',
+                            'forwardUrl'   => $result['mweb_url'],
+                        ];
                     }
                 }
             }

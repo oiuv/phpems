@@ -104,32 +104,32 @@ class action extends app
             $r = $this->G->make('coupon', 'bank')->useCouponById($couponsn, $this->_user['sessionuserid']);
             if (!$r) {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '错误的代金券',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '错误的代金券',
+                ];
             } elseif ('301' == $r) {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '使用过的代金券',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '使用过的代金券',
+                ];
             } elseif ('302' == $r) {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '过期的代金券',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '过期的代金券',
+                ];
             } else {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '充值成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'reload',
-            ];
+                    'statusCode'   => 200,
+                    'message'      => '充值成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'reload',
+                ];
             }
         } else {
             $message = [
-            'statusCode' => 300,
-            'message'    => '操作失败',
-        ];
+                'statusCode' => 300,
+                'message'    => '操作失败',
+            ];
         }
         $this->G->R($message);
     }

@@ -37,9 +37,9 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                'message'    => '缺少参数',
-            ];
+                    'statusCode' => 300,
+                    'message'    => '缺少参数',
+                ];
             }
             $this->G->R($message);
         }

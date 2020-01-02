@@ -27,7 +27,7 @@ class action extends app
         /**
          * $path = 'files/attach/images/content/'.date('Ymd').'/';
          * $fileurl = $this->files->uploadFile($this->ev->getFile('Filedata'),$path,NULL,NULL,$this->allowexts);
-         * echo $fileurl;
+         * echo $fileurl;.
          **/
         $fn = $this->ev->get('CKEditorFuncNum');
         $upfile = $this->ev->getFile('upload');

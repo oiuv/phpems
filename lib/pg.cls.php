@@ -79,7 +79,7 @@ class pg
          * $pageString .= $this->pre.'<a class="ajax" href="'.$url.$separate.$pages.'">'.'末页'.'</a>'.$this->end;
          * }
          * else
-         * $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;
+         * $pageString .= $this->pre.'<a>'.'末页'.'</a>'.$this->end;.
          * **/
         if ($cpage > 1) {
             $pageString = '<li class="col-2 text-center"><a class="ajax" data-target="pagination" data-direction="left" href="'.$url.$separate.intval($cpage - 1).'"><em class="iconfont icon-left-circle"></em></a></li>';

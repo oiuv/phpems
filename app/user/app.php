@@ -36,11 +36,11 @@ class app
         if ($_user['sessionuserid'] && 'logout' != $this->ev->url(2)) {
             if ($this->ev->get('userhash')) {
                 exit(json_encode([
-                'statusCode'   => 200,
-                'message'      => '您已经登录',
-                'callbackType' => 'forward',
-                'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
-            ]));
+                    'statusCode'   => 200,
+                    'message'      => '您已经登录',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => 'index.php?'.$this->G->defaultApp,
+                ]));
             }
 
             header('location:index.php?'.$this->G->defaultApp);

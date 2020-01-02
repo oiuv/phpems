@@ -86,11 +86,11 @@ class action extends app
                 ];
             } else {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
+                ];
             }
             exit(json_encode($message));
         }
@@ -190,18 +190,18 @@ class action extends app
             $this->exam->modifyQuestions($questionid, $args);
             if ($args['questionparent']) {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
+                ];
             } else {
                 $message = [
-                'statusCode'   => 200,
-                'message'      => '操作成功',
-                'callbackType' => 'forward',
-                'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
-            ];
+                    'statusCode'   => 200,
+                    'message'      => '操作成功',
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "?exam-teach-questions&page={$page}{$u}",
+                ];
             }
             exit(json_encode($message));
         }
