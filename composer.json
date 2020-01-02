@@ -1,50 +1,49 @@
 {
-  "name": "phpems/phpems",
-  "description": "PHP Exam Management System",
-  "keywords": [
-    "phpems",
-    "exam"
-  ],
-  "homepage": "http://www.phpems.net",
-  "license": "MIT",
-  "type": "project",
-  "repositories": {
-    "packagist": {
-      "type": "composer",
-      "url": "https://mirrors.aliyun.com/composer/"
-    }
-  },
-  "require": {
-    "illuminate/database": "^5.5",
-    "predis/predis": "^1.1",
-    "overtrue/wechat": "~4.0",
-    "overtrue/easy-sms": "^1.1",
-    "ext-json": "*"
-  },
-  "autoload": {
-    "classmap": [
+    "name": "phpems/phpems",
+    "description": "PHP Exam Management System",
+    "keywords": [
+        "phpems",
+        "exam"
     ],
-    "psr-4": {
-      "Model\\": "model/"
+    "homepage": "http://www.phpems.net",
+    "license": "MIT",
+    "type": "project",
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     },
-    "files": [
-      "lib/database.inc.php"
-    ]
-  },
-  "require-dev": {
-  },
-  "support": {
-    "email": "i@oiuv.cn",
-    "source": "https://github.com/phpems/phpems"
-  },
-  "scripts": {
-    "post-root-package-install": [
-      "@php -r \"file_exists('lib/config.inc.php') || copy('lib/config.inc.example.php', 'lib/config.inc.php');\""
-    ],
-    "post-create-project-cmd": [
-      "@php -r \"echo '项目安装完成，请导入数据库 phpems.sql 并配置 lib/config.inc.php 文件。'.PHP_EOL;\""
-    ]
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "require": {
+        "illuminate/database": "^5.5",
+        "symfony/var-dumper": "^5.0",
+        "predis/predis": "^1.1",
+        "overtrue/wechat": "~4.0",
+        "overtrue/easy-sms": "^1.1",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "classmap": [],
+        "psr-4": {
+            "Model\\": "model/"
+        },
+        "files": [
+            "lib/database.inc.php"
+        ]
+    },
+    "require-dev": {},
+    "support": {
+        "email": "i@oiuv.cn",
+        "source": "https://github.com/phpems/phpems"
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('lib/config.inc.php') || copy('lib/config.inc.example.php', 'lib/config.inc.php');\""
+        ],
+        "post-create-project-cmd": [
+            "@php -r \"echo '项目安装完成，请导入数据库 phpems.sql 并配置 lib/config.inc.php 文件。'.PHP_EOL;\""
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
