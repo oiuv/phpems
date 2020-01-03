@@ -7,9 +7,10 @@
 | 扩展包 | 说明 |
 | --- | --- |
 | [illuminate/database](https://packagist.org/packages/illuminate/database) | Eloquent ORM，以[Model](https://learnku.com/docs/laravel/5.8/eloquent/3931)的方式操作数据库 |
-| [overtrue/easy-sms](https://packagist.org/packages/overtrue/easy-sms) | 一款满足你的多种发送需求的短信发送组件 |
-| [overtrue/wechat](https://packagist.org/packages/overtrue/wechat) | 开源的微信非官方 SDK，方便在考试系统开发微信服务号相关功能 |
+| [symfony/var-dumper](https://packagist.org/packages/symfony/var-dumper) | 支持 dd()、dump() 等方法调试代码 |
 | [predis/predis](https://packagist.org/packages/predis/predis) | 缓存驱动 Redis 基础扩展包，使系统支持Redis缓存 |
+| [overtrue/wechat](https://packagist.org/packages/overtrue/wechat) | 开源的微信非官方 SDK，方便在考试系统开发微信服务号相关功能 |
+| [overtrue/easy-sms](https://packagist.org/packages/overtrue/easy-sms) | 一款满足你的多种发送需求的短信发送组件 |
 
 ## 优化&新增功能
 
@@ -139,9 +140,9 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 ### PHPEMS 文件夹结构
 
  * `api` 支付相关API接口目录
- * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里
+ * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里，其中 `app` 对应PC端、 `phone` 对应移动端、 `master` 对应管理后台、 `teach` 对应教师后台
  * `data` 缓存和日志目录，需要可写权限
- * `files` 上传的附件和公共静态文件目录
+ * `files` 上传的附件和公共静态文件目录，需要可写权限
  * `lib` 系统公共类和方法目录
  * `model` 数据模型目录，使用 ORM 操作数据库更为便捷
  * `tasks` 示例数据库和示例文件目录，项目上线后最好删除

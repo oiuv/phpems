@@ -16,7 +16,7 @@
     },
     "require": {
         "illuminate/database": "^5.5",
-        "symfony/var-dumper": "^5.0",
+        "symfony/var-dumper": "^4.0",
         "predis/predis": "^1.1",
         "overtrue/wechat": "~4.0",
         "overtrue/easy-sms": "^1.1",
