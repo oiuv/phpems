@@ -33,6 +33,8 @@ class action extends app
                 $contents[$p['catid']] = $this->course->getCourseList([['AND', 'find_in_set(cscatid,:catstring)', 'catstring', $catstring]], 1, $p['catindex'] ? $p['catindex'] : 6);
             }
         }
+        $coursesubjects = \Model\Coursesubject::inRandomOrder()->limit(6)->get()->toArray();
+        $this->tpl->assign('news', $coursesubjects);
         $this->tpl->assign('catids', $catids);
         $this->tpl->assign('categories', $this->category->categories);
         $this->tpl->assign('contents', $contents);

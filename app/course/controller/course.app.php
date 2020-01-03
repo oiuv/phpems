@@ -133,6 +133,8 @@ class action extends app
                 $this->tpl->assign('price', $price);
             }
             $isopen = $this->course->getOpenCourseByUseridAndCsid($this->_user['sessionuserid'], $csid);
+            $coursesubjects = \Model\Coursesubject::orderBy('csid', 'desc')->limit(3)->get()->toArray();
+            $this->tpl->assign('news', $coursesubjects);
             $this->tpl->assign('isopen', $isopen);
             $this->tpl->assign('course', $course);
             $this->tpl->display('opencourse');
