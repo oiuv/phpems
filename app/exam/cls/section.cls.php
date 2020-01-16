@@ -162,7 +162,7 @@ class section_exam
     }
 
     //删除知识点
-    public function delKnows($knowsid, $bool)
+    public function delKnows($knowsid, $bool = true)
     {
         if ($bool) {
             $data = ['knows', [['AND', 'knowsid = :knowsid', 'knowsid', $knowsid]]];

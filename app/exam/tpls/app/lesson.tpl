@@ -11,7 +11,7 @@
 					</div>
 				</div>
 				<div class="col-xs-9 nopadding" style="width: 80%">
-					{x2;tree:$sections,section,sid}
+					{x2;if:is_array($sections)}{x2;tree:$sections,section,sid}
 					{x2;if:$basic['basicknows'][v:section['sectionid']]}
 					<div class="content-box padding">
 						<h2 class="title">{x2;v:section['section']}</h2>
@@ -38,7 +38,7 @@
 						</ul>
 					</div>
 					{x2;endif}
-                    {x2;endtree}
+                    {x2;endtree}{x2;endif}
 				</div>
 
 			</div>

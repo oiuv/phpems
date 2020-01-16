@@ -131,16 +131,18 @@ class action extends app
                         $questions[$key] = $this->exam->getQuestionListByIds($ids);
                     }
                 }
-                foreach ($questionids['questionrow'] as $key => $p) {
-                    $ids = '';
-                    if (is_array($p)) {
-                        if (count($p)) {
-                            foreach ($p as $t) {
-                                $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
+                if (is_array($questionids['questionrow'])) {
+                    foreach ($questionids['questionrow'] as $key => $p) {
+                        $ids = '';
+                        if (is_array($p)) {
+                            if (count($p)) {
+                                foreach ($p as $t) {
+                                    $questionrows[$key][$t] = $this->exam->getQuestionRowsById($t);
+                                }
                             }
+                        } else {
+                            $questionrows[$key][$p] = $this->exam->getQuestionRowsById($p);
                         }
-                    } else {
-                        $questionrows[$key][$p] = $this->exam->getQuestionRowsById($p);
                     }
                 }
                 $sargs['examsessionquestion'] = ['questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows];
