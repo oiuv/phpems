@@ -97,7 +97,8 @@ BBBB;
         } catch (OssException $e) {
             $this->assertSame(
                 $e->getMessage(),
-                'NoSuchBucket: The specified bucket does not exist. RequestId: 1a2b-3c4d');
+                'NoSuchBucket: The specified bucket does not exist. RequestId: 1a2b-3c4d'
+            );
             $this->assertSame($e->getHTTPStatus(), '403');
             $this->assertSame($e->getRequestId(), '1a2b-3c4d');
             $this->assertSame($e->getErrorCode(), 'NoSuchBucket');

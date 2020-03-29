@@ -35,7 +35,9 @@ class Common
             $ossClient = new OssClient(
                 getenv('OSS_ACCESS_KEY_ID'),
                 getenv('OSS_ACCESS_KEY_SECRET'),
-                getenv('OSS_ENDPOINT'), false);
+                getenv('OSS_ENDPOINT'),
+                false
+            );
         } catch (OssException $e) {
             printf(__FUNCTION__."creating OssClient instance: FAILED\n");
             printf($e->getMessage()."\n");

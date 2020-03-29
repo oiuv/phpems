@@ -57,8 +57,17 @@ class ListMultipartUploadResult extends Result
             }
         }
 
-        return new ListMultipartUploadInfo($bucket, $keyMarker, $uploadIdMarker,
-            $nextKeyMarker, $nextUploadIdMarker,
-            $delimiter, $prefix, $maxUploads, $isTruncated, $listUpload);
+        return new ListMultipartUploadInfo(
+            $bucket,
+            $keyMarker,
+            $uploadIdMarker,
+            $nextKeyMarker,
+            $nextUploadIdMarker,
+            $delimiter,
+            $prefix,
+            $maxUploads,
+            $isTruncated,
+            $listUpload
+        );
     }
 }

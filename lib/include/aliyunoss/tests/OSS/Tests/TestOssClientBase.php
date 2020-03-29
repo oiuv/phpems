@@ -43,7 +43,9 @@ class TestOssClientBase extends \PHPUnit_Framework_TestCase
         }
 
         $objects = $this->ossClient->listObjects(
-            $this->bucket, ['max-keys' => 1000, 'delimiter' => ''])->getObjectList();
+            $this->bucket,
+            ['max-keys' => 1000, 'delimiter' => '']
+        )->getObjectList();
         $keys = [];
         foreach ($objects as $obj) {
             $keys[] = $obj->getKey();

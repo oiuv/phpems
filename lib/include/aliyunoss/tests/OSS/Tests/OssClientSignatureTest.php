@@ -55,8 +55,11 @@ class OssClientSignatureTest extends TestOssClientBase
             $request->add_header('Content-Length', strlen($content));
             $request->set_body($content);
             $request->send_request();
-            $res = new ResponseCore($request->get_response_header(),
-                $request->get_response_body(), $request->get_response_code());
+            $res = new ResponseCore(
+                $request->get_response_header(),
+                $request->get_response_body(),
+                $request->get_response_code()
+            );
             $this->assertTrue($res->isOK());
         } catch (OssException $e) {
             $this->assertFalse(true);
@@ -78,8 +81,11 @@ class OssClientSignatureTest extends TestOssClientBase
             $request->set_read_file($file);
             $request->set_read_stream_size(filesize($file));
             $request->send_request();
-            $res = new ResponseCore($request->get_response_header(),
-                $request->get_response_body(), $request->get_response_code());
+            $res = new ResponseCore(
+                $request->get_response_header(),
+                $request->get_response_body(),
+                $request->get_response_code()
+            );
             $this->assertTrue($res->isOK());
         } catch (OssException $e) {
             $this->assertFalse(true);

@@ -127,8 +127,10 @@ Common::println("bucket $bucket listLiveChannel:\n".
  * The playlist file is specified to “vod_playlist.m3u8”, which means that a palylist file named vod_playlist.m3u8 is created after the interface is called.
  */
 $current_time = time();
-$ossClient->postVodPlaylist($bucket,
-    'test_rtmp_live', 'vod_playlist.m3u8',
+$ossClient->postVodPlaylist(
+    $bucket,
+    'test_rtmp_live',
+    'vod_playlist.m3u8',
     ['StartTime'    => $current_time - 60,
         'EndTime'   => $current_time, ]
 );
