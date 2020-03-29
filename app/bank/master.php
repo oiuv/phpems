@@ -45,7 +45,7 @@ class app
         $user['manager_apps'] = unserialize($user['manager_apps']);
         $this->tpl->assign('_user', $user);
         $apps = $this->apps->getAppList();
-        if (!in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
+        if (is_array($user['manager_apps']) && !in_array($this->G->app, $user['manager_apps']) && $apps['user']['appsetting']['managemodel']) {
             header('location:index.php?core-master');
             exit();
         }
