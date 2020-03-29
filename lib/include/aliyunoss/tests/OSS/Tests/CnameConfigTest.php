@@ -81,7 +81,8 @@ BBBB;
         } catch (OssException $e) {
             $this->assertSame(
                 $e->getMessage(),
-                'num of cname in the config exceeds self::OSS_MAX_RULES: '.strval(CnameConfig::OSS_MAX_RULES));
+                'num of cname in the config exceeds self::OSS_MAX_RULES: '.strval(CnameConfig::OSS_MAX_RULES)
+            );
         }
     }
 }

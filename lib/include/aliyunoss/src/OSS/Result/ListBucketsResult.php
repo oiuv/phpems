@@ -30,9 +30,11 @@ class ListBucketsResult extends Result
         $xml = new \SimpleXMLElement($content);
         if (isset($xml->Buckets) && isset($xml->Buckets->Bucket)) {
             foreach ($xml->Buckets->Bucket as $bucket) {
-                $bucketInfo = new BucketInfo(strval($bucket->Location),
+                $bucketInfo = new BucketInfo(
+                    strval($bucket->Location),
                     strval($bucket->Name),
-                    strval($bucket->CreationDate));
+                    strval($bucket->CreationDate)
+                );
                 $bucketList[] = $bucketInfo;
             }
         }

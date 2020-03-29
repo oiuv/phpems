@@ -699,8 +699,13 @@ class SphinxClient
 
         // check version
         if ($ver < $client_ver) {
-            $this->_warning = sprintf("searchd command v.%d.%d older than client's v.%d.%d, some options might not work",
-                $ver >> 8, $ver & 0xff, $client_ver >> 8, $client_ver & 0xff);
+            $this->_warning = sprintf(
+                "searchd command v.%d.%d older than client's v.%d.%d, some options might not work",
+                $ver >> 8,
+                $ver & 0xff,
+                $client_ver >> 8,
+                $client_ver & 0xff
+            );
         }
 
         return $response;
@@ -771,7 +776,8 @@ class SphinxClient
             SPH_SORT_ATTR_ASC == $mode ||
             SPH_SORT_TIME_SEGMENTS == $mode ||
             SPH_SORT_EXTENDED == $mode ||
-            SPH_SORT_EXPR == $mode);
+            SPH_SORT_EXPR == $mode
+        );
         assert(is_string($sortby));
         assert(SPH_SORT_RELEVANCE == $mode || strlen($sortby) > 0);
 
@@ -1223,8 +1229,10 @@ class SphinxClient
                     list(, $weight) = unpack('N*', substr($response, $p, 4));
                     $p += 4;
                 } else {
-                    list($doc, $weight) = array_values(unpack('N*N*',
-                        substr($response, $p, 8)));
+                    list($doc, $weight) = array_values(unpack(
+                        'N*N*',
+                        substr($response, $p, 8)
+                    ));
                     $p += 8;
                     $doc = sphFixUint($doc);
                 }

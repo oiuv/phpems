@@ -37,7 +37,7 @@ class ftps
      * @param int    $port     服务器端口，默认值为21
      * @param bool   $pasv     是否开启被动模式
      * @param bool   $ssl      是否使用SSL连接
-     * @param int    $timeout  超时时间　
+     * @param int    $timeout  超时时间
      */
     public function connect($host, $username = '', $password = '', $port = '21', $pasv = false, $ssl = false, $timeout = 30)
     {
