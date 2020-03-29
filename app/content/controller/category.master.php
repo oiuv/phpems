@@ -149,7 +149,7 @@ class action extends app
         $page = $this->ev->get('page');
         $cat = $this->category->getCategoryById($catid);
         $catstring = $this->category->getChildCategoryString($catid, 0);
-        $contents = $this->content->getContentList([['AND', 'contentcatid = :contentcatid', 'contentcatid', $catid]]);
+        $contents = $this->content->getContentList([['AND', 'contentcatid = :contentcatid', 'contentcatid', $catid]], $page);
         if ($catstring || $contents['number']) {
             $message = [
                 'statusCode' => 300,
