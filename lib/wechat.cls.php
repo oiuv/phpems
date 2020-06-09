@@ -689,6 +689,7 @@ class wechat
         if ($is_list) {
             return '['.$json.']';
         } //Return numerical JSON
+
         return '{'.$json.'}'; //Return associative JSON
     }
 

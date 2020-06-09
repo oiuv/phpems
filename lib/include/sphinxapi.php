@@ -998,6 +998,7 @@ class SphinxClient
     {
         $t1 = pack('f', $f); // machine order
         list(, $t2) = unpack('L*', $t1); // int in machine order
+
         return pack('N', $t2);
     }
 
