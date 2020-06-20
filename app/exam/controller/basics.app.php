@@ -201,6 +201,6 @@ class action extends app
         $this->tpl->assign('areas', $areas);
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('basics', $basics);
-        $this->tpl->display('basics');
+        $this->tpl->display('basics_open');
     }
 }
