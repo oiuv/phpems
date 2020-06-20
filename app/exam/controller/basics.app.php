@@ -176,7 +176,7 @@ class action extends app
         $page = $this->ev->get('page');
         $page = $page > 1 ? $page : 1;
         $subjects = $this->basic->getSubjectList();
-        $args = [];
+        $args = [['AND', 'basicclosed = 0']];
         if ($search['basicdemo']) {
             $args[] = ['AND', 'basicdemo = :basicdemo', 'basicdemo', $search['basicdemo']];
         }
@@ -194,8 +194,7 @@ class action extends app
         }
         $basics = $this->basic->getBasicList($args, $page, 15);
         $areas = $this->area->getAreaList();
-        $args = [];
-        $args[] = ['AND', 'basictop = 1'];
+        $args = [['AND', 'basicclosed = 0'], ['AND', 'basictop = 1']];
         $news = $this->basic->getBasicsByArgs($args, 5);
         $this->tpl->assign('news', $news);
         $this->tpl->assign('search', $search);
