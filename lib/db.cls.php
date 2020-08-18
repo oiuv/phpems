@@ -35,7 +35,7 @@ class db2
     {
         $dbcode = str_replace('-', '', $dbcode);
         if (!$this->linkid) {
-            $this->linkid = mysql_connect($host, $dbuser, $password) or die('Mysql数据库连接失败，请检查数据库用户名和密码是否正确！');
+            $this->linkid = mysql_connect($host, $dbuser, $password) or exit('Mysql数据库连接失败，请检查数据库用户名和密码是否正确！');
         }
         $version = $this->getVersion();
 
@@ -45,7 +45,7 @@ class db2
                 mysql_query("SET sql_mode=''", $this->linkid);
             }
         } else {
-            die('Mysql版本过低，请更换5.0以上版本！');
+            exit('Mysql版本过低，请更换5.0以上版本！');
         }
         mysql_select_db($dbname, $this->linkid);
     }

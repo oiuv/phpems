@@ -172,7 +172,7 @@ function charsetEncode($input, $_output_charset, $_input_charset)
     } elseif (function_exists('iconv')) {
         $output = iconv($_input_charset, $_output_charset, $input);
     } else {
-        die('sorry, you have no libs support for charset change.');
+        exit('sorry, you have no libs support for charset change.');
     }
 
     return $output;
@@ -198,7 +198,7 @@ function charsetDecode($input, $_input_charset, $_output_charset)
     } elseif (function_exists('iconv')) {
         $output = iconv($_input_charset, $_output_charset, $input);
     } else {
-        die('sorry, you have no libs support for charset changes.');
+        exit('sorry, you have no libs support for charset changes.');
     }
 
     return $output;

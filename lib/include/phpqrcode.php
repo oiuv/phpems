@@ -1636,7 +1636,7 @@
                 $this->setVersion($ver);
             }
 
-            for (; ;) {
+            for (;;) {
                 $bits = $this->createBitStream();
 
                 if ($bits < 0) {
