@@ -112,16 +112,16 @@ class wechat
         }
         if ($echoStr) {
             if ($this->checkSignature()) {
-                die($echoStr);
+                exit($echoStr);
             }
 
-            die('no access');
+            exit('no access');
         }
         if ($this->checkSignature()) {
             return true;
         }
 
-        die('no access');
+        exit('no access');
 
         return false;
     }

@@ -67,7 +67,7 @@ if (intval(PHP_VERSION) >= 7) {
                 return $this->fl->readFile($file);
             }
 
-            die('The template not fount which name is '.$file);
+            exit('The template not fount which name is '.$file);
         }
 
         //判断字符值是否存在，并返回指定类型的值
@@ -500,7 +500,7 @@ if (intval(PHP_VERSION) >= 7) {
                 return $this->fl->readFile($file);
             }
 
-            die('The template not fount which name is '.$file);
+            exit('The template not fount which name is '.$file);
         }
 
         //判断字符值是否存在，并返回指定类型的值

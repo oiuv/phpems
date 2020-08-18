@@ -142,7 +142,7 @@ class ginkgo
             $run = new action($this);
             $run->display();
         } else {
-            die('error:Unknown app to load, the app is '.$app);
+            exit('error:Unknown app to load, the app is '.$app);
         }
     }
 
