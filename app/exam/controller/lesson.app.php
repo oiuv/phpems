@@ -117,7 +117,7 @@ class action extends app
         $this->tpl->display('lesson_paper');
     }
 
-    private function index()
+    public function index()
     {
         $basic = $this->data['currentbasic'];
         $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $basic['basicsubjectid']]]);

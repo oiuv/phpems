@@ -56,14 +56,14 @@ class action extends app
                 ];
                 exit(json_encode($message));
             }
-            if ($user['useremail'] != $args['useremail']) {
+            if (($user['useremail'] != $args['useremail']) || ($user['useremail'] != $_SESSION['phonerandcode']['email'])) {
                 $message = [
                     'statusCode' => 300,
                     'message'    => '邮箱与用户不对应',
                 ];
                 exit(json_encode($message));
             }
-            $this->user->modifyUserPassword(['password' => $args['userpassword']], $user['userid']);
+            $this->user->modifyUserPassword($user['userid'], ['password' => $args['userpassword']]);
             $message = [
                 'statusCode'   => 200,
                 'message'      => '密码修改成功',

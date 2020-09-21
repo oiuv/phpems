@@ -42,10 +42,10 @@
                 </div>
                 <div class="col-xs-3 nopadding">
                     <div class="content-box padding">
-                        <h2 class="title">推荐考场</h2>
+                        <h2 class="title">我的考场</h2>
                         <ul class="list-unstyled list-img">
-                            {x2;if:is_array($news)}
-                            {x2;tree:$news,basic,bid}
+                            {x2;if:is_array($data)}
+                            {x2;tree:$data['openbasics'],basic,bid}
                             <li class="border padding">
                                 <a href="index.php?{x2;$_app}-app-index-setCurrentBasic&basicid={x2;v:basic['basicid']}" class="ajax">
                                     <div class="intro">

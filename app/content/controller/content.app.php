@@ -23,6 +23,12 @@ class action extends app
         exit;
     }
 
+    private function setview()
+    {
+        $contentid = $this->ev->get('contentid');
+        echo $this->content->setViewNumber($contentid);
+    }
+
     private function index()
     {
         $page = $this->ev->get('page');

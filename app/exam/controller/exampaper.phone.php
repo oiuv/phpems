@@ -144,10 +144,10 @@ class action extends app
                     }
                 }
                 $sargs['examsessionquestion'] = ['questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows];
-                $sargs['examsessionsetting'] = $questionids['setting'];
+                $sargs['examsessionsetting'] = $r;
                 $sargs['examsessionstarttime'] = TIME;
-                $sargs['examsession'] = $questionids['setting']['exam'];
-                $sargs['examsessiontime'] = $questionids['setting']['examsetting']['examtime'] > 0 ? $questionids['setting']['examsetting']['examtime'] : 60;
+                $sargs['examsession'] = $r['exam'];
+                $sargs['examsessiontime'] = $r['examsetting']['examtime'] > 0 ? $r['examsetting']['examtime'] : 60;
                 $sargs['examsessionstatus'] = 0;
                 $sargs['examsessiontype'] = 1;
                 $sargs['examsessionsign'] = null;

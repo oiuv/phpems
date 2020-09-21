@@ -39,7 +39,10 @@ class action extends app
     {
         $sessionvars = $this->exam->getExamSessionByUserid($this->_user['sessionuserid'], $this->data['currentbasic']['basicid']);
         if ($sessionvars && $sessionvars['examsessionbasic'] == $this->_user['sessioncurrent'] && $sessionvars['examsessionstatus'] < 2 && 2 == $sessionvars['examsessiontype'] && ($sessionvars['examsessionstarttime'] + $sessionvars['examsessiontime'] * 60 - TIME)) {
-            $this->exam->modifyExamSession(['examsessionid' => $this->_user['sessionid']], $sessionvars['examsessionid']);
+            if ($sessionvars['examsessionid'] != $this->_user['sessionid']) {
+                $this->exam->delExamSession();
+                $this->exam->modifyExamSession(['examsessionid' => $this->_user['sessionid']], $sessionvars['examsessionid']);
+            }
             $message = [
                 'statusCode'   => 200,
                 'message'      => '恢复成功，正在转向考试页面',

@@ -258,9 +258,9 @@ class wechat
             return $this->_receive['Content'];
         } elseif (isset($this->_receive['Recognition'])) { //获取语音识别文字内容，需申请开通
             return $this->_receive['Recognition'];
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -649,7 +649,7 @@ class wechat
         $max_length = count($arr) - 1;
         if ((0 === $keys[0]) && ($keys[$max_length] === $max_length)) { //See if the first key is 0 and last key is length - 1
             $is_list = true;
-            for ($i = 0; $i < count($keys); $i++) { //See if each key correspondes to its position
+            for ($i = 0; $i < count($keys); ++$i) { //See if each key correspondes to its position
                 if ($i != $keys[$i]) { //A key fails at position check.
                     $is_list = false; //It is an associative array.
                     break;

@@ -11,7 +11,7 @@
  Target Server Version : 100028
  File Encoding         : 65001
 
- Date: 30/12/2019 14:28:45
+ Date: 10/09/2020 12:34:50
 */
 
 SET NAMES utf8mb4;
@@ -290,6 +290,7 @@ CREATE TABLE `x2_certificate`  (
   `ceprice` int(10) NOT NULL,
   `cebasic` int(11) NULL DEFAULT NULL,
   `cetime` int(11) NULL DEFAULT NULL,
+  `cedays` int(11) NULL DEFAULT NULL,
   `cedescribe` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `cetext` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`ceid`) USING BTREE,

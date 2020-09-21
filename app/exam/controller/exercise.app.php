@@ -271,9 +271,14 @@ class action extends app
             $this->G->R($message);
         } else {
             $sections = $this->section->getSectionListByArgs([['AND', 'sectionsubjectid = :sectionsubjectid', 'sectionsubjectid', $this->data['currentbasic']['basicsubjectid']]]);
+            $subject = $this->basic->getSubjectById($this->data['currentbasic']['basicsubjectid']);
+            $questiontypes = [];
+            foreach ($subject['subjectsetting']['questypes'] as $key => $p) {
+                $questiontypes[$key] = $questiontype[$key];
+            }
             $this->tpl->assign('basicnow', $this->data['currentbasic']);
             $this->tpl->assign('sections', $sections);
-            $this->tpl->assign('questype', $questype);
+            $this->tpl->assign('questype', $questypes);
             $this->tpl->display('exercise');
         }
     }

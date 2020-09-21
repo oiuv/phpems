@@ -102,12 +102,13 @@ class ginkgo
         $this->app = $app;
         $this->module = $module = $ev->url(1);
         $this->method = $method = $ev->url(2);
+        /*
         if (USEWX && $ev->isWeixin()) {
             if (!$_SESSION['openid']) {
                 $wxpay = $this->make('wxpay');
                 $openid = $wxpay->getwxopenid();
             }
-            /*
+
             $this->user = $this->make('user','user');
             $this->session = $this->make('session');
             $_user = $this->session->getSessionUser();
@@ -120,8 +121,8 @@ class ginkgo
                     exit;
                 }
             }
-            **/
         }
+        */
         if (!$app) {
             $this->app = $app = $this->defaultApp;
         }

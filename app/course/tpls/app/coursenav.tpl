@@ -59,7 +59,7 @@
 <div class="header">
     <div class="nav">
         <div class="col-xs-3">
-            <h1 class="logo">PHPEMS 6.0</h1>
+            <h1 class="logo"><img src="files/public/img/logo.png" style="height:56px;"/></h1>
         </div>
         <div class="col-xs-7">
             <ul class="list-unstyled list-inline">

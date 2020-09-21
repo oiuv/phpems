@@ -2,7 +2,8 @@
 @bordercolor:#E3E3E4;
 @unselectcolor:#DDDDDD;
 @bgcolor:#E9EAED;
-@headerbgcolor:#000000;
+@headerbgcolor:#FFFFFF;
+@pgwidth:1400px;
 *{
 	padding: 0px;
 	margin: 0px;
@@ -118,29 +119,31 @@ html{
 			}
 			.topbar{
 				&{
-					height: 36px;
-					background-color: #FFFFFF;
-					border-bottom: 1px solid #d4d5d6;
+					height: 40px;
+					background-color: #4f4f4f;
+					border-bottom: 1px solid #4f4f4f;
 					overflow: hidden;
 					clear: both;
 				}
 				.topbar-box{
 					&{
-						width: 1240px;
+						width: @pgwidth;
 						margin: auto;
-						color:#999999;
+						color:#b0b0b0;
 					}
 					.menu{
 						height: 100%;
 						font-size: 13px;
 						width: auto;
 						display: block;
-						padding-top: 8px;
+						padding-top: 10px;
 						padding-left: 10px;
 						padding-right: 10px;
 						position: relative;
 						color:#999999;
 						text-decoration: none;
+						&:hover{
+						color:#FFFFFF;}
 					}
 				}
 			}
@@ -148,14 +151,14 @@ html{
 				&{
 					height: 75px;
 					background-color: @headerbgcolor;
-					color: #FFFFFF;
-					border-bottom: #00C1DE 3px solid;
+					color: #3c3c3c;
+					border-bottom: 1px solid @bgcolor;
 					clear: both;
 					overflow: hidden;
 				}
 				.nav{
 					&{
-						width: 1240px;
+						width: @pgwidth;
 						margin: 0px auto;
 						ul{
 							height: 100%;
@@ -171,10 +174,11 @@ html{
 						width: auto;
 						padding: 28px 35px 22px 35px;
 						display: block;
-						color: #FFFFFF;
+						color: #3c3c3c;
+						font-size:18px;
 						position: relative;
 						&:hover{
-							background-color: #2A2A2A;
+							background-color: #f0f0f0;
 							text-decoration: none;
 						}
 					}
@@ -182,7 +186,7 @@ html{
 			}
 			.content{
 				&{
-					width: 1240px;
+					width: @pgwidth;
 					margin: 0px auto;
 					height: auto;
 					overflow-x: hidden;
@@ -227,6 +231,7 @@ html{
 						position: absolute;
 						right:0px;
 						z-index: 9;
+						margin-top:60px;
 					}
 					.wrong{
 						width: 208px;
@@ -235,6 +240,7 @@ html{
 						position: absolute;
 						right:0px;
 						z-index: 9;
+						margin-top:60px;
 					}
 					.pagination{
 						&{
@@ -300,6 +306,11 @@ html{
 								box-shadow:none;
 								-webkit-box-shadow: none;
 								padding:0px;
+							}
+							select{
+								option{
+									line-height:28px;
+								}
 							}
 							input::-webkit-input-placeholder {
 								color: #C0C0C0;
@@ -521,11 +532,11 @@ html{
 								&.box{
 									&{
 										padding: 20px;
-									}
-									&:nth-child(even)
-									{
-										border-left: 1px solid #EEEEEE;
 										border-right: 1px solid #EEEEEE;
+									}
+									&:last-child
+									{
+										border-right: 0px;
 									}
 									&:hover{
 										background-color: @bgcolor;
@@ -641,14 +652,21 @@ html{
 			.footer{
 				&{
 					margin-top: 15px;
-					background-color: #000000;
+					background-color: #4f4f4f;
 					color: #FFFFFF;
-					border-top: #00C1DE 5px solid;
+					border-top: #444444 5px solid;
+					font-size: 14px;
 				}
 				.footer-content{
-					width: 1240px;
+					width: @pgwidth;
 					margin: auto;
 					padding:25px 10px;
+					a{
+						color:#999999;
+						text-decoration: none;
+						&:hover{
+							color:#FFFFFF;}
+					}
 				}
 			}
 		}

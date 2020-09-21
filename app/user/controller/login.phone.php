@@ -51,9 +51,6 @@ class action extends app
                     if (1 == $app['appsetting']['loginmodel']) {
                         $this->session->offOnlineUser($user['userid']);
                     }
-                    if (!$user['useropenid'] && $_SESSION['openid'] && USEWX) {
-                        $this->user->modifyUserInfo(['useropenid' => $_SESSION['openid']], $user['userid']);
-                    }
                     $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
                     $message = [
                         'statusCode'   => 201,
@@ -61,11 +58,7 @@ class action extends app
                         'callbackType' => 'forward',
                         'forwardUrl'   => 'index.php?core-phone',
                     ];
-                    if ($this->ev->get('userhash')) {
-                        exit(json_encode($message));
-                    }
-
-                    exit(header("location:{$message['forwardUrl']}"));
+                    $this->G->R($message);
                 }
 
                 $message = [

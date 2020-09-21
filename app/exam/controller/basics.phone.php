@@ -82,7 +82,7 @@ class action extends app
                 $this->G->R($message);
             } else {
                 $args = ['usercoin' => $user['usercoin'] - $score];
-                $this->user->modifyUserInfo($args, $this->_user['sessionuserid']);
+                $this->user->modifyUserInfo($this->_user['sessionuserid'], $args);
                 $this->G->make('consume', 'bank')->addConsumeLog(['conluserid' => $this->_user['sessionuserid'], 'conlcost' => $score, 'conltype' => 1, 'conltime' => TIME, 'conlinfo' => '开通考场'.$basic['basic']."{$t['time']}天"]);
             }
         }

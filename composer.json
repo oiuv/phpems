@@ -15,11 +15,12 @@
         }
     },
     "require": {
-        "illuminate/database": "^5.5",
-        "symfony/var-dumper": "^4.0",
+        "illuminate/database": "^5.5 || ^6.0 || ^7.0 || ^8.0",
+        "symfony/var-dumper": "^4.0 || ^5.0",
         "predis/predis": "^1.1",
-        "overtrue/wechat": "~4.0",
+        "overtrue/wechat": "^4.0 || ^5.0",
         "overtrue/easy-sms": "^1.1",
+        "aliyuncs/oss-sdk-php": "^2.4",
         "ext-json": "*"
     },
     "autoload": {

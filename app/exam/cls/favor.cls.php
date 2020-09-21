@@ -234,9 +234,13 @@ class favor_exam
     }
 
     //根据ID删除一个考试记录
-    public function delExamHistory($ehid, $userid)
+    public function delExamHistory($ehid, $userid = false)
     {
-        $data = ['examhistory', [['AND', 'ehid = :ehid', 'ehid', $ehid], ['AND', 'ehuserid = :ehuserid', 'ehuserid', $userid]]];
+        if ($userid) {
+            $data = ["examhistory", [["AND", "ehid = :ehid", 'ehid', $ehid], ["AND", "ehuserid = :ehuserid", 'ehuserid', $userid]]];
+        } else {
+            $data = ["examhistory", [["AND", "ehid = :ehid", 'ehid', $ehid]]];
+        }
         $sql = $this->pdosql->makeDelete($data);
         $this->db->exec($sql);
 
@@ -310,11 +314,11 @@ class favor_exam
         $sql = $this->pdosql->makeInsert($data);
         $aff = $this->db->exec($sql);
         $ehid = $this->db->lastInsertId();
-        //		if($args['ehtype'] == 2 && $args['ehispass'])
-        //		{
-        //			$this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid']),array("AND","prsexamstatus = 0")),array('prsexamstatus' => 1));
-        //			$this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prscoursestatus = 1"),array("AND","prsexamstatus = 1"),array("AND","prstatus = 0"),array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid'])),array('prstatus' => 1,'prsendtime' => TIME));
-        //		}
+        //        if($args['ehtype'] == 2 && $args['ehispass'])
+        //        {
+        //            $this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid']),array("AND","prsexamstatus = 0")),array('prsexamstatus' => 1));
+        //            $this->G->make('progress','user')->modifyProgressByArgs(array(array("AND","prscoursestatus = 1"),array("AND","prsexamstatus = 1"),array("AND","prstatus = 0"),array("AND","prsexamid = :prsexamid","prsexamid",$args['ehbasicid'])),array('prstatus' => 1,'prsendtime' => TIME));
+        //        }
         return $ehid;
     }
 

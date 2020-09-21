@@ -285,29 +285,29 @@ class html
                 $id = 'form'.$name;
             }
             if (!$value) {
-                $value = 'app/core/styles/img/noimage.gif';
+                $value = 'files/public/img/noimage.gif';
             }
         }
         $str = <<<EOF
-    	<script type="text/template" id="pe-template-$id">
-    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width:270px;">
-            	<div class="qq-upload-button-selector" style="clear:both;">
-                	<ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
-		                <li class="text-center">
-		                    <div class="thumbnail">
-								<img class="qq-thumbnail-selector" alt="点击上传新图片">
-								<input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0">
-							</div>
-		                </li>
-		            </ul>
-		            <ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
-			            <li class="text-center">
-			                <div class="thumbnail">
-								<img class="qq-thumbnail-selector" src="$value" alt="点击上传新图片">
-								<input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0" value="$value">
-                			</div>
-			            </li>
-			        </ul>
+        <script type="text/template" id="pe-template-$id">
+            <div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width:270px;">
+                <div class="qq-upload-button-selector" style="clear:both;">
+                    <ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+                        <li class="text-center">
+                            <div class="thumbnail">
+                                <img class="qq-thumbnail-selector" alt="点击上传新图片">
+                                <input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0">
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+                        <li class="text-center">
+                            <div class="thumbnail">
+                                <img class="qq-thumbnail-selector" src="$value" alt="点击上传新图片">
+                                <input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0" value="$value">
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </script>
@@ -341,28 +341,28 @@ EOF;
             foreach ($values as $value) {
                 if ($value) {
                     $str .= <<<EOF
-	    		<div class="thumbnail col-xs-3 listimgselector">
-					<img class="qq-thumbnail-selector" alt="点击上传新图片" src="$value">
-					<input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0" value="$value">
-				</div>
+                <div class="thumbnail col-xs-3 listimgselector">
+                    <img class="qq-thumbnail-selector" alt="点击上传新图片" src="$value">
+                    <input type="hidden" class="qq-edit-filename-selector" name="$name" tabindex="0" value="$value">
+                </div>
 EOF;
                 }
             }
         }
         $str .= '</div>';
         $str .= <<<EOF
-		<script type="text/template" id="pe-template-$id">
-    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
-            	<div class="qq-upload-list-selector hide" aria-live="polite" aria-relevant="additions removals">
-					<span></span>
-				</div>
-				<div class="listimg hide">
-					<div class="thumbnail col-xs-3 listimgselector">
-						<img class="qq-thumbnail-selector" alt="点击上传新图片" src="*value*">
-						<input type="hidden" class="qq-edit-filename-selector" name="*name*" tabindex="0" value="*value*">
-					</div>
-				</div>
-				<div class="qq-upload-button-selector qq-upload-button" style="clear:both;">
+        <script type="text/template" id="pe-template-$id">
+            <div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;">
+                <div class="qq-upload-list-selector hide" aria-live="polite" aria-relevant="additions removals">
+                    <span></span>
+                </div>
+                <div class="listimg hide">
+                    <div class="thumbnail col-xs-3 listimgselector">
+                        <img class="qq-thumbnail-selector" alt="点击上传新图片" src="*value*">
+                        <input type="hidden" class="qq-edit-filename-selector" name="*name*" tabindex="0" value="*value*">
+                    </div>
+                </div>
+                <div class="qq-upload-button-selector qq-upload-button" style="clear:both;">
                     <a class="btn btn-primary">添加文件</a>
                 </div>
             </div>
@@ -395,20 +395,20 @@ EOF;
             $ftype = 'mp4';
         }
         $str = <<<EOF
-    	<script type="text/template" id="pe-template-$id">
-    		<div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width: 100%;">
-            	<ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
-	                <li class="text-center">
-						<input size="45" class="form-control qq-edit-filename-selector" type="text" name="$name" tabindex="0" value="">
-	                </li>
-	            </ul>
-	            <ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
-	                <li class="text-center">
-	                    <input size="45" class="form-control qq-edit-filename-selector" type="text" name="$name" tabindex="0" value="$v">
-	                </li>
-	            </ul>
-            	<div class="qq-upload-button-selector col-xs-3">
-					<button class="btn btn-primary">上传文件<span class="process"></span></button>
+        <script type="text/template" id="pe-template-$id">
+            <div class="qq-uploader-selector" qq-drop-area-text="可将图片拖拽至此处上传" style="clear:both;max-width: 100%;">
+                <ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+                    <li class="text-center">
+                        <input size="45" class="form-control qq-edit-filename-selector" type="text" name="$name" tabindex="0" value="">
+                    </li>
+                </ul>
+                <ul class="qq-upload-list-selector list-unstyled pull-left" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
+                    <li class="text-center">
+                        <input size="45" class="form-control qq-edit-filename-selector" type="text" name="$name" tabindex="0" value="$v">
+                    </li>
+                </ul>
+                <div class="qq-upload-button-selector col-xs-3">
+                    <button class="btn btn-primary">上传文件<span class="process"></span></button>
                 </div>
             </div>
         </script>

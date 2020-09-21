@@ -137,6 +137,7 @@ class action extends app
         $randcode = rand(1000, 9999);
         $_SESSION['phonerandcode'] = [
             $action => $randcode,
+            'email' => $email,
         ];
         $app = $this->G->make('apps', 'core')->getApp('user');
         if (!$app['appsetting']['emailverify']) {
@@ -277,7 +278,7 @@ class action extends app
                 $this->db->exec($sql);
             }
         }
-        $page++;
+        ++$page;
         echo 'ok';
         if (count($rs) > 0) {
             echo '<script>window.location = "index.php?core-api-index-basic&page='.$page.'"</script>';

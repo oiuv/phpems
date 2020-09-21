@@ -139,7 +139,7 @@ class action extends app
         $userid = $this->ev->get('userid');
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => $this->user->getGroupById($this->_user['sessiongroupid'])]);
+        $fields = $this->module->getMoudleFields($group['groupmoduleid'], 1);
         $forms = $this->html->buildHtml($fields, $user);
         $subjects = $this->G->make('basic', 'exam')->getSubjectList();
         $this->tpl->assign('subjects', $subjects);
@@ -188,7 +188,7 @@ class action extends app
                                     $i = 3;
                                     foreach ($tpfields as $p) {
                                         $args[$p] = iconv('GBK', 'UTF-8', $data[$i]);
-                                        $i++;
+                                        ++$i;
                                     }
                                     $this->user->insertUser($args);
                                 }

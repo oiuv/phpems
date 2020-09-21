@@ -46,7 +46,7 @@ class action extends app
         $this->tpl->display('ad_modify');
     }
 
-    private function index()
+    public function index()
     {
         $page = 1;
         $ads = $this->ad->getAdList(1, $page);

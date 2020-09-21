@@ -111,42 +111,32 @@ class action extends app
             $args[] = ['AND', 'ceqtime <= :eceqtime', 'eceqtime', strtotime($search['etime'])];
         }
         $certificates = $this->ce->getCeQueuesByArgs($args);
-        include_once 'lib/phpexcel/PHPExcel.php';
-        include_once 'lib/phpexcel/PHPExcel/Writer/Excel2007.php';
-        $objPHPExcel = new PHPExcel();
-        $objPHPExcel->setActiveSheetIndex(0);
-        $objPHPExcel->getActiveSheet()->setTitle('审证');
 
-        $index = 1;
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('A'.$index, '序号', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('B'.$index, '姓名', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('C'.$index, '身份证号', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('D'.$index, '性别', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('E'.$index, '学历', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('F'.$index, '电话', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('G'.$index, '地址', PHPExcel_Cell_DataType::TYPE_STRING);
-        $objPHPExcel->getActiveSheet()->setCellValueExplicit('H'.$index, '申请时间', PHPExcel_Cell_DataType::TYPE_STRING);
-
-        foreach ($certificates as $key => $p) {
-            $index = $key + 2;
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('A'.$index, $index - 1, PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('B'.$index, $p['ceqinfo']['usertruename'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('C'.$index, $p['ceqinfo']['username'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('D'.$index, $p['ceqinfo']['usersex'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('E'.$index, $p['ceqinfo']['userdegree'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('F'.$index, $p['ceqinfo']['userphone'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('G'.$index, $p['ceqinfo']['useraddress'], PHPExcel_Cell_DataType::TYPE_STRING);
-            $objPHPExcel->getActiveSheet()->setCellValueExplicit('H'.$index, date('Y-m-d', $p['ceqtime']), PHPExcel_Cell_DataType::TYPE_STRING);
+        $fname = 'data/score/'.TIME.'-'.$ceid.'-cert.csv';
+        $r = [];
+        foreach ($certificates as $p) {
+            $tmp = [
+                'usertruename' => iconv('UTF-8', 'GBK', $p['ceqinfo']['usertruename']),
+                'userpassport' => ':'.iconv('UTF-8', 'GBK', $p['ceqinfo']['userpassport']),
+                'userphone'    => iconv('UTF-8', 'GBK', $p['ceqinfo']['userphone']),
+                'useraddress'  => iconv('UTF-8', 'GBK', $p['ceqinfo']['useraddress']),
+                'time'         => date('Y-m-d', $p['ceqtime']),
+            ];
+            $r[] = $tmp;
         }
-        $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
-        $fname = 'data/out/'.TIME.'.xlsx';
-        $objWriter->save($fname);
-        $message = [
-            'statusCode'   => 200,
-            'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-            'callbackType' => 'forward',
-            'forwardUrl'   => "{$fname}",
-        ];
+        if ($this->files->outCsv($fname, $r)) {
+            $message = [
+                'statusCode'   => 200,
+                'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                'callbackType' => 'forward',
+                'forwardUrl'   => "{$fname}",
+            ];
+        } else {
+            $message = [
+                'statusCode' => 300,
+                'message'    => '导出失败',
+            ];
+        }
         exit(json_encode($message));
     }
 
@@ -193,7 +183,7 @@ class action extends app
     private function index()
     {
         $page = intval($this->ev->get('page'));
-        $certificates = $this->ce->getCeList($page, 10);
+        $certificates = $this->ce->getCeList([], $page, 10);
         $this->tpl->assign('certificates', $certificates);
         $this->tpl->assign('page', $page);
         $this->tpl->display('certificate');

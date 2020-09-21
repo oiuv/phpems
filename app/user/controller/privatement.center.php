@@ -63,7 +63,7 @@ class action extends app
             $args = $this->ev->get('args');
             $userid = $this->_user['sessionuserid'];
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], ['iscurrentuser' => 1]);
+            $args = $this->module->tidyNeedFieldsPars($args, $group['groupmoduleid'], 0);
             unset($args['usercoin'],$args['userpassword'],$args['username'],$args['useremail']);
             $id = $this->user->modifyUserInfo($userid, $args);
             $message = [
@@ -78,7 +78,7 @@ class action extends app
         $userid = $this->_user['sessionuserid'];
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($group['groupmoduleid'], ['iscurrentuser' => $userid == $this->_user['sessionuserid'], 'group' => null]);
+        $fields = $this->module->getMoudleFields($group['groupmoduleid'], 0);
         $forms = $this->html->buildHtml($fields, $user);
         $actors = $this->user->getGroupsByModuleid($group['groupmoduleid']);
         $this->tpl->assign('moduleid', $group['groupmoduleid']);

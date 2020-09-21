@@ -40,7 +40,7 @@ class action extends app
             $args['courseusername'] = $this->_user['username'];
             $args['courseinputtime'] = TIME;
             $group = $this->user->getGroupById($this->_user['groupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $args['coursemoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $args['coursemoduleid'], 1);
             $id = $this->content->addCourse($args);
             $message = [
                 'statusCode'   => 200,
@@ -79,7 +79,7 @@ class action extends app
             $args = $this->ev->get('args');
             $args['coursemodifytime'] = TIME;
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $content['coursemoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $content['coursemoduleid'], 1);
             $this->content->modifyCourse($contentid, $args);
             $message = [
                 'statusCode'   => 200,
@@ -93,7 +93,7 @@ class action extends app
         $userid = $this->_user['sessionuserid'];
         $user = $this->user->getUserById($userid);
         $group = $this->user->getGroupById($user['usergroupid']);
-        $fields = $this->module->getMoudleFields($content['coursemoduleid'], $this->user->getModuleUserInfo());
+        $fields = $this->module->getMoudleFields($content['coursemoduleid'], 1);
         $forms = $this->html->buildHtml($fields, $content);
         $tpls = [];
         foreach (glob('app/content/tpls/app/content_*.tpl') as $p) {

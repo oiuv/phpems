@@ -40,6 +40,9 @@ class action extends app
             $user = $this->user->getUserByUserName($args['username']);
             if ($user['userid']) {
                 if ($user['userpassword'] == md5($args['userpassword'])) {
+                    if ($_SESSION['openid'] && USEWX) {
+                        $this->user->modifyUserInfo($user['userid'], ['useropenid' => $_SESSION['openid']]);
+                    }
                     if (1 == $app['appsetting']['loginmodel']) {
                         $this->session->offOnlineUser($user['userid']);
                     }

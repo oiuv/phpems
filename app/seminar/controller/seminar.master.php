@@ -112,7 +112,7 @@ class action extends app
                 $args['sctusername'] = $this->_user['sessoinusername'];
                 $args['scttime'] = TIME;
                 $this->seminar->addSeminarContent($args);
-                $number++;
+                ++$number;
             }
             $message = [
                 'statusCode' => 200,

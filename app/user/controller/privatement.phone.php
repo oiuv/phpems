@@ -22,6 +22,18 @@ class action extends app
         exit;
     }
 
+    private function unbind()
+    {
+        $userid = $this->_user['sessionuserid'];
+        $id = $this->user->modifyUserInfo($userid, ['useropenid' => '']);
+        $message = [
+            'statusCode'   => 200,
+            'callbackType' => 'forward',
+            'forwardUrl'   => 'index.php?user-phone-logout',
+        ];
+        exit(json_encode($message));
+    }
+
     private function modifypass()
     {
         if ($this->ev->get('modifyuserpassword')) {

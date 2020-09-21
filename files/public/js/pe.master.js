@@ -594,7 +594,7 @@ function modalAjax(){
 	if($(this).attr('valuefrom') && ($(this).attr('valuefrom') != "")){
 		var t = $(this).attr('valuefrom').split("|");
 		for(i=0;i<t.length;i++)
-		url = url.replace(eval("/{"+t[i]+"}/gi"),$('#'+t[i]).val());
+		url = url.replace(eval("/{"+t[i]+"}/gi"),escape($('#'+t[i]).val()));
 	}
 	$.get(url+'&'+Math.random(),function(data){
 		var c = m.children().find(".modal-body");
@@ -763,8 +763,8 @@ function inituploader()
 	    },
 	    'thumbnails': {
 	        'placeholders': {
-                'waitingPath': 'files/lublic/img/loader.gif',
-                'notAvailablePath': 'files/lublic/img/noimage.gif'
+                'waitingPath': 'files/public/img/loader.gif',
+                'notAvailablePath': 'files/public/img/noimage.gif'
 	        }
 	    },
 	    'validation': {
@@ -792,6 +792,11 @@ function inituploader()
 				$(_this).find('.process').html('');
 	        },
 		    'onComplete': function(id,fileName,responseJSON) {
+				if(responseJSON.status == 'fail')
+				{
+					alert(responseJSON.message);
+					return;
+				}
 		    	$(_this).find('[qq-file-id='+id+'] .qq-edit-filename-selector').val(responseJSON.thumb);
 		    	if(petype == 'list')
 		    	{

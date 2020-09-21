@@ -151,7 +151,7 @@ class ggd
         $randCode = strval($randCode);
         $ml = intval(rand(2, 6));
         $image = imagecreatetruecolor($width, $height);
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 4; ++$i) {
             $text_color = imagecolorallocate($image, rand(128, 255), rand(128, 255), rand(128, 255));
             if (intval(rand(0, 1))) {
                 imagechar($image, 5, $ml + intval($i * 12), intval(rand(1, 10)), $randCode[$i], $text_color);

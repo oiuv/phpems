@@ -39,7 +39,7 @@ class action extends app
             $args['courseusername'] = $this->_user['sessionusername'];
             $args['courseinputtime'] = TIME;
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $args['coursemoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $args['coursemoduleid'], 1);
             $id = $this->content->addCourse($args);
             $message = [
                 'statusCode'   => 200,
@@ -78,7 +78,7 @@ class action extends app
             $args = $this->ev->get('args');
             $args['coursemodifytime'] = TIME;
             $group = $this->user->getGroupById($this->_user['sessiongroupid']);
-            $args = $this->module->tidyNeedFieldsPars($args, $content['coursemoduleid'], ['group' => $group]);
+            $args = $this->module->tidyNeedFieldsPars($args, $content['coursemoduleid'], 1);
             $this->content->modifyCourse($contentid, $args);
             $message = [
                 'statusCode'   => 200,

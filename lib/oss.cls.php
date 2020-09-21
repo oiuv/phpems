@@ -10,8 +10,6 @@
  * This source file is subject to the MIT license that is bundled.
  */
 
-require_once 'include/aliyunoss/autoload.php';
-
 use OSS\Core\OssException;
 use OSS\OssClient;
 
@@ -38,7 +36,7 @@ class oss
 
             $rs = $ossClient->uploadFile($bucket, $object, $filePath);
             $path = $rs['oss-request-url'];
-            $path = str_ireplace('ÓòÃû1', 'ÓòÃû2', $path);
+            $path = str_ireplace('ï¿½ï¿½ï¿½ï¿½1', 'ï¿½ï¿½ï¿½ï¿½2', $path);
         } catch (OssException $e) {
             //printf(__FUNCTION__ . ": FAILED\n");
             //printf($e->getMessage() . "\n");

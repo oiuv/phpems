@@ -28,7 +28,13 @@ class action extends app
         $catid = $this->ev->get('catid');
         $cat = $this->category->getCategoryById($catid);
         if ($cat['catuseurl'] && $cat['caturl']) {
-            header('location:'.html_entity_decode($cat['caturl']));
+            $message = [
+                'statusCode'   => 201,
+                "message"      => "操作成功",
+                "callbackType" => "forward",
+                "forwardUrl"   => html_entity_decode($cat['caturl'])
+            ];
+            exit(json_encode($message));
         }
         if ($cat['catparent']) {
             $catparent = $this->category->getCategoryById($cat['catparent']);

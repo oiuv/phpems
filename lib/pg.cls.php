@@ -117,7 +117,7 @@ class pg
         if ($pages < 2) {
             return false;
         } elseif ($pages <= 10) {
-            for ($p = 1; $p <= $pages; $p++) {
+            for ($p = 1; $p <= $pages; ++$p) {
                 if ($p == $cpage) {
                     $t = $this->pre.'<a href="#" class="current">'.$p.'</a>'.$this->end;
                 } else {
@@ -151,7 +151,7 @@ class pg
         if (isset($startString)) {
             $pageString .= $startString;
         }
-        for ($start; $start <= $end; $start++) {
+        for ($start; $start <= $end; ++$start) {
             if ($start == $cpage) {
                 $t = $this->pre.'<a href="#" class="current">'.$start.'</a>'.$this->end;
             } else {

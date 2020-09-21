@@ -12,7 +12,7 @@
                                 {x2;tree:$topimgs['data'],content,cid}
                                 <div class="swiper-slide">
                                     <a href="index.php?content-app-content&contentid={x2;v:content['pccontentid']}">
-                                        <img src="{x2;v:content['pcthumb']}" />
+                                        <img src="{x2;v:content['pcthumb']}" style="max-width:100%;"/>
                                     </a>
                                 </div>
                                 {x2;endif}

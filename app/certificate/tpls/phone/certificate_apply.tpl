@@ -1,77 +1,94 @@
 {x2;if:!$userhash}
 {x2;include:header}
 <body>
-<div id="content">
-	<div class="pages" id="page1">
-{x2;endif}
-		<div class="pagecontent">
-			<header class="container-fluid" style="background-color:#337AB7;">
-				<h5 class="text-center">
-					<em style="font-size:2rem;" class="pull-left glyphicon glyphicon-chevron-left" onclick="javascript:$.goPrePage();"></em>
-					申请新证书
-					<a style="font-size:2rem;color:#FFFFFF;" href="index.php?user-phone" class="pull-right glyphicon glyphicon-user ajax" data-target="user" data-page="user"></a>
-				</h5>
-			</header>
-			<div class="container-fluid">
-				<h4 class="text-center">确认您的信息</h4>
-				<hr/>
-				<div class="col-xs-12">
-					<div class="form-horizontal" style="padding:20px;">
-						<fieldset>
-							<table class="table table-bordered">
-								<tr>
-									<td style="width:8rem;">照片：</td>
-									<td><img src="{x2;$_user['photo']}" class="pull-right" style="width:16rem;"/></td>
-								</tr>
-								<tr>
-									<td>证书名：</td>
-									<td>{x2;$ce['cetitle']}</td>
-								</tr>
-								<tr>
-									<td>价格：</td>
-									<td>{x2;$ce['ceprice']}积分</td>
-								</tr>
-								<tr>
-									<td>身份证号：</td>
-									<td>{x2;$_user['username']}</td>
-								</tr>
-								<tr>
-									<td>姓名：</td>
-									<td>{x2;$_user['usertruename']}</td>
-								</tr>
-								<tr>
-									<td>性别：</td>
-									<td>{x2;$_user['usersex']}</td>
-								</tr>
-								<tr>
-									<td>文化程度：</td>
-									<td>{x2;$_user['userdegree']}</td>
-								</tr>
-								<tr>
-									<td>地址：</td>
-									<td>{x2;$_user['useraddress']}</td>
-								</tr>
-								<tr>
-									<td>联系电话：</td>
-									<td>{x2;$_user['userphone']}</td>
-								</tr>
-							</table>
-							<div class="form-group">
-								<div class="col-sm-8">
-									<a class="btn btn-primary ajax btn-block" msg="申请证书将扣除余额{x2;$ce['ceprice']}元，确定支付吗？" href="index.php?certificate-phone-certificate-apply&apply=1&ceid={x2;$ce['ceid']}">资料无误 申请证书</a>
-									<input type="hidden" name="modifyuserinfo" value="1"/>
-									<input type="hidden" name="page" value="{x2;$page}"/>
-									{x2;if:is_array($search)}{x2;tree:$search,arg,aid}
-									<input type="hidden" name="search[{x2;v:key}]" value="{x2;v:arg}"/>
-									{x2;endtree}{x2;endif}
-								</div>
-						</fieldset>
-					</div>
-				</div>
-			</div>
-		</div>
-	{x2;if:!$userhash}
+<div class="pages">
+    {x2;endif}
+    <div class="page-tabs">
+        <div class="page-header">
+            <div class="col-1" onclick="javascript:history.back();"><span class="fa fa-chevron-left"></span></div>
+            <div class="col-8">{x2;$ce['cetitle']}</div>
+            <div class="col-1"></div>
+        </div>
+        <div class="page-content header footer">
+            <form class="top" action="index.php?certificate-phone-certificate-apply&ceid={x2;$ce['ceid']}" method="post">
+                <div class="form-group underline">
+                    <div class="col-3 tip">
+                        姓名
+                    </div>
+                    <div class="col-7">
+                        <input type="text" needle="needle" msg="请填写真实姓名" class="noborder" name="args[usertruename]" value="" placeholder="请填写真实姓名">
+                    </div>
+                </div>
+                <div class="form-group underline">
+                    <div class="col-3 tip">
+                        身份证号
+                    </div>
+                    <div class="col-7">
+                        <input type="text" needle="needle" msg="请填写身份证号" class="noborder" name="args[userpassport]" value="" placeholder="请填写身份证号">
+                    </div>
+                </div>
+                <div class="form-group underline">
+                    <div class="col-3 tip">
+                        手机号码
+                    </div>
+                    <div class="col-7">
+                        <input type="text" needle="needle" msg="请填写手机号码" class="noborder" name="args[userphone]" value="" placeholder="请填写手机号码">
+                    </div>
+                </div>
+                <div class="form-group underline">
+                    <div class="col-3 tip">
+                        地址
+                    </div>
+                    <div class="col-7">
+                        <input type="text" needle="needle" msg="请填写地址" class="noborder" name="args[userpassport]" value="" placeholder="请填写地址">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="apply" value="1">
+                    <button class="primary block">申请</button>
+                </div>
+            </form>
+        </div>
+        <div class="page-footer">
+            <div class="col-5 menu active">
+                <span class="fa fa-play-circle"></span><br />
+                申请
+            </div>
+            <div class="col-5 menu">
+                <span class="fa fa-compass"></span><br />
+                简介
+            </div>
+        </div>
     </div>
+    <div class="page-tabs">
+        <div class="page-header">
+            <div class="col-1" onclick="javascript:history.back();"><span class="fa fa-chevron-left"></span></div>
+            <div class="col-8">{x2;$ce['cetitle']}</div>
+            <div class="col-1"></div>
+        </div>
+        <div class="page-content header footer">
+            <div class="list-box bg">
+                <ol>
+                    <li class="unstyled">
+                        <div class="rows">
+                            {x2;realhtml:$ce['cetext']}
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="page-footer">
+            <div class="col-5 menu">
+                <span class="fa fa-play-circle"></span><br />
+                申请
+            </div>
+            <div class="col-5 menu active">
+                <span class="fa fa-compass"></span><br />
+                简介
+            </div>
+        </div>
+    </div>
+    {x2;if:!$userhash}
 </div>
 </body>
 </html>

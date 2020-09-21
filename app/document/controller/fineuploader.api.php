@@ -22,15 +22,16 @@ class action extends app
         exit;
     }
 
-    private function index()
+    public function index()
     {
         $args = [];
         $path = 'files/attach/images/content/'.date('Ymd').'/';
         $upfile = $this->ev->getFile('qqfile');
         $args['attext'] = $this->files->getFileExtName($upfile['name']);
-        if (!in_array(strtolower($args['attext']), $this->allowexts)) {
-            exit(json_encode(['status' => 'fail']));
+        if (!in_array(strtolower($args['attext']), $this->allowexts) || in_array(strtolower($args['attext']), $this->forbidden)) {
+            exit(json_encode(['status' => 'fail', 'message' => '上传失败，附件类型不符!']));
         }
+
         if ($upfile) {
             $fileurl = $this->files->uploadFile($upfile, $path, null, null, $this->allowexts);
         }

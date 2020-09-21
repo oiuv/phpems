@@ -22,7 +22,7 @@ class action extends app
         exit;
     }
 
-    private function index()
+    public function index()
     {
         $page = $this->ev->get('page');
         $keyword = $this->ev->get('keyword');

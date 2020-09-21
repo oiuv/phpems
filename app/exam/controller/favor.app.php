@@ -75,7 +75,7 @@ class action extends app
             ['AND', 'favorsubjectid = :favorsubjectid', 'favorsubjectid', $this->data['currentbasic']['basicsubjectid']],
             ['AND', 'favoruserid = :favoruserid', 'favoruserid', $this->_user['sessionuserid']],
         ];
-        $favors = $this->favor->getFavorListByUserid($args, $page, 20);
+        $favors = $this->favor->getFavorListByUserid($args, $page, 1);
         $parents = [];
         foreach ($favors['data'] as $p) {
             if ($p['questionparent']) {

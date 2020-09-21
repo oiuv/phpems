@@ -1,29 +1,34 @@
 {x2;include:header}
 <body>
-{x2;include:nav}
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="main">
-			<div class="box itembox" style="margin-bottom:0px;">
-				<div class="col-xs-12">
-					<ol class="breadcrumb">
-						<li><a href="index.php">首页</a></li>
-						<li class="active"><a href="index.php?content-app-category&catid={x2;$cat['catid']}">{x2;$cat['catname']}</a></li>
-					</ol>
-				</div>
-			</div>
-			<div class="box itembox" style="padding-top:20px;">
-				<div class="col-xs-12">
-					<h2 class="text-center">{x2;$cat['catname']}</h2>
-					<hr/>
-				</div>
-				<div class="col-xs-12" id="content">
-                    {x2;realhtml:$cat['catdesc']}
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="row-fluid">
+        <div class="pages">
+            {x2;include:nav}
+            <div class="content">
+                <div class="col-xs-12">
+                    <div class="content-box padding">
+                        <h2 class="title">
+                            {x2;$cat['catname']}
+                            <a href="index.php?content-app" class="badge pull-right"> 返回 </a>
+                        </h2>
+                        <ul class="list-unstyled list-img">
+                            <li class="border padding">
+                                <h4 class="shorttitle text-center">{x2;$cat['catname']}</h4>
+                            </li>
+                            <li class="border morepadding">
+                                <div class="intro">
+                                    <div class="desc" id="content">
+                                        {x2;realhtml:$cat['catdesc']}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {x2;include:footer}
+        </div>
+    </div>
 </div>
-{x2;include:footer}
 </body>
 </html>

@@ -19,8 +19,6 @@ class app
     {
         $this->G = $G;
         $this->ev = $this->G->make('ev');
-        $this->sql = $this->G->make('pdosql');
-        $this->db = $this->G->make('pepdo');
         $this->user = $this->G->make('user', 'user');
         $this->order = $this->G->make('orders', 'bank');
     }

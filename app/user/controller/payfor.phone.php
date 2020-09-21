@@ -88,9 +88,9 @@ class action extends app
         }
         $order = $this->order->getOrderById($oid, $this->_user['sessionuserid']);
         if (1 == $order['orderstatus']) {
-            //$this->wxpay = $this->G->make("wxpay");
-            //$jsApiParameters = $this->wxpay->outJsPay($order);
-            //$this->tpl->assign('jsApiParameters',$jsApiParameters);
+            $this->wxpay = $this->G->make('wxpay');
+            $jsApiParameters = $this->wxpay->outJsPay($order);
+            $this->tpl->assign('jsApiParameters', $jsApiParameters);
         }
         $this->tpl->assign('order', $order);
         $this->tpl->display('payfor_detail');
@@ -122,7 +122,7 @@ class action extends app
             $this->order->addOrder($args);
             if ($this->ev->isWeixin()) {
                 $message = [
-                    'statusCode'   => 200,
+                    'statusCode'   => 201,
                     'message'      => '订单创建成功',
                     'callbackType' => 'forward',
                     'forwardUrl'   => 'index.php?user-phone-payfor-orderdetail&ordersn='.$args['ordersn'],

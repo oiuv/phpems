@@ -31,13 +31,20 @@ class user_user
 
     public function autoLoginWxUser($openid)
     {
-        $user = $this->getUserByArgs([['AND', 'useropenid = :useropenid', 'useropenid', $openid]]);
+        $user = $this->getUserByOpenId($openid);
         if (!$user) {
             return false;
         }
         $this->session->setSessionUser(['sessionuserid' => $user['userid'], 'sessionpassword' => $user['userpassword'], 'sessionip' => $this->ev->getClientIp(), 'sessiongroupid' => $user['usergroupid'], 'sessionlogintime' => TIME, 'sessionusername' => $user['username']]);
 
         return true;
+    }
+
+    public function getUserByOpenId($openid)
+    {
+        $user = $this->getUserByArgs([['AND', 'useropenid = :useropenid', 'useropenid', $openid]]);
+
+        return $user;
     }
 
     public function insertUser($args)

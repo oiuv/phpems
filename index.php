@@ -12,7 +12,7 @@
 
 session_start();
 
-define('PE_VERSION', '6.0');
+define('PE_VERSION', '6.1');
 define('PEPATH', dirname(__FILE__));
 
 require __DIR__.'/vendor/autoload.php';

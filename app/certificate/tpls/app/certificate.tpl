@@ -38,18 +38,18 @@
                 </div>
                 <div class="col-xs-3 nopadding">
                     <div class="content-box padding">
-                        <h2 class="title">推荐证书<a href="index.php?certificate-app" class="badge pull-right">我的证书 </a> </h2>
+                        <h2 class="title">我的证书<a href="index.php?certificate-app" class="badge pull-right">更多</a></h2>
                         <ul class="list-unstyled list-img">
                             {x2;if:is_array($news)}
-                            {x2;tree:$news,content,cid}
+                            {x2;tree:$news,certificate,cid}
                             <li class="border padding">
-                                <a href="index.php?course-app-course&csid={x2;v:content['csid']}">
+                                <a href="index.php?certificate-app-certificate-apply&ceid={x2;v:certificate['ceid']}">
                                     <div class="intro">
                                         <div class="col-xs-5 img noleftpadding">
-                                            <img src="{x2;if:v:content['csthumb']}{x2;v:content['csthumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
+                                            <img src="{x2;if:v:certificate['cethumb']}{x2;v:certificate['cethumb']}{x2;else}app/core/styles/img/item.jpg{x2;endif}" />
                                         </div>
                                         <div class="desc">
-                                            <p>{x2;v:content['cstitle']}</p>
+                                            <p>{x2;v:certificate['cetitle']}</p>
                                         </div>
                                     </div>
                                 </a>

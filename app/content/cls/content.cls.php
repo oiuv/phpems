@@ -32,6 +32,20 @@ class content_content
         $this->user = $this->G->make('user', 'user');
     }
 
+    public function setViewNumber($contentid)
+    {
+        $data = [false, 'content', [['AND', "contentid = :contentid", 'contentid', $contentid]]];
+        $sql = $this->pdosql->makeSelect($data);
+        $r = $this->db->fetch($sql);
+        $number = $r['contentview'] + 1;
+        $data = [
+            'table' => 'content',
+            'value' => ['contentview' => $number],
+            'query' => [['AND', "contentid = :contentid", 'contentid', $contentid]]
+        ];
+        $this->db->updateElement($data);
+    }
+
     public function isAllowPub($cat, $user)
     {
         if (!$cat) {

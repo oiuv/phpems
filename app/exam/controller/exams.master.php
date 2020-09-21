@@ -449,14 +449,14 @@ class action extends app
                     if ($isqr) {
                         $istitle = intval(trim($question[7], " \n\t"));
                         if ($istitle) {
-                            $rindex++;
+                            ++$rindex;
                             $targs['qrid'] = 'qr_'.$rindex;
                             $targs['qrtype'] = $question[0];
                             $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                             $targs['qrcreatetime'] = TIME;
                             $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                         } else {
-                            $index++;
+                            ++$index;
                             $targs['questionid'] = 'q_'.$index;
                             $targs['questiontype'] = $question[0];
                             $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -472,7 +472,7 @@ class action extends app
                             //$qustionnumber++;
                         }
                     } else {
-                        $index++;
+                        ++$index;
                         $targs['questionid'] = 'q_'.$index;
                         $targs['questiontype'] = $question[0];
                         $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -683,14 +683,14 @@ class action extends app
                             if ($isqr) {
                                 $istitle = intval(trim($question[7], " \n\t"));
                                 if ($istitle) {
-                                    $rindex++;
+                                    ++$rindex;
                                     $targs['qrid'] = 'qr_'.$rindex;
                                     $targs['qrtype'] = $question[0];
                                     $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                                     $targs['qrcreatetime'] = TIME;
                                     $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                                 } else {
-                                    $index++;
+                                    ++$index;
                                     $targs['questionid'] = 'q_'.$index;
                                     $targs['questiontype'] = $question[0];
                                     $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
@@ -706,7 +706,7 @@ class action extends app
                                     //$qustionnumber++;
                                 }
                             } else {
-                                $index++;
+                                ++$index;
                                 $targs['questionid'] = 'q_'.$index;
                                 $targs['questiontype'] = $question[0];
                                 $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));

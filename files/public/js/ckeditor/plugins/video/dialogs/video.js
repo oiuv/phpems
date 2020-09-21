@@ -22,7 +22,7 @@
 			contents : [
 				{
 					id : 'Link',
-					label : 'video',
+					label : '视频',
 					padding : 0,
 					type : 'vbox',
 					elements :
@@ -35,28 +35,28 @@
 								{
 									id : 'txtTitle',
 									type : 'text',
-									label : 'Title',
+									label : '名称',
 									style : 'width: 60%',
 									'default' : ''
 								},
 								{
 									id : 'txtUrl',
 									type : 'text',
-									label : 'Url',
+									label : '地址',
 									style : 'width: 100%',
 									'default' : ''
 								},
 								{
 									id : 'txtWidth',
 									type : 'text',
-									label : 'Width',
+									label : '宽度',
 									style : 'width: 60%',
 									'default' : '640'
 								},
 								{
 									id : 'txtHeight',
 									type : 'text',
-									label : 'Height',
+									label : '高度',
 									style : 'width: 60%',
 									'default' : '480'
 								},
@@ -68,13 +68,13 @@
 					id:"Upload",
 					hidden:!0,
 					filebrowser:"uploadButton",
-					label:'Upload',
+					label:'上传',
 					elements:
 					[
 						{
 							type:"file",
 							id:"upload",
-							label:'Upload',
+							label:'上传',
 							size:38
 						},
 						{

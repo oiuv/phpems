@@ -145,7 +145,7 @@
         {
             $len = count($frame);
             foreach ($frame as &$frameLine) {
-                for ($i = 0; $i < $len; $i++) {
+                for ($i = 0; $i < $len; ++$i) {
                     $frameLine[$i] = (ord($frameLine[$i]) & 1) ? '1' : '0';
                 }
             }
@@ -198,7 +198,7 @@
             self::markTime('before_build_cache');
 
             $mask = new QRmask();
-            for ($a = 1; $a <= QRSPEC_VERSION_MAX; $a++) {
+            for ($a = 1; $a <= QRSPEC_VERSION_MAX; ++$a) {
                 $frame = QRspec::newFrame($a);
                 if (QR_IMAGE) {
                     $fileName = QR_CACHE_DIR.'frame_'.$a.'.png';
@@ -207,7 +207,7 @@
 
                 $width = count($frame);
                 $bitMask = array_fill(0, $width, array_fill(0, $width, 0));
-                for ($maskNo = 0; $maskNo < 8; $maskNo++) {
+                for ($maskNo = 0; $maskNo < 8; ++$maskNo) {
                     $mask->makeMaskNo($maskNo, $width, $frame, $bitMask, true);
                 }
             }
@@ -233,8 +233,8 @@
         public static function dumpMask($frame)
         {
             $width = count($frame);
-            for ($y = 0; $y < $width; $y++) {
-                for ($x = 0; $x < $width; $x++) {
+            for ($y = 0; $y < $width; ++$y) {
+                for ($x = 0; $x < $width; ++$x) {
                     echo ord($frame[$y][$x]).',';
                 }
             }
@@ -273,7 +273,7 @@
                     $startTime = $thisTime;
                 }
 
-                $p++;
+                ++$p;
                 $lastTime = $thisTime;
             }
 
@@ -403,7 +403,7 @@
         //----------------------------------------------------------------------
         public static function getMinimumVersion($size, $level)
         {
-            for ($i = 1; $i <= QRSPEC_VERSION_MAX; $i++) {
+            for ($i = 1; $i <= QRSPEC_VERSION_MAX; ++$i) {
                 $words = self::$capacity[$i][QRCAP_WORDS] - self::$capacity[$i][QRCAP_EC][$level];
                 if ($words >= $size) {
                     return $i;
@@ -583,7 +583,7 @@
             $yStart = $oy - 2;
             $xStart = $ox - 2;
 
-            for ($y = 0; $y < 5; $y++) {
+            for ($y = 0; $y < 5; ++$y) {
                 QRstr::set($frame, $xStart, $yStart + $y, $finder[$y]);
             }
         }
@@ -611,16 +611,16 @@
             }
 
             $cx = self::$alignmentPattern[$version][0];
-            for ($x = 1; $x < $w - 1; $x++) {
+            for ($x = 1; $x < $w - 1; ++$x) {
                 self::putAlignmentMarker($frame, 6, $cx);
                 self::putAlignmentMarker($frame, $cx, 6);
                 $cx += $d;
             }
 
             $cy = self::$alignmentPattern[$version][0];
-            for ($y = 0; $y < $w - 1; $y++) {
+            for ($y = 0; $y < $w - 1; ++$y) {
                 $cx = self::$alignmentPattern[$version][0];
-                for ($x = 0; $x < $w - 1; $x++) {
+                for ($x = 0; $x < $w - 1; ++$x) {
                     self::putAlignmentMarker($frame, $cx, $cy);
                     $cx += $d;
                 }
@@ -700,7 +700,7 @@
                 "\xc1\xc1\xc1\xc1\xc1\xc1\xc1",
             ];
 
-            for ($y = 0; $y < 7; $y++) {
+            for ($y = 0; $y < 7; ++$y) {
                 QRstr::set($frame, $ox, $oy + $y, $finder[$y]);
             }
         }
@@ -720,11 +720,11 @@
             // Separator
             $yOffset = $width - 7;
 
-            for ($y = 0; $y < 7; $y++) {
+            for ($y = 0; $y < 7; ++$y) {
                 $frame[$y][7] = "\xc0";
                 $frame[$y][$width - 8] = "\xc0";
                 $frame[$yOffset][7] = "\xc0";
-                $yOffset++;
+                ++$yOffset;
             }
 
             $setPattern = str_repeat("\xc0", 8);
@@ -747,7 +747,7 @@
 
             // Timing pattern
 
-            for ($i = 1; $i < $width - 15; $i++) {
+            for ($i = 1; $i < $width - 15; ++$i) {
                 $frame[6][7 + $i] = chr(0x90 | ($i & 1));
                 $frame[7 + $i][6] = chr(0x90 | ($i & 1));
             }
@@ -761,16 +761,16 @@
 
                 $v = $vinf;
 
-                for ($x = 0; $x < 6; $x++) {
-                    for ($y = 0; $y < 3; $y++) {
+                for ($x = 0; $x < 6; ++$x) {
+                    for ($y = 0; $y < 3; ++$y) {
                         $frame[($width - 11) + $y][$x] = chr(0x88 | ($v & 1));
                         $v = $v >> 1;
                     }
                 }
 
                 $v = $vinf;
-                for ($y = 0; $y < 6; $y++) {
-                    for ($x = 0; $x < 3; $x++) {
+                for ($y = 0; $y < 6; ++$y) {
+                    for ($x = 0; $x < 3; ++$x) {
                         $frame[$y][$x + ($width - 11)] = chr(0x88 | ($v & 1));
                         $v = $v >> 1;
                     }
@@ -998,8 +998,8 @@
 
             imagefill($base_image, 0, 0, $col[0]);
 
-            for ($y = 0; $y < $h; $y++) {
-                for ($x = 0; $x < $w; $x++) {
+            for ($y = 0; $y < $h; ++$y) {
+                for ($x = 0; $x < $w; ++$x) {
                     if ('1' == $frame[$y][$x]) {
                         imagesetpixel($base_image, $x + $outerFrame, $y + $outerFrame, $col[1]);
                     }
@@ -1083,7 +1083,7 @@
                 $bs->appendNum(4, $val);
                 $bs->appendNum(QRspec::lengthIndicator(QR_MODE_NUM, $version), $this->size);
 
-                for ($i = 0; $i < $words; $i++) {
+                for ($i = 0; $i < $words; ++$i) {
                     $val = (ord($this->data[$i * 3]) - ord('0')) * 100;
                     $val += (ord($this->data[$i * 3 + 1]) - ord('0')) * 10;
                     $val += (ord($this->data[$i * 3 + 2]) - ord('0'));
@@ -1117,7 +1117,7 @@
                 $bs->appendNum(4, 0x02);
                 $bs->appendNum(QRspec::lengthIndicator(QR_MODE_AN, $version), $this->size);
 
-                for ($i = 0; $i < $words; $i++) {
+                for ($i = 0; $i < $words; ++$i) {
                     $val = (int) QRinput::lookAnTable(ord($this->data[$i * 2])) * 45;
                     $val += (int) QRinput::lookAnTable(ord($this->data[$i * 2 + 1]));
 
@@ -1146,7 +1146,7 @@
                 $bs->appendNum(4, 0x4);
                 $bs->appendNum(QRspec::lengthIndicator(QR_MODE_8, $version), $this->size);
 
-                for ($i = 0; $i < $this->size; $i++) {
+                for ($i = 0; $i < $this->size; ++$i) {
                     $bs->appendNum(8, ord($this->data[$i]));
                 }
 
@@ -1394,7 +1394,7 @@
 
             foreach ($this->items as $item) {
                 if (QR_MODE_STRUCTURE != $item->mode) {
-                    for ($i = $item->size - 1; $i >= 0; $i--) {
+                    for ($i = $item->size - 1; $i >= 0; --$i) {
                         $parity ^= $item->data[$i];
                     }
                 }
@@ -1406,7 +1406,7 @@
         //----------------------------------------------------------------------
         public static function checkModeNum($size, $data)
         {
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 if ((ord($data[$i]) < ord('0')) || (ord($data[$i]) > ord('9'))) {
                     return false;
                 }
@@ -1456,7 +1456,7 @@
         //----------------------------------------------------------------------
         public static function checkModeAn($size, $data)
         {
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 if (-1 == self::lookAnTable(ord($data[$i]))) {
                     return false;
                 }
@@ -1574,7 +1574,7 @@
                     if ($remain >= 7) {
                         $size += 2;
                     } elseif ($remain >= 4) {
-                        $size++;
+                        ++$size;
                     }
                     break;
                 case QR_MODE_AN:
@@ -1582,7 +1582,7 @@
                     $remain = $payload - $chunks * 11;
                     $size = $chunks * 2;
                     if ($remain >= 6) {
-                        $size++;
+                        ++$size;
                     }
                     break;
                 case QR_MODE_8:
@@ -1687,7 +1687,7 @@
 
             if ($padlen > 0) {
                 $padbuf = [];
-                for ($i = 0; $i < $padlen; $i++) {
+                for ($i = 0; $i < $padlen; ++$i) {
                     $padbuf[$i] = ($i & 1) ? 0x11 : 0xec;
                 }
 
@@ -1804,7 +1804,7 @@
             $bstream->allocate($bits);
 
             $mask = 1 << ($bits - 1);
-            for ($i = 0; $i < $bits; $i++) {
+            for ($i = 0; $i < $bits; ++$i) {
                 if ($num & $mask) {
                     $bstream->data[$i] = 1;
                 } else {
@@ -1823,15 +1823,15 @@
             $bstream->allocate($size * 8);
             $p = 0;
 
-            for ($i = 0; $i < $size; $i++) {
+            for ($i = 0; $i < $size; ++$i) {
                 $mask = 0x80;
-                for ($j = 0; $j < 8; $j++) {
+                for ($j = 0; $j < 8; ++$j) {
                     if ($data[$i] & $mask) {
                         $bstream->data[$p] = 1;
                     } else {
                         $bstream->data[$p] = 0;
                     }
-                    $p++;
+                    ++$p;
                     $mask = $mask >> 1;
                 }
             }
@@ -1913,22 +1913,22 @@
 
             $p = 0;
 
-            for ($i = 0; $i < $bytes; $i++) {
+            for ($i = 0; $i < $bytes; ++$i) {
                 $v = 0;
-                for ($j = 0; $j < 8; $j++) {
+                for ($j = 0; $j < 8; ++$j) {
                     $v = $v << 1;
                     $v |= $this->data[$p];
-                    $p++;
+                    ++$p;
                 }
                 $data[$i] = $v;
             }
 
             if ($size & 7) {
                 $v = 0;
-                for ($j = 0; $j < ($size & 7); $j++) {
+                for ($j = 0; $j < ($size & 7); ++$j) {
                     $v = $v << 1;
                     $v |= $this->data[$p];
-                    $p++;
+                    ++$p;
                 }
                 $data[$bytes] = $v;
             }
@@ -2037,7 +2037,7 @@
 
             $p = 0;
             while (self::isdigitat($this->dataStr, $p)) {
-                $p++;
+                ++$p;
             }
 
             $run = $p;
@@ -2080,7 +2080,7 @@
                 if (self::isdigitat($this->dataStr, $p)) {
                     $q = $p;
                     while (self::isdigitat($this->dataStr, $q)) {
-                        $q++;
+                        ++$q;
                     }
 
                     $dif = QRinput::estimateBitsModeAn($p) // + 4 + la
@@ -2092,7 +2092,7 @@
                     }
                     $p = $q;
                 } else {
-                    $p++;
+                    ++$p;
                 }
             }
 
@@ -2149,7 +2149,7 @@
                 if (QR_MODE_NUM == $mode) {
                     $q = $p;
                     while (self::isdigitat($this->dataStr, $q)) {
-                        $q++;
+                        ++$q;
                     }
                     $dif = QRinput::estimateBitsMode8($p) // + 4 + l8
                          + QRinput::estimateBitsModeNum($q - $p) + 4 + $ln
@@ -2161,7 +2161,7 @@
                 } elseif (QR_MODE_AN == $mode) {
                     $q = $p;
                     while (self::isalnumat($this->dataStr, $q)) {
-                        $q++;
+                        ++$q;
                     }
                     $dif = QRinput::estimateBitsMode8($p)  // + 4 + l8
                          + QRinput::estimateBitsModeAn($q - $p) + 4 + $la
@@ -2171,7 +2171,7 @@
                     }
                     $p = $q;
                 } else {
-                    $p++;
+                    ++$p;
                 }
             }
 
@@ -2233,7 +2233,7 @@
                     if (ord($this->dataStr[$p]) >= ord('a') && ord($this->dataStr[$p]) <= ord('z')) {
                         $this->dataStr[$p] = chr(ord($this->dataStr[$p]) - 32);
                     }
-                    $p++;
+                    ++$p;
                 }
             }
 
@@ -2356,7 +2356,7 @@
             $rs->alpha_to[$A0] = 0; // alpha**-inf = 0
             $sr = 1;
 
-            for ($i = 0; $i < $rs->nn; $i++) {
+            for ($i = 0; $i < $rs->nn; ++$i) {
                 $rs->index_of[$sr] = $i;
                 $rs->alpha_to[$i] = $sr;
                 $sr <<= 1;
@@ -2391,7 +2391,7 @@
                 $rs->genpoly[$i + 1] = 1;
 
                 // Multiply rs->genpoly[] by  @**(root + x)
-                for ($j = $i; $j > 0; $j--) {
+                for ($j = $i; $j > 0; --$j) {
                     if (0 != $rs->genpoly[$j]) {
                         $rs->genpoly[$j] = $rs->genpoly[$j - 1] ^ $rs->alpha_to[$rs->modnn($rs->index_of[$rs->genpoly[$j]] + $root)];
                     } else {
@@ -2403,7 +2403,7 @@
             }
 
             // convert rs->genpoly[] to index form for quicker encoding
-            for ($i = 0; $i <= $nroots; $i++) {
+            for ($i = 0; $i <= $nroots; ++$i) {
                 $rs->genpoly[$i] = $rs->index_of[$rs->genpoly[$i]];
             }
 
@@ -2427,7 +2427,7 @@
 
             $parity = array_fill(0, $NROOTS, 0);
 
-            for ($i = 0; $i < ($NN - $NROOTS - $PAD); $i++) {
+            for ($i = 0; $i < ($NN - $NROOTS - $PAD); ++$i) {
                 $feedback = $INDEX_OF[$data[$i] ^ $parity[0]];
                 if ($feedback != $A0) {
                     // feedback term is non-zero
@@ -2436,7 +2436,7 @@
                     // always be for the polynomials constructed by init_rs()
                     $feedback = $this->modnn($NN - $GENPOLY[$NROOTS] + $feedback);
 
-                    for ($j = 1; $j < $NROOTS; $j++) {
+                    for ($j = 1; $j < $NROOTS; ++$j) {
                         $parity[$j] ^= $ALPHA_TO[$this->modnn($feedback + $GENPOLY[$NROOTS - $j])];
                     }
                 }
@@ -2540,7 +2540,7 @@
             $blacks = 0;
             $format = QRspec::getFormatInfo($mask, $level);
 
-            for ($i = 0; $i < 8; $i++) {
+            for ($i = 0; $i < 8; ++$i) {
                 if ($format & 1) {
                     $blacks += 2;
                     $v = 0x85;
@@ -2557,7 +2557,7 @@
                 $format = $format >> 1;
             }
 
-            for ($i = 0; $i < 7; $i++) {
+            for ($i = 0; $i < 7; ++$i) {
                 if ($format & 1) {
                     $blacks += 2;
                     $v = 0x85;
@@ -2624,8 +2624,8 @@
         {
             $bitMask = array_fill(0, $width, array_fill(0, $width, 0));
 
-            for ($y = 0; $y < $width; $y++) {
-                for ($x = 0; $x < $width; $x++) {
+            for ($y = 0; $y < $width; ++$y) {
+                for ($x = 0; $x < $width; ++$x) {
                     if (ord($frame[$y][$x]) & 0x80) {
                         $bitMask[$y][$x] = 0;
                     } else {
@@ -2691,8 +2691,8 @@
 
             $d = $s;
 
-            for ($y = 0; $y < $width; $y++) {
-                for ($x = 0; $x < $width; $x++) {
+            for ($y = 0; $y < $width; ++$y) {
+                for ($x = 0; $x < $width; ++$x) {
                     if (1 == $bitMask[$y][$x]) {
                         $d[$y][$x] = chr(ord($s[$y][$x]) ^ (int) $bitMask[$y][$x]);
                     }
@@ -2718,7 +2718,7 @@
         {
             $demerit = 0;
 
-            for ($i = 0; $i < $length; $i++) {
+            for ($i = 0; $i < $length; ++$i) {
                 if ($this->runLength[$i] >= 5) {
                     $demerit += (N1 + ($this->runLength[$i] - 5));
                 }
@@ -2748,7 +2748,7 @@
             $head = 0;
             $demerit = 0;
 
-            for ($y = 0; $y < $width; $y++) {
+            for ($y = 0; $y < $width; ++$y) {
                 $head = 0;
                 $this->runLength[0] = 1;
 
@@ -2758,7 +2758,7 @@
                     $frameYM = $frame[$y - 1];
                 }
 
-                for ($x = 0; $x < $width; $x++) {
+                for ($x = 0; $x < $width; ++$x) {
                     if (($x > 0) && ($y > 0)) {
                         $b22 = ord($frameY[$x]) & ord($frameY[$x - 1]) & ord($frameYM[$x]) & ord($frameYM[$x - 1]);
                         $w22 = ord($frameY[$x]) | ord($frameY[$x - 1]) | ord($frameYM[$x]) | ord($frameYM[$x - 1]);
@@ -2773,10 +2773,10 @@
                         $this->runLength[$head] = 1;
                     } elseif ($x > 0) {
                         if ((ord($frameY[$x]) ^ ord($frameY[$x - 1])) & 1) {
-                            $head++;
+                            ++$head;
                             $this->runLength[$head] = 1;
                         } else {
-                            $this->runLength[$head]++;
+                            ++$this->runLength[$head];
                         }
                     }
                 }
@@ -2784,21 +2784,21 @@
                 $demerit += $this->calcN1N3($head + 1);
             }
 
-            for ($x = 0; $x < $width; $x++) {
+            for ($x = 0; $x < $width; ++$x) {
                 $head = 0;
                 $this->runLength[0] = 1;
 
-                for ($y = 0; $y < $width; $y++) {
+                for ($y = 0; $y < $width; ++$y) {
                     if (0 == $y && (ord($frame[$y][$x]) & 1)) {
                         $this->runLength[0] = -1;
                         $head = 1;
                         $this->runLength[$head] = 1;
                     } elseif ($y > 0) {
                         if ((ord($frame[$y][$x]) ^ ord($frame[$y - 1][$x])) & 1) {
-                            $head++;
+                            ++$head;
                             $this->runLength[$head] = 1;
                         } else {
-                            $this->runLength[$head]++;
+                            ++$this->runLength[$head];
                         }
                     }
                 }
@@ -2820,7 +2820,7 @@
 
             if (QR_FIND_FROM_RANDOM !== false) {
                 $howManuOut = 8 - (QR_FIND_FROM_RANDOM % 9);
-                for ($i = 0; $i < $howManuOut; $i++) {
+                for ($i = 0; $i < $howManuOut; ++$i) {
                     $remPos = rand(0, count($checked_masks) - 1);
                     unset($checked_masks[$remPos]);
                     $checked_masks = array_values($checked_masks);
@@ -2952,14 +2952,14 @@
             $blockNo = 0;
             $dataPos = 0;
             $eccPos = 0;
-            for ($i = 0; $i < QRspec::rsBlockNum1($spec); $i++) {
+            for ($i = 0; $i < QRspec::rsBlockNum1($spec); ++$i) {
                 $ecc = array_slice($this->ecccode, $eccPos);
                 $this->rsblocks[$blockNo] = new QRrsblock($dl, array_slice($this->datacode, $dataPos), $el, $ecc, $rs);
                 $this->ecccode = array_merge(array_slice($this->ecccode, 0, $eccPos), $ecc);
 
                 $dataPos += $dl;
                 $eccPos += $el;
-                $blockNo++;
+                ++$blockNo;
             }
 
             if (0 == QRspec::rsBlockNum2($spec)) {
@@ -2974,14 +2974,14 @@
                 return -1;
             }
 
-            for ($i = 0; $i < QRspec::rsBlockNum2($spec); $i++) {
+            for ($i = 0; $i < QRspec::rsBlockNum2($spec); ++$i) {
                 $ecc = array_slice($this->ecccode, $eccPos);
                 $this->rsblocks[$blockNo] = new QRrsblock($dl, array_slice($this->datacode, $dataPos), $el, $ecc, $rs);
                 $this->ecccode = array_merge(array_slice($this->ecccode, 0, $eccPos), $ecc);
 
                 $dataPos += $dl;
                 $eccPos += $el;
-                $blockNo++;
+                ++$blockNo;
             }
 
             return 0;
@@ -3006,7 +3006,7 @@
             } else {
                 return 0;
             }
-            $this->count++;
+            ++$this->count;
 
             return $ret;
         }
@@ -3044,10 +3044,10 @@
             }
 
             // inteleaved data and ecc codes
-            for ($i = 0; $i < $raw->dataLength + $raw->eccLength; $i++) {
+            for ($i = 0; $i < $raw->dataLength + $raw->eccLength; ++$i) {
                 $code = $raw->getCode();
                 $bit = 0x80;
-                for ($j = 0; $j < 8; $j++) {
+                for ($j = 0; $j < 8; ++$j) {
                     $addr = $filler->next();
                     $filler->setFrameAt($addr, 0x02 | (0 != ($bit & $code)));
                     $bit = $bit >> 1;
@@ -3060,7 +3060,7 @@
 
             // remainder bits
             $j = QRspec::getRemainder($version);
-            for ($i = 0; $i < $j; $i++) {
+            for ($i = 0; $i < $j; ++$i) {
                 $addr = $filler->next();
                 $filler->setFrameAt($addr, 0x02);
             }
@@ -3219,12 +3219,12 @@
                 $w = $this->width;
 
                 if (0 == $this->bit) {
-                    $x--;
-                    $this->bit++;
+                    --$x;
+                    ++$this->bit;
                 } else {
-                    $x++;
+                    ++$x;
                     $y += $this->dir;
-                    $this->bit--;
+                    --$this->bit;
                 }
 
                 if ($this->dir < 0) {
@@ -3233,7 +3233,7 @@
                         $x -= 2;
                         $this->dir = 1;
                         if (6 == $x) {
-                            $x--;
+                            --$x;
                             $y = 9;
                         }
                     }
@@ -3243,7 +3243,7 @@
                         $x -= 2;
                         $this->dir = -1;
                         if (6 == $x) {
-                            $x--;
+                            --$x;
                             $y -= 8;
                         }
                     }

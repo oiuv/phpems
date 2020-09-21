@@ -19,10 +19,6 @@ class app
     {
         $this->G = $G;
         $this->ev = $this->G->make('ev');
-        $this->sql = $this->G->make('pdosql');
-        $this->db = $this->G->make('pepdo');
-        $this->module = $this->G->make('module');
-        $this->session = $this->G->make('session');
         $this->user = $this->G->make('user', 'user');
         $this->order = $this->G->make('orders', 'bank');
     }
@@ -46,7 +42,11 @@ class app
             }
         }
 
-        header('location:../index.php?user-api&ordersn='.$orderid);
+        if ($this->ev->isMobile()) {
+            header('location:../index.php?user-phone-payfor-orderdetail&ordersn='.$orderid);
+        } else {
+            header('location:../index.php?user-center-payfor-orderdetail&ordersn='.$orderid);
+        }
         exit();
     }
 }

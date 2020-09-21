@@ -46,6 +46,8 @@ class action extends app
         $page = $this->ev->get('page');
         $contents = $this->course->getOpenCourseListByUserid($this->_user['sessionuserid'], $page);
         $coursesubjects = \Model\Coursesubject::orderBy('csid', 'desc')->limit(5)->get()->toArray();
+        $news = $this->course->getCourseList([], 1, 5);
+        $this->tpl->assign('news', $news['data']);
         $this->tpl->assign('contents', $contents);
         $this->tpl->assign('news', $coursesubjects);
         $this->tpl->assign('page', $page);

@@ -28,6 +28,9 @@ class action extends app
         $args = [];
         $args[] = ['AND', 'cequserid = :cequserid', 'cequserid', $this->_user['sessionuserid']];
         $certificates = $this->ce->getCeQueueList($args, $page, 10);
+        $page = intval($this->ev->get('page'));
+        $news = $this->ce->getCeList([], $page, 10);
+        $this->tpl->assign('news', $news['data']);
         $this->tpl->assign('certificates', $certificates);
         $this->tpl->assign('status', ['申请中', '已受理', '已出证', '申请被驳回']);
         $this->tpl->assign('page', $page);

@@ -56,7 +56,6 @@ var pep = {
                 }
             });
         }
-        pep.allowpre = true;
     },
     'isTrueVar':function(v){
         if(!v)return false;
@@ -771,8 +770,8 @@ function inituploader()
         },
         'thumbnails': {
             'placeholders': {
-                'waitingPath': 'files/lublic/img/loader.gif',
-                'notAvailablePath': 'files/lublic/img/noimage.gif'
+                'waitingPath': 'files/public/img/loader.gif',
+                'notAvailablePath': 'files/public/img/noimage.gif'
             }
         },
         'validation': {
@@ -804,6 +803,11 @@ function inituploader()
 
             },
             'onComplete': function(id,fileName,responseJSON) {
+                if(responseJSON.status == 'fail')
+                {
+                    alert(responseJSON.message);
+                    return;
+                }
                 $(_this).find('[qq-file-id='+id+'] .qq-thumbnail-selector').css('opacity',1).css('filter','none').attr('src',responseJSON.thumb);
                 $(_this).find('[qq-file-id='+id+'] .qq-edit-filename-selector').val(responseJSON.thumb);
                 if(petype == 'list')

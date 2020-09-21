@@ -165,7 +165,9 @@ class action extends app
                         }
                         $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                         if ($p['ehuseranswer'][$question['questionid']] && 0 == $questiontype[$question['questiontype']]['questsort'] && $questiontype[$question['questiontype']]['questchoice'] < 5) {
-                            $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
+                            if (is_array($p['ehuseranswer'][$question['questionid']])) {
+                                $p['ehuseranswer'][$question['questionid']] = implode("", $p['ehuseranswer'][$question['questionid']]);
+                            }
                             foreach ($os as $o) {
                                 if (false !== strpos($p['ehuseranswer'][$question['questionid']], $o)) {
                                     $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
@@ -186,7 +188,9 @@ class action extends app
                             }
                             $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                             if ($p['ehuseranswer'][$question['questionid']] && 0 == $questiontype[$question['questiontype']]['questsort'] && $questiontype[$question['questiontype']]['questchoice'] < 5) {
-                                $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
+                                if (is_array($p['ehuseranswer'][$question['questionid']])) {
+                                    $p['ehuseranswer'][$question['questionid']] = implode("", $p['ehuseranswer'][$question['questionid']]);
+                                }
                                 foreach ($os as $o) {
                                     if (false !== strpos($p['ehuseranswer'][$question['questionid']], $o)) {
                                         $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
@@ -319,6 +323,32 @@ class action extends app
             ];
         }
         exit(json_encode($message));
+    }
+
+    private function delhistory()
+    {
+        $ehid = $this->ev->get('ehid');
+        $this->favor->delExamHistory($ehid);
+        $message = [
+            'statusCode'   => 200,
+            "message"      => "操作成功",
+            "callbackType" => 'forward',
+            "forwardUrl"   => "reload"
+        ];
+        exit(json_encode($message));
+    }
+
+    private function readpaper()
+    {
+        $ehid = $this->ev->get('ehid');
+        $eh = $this->favor->getExamHistoryById($ehid);
+        $questype = $this->basic->getQuestypeList();
+        $sessionvars = ['examsession'=>$eh['ehexam'], 'examsessionscore'=>$eh['ehscore'], 'examsessionscorelist'=>$eh['ehscorelist'], 'examsessionsetting'=>$eh['ehsetting'], 'examsessionquestion'=>$eh['ehquestion'], 'examsessionuseranswer'=>$eh['ehuseranswer']];
+        $this->tpl->assign('eh', $eh);
+        $this->tpl->assign('user', $this->user->getUserById($eh['ehuserid']));
+        $this->tpl->assign('sessionvars', $sessionvars);
+        $this->tpl->assign('questype', $questype);
+        $this->tpl->display('basic_examview');
     }
 
     private function scorelist()
@@ -953,7 +983,7 @@ class action extends app
             'statusCode'   => 200,
             'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -968,7 +998,7 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -996,7 +1026,7 @@ class action extends app
                     'statusCode'   => 200,
                     'message'      => '操作成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}{$u}",
+                    'forwardUrl'   => "index.php?exam-master-basic-area&page={$page}",
                 ];
             }
             $this->G->R($message);
@@ -1024,7 +1054,7 @@ class action extends app
             'statusCode'   => 200,
             'message'      => '操作成功',
             'callbackType' => 'forward',
-            'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+            'forwardUrl'   => "index.php?exam-master-basic&page={$page}",
         ];
         $this->G->R($message);
     }
@@ -1056,7 +1086,7 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-basic&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -1088,107 +1118,12 @@ class action extends app
         $sessionid = $this->ev->get('examsessionid');
         $questype = $this->basic->getQuestypeList();
         $sessionvars = $this->exam->getExamSessionBySessionid($sessionid);
-        $question = $sessionvars['examsessionuseranswer'];
-        $needhand = 0;
-        foreach ($sessionvars['examsessionquestion']['questions'] as $key => $tmp) {
-            if (!$questype[$key]['questsort']) {
-                foreach ($tmp as $p) {
-                    if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
-                        $nanswer = '';
-                        $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                        asort($answer);
-                        $nanswer = implode('', $answer);
-                        if ($nanswer == $p['questionanswer']) {
-                            $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
-                        } else {
-                            if (3 == $questype[$key]['questchoice']) {
-                                $alen = strlen($p['questionanswer']);
-                                $rlen = 0;
-                                foreach ($answer as $t) {
-                                    if (false === strpos($p['questionanswer'], $t)) {
-                                        $rlen = 0;
-                                        break;
-                                    }
-
-                                    $rlen++;
-                                }
-                                $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
-                            } else {
-                                $score = 0;
-                            }
-                        }
-                    } else {
-                        $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                        if ($answer == $p['questionanswer']) {
-                            $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
-                        } else {
-                            $score = 0;
-                        }
-                    }
-                    $scorelist[$p['questionid']] = $score;
-                }
-            } else {
-                if (is_array($tmp) && count($tmp)) {
-                    $needhand = 1;
-                }
-            }
-        }
-        foreach ($sessionvars['examsessionquestion']['questionrows'] as $key => $tmp) {
-            if (!$questype[$key]['questsort']) {
-                foreach ($tmp as $tmp2) {
-                    foreach ($tmp2['data'] as $p) {
-                        if (is_array($sessionvars['examsessionuseranswer'][$p['questionid']])) {
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                            asort($answer);
-                            $nanswer = implode('', $answer);
-                            if ($nanswer == $p['questionanswer']) {
-                                $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
-                            } else {
-                                if (3 == $questype[$key]['questchoice']) {
-                                    $alen = strlen($p['questionanswer']);
-                                    $rlen = 0;
-                                    foreach ($answer as $t) {
-                                        if (false === strpos($p['questionanswer'], $t)) {
-                                            $rlen = 0;
-                                            break;
-                                        }
-
-                                        $rlen++;
-                                    }
-                                    $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
-                                } else {
-                                    $score = 0;
-                                }
-                            }
-                        } else {
-                            $answer = $sessionvars['examsessionuseranswer'][$p['questionid']];
-                            if ($answer == $p['questionanswer']) {
-                                $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'];
-                            } else {
-                                $score = 0;
-                            }
-                        }
-                        $scorelist[$p['questionid']] = $score;
-                    }
-                }
-            } else {
-                if (!$needhand) {
-                    if (is_array($tmp) && count($tmp)) {
-                        $needhand = 1;
-                    }
-                }
-            }
-        }
-        $args['examsessionuseranswer'] = $question;
-        $args['examsessionscorelist'] = $scorelist;
-        $args['examsessionscore'] = array_sum($scorelist);
-        $this->exam->modifyExamSession($args, $sessionid);
-        $this->favor->addExamHistory($sessionid);
+        $result = $this->exam->markscore($sessionvars, $questype);
         $message = [
             'statusCode'   => 200,
-            'message'      => '操作成功',
-            'callbackType' => 'forward',
-            'forwardUrl'   => 'reload',
+            "message"      => "操作成功",
+            "callbackType" => "forward",
+            "forwardUrl"   => "reload"
         ];
         $this->G->R($message);
     }
@@ -1215,7 +1150,7 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-basic&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -1255,7 +1190,7 @@ class action extends app
                 'statusCode'   => 200,
                 'message'      => '操作成功',
                 'callbackType' => 'forward',
-                'forwardUrl'   => "index.php?exam-master-basic-setexamrange&basicid={$id}&page={$page}{$u}",
+                'forwardUrl'   => "index.php?exam-master-basic-setexamrange&basicid={$id}&page={$page}",
             ];
             $this->G->R($message);
         } else {

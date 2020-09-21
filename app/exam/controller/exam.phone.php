@@ -65,7 +65,7 @@ class action extends app
                     'statusCode'   => 300,
                     'message'      => '考场已关闭，不能交卷',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?exam-app-exam',
+                    "forwardUrl"   => "index.php?exam-phone-exam",
                 ];
                 $this->G->R($message);
             }
@@ -92,14 +92,11 @@ class action extends app
                     if ($number['all'] >= $this->data['currentbasic']['basicexam']['examnumber']) {
                         $overflow = true;
                     }
+                } else {
+                    if ($number['child'][$sessionvars['examsessionkey']] >= $this->data['currentbasic']['basicexam']['examnumber']) {
+                        $overflow = true;
+                    }
                 }
-//                else
-//                {
-//                    if($number['child'][$sessionvars['examsessionkey']] >= $this->data['currentbasic']['basicexam']['examnumber'])
-//                    {
-//                        $overflow = true;
-//                    }
-//                }
                 if ($overflow) {
                     $message = [
                         'statusCode' => 300,
@@ -113,7 +110,7 @@ class action extends app
                     'statusCode'   => 300,
                     'message'      => '非法参数',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => 'index.php?exam-app-exam',
+                    'forwardUrl'   => 'index.php?exam-phone-exam',
                 ];
                 $this->G->R($message);
             }
@@ -125,14 +122,14 @@ class action extends app
                     'statusCode'   => 200,
                     'message'      => '交卷成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-app-history-makescore&ehid={$result['ehid']}",
+                    'forwardUrl'   => "index.php?exam-phone-history-makescore&ehid={$result['ehid']}",
                 ];
             } else {
                 $message = [
                     'statusCode'   => 200,
                     'message'      => '交卷成功',
                     'callbackType' => 'forward',
-                    'forwardUrl'   => "index.php?exam-app-history-stats&ehid={$result['ehid']}",
+                    'forwardUrl'   => "index.php?exam-phone-history-stats&ehid={$result['ehid']}",
                 ];
             }
             $this->G->R($message);
@@ -202,14 +199,11 @@ class action extends app
                     if ($number['all'] >= $this->data['currentbasic']['basicexam']['examnumber']) {
                         $overflow = true;
                     }
+                } else {
+                    if ($number['child'][$r['examid']] >= $this->data['currentbasic']['basicexam']['examnumber']) {
+                        $overflow = true;
+                    }
                 }
-//                else
-//                {
-//                    if($number['child'][$r['examid']] >= $this->data['currentbasic']['basicexam']['examnumber'])
-//                    {
-//                        $overflow = true;
-//                    }
-//                }
                 if ($overflow) {
                     $message = [
                         'statusCode' => 300,
@@ -248,10 +242,10 @@ class action extends app
                     }
                 }
                 $sargs['examsessionquestion'] = ['questionids' => $questionids, 'questions' => $questions, 'questionrows' => $questionrows];
-                $sargs['examsessionsetting'] = $questionids['setting'];
+                $sargs['examsessionsetting'] = $r;
                 $sargs['examsessionstarttime'] = TIME;
-                $sargs['examsession'] = $questionids['setting']['exam'];
-                $sargs['examsessiontime'] = $questionids['setting']['examsetting']['examtime'] > 0 ? $questionids['setting']['examsetting']['examtime'] : 60;
+                $sargs['examsession'] = $r['exam'];
+                $sargs['examsessiontime'] = $r['examsetting']['examtime'] > 0 ? $r['examsetting']['examtime'] : 60;
                 $sargs['examsessionstatus'] = 0;
                 $sargs['examsessiontype'] = 2;
                 $sargs['examsessionsign'] = '';

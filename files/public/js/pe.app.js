@@ -48,7 +48,7 @@ jQuery.extend({'zoombox':(function(){
 		}
 	};
 })(),
-userwx:false,
+userwx:true,
 'loginbox':(function(){
 	var l = $("<div class=\"modal fade\" id=\"peloginbox\"></div>");
 	var lcnt = "";
@@ -597,7 +597,7 @@ function modalAjax(){
 	if($(this).attr('valuefrom') && ($(this).attr('valuefrom') != "")){
 		var t = $(this).attr('valuefrom').split("|");
 		for(i=0;i<t.length;i++)
-		url = url.replace(eval("/{"+t[i]+"}/gi"),$('#'+t[i]).val());
+		url = url.replace(eval("/{"+t[i]+"}/gi"),escape($('#'+t[i]).val()));
 	}
 	$.get(url+'&'+Math.random(),function(data){
 		var c = m.children().find(".modal-body");
@@ -629,12 +629,21 @@ function initEditor(){
 	if($(_this).attr('etype') == 'simple')
 	{
 		var config = {
-			toolbar:
+			toolbar:[
+				{ name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike','-',  'Subscript', 'Superscript'] },
+				{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', '-','JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+				{ name: 'links', items: [ 'Link', 'Unlink'] },
+				{ name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar'] },
+				{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+				{ name: 'tools', items: [ 'Maximize'] }
+			]
+			/**
 			[
-				['Bold', 'Italic', '-', 'NumberedList', 'BulletedList'],
-				['Superscript','Subscript','JustifyLeft','JustifyCenter','JustifyRight','Link'],
+				['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'NumberedList', 'BulletedList'],
+				['JustifyLeft','JustifyCenter','JustifyRight','Link'],
 				['Table','HorizontalRule','SpecialChar','Mathjax']
 			]
+			**/
 		};
 		CKEDITOR.replace(_this,config).on("blur", function () {
 	        var that = this;
@@ -780,8 +789,8 @@ function inituploader()
 	    },
 	    'thumbnails': {
 	        'placeholders': {
-	            'waitingPath': 'files/lublic/img/loader.gif',
-	            'notAvailablePath': 'files/lublic/img/noimage.gif'
+	            'waitingPath': 'files/public/img/loader.gif',
+	            'notAvailablePath': 'files/public/img/noimage.gif'
 	        }
 	    },
 	    'validation': {
@@ -813,7 +822,12 @@ function inituploader()
                 }
 	        },
 		    'onComplete': function(id,fileName,responseJSON) {
-                $(_this).find('[qq-file-id='+id+'] .qq-thumbnail-selector').css('opacity',1).css('filter','none').attr('src',responseJSON.thumb);
+                if(responseJSON.status == 'fail')
+				{
+					alert(responseJSON.message);
+					return;
+				}
+		    	$(_this).find('[qq-file-id='+id+'] .qq-thumbnail-selector').css('opacity',1).css('filter','none').attr('src',responseJSON.thumb);
                 $(_this).find('[qq-file-id='+id+'] .qq-edit-filename-selector').val(responseJSON.thumb);
 		    	if(petype == 'list')
 		    	{

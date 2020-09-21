@@ -31,7 +31,7 @@ class action extends app
             if ($ids) {
                 foreach ($ids as $key => $value) {
                     $args = ['fieldsequence' => $value];
-                    $this->module->modifyFieldHtmlType($args, $key);
+                    $this->module->modifyFieldHtmlType($key, $args);
                 }
             }
             $message = [

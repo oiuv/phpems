@@ -107,7 +107,7 @@ class action extends app
                     $this->G->R($message);
                 } else {
                     $args = ['usercoin' => $user['usercoin'] - $score];
-                    $this->user->modifyUserInfo($args, $this->_user['sessionuserid']);
+                    $this->user->modifyUserInfo($this->_user['sessionuserid'], $args);
                 }
             }
             $args = ['ocuserid' => $userid, 'occourseid' => $csid, 'ocendtime' => TIME + $time];

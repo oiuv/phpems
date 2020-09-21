@@ -2,8 +2,8 @@
 {x2;include:header}
 <body>
 <div class="container-fluid">
-	<div class="row-fluid">
-		<div class="pages">
+    <div class="row-fluid">
+        <div class="pages">
             {x2;include:nav}
             <div class="content">
                 {x2;endif}
@@ -92,8 +92,8 @@
                 {x2;if:!$userhash}
             </div>
             {x2;include:footer}
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

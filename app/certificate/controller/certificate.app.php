@@ -35,13 +35,31 @@ class action extends app
                 ];
                 exit(json_encode($message));
             }
-            $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $ce['cebasic']]]);
-            if (!$eh['ehid']) {
+            $cq = $this->ce->getCeQueueByArgs([
+                ['AND', 'cequserid = :cequserid', 'cequserid', $this->_user['sessionuserid']],
+                ['AND', 'ceqceid = :ceqceid', 'ceqceid', $ceid],
+                ['AND', 'ceqstatus < 3'],
+                ['AND', 'ceqtime >= :ceqtime', 'ceqtime', TIME - $ce['cedays'] * 24 * 3600],
+            ]);
+            if ($cq['ceqid']) {
                 $message = [
                     'statusCode' => 300,
-                    'message'    => '您需要通过考试后才能申请',
+                    'message'    => '您已经申请过本证书了',
                 ];
                 exit(json_encode($message));
+            }
+            $ce['cebasic'] = explode(',', $ce['cebasic']);
+            foreach ($ce['cebasic'] as $basicid) {
+                if ($basicid) {
+                    $eh = $this->G->make('favor', 'exam')->getExamHistoryByArgs([['AND', 'ehuserid = :ehuserid', 'ehuserid', $this->_user['sessionuserid']], ['AND', 'ehispass = 1'], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid]]);
+                    if (!$eh['ehid']) {
+                        $message = [
+                            'statusCode' => 300,
+                            'message'    => '您需要通过考试后才能申请',
+                        ];
+                        exit(json_encode($message));
+                    }
+                }
             }
             $info = $this->ev->get('info');
             if (!$info['useraddress'] || !$info['userphone']) {
@@ -59,7 +77,7 @@ class action extends app
             $args['ceqinfo'] = ['username' => $user['username'], 'photo' => $user['userphoto'], 'usertruename' => $user['usertruename'], 'usersex' => $user['usergender'], 'userphone' => $info['userphone'], 'useraddress' => $info['useraddress']];
             $this->ce->addCeQueue($args);
             $coin = $user['usercoin'] - $ce['ceprice'];
-            $this->user->modifyUserInfo(['usercoin' => $coin], $this->_user['sessionuserid']);
+            $this->user->modifyUserInfo($this->_user['sessionuserid'], ['usercoin' => $coin]);
             $this->G->make('consume', 'bank')->addConsumeLog(['conluserid' => $this->_user['sessionuserid'], 'conlcost' => $ce['ceprice'], 'conltype' => 1, 'conltime' => TIME, 'conlinfo' => '申请证书'.$ce['cetitle']]);
             $user = $this->user->getUserById($this->_user['sessionuserid']);
             $message = [
@@ -71,8 +89,8 @@ class action extends app
             exit(json_encode($message));
         }
 
-        $basic = $this->G->make('basic', 'exam')->getBasicById($ce['cebasic']);
-        $this->tpl->assign('basic', $basic);
+        // $basic = $this->G->make('basic', 'exam')->getBasicById($ce['cebasic']);
+        // $this->tpl->assign('basic', $basic);
         $this->tpl->assign('ce', $ce);
         $this->tpl->display('certificate_apply');
     }
@@ -80,7 +98,11 @@ class action extends app
     private function index()
     {
         $page = intval($this->ev->get('page'));
-        $certificates = $this->ce->getCeList($page, 10);
+        $certificates = $this->ce->getCeList([], $page, 10);
+        $args = [];
+        $args[] = ['AND', 'cequserid = :cequserid', 'cequserid', $this->_user['sessionuserid']];
+        $new = $this->ce->getCeQueueList($args, 1, 10);
+        $this->tpl->assign('news', $new['data']);
         $this->tpl->assign('certificates', $certificates);
         $this->tpl->assign('page', $page);
         $this->tpl->display('certificate');

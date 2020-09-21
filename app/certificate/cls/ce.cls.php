@@ -26,12 +26,12 @@ class ce_certificate
     //获取地名列表
     //参数：无
     //返回值：地区列表
-    public function getCeList($page, $number = 20)
+    public function getCeList($args, $page, $number = 20)
     {
         $data = [
             'select' => false,
             'table'  => 'certificate',
-            'query'  => 1,
+            'query'  => $args,
             'index'  => 'ceid',
         ];
         $r = $this->db->listElements($page, $number, $data);
@@ -128,6 +128,15 @@ class ce_certificate
         $sql = $this->pdosql->makeSelect($data);
 
         return $this->db->fetchAll($sql, null, 'ceqinfo');
+    }
+
+    public function getCeQueueByArgs($args)
+    {
+        $args[] = ['AND', 'ceid = ceqceid'];
+        $data = [false, ['cequeue', 'certificate'], $args, false, false, 1];
+        $sql = $this->pdosql->makeSelect($data);
+
+        return $this->db->fetch($sql, 'ceqinfo');
     }
 
     public function addCeQueue($args)

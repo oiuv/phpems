@@ -36,6 +36,7 @@ class app
         }
         $this->attach = $this->G->make('attach', 'document');
         $this->allowexts = $this->attach->getAllowAttachExts();
+        $this->forbidden = ['rpm', 'exe', 'hta', 'php', 'phpx', 'asp', 'aspx', 'jsp'];
         //$this->allowexts = array('zip','jpg','rar','png','gif','mp3','mp4','ogg','webm');
     }
 }

@@ -60,8 +60,8 @@
                                             <ul class="qq-upload-list-selector list-unstyled" aria-live="polite" aria-relevant="additions removals" style="clear:both;">
                                                 <li class="text-center">
                                                     <div class="thumbnail">
-                                                        <img class="qq-thumbnail-selector" src="app/core/styles/images/noimage.gif" alt="点击上传新图片">
-                                                        <input type="hidden" class="qq-edit-filename-selector" name="args[basicthumb]" tabindex="0" value="app/core/styles/images/noimage.gif">
+                                                        <img class="qq-thumbnail-selector" src="files/public/img/noimage.gif" alt="点击上传新图片">
+                                                        <input type="hidden" class="qq-edit-filename-selector" name="args[basicthumb]" tabindex="0" value="files/public/img/noimage.gif">
                                                     </div>
                                                 </li>
                                             </ul>

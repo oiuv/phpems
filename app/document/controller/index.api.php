@@ -22,7 +22,7 @@ class action extends app
         exit;
     }
 
-    private function index()
+    public function index()
     {
         header('location:'.'index.php?'.$this->G->app.'-app');
     }

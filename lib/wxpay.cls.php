@@ -107,6 +107,9 @@ class wxpay
 
     public function outJsPay($order)
     {
+        if (!$_SESSION['openid']) {
+            $this->getwxopenid();
+        }
         $tools = new JsApiPay();
         $input = new WxPayUnifiedOrder();
         $input->SetBody('test');

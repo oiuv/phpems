@@ -83,7 +83,7 @@ class action extends app
                 if ($value > 9999) {
                     $value = 9999;
                 }
-                for ($i = 0; $i < $number; $i++) {
+                for ($i = 0; $i < $number; ++$i) {
                     $this->coupon->randCoupon($value);
                 }
                 $message = [

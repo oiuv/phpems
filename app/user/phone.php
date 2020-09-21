@@ -31,8 +31,14 @@ class app
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $this->_user = $_user = $this->session->getSessionUser();
         $this->order = $this->G->make('orders', 'bank');
-        if ($_user['sessionuserid']) {
-            $this->tpl->assign('_user', $this->user->getUserById($_user['sessionuserid']));
+        if (!$_user['sessionuserid'] && !in_array($this->ev->url(2), ['register', 'login'])) {
+            $message = [
+                'statusCode'   => 301,
+                'message'      => '请您重新登录',
+                'callbackType' => 'forward',
+                'forwardUrl'   => 'index.php?user-phone-login',
+            ];
+            $this->G->R($message);
         }
         $this->tpl->assign('userhash', $this->ev->get('userhash'));
         $orderstatus = [1 => '待付款', 2 => '已完成', 99 => '已撤单'];
