@@ -65,7 +65,7 @@ class action extends app
                     'statusCode'   => 300,
                     'message'      => '考场已关闭，不能交卷',
                     'callbackType' => 'forward',
-                    "forwardUrl"   => "index.php?exam-phone-exam",
+                    'forwardUrl'   => 'index.php?exam-phone-exam',
                 ];
                 $this->G->R($message);
             }

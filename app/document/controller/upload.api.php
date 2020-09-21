@@ -34,8 +34,8 @@ class action extends app
             $back = [
                 'error' => [
                     'number'  => 105,
-                    'message' => $message
-                ]
+                    'message' => $message,
+                ],
             ];
             exit(json_encode($back));
         }
@@ -58,15 +58,15 @@ class action extends app
             $back = [
                 'fileName' => $upfile['name'],
                 'url'      => $fileurl,
-                'uploaded' => 1
+                'uploaded' => 1,
             ];
         } else {
             $message = '上传失败，附件类型不符!';
             $back = [
                 'error' => [
                     'number'  => 105,
-                    'message' => $message
-                ]
+                    'message' => $message,
+                ],
             ];
         }
         exit(json_encode($back));

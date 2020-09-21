@@ -116,7 +116,7 @@ class action extends app
                                         break;
                                     }
 
-                                    ++$rlen;
+                                    $rlen++;
                                 }
                                 $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                             } else {
@@ -159,7 +159,7 @@ class action extends app
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                 } else {

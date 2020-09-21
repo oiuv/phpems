@@ -245,7 +245,7 @@ class sendmail
                 $command[] = ['RCPT TO: <'.$this->_to[0].">\r\n", 250];
                 $header .= 'TO: <'.$this->_to[0].">\r\n";
             } else {
-                for ($i = 0; $i < $count; ++$i) {
+                for ($i = 0; $i < $count; $i++) {
                     $command[] = ['RCPT TO: <'.$this->_to[$i].">\r\n", 250];
                     if (0 == $i) {
                         $header .= 'TO: <'.$this->_to[$i].'>';
@@ -264,7 +264,7 @@ class sendmail
                 $command[] = ['RCPT TO: <'.$this->_cc[0].">\r\n", 250];
                 $header .= 'CC: <'.$this->_cc[0].">\r\n";
             } else {
-                for ($i = 0; $i < $count; ++$i) {
+                for ($i = 0; $i < $count; $i++) {
                     $command[] = ['RCPT TO: <'.$this->_cc[$i].">\r\n", 250];
                     if (0 == $i) {
                         $header .= 'CC: <'.$this->_cc[$i].'>';
@@ -283,7 +283,7 @@ class sendmail
                 $command[] = ['RCPT TO: <'.$this->_bcc[0].">\r\n", 250];
                 $header .= 'BCC: <'.$this->_bcc[0].">\r\n";
             } else {
-                for ($i = 0; $i < $count; ++$i) {
+                for ($i = 0; $i < $count; $i++) {
                     $command[] = ['RCPT TO: <'.$this->_bcc[$i].">\r\n", 250];
                     if (0 == $i) {
                         $header .= 'BCC: <'.$this->_bcc[$i].'>';
@@ -319,7 +319,7 @@ class sendmail
         //加入附件
         if (!empty($this->_attachment)) {
             $count = count($this->_attachment);
-            for ($i = 0; $i < $count; ++$i) {
+            for ($i = 0; $i < $count; $i++) {
                 $header .= "\r\n--".$separator."\r\n";
                 $header .= 'Content-Type: '.$this->getMIMEType($this->_attachment[$i]).'; name="=?UTF-8?B?'.base64_encode(basename($this->_attachment[$i])).'?="'."\r\n";
                 $header .= "Content-Transfer-Encoding: base64\r\n";

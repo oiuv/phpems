@@ -278,7 +278,7 @@ class action extends app
                 $this->db->exec($sql);
             }
         }
-        ++$page;
+        $page++;
         echo 'ok';
         if (count($rs) > 0) {
             echo '<script>window.location = "index.php?core-api-index-basic&page='.$page.'"</script>';

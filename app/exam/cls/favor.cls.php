@@ -237,9 +237,9 @@ class favor_exam
     public function delExamHistory($ehid, $userid = false)
     {
         if ($userid) {
-            $data = ["examhistory", [["AND", "ehid = :ehid", 'ehid', $ehid], ["AND", "ehuserid = :ehuserid", 'ehuserid', $userid]]];
+            $data = ['examhistory', [['AND', 'ehid = :ehid', 'ehid', $ehid], ['AND', 'ehuserid = :ehuserid', 'ehuserid', $userid]]];
         } else {
-            $data = ["examhistory", [["AND", "ehid = :ehid", 'ehid', $ehid]]];
+            $data = ['examhistory', [['AND', 'ehid = :ehid', 'ehid', $ehid]]];
         }
         $sql = $this->pdosql->makeDelete($data);
         $this->db->exec($sql);

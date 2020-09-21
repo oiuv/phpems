@@ -137,11 +137,11 @@ class action extends app
             $score[$key] = 0;
             if ($sessionvars['examsessionquestion']['questions'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
-                    ++$number[$key];
-                    ++$allnumber;
+                    $number[$key]++;
+                    $allnumber++;
                     if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                        ++$right[$key];
-                        ++$allright;
+                        $right[$key]++;
+                        $allright++;
                     }
                     $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                 }
@@ -149,11 +149,11 @@ class action extends app
             if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                     foreach ($v['data'] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }
@@ -335,15 +335,15 @@ class action extends app
                         foreach ($q as $qid => $t) {
                             if (0 == $p['ehtype']) {
                                 if (1 != $scorelist[$qid]) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             } elseif (1 == $p['ehtype']) {
                                 if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             } else {
                                 if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                    ++$exams['data'][$key]['errornumber'];
+                                    $exams['data'][$key]['errornumber']++;
                                 }
                             }
                         }
@@ -355,15 +355,15 @@ class action extends app
                             foreach ($q['data'] as $qid => $t) {
                                 if (0 == $p['ehtype']) {
                                     if (1 != $scorelist[$qid]) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 } elseif (1 == $p['ehtype']) {
                                     if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 } else {
                                     if ($scorelist[$qid] != $examsetting['examsetting']['questype'][$nkey]['score']) {
-                                        ++$exams['data'][$key]['errornumber'];
+                                        $exams['data'][$key]['errornumber']++;
                                     }
                                 }
                             }

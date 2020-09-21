@@ -30,9 +30,9 @@ class action extends app
         if ($cat['catuseurl'] && $cat['caturl']) {
             $message = [
                 'statusCode'   => 201,
-                "message"      => "操作成功",
-                "callbackType" => "forward",
-                "forwardUrl"   => html_entity_decode($cat['caturl'])
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => html_entity_decode($cat['caturl']),
             ];
             exit(json_encode($message));
         }

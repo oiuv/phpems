@@ -34,14 +34,14 @@ class content_content
 
     public function setViewNumber($contentid)
     {
-        $data = [false, 'content', [['AND', "contentid = :contentid", 'contentid', $contentid]]];
+        $data = [false, 'content', [['AND', 'contentid = :contentid', 'contentid', $contentid]]];
         $sql = $this->pdosql->makeSelect($data);
         $r = $this->db->fetch($sql);
         $number = $r['contentview'] + 1;
         $data = [
             'table' => 'content',
             'value' => ['contentview' => $number],
-            'query' => [['AND', "contentid = :contentid", 'contentid', $contentid]]
+            'query' => [['AND', 'contentid = :contentid', 'contentid', $contentid]],
         ];
         $this->db->updateElement($data);
     }
