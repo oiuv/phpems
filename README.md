@@ -1,4 +1,4 @@
-# [phpems v6.0](https://phpems.is.js.cn)
+# [phpems v6.1](https://phpems.is.js.cn)
 
 开源免费的PHP无纸化模拟考试系统，基于 [PHPEMS](http://www.phpems.net/) v6.1 优化。本版本重点修复BUG(包括所有非 E_NOTICE 级别错误提示)，并根据需要优化新增一些功能。
 
@@ -98,7 +98,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 使用 git 复制项目后使用 composer 安装依赖
 
-    git clone https://github.com/oiuv/phpems.git
+    git clone https://github.com/phpems/phpems.git
     cd phpems && composer install
     cd lib && cp config.inc.example.php config.inc.php
 
@@ -106,7 +106,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `tasks` 目录下的数据库文件 `phpems.sql` 创建数据库，项目上线后务必删除 `tasks` 目录。
 
-如果是 phpems v5.0 版本升级，请使用 `tasks` 目录下的 `v5v6.sql` 升级数据库。
+如果是 phpems v5.0 版本升级到 v6.0，请使用 `tasks` 目录下的 `v5v6.sql` 升级数据库。
 
 如果是 linux 系统，需要保证 `data` 目录具有可写权限，否则网站无法正常访问。
 
@@ -114,7 +114,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 > 源码默认关闭错误提示，如需调试请修改 `config.inc.php` 中 `DEBUG` 为 `true`。
 
-## 使用
+## 使用(演示)
 
  * v6.0：https://phpems.is.js.cn/
  * v5.0：https://phpems5.is.js.cn/
@@ -141,12 +141,24 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 ### PHPEMS 文件夹结构
 
  * `api` 支付相关API接口目录
- * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里，其中 `app` 对应PC端、 `phone` 对应移动端、 `master` 对应管理后台、 `teach` 对应教师后台
+ * `app` 项目的核心代码目录，应用的所有模块的类（cls）、控制器（controller）和视图模板（tpls）都在这里，其中 `app` 对应PC端、 `phone` 对应移动端、 `master` 对应管理后台、 `teach` 对应教师后台。主要模块如下：
+   * `bank` 财务模块
+   * `certificate` 证书模块
+   * `content` 内容模块
+   * `core` 全局核心模块，包括网站首页
+   * `course` 课程模块
+   * `docs` 文档（词条）模块
+   * `document` 文件（附件）模块
+   * `exma` 考试模块
+   * `seminar` 专题模块
+   * `user` 用户模块
+   * `weixin` 微信登录模块
  * `data` 缓存和日志目录，需要可写权限
  * `files` 上传的附件和公共静态文件目录，需要可写权限
- * `lib` 系统公共类和方法目录
+ * `lib` 系统公共类和方法目录，包括配置文件
  * `model` 数据模型目录，使用 ORM 操作数据库更为便捷
  * `tasks` 示例数据库和示例文件目录，项目上线后最好删除
+ * `vendor` 项目依赖的 composer 包
 
 ### PHPEMS 路由说明
 
