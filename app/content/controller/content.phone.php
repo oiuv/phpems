@@ -36,9 +36,9 @@ class action extends app
         if ($content['contentlink']) {
             $message = [
                 'statusCode'   => 201,
-                "message"      => "操作成功",
-                "callbackType" => "forward",
-                "forwardUrl"   => html_entity_decode($content['contentlink'])
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => html_entity_decode($content['contentlink']),
             ];
             exit(json_encode($message));
         }

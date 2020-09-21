@@ -971,7 +971,7 @@ class exam_exam
                                             break;
                                         }
 
-                                        ++$rlen;
+                                        $rlen++;
                                     }
                                     $score = floatval($sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen);
                                 } else {
@@ -1013,7 +1013,7 @@ class exam_exam
                                                 $rlen = 0;
                                                 break;
                                             }
-                                            ++$rlen;
+                                            $rlen++;
                                         }
                                         $score = $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score'] * $rlen / $alen;
                                     } else {

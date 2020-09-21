@@ -166,7 +166,7 @@ class action extends app
                         $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                         if ($p['ehuseranswer'][$question['questionid']] && 0 == $questiontype[$question['questiontype']]['questsort'] && $questiontype[$question['questiontype']]['questchoice'] < 5) {
                             if (is_array($p['ehuseranswer'][$question['questionid']])) {
-                                $p['ehuseranswer'][$question['questionid']] = implode("", $p['ehuseranswer'][$question['questionid']]);
+                                $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
                             }
                             foreach ($os as $o) {
                                 if (false !== strpos($p['ehuseranswer'][$question['questionid']], $o)) {
@@ -189,7 +189,7 @@ class action extends app
                             $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                             if ($p['ehuseranswer'][$question['questionid']] && 0 == $questiontype[$question['questiontype']]['questsort'] && $questiontype[$question['questiontype']]['questchoice'] < 5) {
                                 if (is_array($p['ehuseranswer'][$question['questionid']])) {
-                                    $p['ehuseranswer'][$question['questionid']] = implode("", $p['ehuseranswer'][$question['questionid']]);
+                                    $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
                                 }
                                 foreach ($os as $o) {
                                     if (false !== strpos($p['ehuseranswer'][$question['questionid']], $o)) {
@@ -331,9 +331,9 @@ class action extends app
         $this->favor->delExamHistory($ehid);
         $message = [
             'statusCode'   => 200,
-            "message"      => "操作成功",
-            "callbackType" => 'forward',
-            "forwardUrl"   => "reload"
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -1121,9 +1121,9 @@ class action extends app
         $result = $this->exam->markscore($sessionvars, $questype);
         $message = [
             'statusCode'   => 200,
-            "message"      => "操作成功",
-            "callbackType" => "forward",
-            "forwardUrl"   => "reload"
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => 'reload',
         ];
         $this->G->R($message);
     }

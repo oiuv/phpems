@@ -16,7 +16,7 @@ class action extends app
     {
         $action = $this->ev->url(3);
         if (!method_exists($this, $action)) {
-            $action = "index";
+            $action = 'index';
         }
         $this->$action();
         exit;
@@ -33,7 +33,7 @@ class action extends app
         $args = [];
         if ($search) {
             if ($search['subjectid']) {
-                $args[] = ["AND", "examsubject = :examsubject", 'examsubject', $search['subjectid']];
+                $args[] = ['AND', 'examsubject = :examsubject', 'examsubject', $search['subjectid']];
             }
         }
         if (!count($args)) {
@@ -54,9 +54,9 @@ class action extends app
         $this->exam->delExamSetting($examid);
         $message = [
             'statusCode'   => 200,
-            "message"      => "操作成功",
-            "callbackType" => "forward",
-            "forwardUrl"   => "index.php?exam-teach-exams&page={$page}"
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => "index.php?exam-teach-exams&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -71,9 +71,9 @@ class action extends app
                 $basic = $this->basic->getBasicBySubjectId($subjectid);
                 $questypes = $this->basic->getQuestypeList();
                 $this->tpl->assign('questypes', $questypes);
-                $this->tpl->assign("type", $type);
-                $this->tpl->assign("subjectid", $subjectid);
-                $this->tpl->assign("basic", $basic);
+                $this->tpl->assign('type', $type);
+                $this->tpl->assign('subjectid', $subjectid);
+                $this->tpl->assign('basic', $basic);
                 $this->tpl->display('exams_ajaxsetting');
             }
         }
@@ -86,9 +86,9 @@ class action extends app
         $this->exam->delExamSetting($examid);
         $message = [
             'statusCode'   => 200,
-            "message"      => "操作成功",
-            "callbackType" => "forward",
-            "forwardUrl"   => "index.php?exam-teach-exams&page={$page}"
+            'message'      => '操作成功',
+            'callbackType' => 'forward',
+            'forwardUrl'   => "index.php?exam-teach-exams&page={$page}",
         ];
         exit(json_encode($message));
     }
@@ -104,12 +104,11 @@ class action extends app
             $this->exam->addExamSetting($args);
             $message = [
                 'statusCode' => 200,
-                "message"    => "操作成功",
-                "forwardUrl" => "index.php?exam-teach-exams&page={$page}"
+                'message'    => '操作成功',
+                'forwardUrl' => "index.php?exam-teach-exams&page={$page}",
             ];
             exit(json_encode($message));
         }
-
 
         $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         $questypes = $this->basic->getQuestypeList();
@@ -130,15 +129,14 @@ class action extends app
             $id = $this->exam->addExamSetting($args);
             $message = [
                 'statusCode'   => 200,
-                "message"      => "操作成功",
-                "callbackType" => "forward",
-                "forwardUrl"   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}"
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}",
             ];
             exit(json_encode($message));
         }
 
-
-        $subjects = $this->basic->getSubjectList([["AND", "find_in_set(subjectid,:subjectid)", 'subjectid', $this->teachsubjects]]);
+        $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         $questypes = $this->basic->getQuestypeList();
         $this->tpl->assign('questypes', $questypes);
         $this->tpl->assign('subjects', $subjects);
@@ -153,7 +151,7 @@ class action extends app
             if (!$uploadfile) {
                 $message = [
                     'statusCode' => 300,
-                    "message"    => "请上传即时试卷试题"
+                    'message'    => '请上传即时试卷试题',
                 ];
                 $this->G->R($message);
             }
@@ -162,7 +160,7 @@ class action extends app
             $args['examauthor'] = $this->_user['sessionusername'];
             $args['examtype'] = 3;
             setlocale(LC_ALL, 'zh_CN');
-            $handle = fopen($uploadfile, "r");
+            $handle = fopen($uploadfile, 'r');
             $questions = [];
             $rindex = 0;
             $index = 0;
@@ -173,26 +171,26 @@ class action extends app
                     $isqr = intval(trim($question[6], " \n\t"));
                     if ($isqr) {
                         $istitle = intval(trim($question[7], " \n\t"));
-                        ;
+
                         if ($istitle) {
                             $rindex++;
                             $targs['qrid'] = 'qr_'.$rindex;
                             $targs['qrtype'] = $question[0];
-                            $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim(nl2br($question[1]), " \n\t"))));
+                            $targs['qrquestion'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
                             $targs['qrcreatetime'] = TIME;
                             $questionrows[$targs['qrtype']][intval($rindex - 1)] = $targs;
                         } else {
                             $index++;
                             $targs['questionid'] = 'q_'.$index;
                             $targs['questiontype'] = $question[0];
-                            $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim(nl2br($question[1]), " \n\t"))));
-                            $targs['questionselect'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim(nl2br($question[2]), " \n\t"))));
+                            $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
+                            $targs['questionselect'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[2]), " \n\t"))));
                             if (!$targs['questionselect'] && $targs['questiontype'] == 3) {
                                 $targs['questionselect'] = '<p>A、对<p><p>B、错<p>';
                             }
                             $targs['questionselectnumber'] = $question[3];
-                            $targs['questionanswer'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim($question[4], " \n\t"))));
-                            $targs['questiondescribe'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim($question[5], " \n\t"))));
+                            $targs['questionanswer'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim($question[4], " \n\t"))));
+                            $targs['questiondescribe'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim($question[5], " \n\t"))));
                             $targs['questioncreatetime'] = TIME;
                             $questionrows[$targs['questiontype']][intval($rindex - 1)]['data'][] = $targs;
                         }
@@ -200,14 +198,14 @@ class action extends app
                         $index++;
                         $targs['questionid'] = 'q_'.$index;
                         $targs['questiontype'] = $question[0];
-                        $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim(nl2br($question[1]), " \n\t"))));
-                        $targs['questionselect'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim(nl2br($question[2]), " \n\t"))));
+                        $targs['question'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[1]), " \n\t"))));
+                        $targs['questionselect'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim(nl2br($question[2]), " \n\t"))));
                         if (!$targs['questionselect'] && $targs['questiontype'] == 3) {
                             $targs['questionselect'] = '<p>A、对<p><p>B、错<p>';
                         }
                         $targs['questionselectnumber'] = intval($question[3]);
-                        $targs['questionanswer'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim($question[4], " \n\t"))));
-                        $targs['questiondescribe'] = $this->ev->addSlashes(htmlspecialchars(iconv("GBK", "UTF-8//IGNORE", trim($question[5], " \n\t"))));
+                        $targs['questionanswer'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim($question[4], " \n\t"))));
+                        $targs['questiondescribe'] = $this->ev->addSlashes(htmlspecialchars(iconv('GBK', 'UTF-8//IGNORE', trim($question[5], " \n\t"))));
                         $targs['questioncreatetime'] = TIME;
                         $questions[$targs['questiontype']][] = $targs;
                     }
@@ -217,9 +215,9 @@ class action extends app
             $id = $this->exam->addExamSetting($args);
             $message = [
                 'statusCode'   => 200,
-                "message"      => "操作成功",
-                "callbackType" => "forward",
-                "forwardUrl"   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}"
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-teach-exams-examself&examid={$id}&page={$page}",
             ];
             $this->G->R($message);
         } else {
@@ -234,20 +232,20 @@ class action extends app
     private function selected()
     {
         $show = $this->ev->get('show');
-        $questionids = trim($this->ev->get('questionids'), " ,");
-        $rowsquestionids = trim($this->ev->get('rowsquestionids'), " ,");
+        $questionids = trim($this->ev->get('questionids'), ' ,');
+        $rowsquestionids = trim($this->ev->get('rowsquestionids'), ' ,');
         if (!$questionids) {
             $questionids = '0';
         }
         if (!$rowsquestionids) {
             $rowsquestionids = '0';
         }
-        $questions = $this->exam->getQuestionListByArgs([['AND', "questionstatus = 1"], ['AND', "find_in_set(questionid,:questionid)", 'questionid', $questionids]]);
+        $questions = $this->exam->getQuestionListByArgs([['AND', 'questionstatus = 1'], ['AND', 'find_in_set(questionid,:questionid)', 'questionid', $questionids]]);
         $rowsquestions = [];
         $rowsquestionids = explode(',', $rowsquestionids);
         foreach ($rowsquestionids as $p) {
             if ($p) {
-                $rowsquestions[$p] = $this->exam->getQuestionRowsByArgs([['AND', "qrstatus = 1"], ['AND', "qrid = :qrid", 'qrid', $p]]);
+                $rowsquestions[$p] = $this->exam->getQuestionRowsByArgs([['AND', 'qrstatus = 1'], ['AND', 'qrid = :qrid', 'qrid', $p]]);
             }
         }
         $this->tpl->assign('rowsquestions', $rowsquestions);
@@ -264,37 +262,37 @@ class action extends app
         $page = $page > 0 ? $page : 1;
         $this->pg->setUrlTarget('modal-body" class="ajax');
         if (!$search['questionisrows']) {
-            $args = [["AND", "quest2knows.qkquestionid = questions.questionid"], ["AND", "questions.questionstatus = '1'"], ["AND", "questions.questionparent = 0"], ["AND", "quest2knows.qktype = 0"] ];
+            $args = [['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', "questions.questionstatus = '1'"], ['AND', 'questions.questionparent = 0'], ['AND', 'quest2knows.qktype = 0']];
             if ($search['keyword']) {
-                $args[] = ["AND", "questions.question LIKE :question", 'question', '%'.$search['keyword'].'%'];
+                $args[] = ['AND', 'questions.question LIKE :question', 'question', '%'.$search['keyword'].'%'];
             }
             if ($search['knowsids']) {
-                $args[] = ["AND", "find_in_set(questions.questionknowsid,:questionknowsid)", 'questionknowsid', $search['knowsids']];
+                $args[] = ['AND', 'find_in_set(questions.questionknowsid,:questionknowsid)', 'questionknowsid', $search['knowsids']];
             }
             if ($search['stime']) {
-                $args[] = ["AND", "questions.questioncreatetime >= :squestioncreatetime", 'squestioncreatetime', strtotime($search['stime'])];
+                $args[] = ['AND', 'questions.questioncreatetime >= :squestioncreatetime', 'squestioncreatetime', strtotime($search['stime'])];
             }
             if ($search['etime']) {
-                $args[] = ["AND", "questions.questioncreatetime <= :equestioncreatetime", 'equestioncreatetime', strtotime($search['etime'])];
+                $args[] = ['AND', 'questions.questioncreatetime <= :equestioncreatetime', 'equestioncreatetime', strtotime($search['etime'])];
             }
             if ($search['questiontype']) {
-                $args[] = ["AND", "questions.questiontype = :questiontype", 'questiontype', $search['questiontype']];
+                $args[] = ['AND', 'questions.questiontype = :questiontype', 'questiontype', $search['questiontype']];
             }
             if ($search['questionlevel']) {
-                $args[] = ["AND", "questions.questionlevel = :questionlevel", 'questionlevel', $search['questionlevel']];
+                $args[] = ['AND', 'questions.questionlevel = :questionlevel', 'questionlevel', $search['questionlevel']];
             }
             if ($search['questionknowsid']) {
-                $args[] = ["AND", "quest2knows.qkknowsid = :qkknowsid", 'qkknowsid', $search['questionknowsid']];
+                $args[] = ['AND', 'quest2knows.qkknowsid = :qkknowsid', 'qkknowsid', $search['questionknowsid']];
             } else {
                 $tmpknows = '0';
                 if ($search['questionsectionid']) {
-                    $knows = $this->section->getKnowsListByArgs([["AND", "knowsstatus = 1"], ["AND", "knowssectionid = :knowssectionid", 'knowssectionid', $search['questionsectionid']]]);
+                    $knows = $this->section->getKnowsListByArgs([['AND', 'knowsstatus = 1'], ['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $search['questionsectionid']]]);
                     foreach ($knows as $p) {
                         if ($p['knowsid']) {
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid' , $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 } elseif ($search['questionsubjectid']) {
                     $knows = $this->section->getAllKnowsBySubject($search['questionsubjectid']);
                     foreach ($knows as $p) {
@@ -302,7 +300,7 @@ class action extends app
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid', $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 } else {
                     $knows = $this->section->getAllKnowsBySubjects($this->teachsubjects);
                     foreach ($knows as $p) {
@@ -310,39 +308,39 @@ class action extends app
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid', $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 }
             }
             $questions = $this->exam->getQuestionsList($page, 10, $args);
         } else {
-            $args = [["AND", "quest2knows.qkquestionid = questionrows.qrid"], ["AND", "questionrows.qrstatus = '1'"]];
+            $args = [['AND', 'quest2knows.qkquestionid = questionrows.qrid'], ['AND', "questionrows.qrstatus = '1'"]];
             if ($search['keyword']) {
-                $args[] = ["AND", "questionrows.qrquestion LIKE :qrquestion", 'qrquestion', '%'.$search['keyword'].'%'];
+                $args[] = ['AND', 'questionrows.qrquestion LIKE :qrquestion', 'qrquestion', '%'.$search['keyword'].'%'];
             }
             if ($search['questiontype']) {
-                $args[] = ["AND", "questionrows.qrtype = :qrtype", 'qrtype', $search['questiontype']];
+                $args[] = ['AND', 'questionrows.qrtype = :qrtype', 'qrtype', $search['questiontype']];
             }
             if ($search['stime']) {
-                $args[] = ["AND", "questionrows.qrtime >= :stime", 'stime', strtotime($search['stime'])];
+                $args[] = ['AND', 'questionrows.qrtime >= :stime', 'stime', strtotime($search['stime'])];
             }
             if ($search['etime']) {
-                $args[] = ["AND", "questionrows.qrtime <= :etime", 'etime', strtotime($search['etime'])];
+                $args[] = ['AND', 'questionrows.qrtime <= :etime', 'etime', strtotime($search['etime'])];
             }
             if ($search['qrlevel']) {
-                $args[] = ["AND", "questionrows.qrlevel = :qrlevel", 'qrlevel', $search['qrlevel']];
+                $args[] = ['AND', 'questionrows.qrlevel = :qrlevel', 'qrlevel', $search['qrlevel']];
             }
             if ($search['questionknowsid']) {
-                $args[] = ["AND", "quest2knows.qkknowsid = :qkknowsid", 'qkknowsid', $search['questionknowsid']];
+                $args[] = ['AND', 'quest2knows.qkknowsid = :qkknowsid', 'qkknowsid', $search['questionknowsid']];
             } else {
                 $tmpknows = '0';
                 if ($search['questionsectionid']) {
-                    $knows = $this->section->getKnowsListByArgs([["AND", "knowsstatus = 1"], ["AND", "knowssectionid = :knowssectionid", 'knowssectionid', $search['questionsectionid']]]);
+                    $knows = $this->section->getKnowsListByArgs([['AND', 'knowsstatus = 1'], ['AND', 'knowssectionid = :knowssectionid', 'knowssectionid', $search['questionsectionid']]]);
                     foreach ($knows as $p) {
                         if ($p['knowsid']) {
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid' , $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 } elseif ($search['questionsubjectid']) {
                     $knows = $this->section->getAllKnowsBySubject($search['questionsubjectid']);
                     foreach ($knows as $p) {
@@ -350,7 +348,7 @@ class action extends app
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid', $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 } else {
                     $knows = $this->section->getAllKnowsBySubjects($this->teachsubjects);
                     foreach ($knows as $p) {
@@ -358,7 +356,7 @@ class action extends app
                             $tmpknows .= ','.$p['knowsid'];
                         }
                     }
-                    $args[] = ["AND", "find_in_set(quest2knows.qkknowsid,:qkknowsid)", 'qkknowsid', $tmpknows];
+                    $args[] = ['AND', 'find_in_set(quest2knows.qkknowsid,:qkknowsid)', 'qkknowsid', $tmpknows];
                 }
             }
             $questions = $this->exam->getQuestionrowsList($page, 10, $args);
@@ -368,7 +366,7 @@ class action extends app
         }
         $questypes = $this->basic->getQuestypeList();
         $sections = $this->section->getSectionListByArgs("sectionsubjectid = '{$search['questionsubjectid']}'");
-        $knows = $this->section->getKnowsListByArgs(["knowsstatus = 1", "knowssectionid = '{$search['questionsectionid']}'"]);
+        $knows = $this->section->getKnowsListByArgs(['knowsstatus = 1', "knowssectionid = '{$search['questionsectionid']}'"]);
         //$this->tpl->assign('subjects',$subjects);
         $this->tpl->assign('search', $search);
         $this->tpl->assign('sections', $sections);
@@ -384,7 +382,7 @@ class action extends app
     {
         $examid = $this->ev->get('examid');
         $r = $this->exam->getExamSettingById($examid);
-        $this->tpl->assign("setting", $r);
+        $this->tpl->assign('setting', $r);
         if ($r['examtype'] == 2) {
             $questions = [];
             $questionrows = [];
@@ -392,16 +390,16 @@ class action extends app
                 $qids = '';
                 $qrids = '';
                 if ($p['questions']) {
-                    $qids = trim($p['questions'], " ,");
+                    $qids = trim($p['questions'], ' ,');
                 }
                 if ($qids) {
                     $questions[$key] = $this->exam->getQuestionListByIds($qids);
                 }
                 if ($p['rowsquestions']) {
-                    $qrids = trim($p['rowsquestions'], " ,");
+                    $qrids = trim($p['rowsquestions'], ' ,');
                 }
                 if ($qrids) {
-                    $qrids = explode(",", $qrids);
+                    $qrids = explode(',', $qrids);
                     foreach ($qrids as $t) {
                         $qr = $this->exam->getQuestionRowsById($t);
                         if ($qr) {
@@ -430,7 +428,7 @@ class action extends app
         }
         $questype = $this->basic->getQuestypeList();
         $this->tpl->assign('questype', $questype);
-        $this->tpl->assign("sessionvars", $args);
+        $this->tpl->assign('sessionvars', $args);
         $this->tpl->display('exams_paper');
     }
 
@@ -445,13 +443,12 @@ class action extends app
             $this->exam->modifyExamSetting($examid, $args);
             $message = [
                 'statusCode'   => 200,
-                "message"      => "操作成功",
-                "callbackType" => "forward",
-                "forwardUrl"   => "index.php?exam-teach-exams&page={$page}"
+                'message'      => '操作成功',
+                'callbackType' => 'forward',
+                'forwardUrl'   => "index.php?exam-teach-exams&page={$page}",
             ];
             exit(json_encode($message));
         }
-
 
         $examid = $this->ev->get('examid');
         $exam = $this->exam->getExamSettingById($examid);
@@ -479,7 +476,7 @@ class action extends app
         $args = [['AND', 'find_in_set(examsubject,:examsubject)', 'examsubject', $this->teachsubjects]];
         if ($search) {
             if ($search['examsubject']) {
-                $args[] = ['AND', "examsubject = :sexamsubject", 'sexamsubject', $search['examsubject']];
+                $args[] = ['AND', 'examsubject = :sexamsubject', 'sexamsubject', $search['examsubject']];
             }
             if ($search['examtype']) {
                 $args[] = "examtype = '{$search['examtype']}'";
@@ -489,7 +486,7 @@ class action extends app
             $args = 1;
         }
         $exams = $this->exam->getExamSettingList($args, $page, 10);
-        $subjects = $this->basic->getSubjectList([["AND", "find_in_set(subjectid,:subjectid)", 'subjectid', $this->teachsubjects]]);
+        $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
         //$subjects = $this->basic->getSubjectList("subjectid IN ({$this->teachsubjects})");
         $this->tpl->assign('subjects', $subjects);
         $this->tpl->assign('exams', $exams);

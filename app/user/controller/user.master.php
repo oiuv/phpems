@@ -188,7 +188,7 @@ class action extends app
                                     $i = 3;
                                     foreach ($tpfields as $p) {
                                         $args[$p] = iconv('GBK', 'UTF-8', $data[$i]);
-                                        ++$i;
+                                        $i++;
                                     }
                                     $this->user->insertUser($args);
                                 }

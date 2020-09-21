@@ -210,11 +210,11 @@ class section_exam
         $knows['knowsnumber'] = unserialize($knows['knowsnumber']);
         $knows['knowsquestions'] = unserialize($knows['knowsquestions']);
         if (!$knows['knowsquestions']) {
-            $data = ['DISTINCT questionid', ['questions', 'quest2knows'], [["AND", "find_in_set(quest2knows.qkknowsid,:knowsid)", 'knowsid', $knowsid], ["AND", "quest2knows.qktype = 0"], ["AND", "quest2knows.qkquestionid = questions.questionid"], ["AND", "questions.questionstatus = 1"]], false, false, false];
+            $data = ['DISTINCT questionid', ['questions', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowsid)', 'knowsid', $knowsid], ['AND', 'quest2knows.qktype = 0'], ['AND', 'quest2knows.qkquestionid = questions.questionid'], ['AND', 'questions.questionstatus = 1']], false, false, false];
             $sql1 = $this->pdosql->makeSelect($data);
-            $data = ['questionid,questiontype', "questions", [["AND", "questionid in (%CHILDSQL%)"]], false, "questionparent asc,questionsequence asc,questionid asc", false];
+            $data = ['questionid,questiontype', 'questions', [['AND', 'questionid in (%CHILDSQL%)']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
             $sql = $this->pdosql->makeSelect($data);
-            $sql['sql'] = str_replace("%CHILDSQL%", $sql1['sql'], $sql['sql']);
+            $sql['sql'] = str_replace('%CHILDSQL%', $sql1['sql'], $sql['sql']);
             $sql['v'] = array_merge($sql1['v'], $sql['v']);
             $r = $this->db->fetchAll($sql);
             $t = [];
@@ -222,11 +222,11 @@ class section_exam
             foreach ($r as $p) {
                 $t[$p['questiontype']][] = $p['questionid'];
             }
-            $data = ['DISTINCT questionid', ['questions', 'questionrows', 'quest2knows'], [["AND", "find_in_set(quest2knows.qkknowsid,:knowsid)", 'knowsid', $knowsid], ["AND", "quest2knows.qktype = 1"], ["AND", "quest2knows.qkquestionid = questionrows.qrid"], ["AND", "questions.questionparent = questionrows.qrid"], ["AND", "questionrows.qrstatus = 1"]], false, false, false];
+            $data = ['DISTINCT questionid', ['questions', 'questionrows', 'quest2knows'], [['AND', 'find_in_set(quest2knows.qkknowsid,:knowsid)', 'knowsid', $knowsid], ['AND', 'quest2knows.qktype = 1'], ['AND', 'quest2knows.qkquestionid = questionrows.qrid'], ['AND', 'questions.questionparent = questionrows.qrid'], ['AND', 'questionrows.qrstatus = 1']], false, false, false];
             $sql1 = $this->pdosql->makeSelect($data);
-            $data = ['questionid,qrtype', ['questions', 'questionrows'], [["AND", "questionid in (%CHILDSQL%)"], ["AND", "questionparent = qrid"]], false, "questionparent asc,questionsequence asc,questionid asc", false];
+            $data = ['questionid,qrtype', ['questions', 'questionrows'], [['AND', 'questionid in (%CHILDSQL%)'], ['AND', 'questionparent = qrid']], false, 'questionparent asc,questionsequence asc,questionid asc', false];
             $sql = $this->pdosql->makeSelect($data);
-            $sql['sql'] = str_replace("%CHILDSQL%", $sql1['sql'], $sql['sql']);
+            $sql['sql'] = str_replace('%CHILDSQL%', $sql1['sql'], $sql['sql']);
             $sql['v'] = array_merge($sql1['v'], $sql['v']);
             $r = $this->db->fetchAll($sql);
             foreach ($r as $p) {

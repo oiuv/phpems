@@ -26,7 +26,7 @@ class action extends app
         }
         $this->tpl->assign('u', $u);
         if (!method_exists($this, $action)) {
-            $action = "index";
+            $action = 'index';
         }
         $this->$action();
         exit;
@@ -44,23 +44,23 @@ class action extends app
         $basicid = $this->ev->get('basicid');
         $type = $this->ev->get('type');
         $this->tpl->assign('type', $type);
-        $args[] = ['AND', "ehbasicid = :ehbasicid", 'ehbasicid', $basicid];
+        $args[] = ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid];
         if ($search['stime']) {
             $stime = strtotime($search['stime']);
-            $args[] = ['AND', "ehstarttime >= :stime", 'stime', $stime];
+            $args[] = ['AND', 'ehstarttime >= :stime', 'stime', $stime];
         }
         if ($search['etime']) {
             $etime = strtotime($search['etime']);
-            $args[] = ['AND', "ehstarttime <= :etime", 'etime', $etime];
+            $args[] = ['AND', 'ehstarttime <= :etime', 'etime', $etime];
         }
         if ($search['sscore']) {
-            $args[] = ['AND', "ehscore >= :sscore", 'sscore', $search['sscore']];
+            $args[] = ['AND', 'ehscore >= :sscore', 'sscore', $search['sscore']];
         }
         if ($search['escore']) {
-            $args[] = ['AND', "ehscore <= :escore", 'escore', $search['escore']];
+            $args[] = ['AND', 'ehscore <= :escore', 'escore', $search['escore']];
         }
         if ($search['examid']) {
-            $args[] = ['AND', "ehexamid = :ehexamid", 'ehexamid', $search['examid']];
+            $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
         }
         $rs = $this->favor->getStatsAllExamHistoryByArgs($args);
         $number = count($rs);
@@ -100,7 +100,7 @@ class action extends app
                             }
                             $stats[$question['questionid']]['number'] = intval($stats[$question['questionid']]['number']) + 1;
                             if ($p['ehuseranswer'][$question['questionid']] && $questiontype[$question['questiontype']]['questsort'] == 0 && $questiontype[$question['questiontype']]['questchoice'] < 5) {
-                                $p['ehuseranswer'][$question['questionid']] = implode("", $p['ehuseranswer'][$question['questionid']]);
+                                $p['ehuseranswer'][$question['questionid']] = implode('', $p['ehuseranswer'][$question['questionid']]);
                                 foreach ($os as $o) {
                                     if (strpos($p['ehuseranswer'][$question['questionid']], $o) !== false) {
                                         $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
@@ -168,26 +168,26 @@ class action extends app
         $basicid = $this->ev->get('basicid');
         if ($basicid) {
             $fname = 'data/score/'.TIME.'-'.$basicid.'-answer.csv';
-            $args[] = ['AND', "ehbasicid = :ehbasicid", 'ehbasicid', $basicid];
-            $args[] = ['AND', "ehneedresit = 0"];
+            $args[] = ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid];
+            $args[] = ['AND', 'ehneedresit = 0'];
             $args[] = ['AND', "ehstatus = '1'"];
-            $args[] = ['AND', "ehtype = 2"];
+            $args[] = ['AND', 'ehtype = 2'];
             if ($search['stime']) {
                 $stime = strtotime($search['stime']);
-                $args[] = ['AND', "ehstarttime >= :stime", 'stime', $stime];
+                $args[] = ['AND', 'ehstarttime >= :stime', 'stime', $stime];
             }
             if ($search['etime']) {
                 $etime = strtotime($search['etime']);
-                $args[] = ['AND', "ehstarttime <= :etime", 'etime', $etime];
+                $args[] = ['AND', 'ehstarttime <= :etime', 'etime', $etime];
             }
             if ($search['sscore']) {
-                $args[] = ['AND', "ehscore >= :sscore", 'sscore', $search['sscore']];
+                $args[] = ['AND', 'ehscore >= :sscore', 'sscore', $search['sscore']];
             }
             if ($search['escore']) {
-                $args[] = ['AND', "ehscore <= :escore", 'escore', $search['escore']];
+                $args[] = ['AND', 'ehscore <= :escore', 'escore', $search['escore']];
             }
             if ($search['examid']) {
-                $args[] = ['AND', "ehexamid = :ehexamid", 'ehexamid', $search['examid']];
+                $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
             }
             $sf = ['ehusername', 'useremail', 'usertruename', 'ehstarttime', 'ehtime', 'ehquestion', 'ehuseranswer'];
             $rs = $this->favor->getAllExamHistoryByArgs($args, $sf);
@@ -222,52 +222,51 @@ class action extends app
             }
             $r = [];
             $tmp = [];
-            $tmp[] = iconv("UTF-8", "GBK", '序号');
-            $tmp[] = iconv("UTF-8", "GBK", '答题时间');
-            $tmp[] = iconv("UTF-8", "GBK", '所用时间(秒)');
-            $tmp[] = iconv("UTF-8", "GBK", '邮箱');
-            $tmp[] = iconv("UTF-8", "GBK", '用户名');
-            $tmp[] = iconv("UTF-8", "GBK", '姓名');
+            $tmp[] = iconv('UTF-8', 'GBK', '序号');
+            $tmp[] = iconv('UTF-8', 'GBK', '答题时间');
+            $tmp[] = iconv('UTF-8', 'GBK', '所用时间(秒)');
+            $tmp[] = iconv('UTF-8', 'GBK', '邮箱');
+            $tmp[] = iconv('UTF-8', 'GBK', '用户名');
+            $tmp[] = iconv('UTF-8', 'GBK', '姓名');
             foreach ($index as $inx) {
-                $tmp[] = iconv("UTF-8", "GBK", $questions[$inx]['title']);
+                $tmp[] = iconv('UTF-8', 'GBK', $questions[$inx]['title']);
             }
             $r[] = $tmp;
             $i = 0;
             foreach ($answers as $key => $answer) {
                 $tmp = [];
-                $tmp[] = iconv("UTF-8", "GBK", ++$i);
-                $tmp[] = iconv("UTF-8", "GBK", date('Y-m-d H:i:s', $info[$key]['ehstarttime']));
-                $tmp[] = iconv("UTF-8", "GBK", $info[$key]['ehtime']);
-                $tmp[] = iconv("UTF-8", "GBK", $info[$key]['useremail']);
-                $tmp[] = iconv("UTF-8", "GBK", $info[$key]['ehusername']);
-                $tmp[] = iconv("UTF-8", "GBK", $info[$key]['usertruename']);
+                $tmp[] = iconv('UTF-8', 'GBK', ++$i);
+                $tmp[] = iconv('UTF-8', 'GBK', date('Y-m-d H:i:s', $info[$key]['ehstarttime']));
+                $tmp[] = iconv('UTF-8', 'GBK', $info[$key]['ehtime']);
+                $tmp[] = iconv('UTF-8', 'GBK', $info[$key]['useremail']);
+                $tmp[] = iconv('UTF-8', 'GBK', $info[$key]['ehusername']);
+                $tmp[] = iconv('UTF-8', 'GBK', $info[$key]['usertruename']);
                 foreach ($index as $inx) {
-                    $tmp[] = iconv("UTF-8", "GBK", $answer[$inx]);
+                    $tmp[] = iconv('UTF-8', 'GBK', $answer[$inx]);
                 }
                 $r[] = $tmp;
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
                     'statusCode'   => 200,
-                    "message"      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                    "callbackType" => 'forward',
-                    "forwardUrl"   => "{$fname}"
+                    'message'      => "导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "{$fname}",
                 ];
             } else {
                 $message = [
                     'statusCode' => 300,
-                    "message"    => "导出失败"
+                    'message'    => '导出失败',
                 ];
             }
         } else {
             $message = [
                 'statusCode' => 300,
-                "message"    => "请选择好考场"
+                'message'    => '请选择好考场',
             ];
         }
         exit(json_encode($message));
     }
-
 
     private function outscore()
     {
@@ -288,31 +287,31 @@ class action extends app
         $basicid = $this->ev->get('basicid');
         if ($basicid) {
             $fname = 'data/score/'.TIME.'-'.$basicid.'-score.csv';
-            $args[] = ['AND', "ehbasicid = :ehbasicid", 'ehbasicid', $basicid];
-            $args[] = ['AND', "ehneedresit = 0"];
-            $args[] = ['AND', "ehtype > 0"];
+            $args[] = ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid];
+            $args[] = ['AND', 'ehneedresit = 0'];
+            $args[] = ['AND', 'ehtype > 0'];
             if ($search['username']) {
-                $args[] = ['AND', "ehusername = :ehusername", 'ehusername', $search['username']];
+                $args[] = ['AND', 'ehusername = :ehusername', 'ehusername', $search['username']];
             }
             if ($search['stime']) {
                 $stime = strtotime($search['stime']);
-                $args[] = ['AND', "ehstarttime >= :stime", 'stime', $stime];
+                $args[] = ['AND', 'ehstarttime >= :stime', 'stime', $stime];
             }
             if ($search['etime']) {
                 $etime = strtotime($search['etime']);
-                $args[] = ['AND', "ehstarttime <= :etime", 'etime', $etime];
+                $args[] = ['AND', 'ehstarttime <= :etime', 'etime', $etime];
             }
             if ($search['sscore']) {
-                $args[] = ['AND', "ehscore >= :sscore", 'sscore', $search['sscore']];
+                $args[] = ['AND', 'ehscore >= :sscore', 'sscore', $search['sscore']];
             }
             if ($search['escore']) {
-                $args[] = ['AND', "ehscore <= :escore", 'escore', $search['escore']];
+                $args[] = ['AND', 'ehscore <= :escore', 'escore', $search['escore']];
             }
             if ($search['examid']) {
-                $args[] = ['AND', "ehexamid = :ehexamid", 'ehexamid', $search['examid']];
+                $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
             }
             if ($search['examtype']) {
-                $args[] = ['AND', "ehtype = :ehtype", 'ehtype', $search['examtype']];
+                $args[] = ['AND', 'ehtype = :ehtype', 'ehtype', $search['examtype']];
             }
             $sf = ['ehusername', 'ehscore', 'ehtime', 'ehstarttime'];
             foreach ($fields as $p) {
@@ -321,30 +320,30 @@ class action extends app
             $rs = $this->favor->getAllExamHistoryByArgs($args, $sf);
             $r = [];
             foreach ($rs as $p) {
-                $tmp = ['ehusername' => iconv("UTF-8", "GBK", $p['ehusername']), 'ehscore' => $p['ehscore'], 'ehtime' => $p['ehtime'], 'ehstrattime' => date('Y-m-d H:i:s', $p['ehstarttime'])];
+                $tmp = ['ehusername' => iconv('UTF-8', 'GBK', $p['ehusername']), 'ehscore' => $p['ehscore'], 'ehtime' => $p['ehtime'], 'ehstrattime' => date('Y-m-d H:i:s', $p['ehstarttime'])];
                 foreach ($fields as $ps) {
-                    $tmp[$ps['field']] = iconv("UTF-8", "GBK", $p[$ps['field']]);
+                    $tmp[$ps['field']] = iconv('UTF-8', 'GBK', $p[$ps['field']]);
                 }
                 $r[] = $tmp;
             }
             if ($this->files->outCsv($fname, $r)) {
                 $message = [
-                'statusCode'   => 200,
-                "message"      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
-                "callbackType" => 'forward',
-                "forwardUrl"   => "{$fname}"
-            ];
+                    'statusCode'   => 200,
+                    'message'      => "成绩导出成功，转入下载页面，如果浏览器没有相应，请<a href=\"{$fname}\">点此下载</a>",
+                    'callbackType' => 'forward',
+                    'forwardUrl'   => "{$fname}",
+                ];
             } else {
                 $message = [
-                'statusCode' => 300,
-                "message"    => "成绩导出失败"
-            ];
+                    'statusCode' => 300,
+                    'message'    => '成绩导出失败',
+                ];
             }
         } else {
             $message = [
-            'statusCode' => 300,
-            "message"    => "请选择好考场"
-        ];
+                'statusCode' => 300,
+                'message'    => '请选择好考场',
+            ];
         }
         exit(json_encode($message));
     }
@@ -371,7 +370,7 @@ class action extends app
             if ($eh['ehteacher'] != $this->_user['username']) {
                 $message = [
                     'statusCode' => 300,
-                    "message"    => "本试卷已被{$eh['ehteacher']}锁定批改中"
+                    'message'    => "本试卷已被{$eh['ehteacher']}锁定批改中",
                 ];
                 exit(json_encode($message));
             }
@@ -395,8 +394,8 @@ class action extends app
             $this->favor->modifyExamHistory($ehid, $args);
             $message = [
                 'statusCode' => 200,
-                "message"    => "评分完成",
-                "forwardUrl" => "index.php?exam-teach-users-exams&basicid={$eh['ehbasicid']}"
+                'message'    => '评分完成',
+                'forwardUrl' => "index.php?exam-teach-users-exams&basicid={$eh['ehbasicid']}",
             ];
             exit(json_encode($message));
         }
@@ -438,43 +437,43 @@ class action extends app
         $basic = $this->basic->getBasicById($basicid);
         $page = $page > 0 ? $page : 1;
         $args = [];
-        $args[] = ['AND', "ehtype > 0"];
+        $args[] = ['AND', 'ehtype > 0'];
         $args[] = ['AND', "ehstatus = '1'"];
-        $args[] = ['AND', "ehbasicid = :ehbasicid", 'ehbasicid', $basicid];
+        $args[] = ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid];
         if ($search['username']) {
-            $args[] = ['AND', "ehusername = :ehusername", 'ehusername', $search['username']];
+            $args[] = ['AND', 'ehusername = :ehusername', 'ehusername', $search['username']];
         }
         if ($search['stime']) {
             $stime = strtotime($search['stime']);
-            $args[] = ['AND', "ehstarttime >= :stime", 'stime', $stime];
+            $args[] = ['AND', 'ehstarttime >= :stime', 'stime', $stime];
         }
         if ($search['etime']) {
             $etime = strtotime($search['etime']);
-            $args[] = ['AND', "ehstarttime <= :etime", 'etime', $etime];
+            $args[] = ['AND', 'ehstarttime <= :etime', 'etime', $etime];
         }
         if ($search['sscore']) {
-            $args[] = ['AND', "ehscore >= :sscore", 'sscore', $search['sscore']];
+            $args[] = ['AND', 'ehscore >= :sscore', 'sscore', $search['sscore']];
         }
         if ($search['escore']) {
-            $args[] = ['AND', "ehscore <= :escore", 'escore', $search['escore']];
+            $args[] = ['AND', 'ehscore <= :escore', 'escore', $search['escore']];
         }
         if ($search['examid']) {
-            $args[] = ['AND', "ehexamid = :ehexamid", 'ehexamid', $search['examid']];
+            $args[] = ['AND', 'ehexamid = :ehexamid', 'ehexamid', $search['examid']];
         }
         if ($search['examtype']) {
-            $args[] = ['AND', "ehtype = :ehtype", 'ehtype', $search['examtype']];
+            $args[] = ['AND', 'ehtype = :ehtype', 'ehtype', $search['examtype']];
         }
         if ($search['order']) {
             $order = null;
         } else {
-            $order = "ehid desc";
+            $order = 'ehid desc';
         }
         $exams = $this->favor->getExamHistoryListByArgs($args, $page, 30, false, $order);
         $ids = trim($basic['basicexam']['self'], ', ');
         if (!$ids) {
             $ids = '0';
         }
-        $exampaper = $this->exam->getExamSettingsByArgs([["AND", "find_in_set(examid,:examid)", 'examid', $ids]]);
+        $exampaper = $this->exam->getExamSettingsByArgs([['AND', 'find_in_set(examid,:examid)', 'examid', $ids]]);
         $this->tpl->assign('basicid', $basicid);
         $this->tpl->assign('search', $search);
         $this->tpl->assign('basic', $basic);
@@ -491,8 +490,8 @@ class action extends app
         $this->favor->modifyExamHistory($ehid, ['ehneedresit' => 1]);
         $message = [
             'statusCode' => 200,
-            "message"    => "设置成功",
-            "forwardUrl" => "reload"
+            'message'    => '设置成功',
+            'forwardUrl' => 'reload',
         ];
         exit(json_encode($message));
     }
@@ -502,7 +501,7 @@ class action extends app
         $page = $this->ev->get('page');
         $basicid = intval($this->ev->get('basicid'));
         $page = $page > 0 ? $page : 1;
-        $args = [['AND', "ehstatus = '0'"], ['AND', "ehtype = 2"], ['AND', "ehbasicid = :ehbasicid", 'ehbasicid', $basicid]];
+        $args = [['AND', "ehstatus = '0'"], ['AND', 'ehtype = 2'], ['AND', 'ehbasicid = :ehbasicid', 'ehbasicid', $basicid]];
         $exams = $this->favor->getExamHistoryListByArgs($args, $page, 10, false, 'ehid desc');
         $this->tpl->assign('page', $page);
         $this->tpl->assign('exams', $exams);
@@ -514,22 +513,22 @@ class action extends app
         $page = $this->ev->get('page');
         $search = $this->ev->get('search');
         $page = $page > 1 ? $page : 1;
-        $subjects = $this->basic->getSubjectList([['AND', "find_in_set(subjectid,:subjectid)", 'subjectid', $this->teachsubjects]]);
-        $args = [['AND', "find_in_set(basicsubjectid,:basicsubjectid)", 'basicsubjectid', $this->teachsubjects]];
+        $subjects = $this->basic->getSubjectList([['AND', 'find_in_set(subjectid,:subjectid)', 'subjectid', $this->teachsubjects]]);
+        $args = [['AND', 'find_in_set(basicsubjectid,:basicsubjectid)', 'basicsubjectid', $this->teachsubjects]];
         if ($search['basicid']) {
-            $args[] = ['AND', "basicid = :basicid", 'basicid', $search['basicid']];
+            $args[] = ['AND', 'basicid = :basicid', 'basicid', $search['basicid']];
         } else {
             if ($search['keyword']) {
-                $args[] = ['AND', "basic LIKE :basic", 'basic', "%{$search['keyword']}%"];
+                $args[] = ['AND', 'basic LIKE :basic', 'basic', "%{$search['keyword']}%"];
             }
             if ($search['basicareaid']) {
-                $args[] = ['AND', "basicareaid = :basicareaid", 'basicareaid', $search['basicareaid']];
+                $args[] = ['AND', 'basicareaid = :basicareaid', 'basicareaid', $search['basicareaid']];
             }
             if ($search['basicsubjectid']) {
-                $args[] = ['AND', "basicsubjectid = :basicsubjectid", 'basicsubjectid', $search['basicsubjectid']];
+                $args[] = ['AND', 'basicsubjectid = :basicsubjectid', 'basicsubjectid', $search['basicsubjectid']];
             }
             if ($search['basicapi']) {
-                $args[] = ['AND', "basicapi = :basicapi", 'basicapi', $search['basicapi']];
+                $args[] = ['AND', 'basicapi = :basicapi', 'basicapi', $search['basicapi']];
             }
         }
         $basics = $this->basic->getBasicList($args, $page, 10);

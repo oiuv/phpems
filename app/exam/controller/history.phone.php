@@ -137,11 +137,11 @@ class action extends app
             $score[$key] = 0;
             if ($sessionvars['examsessionquestion']['questions'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questions'][$key] as $p) {
-                    ++$number[$key];
-                    ++$allnumber;
+                    $number[$key]++;
+                    $allnumber++;
                     if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                        ++$right[$key];
-                        ++$allright;
+                        $right[$key]++;
+                        $allright++;
                     }
                     $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                 }
@@ -149,11 +149,11 @@ class action extends app
             if ($sessionvars['examsessionquestion']['questionrows'][$key]) {
                 foreach ($sessionvars['examsessionquestion']['questionrows'][$key] as $v) {
                     foreach ($v['data'] as $p) {
-                        ++$number[$key];
-                        ++$allnumber;
+                        $number[$key]++;
+                        $allnumber++;
                         if ($sessionvars['examsessionscorelist'][$p['questionid']] == $sessionvars['examsessionsetting']['examsetting']['questype'][$key]['score']) {
-                            ++$right[$key];
-                            ++$allright;
+                            $right[$key]++;
+                            $allright++;
                         }
                         $score[$key] = $score[$key] + $sessionvars['examsessionscorelist'][$p['questionid']];
                     }

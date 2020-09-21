@@ -151,7 +151,7 @@ class category
                     $parent[] = $n['catid'];
                 }
             }
-            ++$i;
+            $i++;
         }
 
         return $child;

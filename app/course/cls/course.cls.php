@@ -70,7 +70,7 @@ class course_course
             if ($rs['logstatus']) {
                 $cdata['content'][$i] = $rs['logid'];
             }
-            ++$i;
+            $i++;
         }
         foreach ($cdata['course'] as $key => $p) {
             if ($key) {

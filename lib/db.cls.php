@@ -67,7 +67,7 @@ class db2
         if (!$this->linkid) {
             $this->connect();
         }
-        ++$this->q;
+        $this->q++;
         $this->queryid = mysql_query($sql);
         if (mysql_errno($this->linkid) && $this->debug) {
             exit('ERRO:'.$sql.':'.mysql_error());

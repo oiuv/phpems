@@ -55,16 +55,16 @@ class ev
         $_SERVER['ALL_HTTP'] = isset($_SERVER['ALL_HTTP']) ? $_SERVER['ALL_HTTP'] : '';
         $mobile_browser = '0';
         if (preg_match('/(up.browser|up.link|mmp|symbian|smartphone|midp|wap|phone|iphone|ipad|ipod|android|xoom)/i', strtolower($_SERVER['HTTP_USER_AGENT']))) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if ((isset($_SERVER['HTTP_ACCEPT'])) and (false !== strpos(strtolower($_SERVER['HTTP_ACCEPT']), 'application/vnd.wap.xhtml+xml'))) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if (isset($_SERVER['HTTP_X_WAP_PROFILE'])) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if (isset($_SERVER['HTTP_PROFILE'])) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         $mobile_ua = strtolower(substr($_SERVER['HTTP_USER_AGENT'], 0, 4));
         $mobile_agents = [
@@ -79,16 +79,16 @@ class ev
             'wapr', 'webc', 'winw', 'winw', 'xda', 'xda-',
         ];
         if (in_array($mobile_ua, $mobile_agents)) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if (false !== strpos(strtolower($_SERVER['ALL_HTTP']), 'operamini')) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if (false !== strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows')) {
             $mobile_browser = 0;
         }
         if (false !== strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'windows phone')) {
-            ++$mobile_browser;
+            $mobile_browser++;
         }
         if ($mobile_browser > 0) {
             return true;
