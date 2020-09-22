@@ -16,6 +16,7 @@
         <div class="page-content header">
             <div class="list-box bg">
                 <ol>
+                    {x2;if:is_array($basics)}
                     {x2;tree:$basics,basic,bid}
                     <li class="unstyled">
                         <div class="col-4x">
@@ -33,6 +34,8 @@
                         </div>
                     </li>
                     {x2;endtree}
+                    {x2;else}
+                    {x2;endif}
                 </ol>
             </div>
         </div>

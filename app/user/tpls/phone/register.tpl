@@ -67,6 +67,7 @@
                         <input type="password" needle="needle" msg="请输入密码" class="noborder" placeholder="请输入密码">
                     </div>
                 </div>
+                {x2;if:is_array($forms)}
                 {x2;tree:$forms,form,fid}
                 <div class="form-group underline">
                     <div class="col-3 tip">
@@ -76,6 +77,7 @@
                         {x2;v:form['html']}
                     </div>
                 </div>
+                {x2;endtree}
                 {x2;endif}
                 <div class="form-group text-center">
                     <label class="inline"><input type="radio" name="agreement"><span class="selector">同意《注册协议》</span></label>
