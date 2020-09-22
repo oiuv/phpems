@@ -121,9 +121,11 @@ class action extends app
                 ];
                 $this->G->R($message);
             }
-            foreach ($question as $key => $t) {
-                if ('' == $t) {
-                    unset($question[$key]);
+            if (is_array($question)) {
+                foreach ($question as $key => $t) {
+                    if ('' == $t) {
+                        unset($question[$key]);
+                    }
                 }
             }
             $this->exam->modifyExamSession(['examsessionuseranswer' => $question]);
