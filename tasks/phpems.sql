@@ -4002,7 +4002,7 @@ CREATE TABLE `x2_content`  (
   `contentstatus` int(2) NOT NULL DEFAULT 0,
   `contenttemplate` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `contenttext` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `news_title` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `contentview` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`contentid`) USING BTREE,
   INDEX `contentuserid`(`contentuserid`, `contentinputtime`, `contentmodifytime`, `contentsequence`) USING BTREE,
   INDEX `contentmoduleid`(`contentmoduleid`) USING BTREE,
