@@ -152,6 +152,9 @@ class Cache
     }
 }
 
+// 查看待缓存的已考知识点数据
+dump(Cache::knows());
+
 // 缓存统计结果到 redis
 $client = new Predis\Client('tcp://127.0.0.1:6379');
 $client->set('phpems:questions', json_encode(Cache::questions()));
@@ -161,8 +164,9 @@ echo '已考试题和知识点缓存完成^_^';
 /* 在控制器中可以直接读取缓存并在模板中使用
     $client = new Predis\Client('tcp://127.0.0.1:6379');
     $questions = $client->get('phpems:questions');
-    $questions = json_decode($questions,true);
+    $questions = json_decode($questions, true);
+    $knows = $client->get('phpems:knows');
+    $knows = json_decode($knows, true);
     // $this->tpl->assign('questions', $questions);
-    dd($questions);
+    dd($knows);
  */
- 
