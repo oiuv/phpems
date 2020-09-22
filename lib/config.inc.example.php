@@ -26,7 +26,6 @@ if (dirname($_SERVER['SCRIPT_NAME'])) {
 } else {
     define('WP', '//'.$_SERVER['SERVER_NAME'].'/');
 }
-define('OPENOSS', false);
 
 /* 数据库设置 */
 define('SQLDEBUG', 1);
@@ -42,6 +41,13 @@ define('SERVER', [
     'port'     => 6379, //Redis服务器端口
     'database' => 9, //Redis数据库（0-15）
 ]);
+
+/* 阿里云OSS设置 */
+define('OPENOSS', false);
+define('OSSKEYID', 'LTAI1gDYPJhtZlIh');
+define('OSSKEYSECRET', 'bmLtFONC9OVSfS9NAWYtelVsWMzCEp');
+define('OSSENDPOINT', 'http://oss-cn-beijing.aliyuncs.com');
+define('OSSBUCKET', 'ossforphpems');
 
 /* 微信相关设置 */
 define('USEWX', false); //微信使用开关，绑定用户

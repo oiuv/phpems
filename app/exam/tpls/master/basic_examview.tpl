@@ -31,12 +31,14 @@
                             {x2;eval: v:tid++}
                             <a id="sign_{x2;v:question['questionid']}" href="#question_{x2;v:question['questionid']}" class="btn btn-default">{x2;v:tid}</a>
                             {x2;endtree}
+                            {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
                             {x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
                             {x2;eval: v:tid++}
                             {x2;tree:v:questionrow['data'],data,did}
                             <a id="sign_{x2;v:data['questionid']}" href="#question_{x2;v:data['questionid']}" class="btn btn-default">{x2;v:tid}-{x2;v:did}</a>
                             {x2;endtree}
                             {x2;endtree}
+                            {x2;endif}
                         </div>
                         {x2;endif}
                         {x2;endif}
@@ -99,6 +101,7 @@
                     </div>
                 </div>
                 {x2;endtree}
+                {x2;if:is_array($sessionvars['examsessionquestion']['questionrows'][v:quest])}
                 {x2;tree:$sessionvars['examsessionquestion']['questionrows'][v:quest],questionrow,qrid}
                 {x2;eval: v:tid++}
                 <div class="box itembox paperexamcontent">
@@ -147,6 +150,7 @@
                     {x2;endtree}
                 </div>
                 {x2;endtree}
+                {x2;endif}
                 {x2;endif}
                 {x2;endif}
                 {x2;endtree}

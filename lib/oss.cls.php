@@ -24,10 +24,10 @@ class oss
 
     public function upload($filepath)
     {
-        $accessKeyId = 'LTAI1gDYPJhtZlIh';
-        $accessKeySecret = 'bmLtFONC9OVSfS9NAWYtelVsWMzCEp';
-        $endpoint = 'http://oss-cn-beijing.aliyuncs.com';
-        $bucket = 'ossforphpems';
+        $accessKeyId = OSSKEYID;
+        $accessKeySecret = OSSKEYSECRET;
+        $endpoint = OSSENDPOINT;
+        $bucket = OSSBUCKET;
         $object = date('Ymd').'/'.basename($filepath);
         $filePath = $filepath;
 
@@ -36,7 +36,7 @@ class oss
 
             $rs = $ossClient->uploadFile($bucket, $object, $filePath);
             $path = $rs['oss-request-url'];
-            $path = str_ireplace('����1', '����2', $path);
+            $path = str_ireplace('url1', 'url2', $path);
         } catch (OssException $e) {
             //printf(__FUNCTION__ . ": FAILED\n");
             //printf($e->getMessage() . "\n");

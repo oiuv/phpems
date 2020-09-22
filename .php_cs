@@ -20,6 +20,7 @@ $config = PhpCsFixer\Config::create()
         '@PSR2' => true,
         'header_comment' => ['header' => $header],
         'binary_operator_spaces' => ['operators' => ['=>' => 'align']],
+        'trailing_comma_in_multiline_array' => true,
         // 'no_useless_else' => true,
         // 'no_useless_return' => true,
     ])

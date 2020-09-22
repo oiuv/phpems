@@ -69,14 +69,16 @@
                                 <th>名次</th>
                                 {x2;endif}
                                 <th>考生用户名</th>
+                                {x2;if:is_array($fields)}
                                 {x2;tree:$fields,field,fid}
                                 <th>{x2;v:field['fieldtitle']}</th>
                                 {x2;endtree}
+                                {x2;endif}
                                 <th>分数</th>
                                 <th>考试名称</th>
                                 <th>考试时间</th>
                                 <th>考试用时</th>
-                                <th width="100">操作</th>
+                                <th style="width:100px;">操作</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,9 +95,11 @@
                                 <td>
                                     {x2;v:exam['ehusername']}
                                 </td>
+                                {x2;if:is_array($fields)}
                                 {x2;tree:$fields,field,fid}
                                 <th>{x2;v:exam[v:field['field']]}</th>
                                 {x2;endtree}
+                                {x2;endif}
                                 <td>
                                     {x2;v:exam['ehscore']}
                                 </td>
