@@ -61,4 +61,10 @@ class ExamHistory extends Model
     {
         return unserialize(gzuncompress(base64_decode($value)));
     }
+
+    // 获取考生答案
+    public function getEhuseranswerAttribute($value)
+    {
+        return unserialize($value);
+    }
 }

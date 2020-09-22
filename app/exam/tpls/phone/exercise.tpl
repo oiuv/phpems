@@ -47,6 +47,7 @@
                                 </div>
                             </div>
                             <ol id="questionnumbers">
+                                {x2;if:is_array($questype)}
                                 {x2;tree:$questype,quest,qid}
                                 {x2;if:$numbers[v:quest['questid']]}
                                 <li class="form-group">
@@ -54,6 +55,7 @@
                                 </li>
                                 {x2;endif}
                                 {x2;endtree}
+                                {x2;endif}
                             </ol>
                         </li>
                         <li class="unstyled">

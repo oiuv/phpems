@@ -49,9 +49,12 @@ class Cache
                             if (!isset($stats[$question['questionid']][$o])) {
                                 $stats[$question['questionid']][$o] = 0;
                             }
+                            // 多选
                             if (is_array($p->ehuseranswer[$question['questionid']]) && in_array($o, $p->ehuseranswer[$question['questionid']])) {
                                 $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
-                            } elseif (!is_array($p->ehuseranswer[$question['questionid']]) && false !== strpos($p->ehuseranswer[$question['questionid']], $o)) {
+                            }
+                            // 单选
+                            if (!is_array($p->ehuseranswer[$question['questionid']]) && false !== strpos($p->ehuseranswer[$question['questionid']], $o)) {
                                 $stats[$question['questionid']][$o] = intval($stats[$question['questionid']][$o]) + 1;
                             }
                         }
@@ -159,5 +162,7 @@ echo '已考试题和知识点缓存完成^_^';
     $client = new Predis\Client('tcp://127.0.0.1:6379');
     $questions = $client->get('phpems:questions');
     $questions = json_decode($questions,true);
-    $this->tpl->assign('questions', $questions);
+    // $this->tpl->assign('questions', $questions);
+    dd($questions);
  */
+ 

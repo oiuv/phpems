@@ -94,6 +94,8 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
     composer create-project --prefer-dist phpems/phpems phpems "5.*"
 
+提示：推荐使用[阿里云 Composer 全量镜像](https://developer.aliyun.com/composer)
+
 #### 方式2：使用 git 创建项目
 
 使用 git 复制项目后使用 composer 安装依赖
