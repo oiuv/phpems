@@ -108,7 +108,7 @@ $client->set('phpems:knows', json_encode(Cache::knows()));
 
 安装完成后，根据需要修改 lib 目录下的 `config.inc.php` 文件，配置数据库，然后使用 `tasks` 目录下的数据库文件 `phpems.sql` 创建数据库，项目上线后务必删除 `tasks` 目录。
 
-如果是 phpems v5.0 版本升级到 v6.0，请使用 `tasks` 目录下的 `v5v6.sql` 升级数据库。
+如果是 phpems v5.0 版本升级到 v6.0，请使用 `tasks` 目录下的 `v5.0v6.0.sql` 升级数据库。如果是 phpems v6.0 版本升级到 v6.1，请使用 `tasks` 目录下的 `v6.0v6.1.sql` 升级数据库，也可以访问 `/tasks/Database.php?action=update` 在线升级。
 
 如果是 linux 系统，需要保证 `data` 目录具有可写权限，否则网站无法正常访问。
 

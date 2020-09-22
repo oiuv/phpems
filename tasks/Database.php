@@ -43,11 +43,11 @@ class Database
         // 删除数据表
         DB::schema()->dropIfExists($table);
         // 删除数据表中的字段
-        if (DB::schema()->hasTable($table)) {
-            DB::schema()->table($table, function ($table) {
-                $table->dropColumn(['mobile']);
-            });
-        }
+        // if (DB::schema()->hasTable($table)) {
+        //     DB::schema()->table($table, function ($table) {
+        //         $table->dropColumn(['mobile']);
+        //     });
+        // }
     }
 
     // 重命名数据表
@@ -62,7 +62,31 @@ class Database
     // 升级数据库
     public static function up()
     {
-        // todo
+        // v6.0 to v6.1
+        $table = 'certificate';
+        // 判断数据表是否存在
+        if (DB::schema()->hasTable($table)) {
+            // 在已有数据表上创建字段
+            DB::schema()->table($table, function ($table) {
+                $table->integer('cedays')->after('cetime')->nullable();
+            });
+        } else {
+            // 数据表不是v6.0版本？
+            exit('数据库版本不对？请手动校验后升级。');
+        }
+
+        $table = 'content';
+        // 判断数据表是否存在
+        if (DB::schema()->hasTable($table)) {
+            // 在已有数据表上创建字段
+            DB::schema()->table($table, function ($table) {
+                $table->integer('contentview')->default(0);
+                $table->dropColumn('news_title');
+            });
+        } else {
+            // 数据表不是v6.0版本？
+            exit('数据库版本不对？请手动校验后升级。');
+        }
     }
 
     // 降级数据库
@@ -86,6 +110,14 @@ if (isset($_GET['action'])) {
             try {
                 Database::rollback();
                 echo '数据库滚回成功';
+            } catch (PDOException $exception) {
+                echo $exception->getMessage();
+            }
+            break;
+        case 'update':
+            try {
+                Database::up();
+                echo '数据库升级成功';
             } catch (PDOException $exception) {
                 echo $exception->getMessage();
             }
