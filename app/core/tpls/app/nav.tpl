@@ -4,7 +4,7 @@
             <ul class="list-unstyled list-inline">
                 <li>
                     <a href="https://github.com/oiuv/phpems" class="menu">
-                        免费开源的PHP模拟考试系统
+                        免费开源的PHP模拟考试系统 v6.1
                     </a>
                 </li>
             </ul>
