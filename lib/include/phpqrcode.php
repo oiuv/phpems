@@ -2990,8 +2990,6 @@
         //----------------------------------------------------------------------
         public function getCode()
         {
-            $ret;
-
             if ($this->count < $this->dataLength) {
                 $row = $this->count % $this->blocks;
                 $col = $this->count / $this->blocks;
