@@ -29,7 +29,7 @@ class action extends app
         $this->position = $this->G->make('position', 'content');
         $courses = $this->course->getCourseList([], 1, 10);
         $basic = $this->G->make('basic', 'exam');
-        $basics = $basic->getBasicList([], 1, 10);
+        $basics = $basic->getBasicList([['AND', 'basicclosed = 0']], 1, 6);
         $topimgs = $this->position->getPosNewsList([['AND', 'pcposid = 4']], 1, 5);
         $topnews = $this->position->getPosNewsList([['AND', 'pcposid = 2']], 1, 10);
         $links = $this->content->getContentList([['AND', 'contentcatid = 11']], 1, 10);
