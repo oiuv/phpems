@@ -15,13 +15,20 @@
         }
     },
     "require": {
-        "illuminate/database": "^5.5 || ^6.0 || ^7.0 || ^8.0",
-        "symfony/var-dumper": "^4.0 || ^5.0",
+        "php": ">=7.0",
+        "illuminate/database": ">=5.0",
+        "davedevelopment/phpmig": "^1.6",
+        "thamaraiselvam/mysql-import": "^1.1",
         "predis/predis": "^1.1",
-        "overtrue/wechat": "^4.0 || ^5.0",
-        "overtrue/easy-sms": "^1.1",
         "aliyuncs/oss-sdk-php": "^2.4",
         "ext-json": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": ">=3.0"
+    },
+    "suggest": {
+        "overtrue/easy-sms": "方便发送验证码短信的组件",
+        "overtrue/wechat": "方便开发服务号相关功能的组件"
     },
     "autoload": {
         "classmap": [],
@@ -32,7 +39,6 @@
             "lib/database.inc.php"
         ]
     },
-    "require-dev": {},
     "support": {
         "email": "i@oiuv.cn",
         "source": "https://github.com/phpems/phpems"
@@ -46,5 +52,10 @@
         ]
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
 }
