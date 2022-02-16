@@ -6,11 +6,11 @@ use Thamaraiselvam\MysqlImport\Import;
 class Init extends Migration
 {
     /**
-     * Do the migration
+     * Do the migration.
      */
     public function up()
     {
-        $filename = __DIR__ . '/phpems.sql';
+        $filename = __DIR__.'/phpems.sql';
         $username = DU;
         $password = DP;
         $database = DB;
@@ -19,7 +19,7 @@ class Init extends Migration
     }
 
     /**
-     * Undo the migration
+     * Undo the migration.
      */
     public function down()
     {

@@ -563,7 +563,8 @@
             [24, 50], [28, 54], [32, 58], [26, 54], [30, 58], //35-40
         ];
 
-        /** --------------------------------------------------------------------
+        /**
+         * --------------------------------------------------------------------
          * Put an alignment marker.
          *
          * @param frame
@@ -636,11 +637,11 @@
         // size: [QRSPEC_VERSION_MAX - 6]
 
         public static $versionPattern = [
-            0x07c94, 0x085bc, 0x09a99, 0x0a4d3, 0x0bbf6, 0x0c762, 0x0d847, 0x0e60d,
-            0x0f928, 0x10b78, 0x1145d, 0x12a17, 0x13532, 0x149a6, 0x15683, 0x168c9,
-            0x177ec, 0x18ec4, 0x191e1, 0x1afab, 0x1b08e, 0x1cc1a, 0x1d33f, 0x1ed75,
-            0x1f250, 0x209d5, 0x216f0, 0x228ba, 0x2379f, 0x24b0b, 0x2542e, 0x26a64,
-            0x27541, 0x28c69,
+            0x07C94, 0x085BC, 0x09A99, 0x0A4D3, 0x0BBF6, 0x0C762, 0x0D847, 0x0E60D,
+            0x0F928, 0x10B78, 0x1145D, 0x12A17, 0x13532, 0x149A6, 0x15683, 0x168C9,
+            0x177EC, 0x18EC4, 0x191E1, 0x1AFAB, 0x1B08E, 0x1CC1A, 0x1D33F, 0x1ED75,
+            0x1F250, 0x209D5, 0x216F0, 0x228BA, 0x2379F, 0x24B0B, 0x2542E, 0x26A64,
+            0x27541, 0x28C69,
         ];
 
         //----------------------------------------------------------------------
@@ -657,10 +658,10 @@
         // See calcFormatInfo in tests/test_qrspec.c (orginal qrencode c lib)
 
         public static $formatInfo = [
-            [0x77c4, 0x72f3, 0x7daa, 0x789d, 0x662f, 0x6318, 0x6c41, 0x6976],
-            [0x5412, 0x5125, 0x5e7c, 0x5b4b, 0x45f9, 0x40ce, 0x4f97, 0x4aa0],
-            [0x355f, 0x3068, 0x3f31, 0x3a06, 0x24b4, 0x2183, 0x2eda, 0x2bed],
-            [0x1689, 0x13be, 0x1ce7, 0x19d0, 0x0762, 0x0255, 0x0d0c, 0x083b],
+            [0x77C4, 0x72F3, 0x7DAA, 0x789D, 0x662F, 0x6318, 0x6C41, 0x6976],
+            [0x5412, 0x5125, 0x5E7C, 0x5B4B, 0x45F9, 0x40CE, 0x4F97, 0x4AA0],
+            [0x355F, 0x3068, 0x3F31, 0x3A06, 0x24B4, 0x2183, 0x2EDA, 0x2BED],
+            [0x1689, 0x13BE, 0x1CE7, 0x19D0, 0x0762, 0x0255, 0x0D0C, 0x083B],
         ];
 
         public static function getFormatInfo($mask, $level)
@@ -681,7 +682,8 @@
 
         public static $frames = [];
 
-        /** --------------------------------------------------------------------
+        /**
+         * --------------------------------------------------------------------
          * Put a finder pattern.
          *
          * @param frame
@@ -1169,14 +1171,14 @@
 
                 for ($i = 0; $i < $this->size; $i += 2) {
                     $val = (ord($this->data[$i]) << 8) | ord($this->data[$i + 1]);
-                    if ($val <= 0x9ffc) {
+                    if ($val <= 0x9FFC) {
                         $val -= 0x8140;
                     } else {
-                        $val -= 0xc140;
+                        $val -= 0xC140;
                     }
 
-                    $h = ($val >> 8) * 0xc0;
-                    $val = ($val & 0xff) + $h;
+                    $h = ($val >> 8) * 0xC0;
+                    $val = ($val & 0xFF) + $h;
 
                     $bs->appendNum(13, $val);
                 }
@@ -1500,8 +1502,8 @@
             for ($i = 0; $i < $size; $i += 2) {
                 $val = (ord($data[$i]) << 8) | ord($data[$i + 1]);
                 if ($val < 0x8140
-                || ($val > 0x9ffc && $val < 0xe040)
-                || $val > 0xebbf) {
+                || ($val > 0x9FFC && $val < 0xE040)
+                || $val > 0xEBBF) {
                     return false;
                 }
             }
@@ -1688,7 +1690,7 @@
             if ($padlen > 0) {
                 $padbuf = [];
                 for ($i = 0; $i < $padlen; $i++) {
-                    $padbuf[$i] = ($i & 1) ? 0x11 : 0xec;
+                    $padbuf[$i] = ($i & 1) ? 0x11 : 0xEC;
                 }
 
                 $ret = $padding->appendBytes($padlen, $padbuf);
@@ -2021,7 +2023,7 @@
                 if ($pos + 1 < strlen($this->dataStr)) {
                     $d = $this->dataStr[$pos + 1];
                     $word = (ord($c) << 8) | ord($d);
-                    if (($word >= 0x8140 && $word <= 0x9ffc) || ($word >= 0xe040 && $word <= 0xebbf)) {
+                    if (($word >= 0x8140 && $word <= 0x9FFC) || ($word >= 0xE040 && $word <= 0xEBBF)) {
                         return QR_MODE_KANJI;
                     }
                 }
@@ -2947,7 +2949,7 @@
         {
             $dl = QRspec::rsDataCodes1($spec);
             $el = QRspec::rsEccCodes1($spec);
-            $rs = QRrs::init_rs(8, 0x11d, 0, 1, $el, 255 - $dl - $el);
+            $rs = QRrs::init_rs(8, 0x11D, 0, 1, $el, 255 - $dl - $el);
 
             $blockNo = 0;
             $dataPos = 0;
@@ -2968,7 +2970,7 @@
 
             $dl = QRspec::rsDataCodes2($spec);
             $el = QRspec::rsEccCodes2($spec);
-            $rs = QRrs::init_rs(8, 0x11d, 0, 1, $el, 255 - $dl - $el);
+            $rs = QRrs::init_rs(8, 0x11D, 0, 1, $el, 255 - $dl - $el);
 
             if (null == $rs) {
                 return -1;
