@@ -1,12 +1,12 @@
 <?php
 
-use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as DB;
+use Phpmig\Migration\Migration;
 
 class Test extends Migration
 {
     /**
-     * Do the migration
+     * Do the migration.
      */
     public function up()
     {
@@ -20,7 +20,7 @@ class Test extends Migration
     }
 
     /**
-     * Undo the migration
+     * Undo the migration.
      */
     public function down()
     {

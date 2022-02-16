@@ -702,9 +702,9 @@ class SphinxClient
             $this->_warning = sprintf(
                 "searchd command v.%d.%d older than client's v.%d.%d, some options might not work",
                 $ver >> 8,
-                $ver & 0xff,
+                $ver & 0xFF,
                 $client_ver >> 8,
-                $client_ver & 0xff
+                $client_ver & 0xFF
             );
         }
 
